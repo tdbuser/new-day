@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#06241a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%98%80%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <title>NEW DAY — Yangi kun — Новый день</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
@@ -114,6 +115,22 @@ body.shake #app{animation:shake .5s}
 @keyframes flash{0%,100%{opacity:0}50%{opacity:1}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
 .demo{background:#a16207;color:#fff;border-radius:12px;padding:6px 10px;font-size:13px;font-weight:800;text-align:center;margin-bottom:8px}
+/* ---- добавлено: нижние вкладки, фото, камера, ранги, звуки ---- */
+.tabbar{position:fixed;left:0;right:0;bottom:0;display:flex;gap:6px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(6,36,26,.96);border-top:2px solid #e0b43a;z-index:40}
+.tabbar button{flex:1;background:transparent;border:0;color:#cfe9dc;font:800 14px Nunito,system-ui,sans-serif;padding:6px 2px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.tabbar button span{font-size:20px}
+.tabbar button.on{background:#e0b43a;color:#2a1b00}
+#app{padding-bottom:92px}
+.big.gold{background:linear-gradient(180deg,#ffd23f,#e0951a);color:#2a1b00}
+.big.gold{margin-top:8px}
+.photo img{width:100%;max-height:260px;object-fit:cover;border-radius:12px;margin-bottom:8px}
+.rankbig{font-size:22px;font-weight:900;color:var(--gold);margin-top:6px}
+.stat{background:rgba(255,255,255,.06);border-radius:14px;padding:10px;text-align:center}
+.stat b{font-size:20px}
+.hrow{display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px}
+.hrow span:nth-child(2){flex:1}
+.hrow b.neg{color:#ff8a80}
+#modal video{width:100%;border-radius:12px;background:#000;max-height:60vh}
 
 </style>
 </head>
@@ -129,7 +146,12 @@ const APP_CONFIG = {
 
   // Данные из Firebase Console (Project settings -> Your apps -> Web app).
   // Пока apiKey пустой, приложение работает в ДЕМО-режиме (данные только в этом браузере).
-  FIREBASE: { apiKey: "", authDomain: "", projectId: "", appId: "" },
+  FIREBASE: {
+    apiKey: "AIzaSyBkFb0DwW2GMMvUMdZ_Nx1fl5e3LvIYH9U",
+    authDomain: "newday-8f3de.firebaseapp.com",
+    projectId: "newday-8f3de",
+    appId: "1:526495750584:web:b834e22a183722ad87974d"
+  },
 
   // Часовой пояс по умолчанию (Самарканд/Ташкент).
   DEFAULT_TZ: "Asia/Tashkent"
@@ -138,7 +160,7 @@ const APP_CONFIG = {
 
 /* ===== i18n.js: тексты. Порядок в массиве: [uz, ru, en]. Язык по умолчанию — узбекский ===== */
 const D = {
-  app_name: ["Yangi kun", "Новый день", "New Day"],
+  app_name: ["Oila rejasi", "Семейный план", "Family Plan"],
   login_title: ["Kirish", "Вход", "Sign in"],
   login_sub: ["Davom etish uchun Google akkauntingiz bilan kiring", "Войдите через свой Google-аккаунт, чтобы продолжить", "Sign in with your Google account to continue"],
   login_google: ["Google orqali kirish", "Войти через Google", "Sign in with Google"],
@@ -274,7 +296,75 @@ const D = {
 };
 
 
-/* ===== logic.js: время, монеты, штрафы, уровни, призы (без интерфейса) ===== */
+/* ===== i18n_extra.js: новые и переопределённые тексты (uz, ru, en) ===== */
+Object.assign(D, {
+  app_name: ["Yangi kun", "Новый день", "New Day"],
+  no: ["Yo'q", "Нет", "No"],
+  cancel: ["Bekor qilish", "Отмена", "Cancel"],
+  rank: ["Daraja", "Ранг", "Rank"],
+  nav_today: ["Bugun", "Сегодня", "Today"],
+  nav_rewards: ["Mukofotlar", "Награды", "Rewards"],
+  nav_me: ["Profil", "Профиль", "Profile"],
+  profile: ["Profil", "Профиль", "Profile"],
+  history: ["So'nggi amallar", "Последние действия", "Recent activity"],
+  no_history: ["Hali amallar yo'q", "Пока нет действий", "No activity yet"],
+  earned_total: ["Jami topilgan", "Всего заработано", "Total earned"],
+  photo_mode: ["Foto hisobot", "Фотоотчёт", "Photo report"],
+  photo_off: ["Kerak emas", "Не нужно", "Not needed"],
+  photo_opt: ["Istalgan (ixtiyoriy)", "Желательно", "Optional"],
+  photo_req: ["Majburiy", "Обязательно", "Required"],
+  photo_req_btn: ["📷 Foto olib bajarildi", "📷 Фото и выполнено", "📷 Photo and done"],
+  photo_opt_btn: ["📷 Foto", "📷 Фото", "📷 Photo"],
+  photo_req_note: ["Bu vazifa uchun foto majburiy. Kamera ochiladi.", "Для этого задания нужно фото. Откроется камера.", "This task needs a photo. The camera will open."],
+  photo_pending: ["Tekshiruvda", "На проверке", "Under review"],
+  photo_ok: ["Tasdiqlandi", "Подтверждено", "Approved"],
+  photo_rejected: ["Rad etildi", "Отклонено", "Rejected"],
+  photo_expired: ["Muddati o'tgan", "Срок истёк", "Expired"],
+  photo_left: ["{h} soat qoldi", "осталось {h} ч", "{h} h left"],
+  tab_photos: ["Fotolar", "Фото", "Photos"],
+  photos_hint: ["Foto faqat kamera orqali olinadi va 48 soatdan keyin o'chiriladi.", "Фото снимаются только камерой и удаляются через 48 часов.", "Photos are taken with the camera only and deleted after 48 hours."],
+  photos_empty: ["Tekshiruv uchun fotolar yo'q", "Фото на проверку нет", "No photos to review"],
+  approve_photo: ["Tasdiqlash", "Подтвердить", "Approve"],
+  reject_photo: ["Rad etish (monetalar olib tashlanadi)", "Отклонить (монеты будут отменены)", "Reject (coins are removed)"],
+  photo_by: ["{n} · {t}", "{n} · {t}", "{n} · {t}"],
+  cam_title: ["Foto olish", "Фото", "Take a photo"],
+  snap: ["Suratga olish", "Снять", "Capture"],
+  cam_fallback: ["Kamera ochilmadi, telefon kamerasi ochiladi.", "Камера не открылась, откроется камера телефона.", "Camera did not open, the phone camera will open instead."],
+  cam_fail: ["Kameraga ruxsat bering", "Разрешите доступ к камере", "Allow camera access"],
+  bonus_day: ["Kun seriyasi bonusi", "Бонус серии дней", "Streak bonus"],
+  bonus_week: ["Ideal hafta bonusi", "Бонус идеальной недели", "Perfect week bonus"],
+  bonus_month: ["Ideal oy bonusi", "Бонус идеального месяца", "Perfect month bonus"],
+  payout_day_only: ["Pul yechish faqat oyning oxirgi kuni ({d}) ochiladi.", "Выплата открывается только в последний день месяца ({d}).", "Payouts open only on the last day of the month ({d})."],
+  payout_none: ["Bu oyda yechish uchun monetalar yo'q", "В этом месяце нет монет для выплаты", "No coins to withdraw this month"],
+  payout_hint: ["Oyning oxirgi kunida tugma ochiladi. Pul sizga admin tomonidan kartaga o'tkaziladi.", "В последний день месяца откроется кнопка. Деньги переведёт администратор на карту.", "On the last day of the month the button opens. The admin transfers the money to your card."],
+  rate_derived: ["Kurs: 1 moneta = ${c} (byudjet ÷ {n})", "Курс: 1 монета = ${c} (бюджет ÷ {n})", "Rate: 1 coin = ${c} (budget ÷ {n})"],
+  set_budget: ["Oylik byudjet, $ (pul yechish uchun)", "Месячный бюджет на выплаты, $", "Monthly budget for payouts, $"],
+  set_budget_hint: ["Kurs shu byudjetdan hisoblanadi. Bu raqam faqat siz uchun.", "Курс считается из этого бюджета. Видите только вы.", "The rate is calculated from this budget. Only you see it."],
+  tab_sounds: ["Ovozlar", "Звуки", "Sounds"],
+  snd_intro: ["Har bir hodisa uchun ovoz tanlang yoki o'z faylingizning havolasini qo'ying.", "Выберите звук для каждого события или вставьте ссылку на свой файл.", "Pick a sound for each event or paste a link to your own file."],
+  ev_coin: ["Vazifa bajarildi", "Задание выполнено", "Task done"],
+  ev_wrong: ["Bajarilmadi / o'tkazildi", "Не выполнено / пропуск", "Not done / missed"],
+  ev_warn: ["Ogohlantirish", "Предупреждение", "Warning"],
+  ev_burn: ["Monetalar yonishi", "Сгорание монет", "Coins burned"],
+  ev_fanfare: ["Yangi daraja / mukofot", "Новый ранг / награда", "New rank / reward"],
+  ev_music: ["Fon musiqasi", "Фоновая музыка", "Background music"],
+  preset_coin: ["Tanga jaranglashi", "Звон монет", "Coin chime"],
+  preset_bell: ["Qo'ng'iroq", "Колокольчик", "Bell"],
+  preset_wrong: ["Xato signali", "Сигнал ошибки", "Error buzz"],
+  preset_warn: ["Sirena", "Сирена", "Siren"],
+  preset_burn: ["Pasayuvchi ovoz", "Падающий звук", "Falling sound"],
+  preset_fanfare: ["Fanfara", "Фанфары", "Fanfare"],
+  preset_off: ["Ovozsiz", "Без звука", "Silent"],
+  music_chords: ["Ichki akkordlar", "Встроенные аккорды", "Built-in chords"],
+  music_off: ["Musiqasiz", "Без музыки", "No music"],
+  snd_url: ["Yoki o'z fayl havolasi (mp3)", "Или ссылка на свой файл (mp3)", "Or a link to your own file (mp3)"],
+  preview: ["Tinglash", "Прослушать", "Preview"],
+  saved_ok: ["Saqlandi", "Сохранено", "Saved"],
+  photo_camera_only: ["Faqat kamera", "Только камера", "Camera only"]
+});
+
+
+/* ===== logic.js: время, монеты, штрафы, бонусы, ранги, фото, выплаты (без интерфейса) ===== */
 const Logic = (() => {
   const pad = n => String(n).padStart(2, '0');
 
@@ -297,16 +387,29 @@ const Logic = (() => {
   const weekStart = date => addDays(date, -((weekday(date) + 6) % 7)); // понедельник
   const monthOf = date => date.slice(0, 7);
   const daysInMonth = ym => { const [y, m] = ym.split('-').map(Number); return new Date(Date.UTC(y, m, 0)).getUTCDate(); };
+  const lastDayOf = ym => `${ym}-${pad(daysInMonth(ym))}`;
+  const prevMonth = ym => { const [y, m] = ym.split('-').map(Number); return new Date(Date.UTC(y, m - 2, 1)).toISOString().slice(0, 7); };
   const maxStr = (...a) => a.reduce((x, y) => (x > y ? x : y), '');
 
+  const PHOTO_TTL_MS = 48 * 3600 * 1000;   // фото хранятся двое суток
+  const RATE_COINS = 5000;                  // монет в месяц, на которые делится бюджет в USD
+
   const DEFAULTS = {
-    missPenaltyPct: 50,   // штраф за пропуск, % от награды задания
-    warnings: 2,          // сколько пропусков за день только предупреждают
-    burnPct: 70,          // на следующем пропуске сгорает % дневного лимита
-    weeklyGoalPct: 80,    // % выполнения за неделю для подарка
-    usdPerCoin: 0,        // курс монеты к доллару (0 = не задан)
-    backfillDays: 7,      // сколько дней назад дописывать пропуски
+    missPenaltyPct: 50,    // штраф за пропуск, % от награды задания
+    warnings: 2,           // сколько пропусков за день только предупреждают
+    burnPct: 70,           // на следующем пропуске сгорает % дневного лимита
+    weeklyGoalPct: 80,     // % выполнения за неделю для подарка
+    idealPct: 90,          // % выполнения для «идеальной» недели и месяца
+    streakStepPct: 2,      // бонус серии: +2% за каждый идеальный день подряд
+    streakMaxPct: 30,      // но не больше +30%
+    idealWeekBonus: 10000, // +100 монет за идеальную неделю (в сотых)
+    idealMonthBonus: 50000,// +500 монет за идеальный месяц
+    budgetUsd: 0,          // месячный бюджет на выплаты, USD (задаёт админ)
+    rateCoins: RATE_COINS,
+    usdPerCoin: 0,         // считается из бюджета; 0 = курс не задан
+    backfillDays: 7,       // сколько дней назад дописывать пропуски
     tz: 'Asia/Tashkent',
+    sounds: {},
     prizes: [
       { icon: '🍢', uz: "Restoranda shashlik bilan kechki ovqat", ru: 'Ужин с шашлыками в ресторане', en: 'Barbecue dinner at a restaurant' },
       { icon: '🐟', uz: "Baliq restoranida kechki ovqat", ru: 'Ужин в рыбном ресторане', en: 'Dinner at a fish restaurant' },
@@ -316,11 +419,27 @@ const Logic = (() => {
       { icon: '🛍️', uz: "Sovg'a tanlash uchun xarid", ru: 'Шопинг: выбрать себе подарок', en: 'Shopping trip to pick a gift' }
     ]
   };
-  const cfg = s => Object.assign({}, DEFAULTS, s || {});
+  // Курс считается из бюджета: бюджет ÷ 5000 монет
+  const cfg = s => {
+    const c = Object.assign({}, DEFAULTS, s || {});
+    if (c.budgetUsd > 0) c.usdPerCoin = c.budgetUsd / (c.rateCoins || RATE_COINS);
+    return c;
+  };
+
+  // Ранги по заработанным монетам (порог в монетах)
+  const RANKS = [
+    [0, { uz: 'Yangi boshlovchi', ru: 'Новичок', en: 'Beginner' }],
+    [500, { uz: 'Olov', ru: 'Огонёк', en: 'Spark' }],
+    [1500, { uz: "Oila tayanchi", ru: 'Опора дома', en: 'Home pillar' }],
+    [3500, { uz: 'Kun ustasi', ru: 'Мастер дня', en: 'Day master' }],
+    [7000, { uz: 'Oila yulduzi', ru: 'Звезда семьи', en: 'Family star' }],
+    [12000, { uz: "O'choq qo'riqchisi", ru: 'Хранитель очага', en: 'Hearth keeper' }],
+    [20000, { uz: 'Afsona', ru: 'Легенда', en: 'Legend' }]
+  ];
 
   const T0 = (id, time, icon, uz, ru, en, grace) => ({
-    id, time, icon, title: { uz, ru, en }, reward: 100, graceMin: grace, earlyMin: 15,
-    relations: ['wife'], uids: [], active: true, since: ''
+    id, time, icon, title: { uz, ru, en }, reward: 1000, graceMin: grace, earlyMin: 15,
+    relations: ['wife'], uids: [], active: true, since: '', photo: 'opt'
   });
   const DEFAULT_TASKS = [
     T0('wake', '06:00', '⏰', "Uyg'onish", 'Подъём', 'Wake up', 30),
@@ -360,6 +479,7 @@ const Logic = (() => {
     return 'expired';
   }
 
+  const photoMode = t => (t && ['off', 'opt', 'req'].includes(t.photo) ? t.photo : 'opt');
   const dayLimit = ts => ts.reduce((s, t) => s + (t.reward || 0), 0);
 
   // Запись о пропуске: штраф + (при N-м пропуске за день) сгорание части дневного лимита
@@ -398,19 +518,26 @@ const Logic = (() => {
     const dayTasks = tasks.filter(x => assigned(x, u, now.date));
     return makeMiss(u, t, now.date, 'failed', missesOn(logs, now.date) + 1, dayLimit(dayTasks), c);
   }
-  const doneLog = (u, t, now) => ({
-    id: logId(u.uid, now.date, t.id), uid: u.uid, date: now.date, taskId: t.id, kind: 'done', delta: t.reward || 0
-  });
+  // Выполнено. Если задание с фото — запись получает фото и ждёт проверки админом.
+  const doneLog = (u, t, now, photo) => {
+    const l = { id: logId(u.uid, now.date, t.id), uid: u.uid, date: now.date, taskId: t.id, kind: 'done', delta: t.reward || 0, hasPhoto: !!photo };
+    if (photo) { l.photo = photo; l.review = 'pending'; }
+    return l;
+  };
+  const photoExpired = (l, nowMs) => !!(l && l.hasPhoto && l.at && nowMs - l.at > PHOTO_TTL_MS);
 
   const sum = (a, f) => a.reduce((s, x) => s + f(x), 0);
   const balance = logs => sum(logs, l => l.delta || 0);
-  const earned = logs => sum(logs.filter(l => l.kind === 'done'), l => l.delta || 0);
+  const earned = logs => sum(logs.filter(l => l.kind === 'done' || l.kind === 'bonus'), l => l.delta || 0);
+
+  // Ранг по заработку: уровень, название, прогресс до следующего ранга
   function level(earnedCents) {
     const c = earnedCents / 100;
-    let L = 1;
-    while (25 * (L + 1) * L <= c) L++;
-    const cur = 25 * L * (L - 1), nxt = 25 * (L + 1) * L;
-    return { level: L, pct: Math.max(0, Math.min(1, (c - cur) / (nxt - cur))), toNext: Math.max(0, nxt - c) * 100 };
+    let i = 0;
+    while (i + 1 < RANKS.length && c >= RANKS[i + 1][0]) i++;
+    const nxt = RANKS[i + 1] ? RANKS[i + 1][0] : null, cur = RANKS[i][0];
+    const pct = nxt === null ? 1 : Math.max(0, Math.min(1, (c - cur) / (nxt - cur)));
+    return { level: i + 1, name: RANKS[i][1], pct, toNext: nxt === null ? 0 : Math.max(0, nxt - c) * 100 };
   }
 
   function dayStats(tasks, logs, u, date, now) {
@@ -425,6 +552,23 @@ const Logic = (() => {
     });
     const net = sum(logs.filter(l => l.date === date), l => l.delta || 0);
     return { date, total: ts.length, done, missed, open, net };
+  }
+
+  // Бонусы: серия идеальных дней, идеальная неделя, идеальный месяц
+  const perfectDay = (tasks, logs, u, date, now) => {
+    const s = dayStats(tasks, logs, u, date, now);
+    return s.total > 0 && s.done === s.total && s.missed === 0;
+  };
+  function dayBonus(tasks, logs, u, date, now, settings) {
+    const c = cfg(settings);
+    if (!perfectDay(tasks, logs, u, date, now)) return null;
+    let streak = 1, d = addDays(date, -1), guard = 0;
+    while (guard++ < 60 && d >= (u.approvedDate || '0000-00-00') && perfectDay(tasks, logs, u, d, now)) { streak++; d = addDays(d, -1); }
+    const pct = Math.min(c.streakMaxPct, c.streakStepPct * (streak - 1));
+    const limit = dayLimit(sortTasks(tasks.filter(t => assigned(t, u, date))));
+    const delta = Math.floor(limit * pct / 100);
+    if (delta <= 0) return null;
+    return { id: `${u.uid}_bonus_d_${date}`, uid: u.uid, date, taskId: 'bonus', kind: 'bonus', delta, pct, streak };
   }
 
   const hashStr = s => { let h = 0; for (const ch of s) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; };
@@ -444,6 +588,11 @@ const Logic = (() => {
     const prize = won && c.prizes.length ? c.prizes[hashStr(wStart) % c.prizes.length] : null;
     return { start: wStart, done, missed, total, rate, ended, won, prize };
   }
+  function weekBonus(tasks, logs, u, wStart, now, settings) {
+    const c = cfg(settings), r = weekReport(tasks, logs, u, wStart, now, settings);
+    if (!r.ended || r.done + r.missed === 0 || r.rate * 100 < c.idealPct) return null;
+    return { id: `${u.uid}_bonus_w_${wStart}`, uid: u.uid, date: addDays(wStart, 6), taskId: 'bonus', kind: 'bonus', delta: c.idealWeekBonus };
+  }
 
   function monthReport(tasks, logs, u, ym, now) {
     const days = [];
@@ -454,31 +603,40 @@ const Logic = (() => {
       days.push(Object.assign(s, { rate: counted ? s.done / counted : null, future: date > now.date, today: date === now.date }));
     }
     const monthLogs = logs.filter(l => (l.date || '').startsWith(ym));
+    const done = sum(days, d => d.done), missed = sum(days, d => d.missed);
     return {
-      ym, days,
-      net: balance(monthLogs),
-      done: sum(days, d => d.done),
-      missed: sum(days, d => d.missed),
-      ended: addDays(`${ym}-${pad(daysInMonth(ym))}`, 1) <= now.date
+      ym, days, net: balance(monthLogs), done, missed,
+      ended: addDays(lastDayOf(ym), 1) <= now.date
     };
   }
+  function monthBonus(tasks, logs, u, ym, now, settings) {
+    const c = cfg(settings), r = monthReport(tasks, logs, u, ym, now);
+    if (!r.ended || r.done + r.missed === 0 || (r.done / (r.done + r.missed)) * 100 < c.idealPct) return null;
+    return { id: `${u.uid}_bonus_m_${ym}`, uid: u.uid, date: lastDayOf(ym), taskId: 'bonus', kind: 'bonus', delta: c.idealMonthBonus };
+  }
+
+  // Выплату можно запросить только в последний день месяца
+  const payoutDay = (now, ym) => now.date === lastDayOf(ym);
 
   const toUsd = (cents, rate) => (cents / 100) * (rate || 0);
   const money = c => (c / 100).toFixed(2);
 
   const api = {
-    tzNow, toMin, fmtMin, addDays, weekday, weekStart, monthOf, daysInMonth, DEFAULTS, cfg, DEFAULT_TASKS,
+    tzNow, toMin, fmtMin, addDays, weekday, weekStart, monthOf, daysInMonth, lastDayOf, prevMonth, PHOTO_TTL_MS,
+    DEFAULTS, cfg, DEFAULT_TASKS, RANKS, photoMode,
     assigned, sortTasks, logIndex, logId, isMiss, taskState, dayLimit, makeMiss, pendingMisses, failLog, doneLog,
-    balance, earned, level, dayStats, weekReport, monthReport, toUsd, money, hashStr
+    photoExpired, balance, earned, level, dayStats, perfectDay, dayBonus, weekReport, weekBonus, monthReport, monthBonus,
+    payoutDay, toUsd, money, hashStr
   };
   if (typeof module !== 'undefined') module.exports = api;
   return api;
 })();
 
 
-/* ===== sound.js: звуки и фоновая музыка синтезируются в браузере (файлы не нужны) ===== */
+/* ===== sound.js: звуки и музыка. Готовые синтезированные пресеты + своя ссылка на файл ===== */
 const Snd = (() => {
   let ctx = null, master = null, musicGain = null, timer = null, step = 0, nextT = 0, musicOn = false;
+  let musicPreset = 'chords', musicUrl = '', fileAudio = null, musicAudio = null;
   const chords = [[261.63, 329.63, 392.0], [220.0, 261.63, 329.63], [174.61, 220.0, 261.63], [196.0, 246.94, 293.66]];
 
   function ensure() {
@@ -510,37 +668,53 @@ const Snd = (() => {
     s.buffer = buf; s.connect(f); f.connect(g); g.connect(master); s.start(t);
   }
 
-  // Звон золотых монет, как выигрыш в автомате
-  function coin() {
-    if (!ensure()) return; const t = ctx.currentTime;
-    tone(1318.5, t, 0.10, 'square', 0.10); tone(1760, t + 0.08, 0.45, 'square', 0.10); tone(2637, t + 0.08, 0.40, 'sine', 0.08);
-    for (let i = 0; i < 7; i++) tone(1800 + Math.random() * 1800, t + 0.18 + i * 0.055, 0.14, 'triangle', 0.05);
-    noise(t + 0.15, 0.25, 0.05);
-  }
-  // Раздражающий сигнал ошибки
-  function wrong() {
-    if (!ensure()) return; const t = ctx.currentTime;
-    tone(180, t, 0.30, 'sawtooth', 0.22, null, 120); tone(130, t + 0.32, 0.45, 'sawtooth', 0.22, null, 80);
-    tone(92, t, 0.75, 'square', 0.12);
-  }
-  // Сирена предупреждения
-  function warn() {
-    if (!ensure()) return; const t = ctx.currentTime;
-    for (let i = 0; i < 6; i++) tone(i % 2 ? 620 : 880, t + i * 0.16, 0.16, 'square', 0.14);
-  }
-  // Сгорание: падающий звук
-  function burn() {
-    if (!ensure()) return; const t = ctx.currentTime;
-    tone(900, t, 1.0, 'sawtooth', 0.18, null, 70); noise(t, 0.9, 0.12);
-  }
-  function fanfare() {
-    if (!ensure()) return; const t = ctx.currentTime;
-    [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, i) => tone(f, t + i * 0.11, 0.35, 'triangle', 0.16));
-    tone(1046.5, t + 0.6, 0.9, 'sine', 0.14);
-  }
-  function tick() { if (ensure()) tone(1200, ctx.currentTime, 0.05, 'sine', 0.05); }
+  // Пресеты: звон монет, ошибка, сирена, сгорание, фанфары, колокольчик
+  const presets = {
+    coin() {
+      if (!ensure()) return; const t = ctx.currentTime;
+      tone(1318.5, t, 0.10, 'square', 0.10); tone(1760, t + 0.08, 0.45, 'square', 0.10); tone(2637, t + 0.08, 0.40, 'sine', 0.08);
+      for (let i = 0; i < 7; i++) tone(1800 + Math.random() * 1800, t + 0.18 + i * 0.055, 0.14, 'triangle', 0.05);
+      noise(t + 0.15, 0.25, 0.05);
+    },
+    bell() {
+      if (!ensure()) return; const t = ctx.currentTime;
+      tone(1046.5, t, 1.2, 'sine', 0.18); tone(1568, t, 1.0, 'sine', 0.07); tone(2093, t + 0.05, 0.8, 'sine', 0.04);
+    },
+    wrong() {
+      if (!ensure()) return; const t = ctx.currentTime;
+      tone(180, t, 0.30, 'sawtooth', 0.22, null, 120); tone(130, t + 0.32, 0.45, 'sawtooth', 0.22, null, 80);
+      tone(92, t, 0.75, 'square', 0.12);
+    },
+    warn() {
+      if (!ensure()) return; const t = ctx.currentTime;
+      for (let i = 0; i < 6; i++) tone(i % 2 ? 620 : 880, t + i * 0.16, 0.16, 'square', 0.14);
+    },
+    burn() {
+      if (!ensure()) return; const t = ctx.currentTime;
+      tone(900, t, 1.0, 'sawtooth', 0.18, null, 70); noise(t, 0.9, 0.12);
+    },
+    fanfare() {
+      if (!ensure()) return; const t = ctx.currentTime;
+      [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, i) => tone(f, t + i * 0.11, 0.35, 'triangle', 0.16));
+      tone(1046.5, t + 0.6, 0.9, 'sine', 0.14);
+    },
+    tick() { if (ensure()) tone(1200, ctx.currentTime, 0.05, 'sine', 0.05); },
+    off() {}
+  };
+  const PRESET_NAMES = ['coin', 'bell', 'wrong', 'warn', 'burn', 'fanfare', 'off'];
 
-  // Фоновая музыка: спокойный перебор аккордов
+  // Звук события: если админ задал свою ссылку — играет файл, иначе пресет
+  function play(event, sc) {
+    const s = sc || {};
+    if (s.u) {
+      try { if (fileAudio) fileAudio.pause(); fileAudio = new Audio(s.u); fileAudio.play().catch(() => {}); return; } catch (e) { /* пресет ниже */ }
+    }
+    (presets[s.p] || presets[event] || presets.coin)();
+  }
+  const coin = () => presets.coin(), wrong = () => presets.wrong(), warn = () => presets.warn(),
+    burn = () => presets.burn(), fanfare = () => presets.fanfare(), tick = () => presets.tick();
+
+  // Фоновая музыка: встроенный перебор аккордов или своя ссылка (зацикливается)
   function schedule() {
     while (nextT < ctx.currentTime + 0.5) {
       const bar = Math.floor(step / 8) % chords.length, ch = chords[bar], i = step % 8;
@@ -552,13 +726,32 @@ const Snd = (() => {
   }
   function startMusic() {
     musicOn = true;
+    if (musicPreset === 'off') return;
+    if (musicUrl) {
+      if (!musicAudio) { musicAudio = new Audio(musicUrl); musicAudio.loop = true; }
+      musicAudio.play().catch(() => {});
+      return;
+    }
     if (!ensure() || timer) return;
     nextT = ctx.currentTime + 0.1; schedule(); timer = setInterval(schedule, 200);
   }
-  function stopMusic() { musicOn = false; if (timer) { clearInterval(timer); timer = null; } }
-  function unlock() { if (ensure() && musicOn && !timer) startMusic(); }
+  function stopMusic() {
+    musicOn = false;
+    if (timer) { clearInterval(timer); timer = null; }
+    if (musicAudio) musicAudio.pause();
+  }
+  function setMusic(sc) {
+    const s = sc || {};
+    const wasOn = musicOn;
+    stopMusic();
+    musicPreset = s.p || 'chords';
+    musicUrl = s.u || '';
+    musicAudio = null;
+    if (wasOn) startMusic();
+  }
+  function unlock() { if (ensure() && musicOn && !timer && !musicAudio) startMusic(); }
 
-  return { coin, wrong, warn, burn, fanfare, tick, startMusic, stopMusic, unlock, get on() { return musicOn; } };
+  return { coin, wrong, warn, burn, fanfare, tick, play, PRESET_NAMES, startMusic, stopMusic, setMusic, unlock, get on() { return musicOn; } };
 })();
 
 
@@ -568,7 +761,7 @@ const DemoStore = (() => {
   const fresh = () => ({ users: {}, whitelist: {}, tasks: {}, settings: {}, logs: {}, payouts: {} });
   let st = fresh(), subs = new Set(), authCb = null;
   const load = () => { try { st = Object.assign(fresh(), JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) { st = fresh(); } };
-  const save = () => { localStorage.setItem(KEY, JSON.stringify(st)); subs.forEach(f => f()); };
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) { /* переполнено: данные останутся в памяти */ } subs.forEach(f => f()); };
   const watch = fn => { subs.add(fn); fn(); return () => subs.delete(fn); };
   const uidOf = e => 'u_' + e.toLowerCase().replace(/[^a-z0-9]/g, '_');
   const clone = o => JSON.parse(JSON.stringify(o));
@@ -609,6 +802,12 @@ const DemoStore = (() => {
     st.logs[l.id] = Object.assign(clone(l), { at: Date.now() }); save();
   };
   const delLog = async id => { delete st.logs[id]; save(); };
+  const watchPhotos = cb => watch(() => cb(list(st.logs).filter(l => l.hasPhoto)));
+  const decidePhoto = async (id, patch) => {
+    if (st.logs[id]) { Object.assign(st.logs[id], clone(patch)); st.logs[id].hasPhoto = false; delete st.logs[id].photo; }
+    save();
+  };
+  const updateLog = async (id, patch) => { if (st.logs[id]) Object.assign(st.logs[id], clone(patch)); save(); };
 
   const watchPayouts = cb => watch(() => cb(list(st.payouts)));
   const watchMyPayouts = (uid, cb) => watch(() => cb(list(st.payouts).filter(p => p.uid === uid)));
@@ -617,7 +816,7 @@ const DemoStore = (() => {
 
   return { demo: true, init, onAuth, signIn, signOut, getUser, watchUser, createUser, updateUser, deleteUser, watchUsers,
     getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
-    watchLogs, addLog, delLog, watchPayouts, watchMyPayouts, addPayout, updatePayout };
+    watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout };
 })();
 
 
@@ -629,6 +828,7 @@ const FirebaseStore = (() => {
   const ms = v => (v && v.toMillis ? v.toMillis() : v);
   const errCb = e => { console.error(e); onErr(e); };
   const listen = (q, map, cb) => F.onSnapshot(q, s => cb(s.docs.map(d => map(d.id, d.data()))), errCb);
+  const logMap = (id, d) => Object.assign({}, d, { id, at: ms(d.at) });
 
   async function init(cfg, errHandler) {
     onErr = errHandler || onErr;
@@ -671,10 +871,14 @@ const FirebaseStore = (() => {
   const watchSettings = cb => F.onSnapshot(ref('settings', 'main'), s => cb(s.exists() ? s.data() : {}), errCb);
   const saveSettings = o => F.setDoc(ref('settings', 'main'), o);
 
-  const watchLogs = (uid, cb) => listen(F.query(col('logs'), F.where('uid', '==', uid)),
-    (id, d) => Object.assign({}, d, { id, at: ms(d.at) }), cb);
+  const watchLogs = (uid, cb) => listen(F.query(col('logs'), F.where('uid', '==', uid)), logMap, cb);
   const addLog = l => F.setDoc(ref('logs', l.id), Object.assign({}, l, { at: F.serverTimestamp() }));
   const delLog = id => F.deleteDoc(ref('logs', id));
+  // Все записи с фото (только для админа)
+  const watchPhotos = cb => listen(F.query(col('logs'), F.where('hasPhoto', '==', true)), logMap, cb);
+  // Решение по фото: фото удаляется, запись остаётся с отметкой
+  const decidePhoto = (id, patch) => F.updateDoc(ref('logs', id), Object.assign({}, patch, { hasPhoto: false, photo: F.deleteField() }));
+  const updateLog = (id, patch) => F.updateDoc(ref('logs', id), patch);
 
   const watchPayouts = cb => listen(col('payouts'), (id, d) => Object.assign({}, d, { id }), cb);
   const watchMyPayouts = (uid, cb) => listen(F.query(col('payouts'), F.where('uid', '==', uid)), (id, d) => Object.assign({}, d, { id }), cb);
@@ -683,7 +887,7 @@ const FirebaseStore = (() => {
 
   return { demo: false, init, onAuth, signIn, signOut, getUser, watchUser, createUser, updateUser, deleteUser, watchUsers,
     getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
-    watchLogs, addLog, delLog, watchPayouts, watchMyPayouts, addPayout, updatePayout };
+    watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout };
 })();
 
 
@@ -695,16 +899,17 @@ const LANGS = [['uz', "O'zbekcha"], ['ru', 'Русский'], ['en', 'English']]
 const GLOGO = '<svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>';
 
 let Store = null;
+let CAM = null;
 const safeGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
 const safeSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } };
 
 const S = {
   lang: ['uz', 'ru', 'en'].includes(safeGet('fp_lang')) ? safeGet('fp_lang') : 'uz',
-  au: null, me: null, tasks: [], settings: {}, logs: [], myPayouts: [],
+  au: null, me: null, tasks: [], settings: {}, logs: [], myPayouts: [], photos: [],
   users: [], wl: [], payouts: [],
-  view: 'boot', tab: 'users', adminOpen: false, error: '',
+  view: 'boot', tab: 'users', htab: 'today', adminOpen: false, error: '',
   tasksLoaded: false, logsLoaded: false, shown: 0, lvl: 1, sel: {}, openTask: '', dirty: false,
-  music: safeGet('fp_music') !== '0', amBusy: false, amTried: {}, unsubs: [], userUnsub: null
+  music: safeGet('fp_music') !== '0', amBusy: false, amTried: {}, bnBusy: false, mk: '', unsubs: [], userUnsub: null
 };
 
 /* ---------- помощники ---------- */
@@ -724,6 +929,8 @@ const OWNER = () => (APP_CONFIG.OWNER_EMAIL || (Store && Store.demo ? 'owner@dem
 const taskById = id => S.tasks.find(t => t.id === id);
 const myTasks = date => Logic.sortTasks(S.tasks.filter(t => Logic.assigned(t, S.me, date)));
 const isAdmin = () => !!(S.me && S.me.status === 'approved' && S.me.isAdmin);
+const sc = ev => ((S.settings && S.settings.sounds) || {})[ev] || {};
+const play = ev => Snd.play(ev, sc(ev));
 const avatar = u => u && u.photo ? `<img class="avatar" src="${esc(u.photo)}" alt="" referrerpolicy="no-referrer">` : `<div class="avatar">${esc(((u && u.name) || '?').trim().charAt(0).toUpperCase())}</div>`;
 const relLabel = r => (r && D['rel_' + r]) ? T('rel_' + r) : '';
 const relOptions = sel => `<option value="">${T('choose_rel')}</option>` + REL.map(r => `<option value="${r}" ${sel === r ? 'selected' : ''}>${T('rel_' + r)}</option>`).join('');
@@ -746,6 +953,13 @@ function fmtDate(now) {
   const [, m, d] = now.date.split('-').map(Number), w = WD[S.lang][Logic.weekday(now.date)], mo = MN[S.lang][m - 1];
   return S.lang === 'uz' ? `${d}-${mo}, ${w}` : `${w}, ${d} ${mo}`;
 }
+function kindLabel(l) {
+  if (l.kind === 'bonus') {
+    const id = String(l.id);
+    return T(id.includes('_bonus_w_') ? 'bonus_week' : id.includes('_bonus_m_') ? 'bonus_month' : 'bonus_day');
+  }
+  return T('kind_' + l.kind);
+}
 
 /* ---------- запуск и вход ---------- */
 async function boot() {
@@ -762,7 +976,7 @@ function stopData() {
   S.unsubs.forEach(u => { try { u(); } catch (e) { /* ignore */ } });
   S.unsubs = [];
   if (S.userUnsub) { try { S.userUnsub(); } catch (e) { /* ignore */ } S.userUnsub = null; }
-  Object.assign(S, { me: null, tasks: [], settings: {}, logs: [], myPayouts: [], users: [], wl: [], payouts: [], tasksLoaded: false, logsLoaded: false, adminOpen: false, tab: 'users', sel: {}, amTried: {} });
+  Object.assign(S, { me: null, tasks: [], settings: {}, logs: [], myPayouts: [], photos: [], users: [], wl: [], payouts: [], tasksLoaded: false, logsLoaded: false, adminOpen: false, tab: 'users', htab: 'today', sel: {}, amTried: {} });
 }
 
 async function onAuth(au) {
@@ -804,13 +1018,14 @@ function startData() {
   S.unsubs = [];
   const uid = S.me.uid;
   S.unsubs.push(Store.watchTasks(ts => { S.tasks = ts; S.tasksLoaded = true; render(); runAutoMiss(); }));
-  S.unsubs.push(Store.watchSettings(s => { S.settings = s || {}; render(); }));
+  S.unsubs.push(Store.watchSettings(s => { S.settings = s || {}; applyMusic(); render(); }));
   S.unsubs.push(Store.watchLogs(uid, onLogs));
   S.unsubs.push(Store.watchMyPayouts(uid, p => { S.myPayouts = p; render(); }));
   if (S.me.isAdmin) {
     S.unsubs.push(Store.watchUsers(u => { S.users = u; render(); }));
     S.unsubs.push(Store.watchWhitelist(w => { S.wl = w; render(); }));
     S.unsubs.push(Store.watchPayouts(p => { S.payouts = p; render(); }));
+    S.unsubs.push(Store.watchPhotos(p => { S.photos = p; cleanupPhotos(); render(); }));
   }
 }
 
@@ -820,7 +1035,7 @@ function onLogs(logs) {
   if (!S.logsLoaded) { S.shown = bal; S.lvl = lvl; }
   else { animateBalance(bal); if (lvl > S.lvl) levelUp(lvl); S.lvl = lvl; }
   S.logsLoaded = true;
-  render(); runAutoMiss();
+  render(); runAutoMiss(); runBonuses();
 }
 
 function route() {
@@ -831,7 +1046,7 @@ function route() {
   else S.view = S.adminOpen && isAdmin() ? 'admin' : 'home';
 }
 
-/* ---------- время: проверка пропусков ---------- */
+/* ---------- время: пропуски, бонусы, фото ---------- */
 async function runAutoMiss() {
   if (S.amBusy || !S.me || S.me.status !== 'approved' || !S.logsLoaded || !S.tasksLoaded) return;
   const now = clock();
@@ -847,9 +1062,51 @@ async function runAutoMiss() {
   if (written.length) feedbackMiss(written, true);
 }
 
+// Бонусы: серия за день, идеальная неделя (прошлая), идеальный месяц (прошлый)
+async function runBonuses() {
+  if (S.bnBusy || !S.me || S.me.status !== 'approved' || !S.logsLoaded || !S.tasksLoaded) return;
+  const now = clock(), idx = Logic.logIndex(S.logs), appr = S.me.approvedDate || '';
+  const cands = [];
+  const td = Logic.dayBonus(S.tasks, S.logs, S.me, now.date, now, S.settings);
+  if (td) cands.push(td);
+  for (let k = 1; k <= 2; k++) {
+    const ws = Logic.weekStart(Logic.addDays(now.date, -7 * k));
+    if (Logic.addDays(ws, 6) < appr) break;
+    const wb = Logic.weekBonus(S.tasks, S.logs, S.me, ws, now, S.settings);
+    if (wb) cands.push(wb);
+  }
+  const pm = Logic.prevMonth(Logic.monthOf(now.date));
+  if (Logic.lastDayOf(pm) >= appr) {
+    const mb = Logic.monthBonus(S.tasks, S.logs, S.me, pm, now, S.settings);
+    if (mb) cands.push(mb);
+  }
+  const fresh = cands.filter(b => !idx.has(b.id));
+  if (!fresh.length) return;
+  S.bnBusy = true;
+  for (const b of fresh) {
+    try {
+      await Store.addLog(b);
+      banner('good', '🎁 ' + kindLabel(b), '+' + M(b.delta) + ' ' + T('coins'), 4200);
+      play('fanfare');
+    } catch (e) { console.warn('бонус не записан', b.id, e && e.message); }
+  }
+  S.bnBusy = false;
+}
+
+// Фото старше двух суток удаляются (делает админ, который открыл приложение)
+async function cleanupPhotos() {
+  if (!isAdmin()) return;
+  const now = Date.now();
+  for (const p of S.photos) {
+    if (!Logic.photoExpired(p, now) || (S.amTried['ph_' + p.id] || 0) >= 2) continue;
+    S.amTried['ph_' + p.id] = (S.amTried['ph_' + p.id] || 0) + 1;
+    try { await Store.decidePhoto(p.id, { review: 'expired' }); } catch (e) { console.warn('фото не удалено', p.id); }
+  }
+}
+
 function tick() {
   if (S.view === 'home') render();
-  runAutoMiss();
+  runAutoMiss(); runBonuses();
 }
 
 /* ---------- обратная связь: звуки, баннеры, вибрация ---------- */
@@ -875,12 +1132,16 @@ function feedbackMiss(logs, auto) {
   const total = logs.reduce((s, m) => s + m.delta, 0);
   if (navigator.vibrate) navigator.vibrate([250, 120, 250, 120, 500]);
   redFlash();
-  if (worst.burn > 0) { Snd.burn(); banner('burn', T('burn_msg', { p: c.burnPct }), T('warn_pen', { c: M(-total) }), 5200); }
-  else if (worst.warn) { Snd.warn(); banner('warn', T('warn_n', { n: worst.strike, m: c.warnings }), T('warn_pen', { c: M(-total) }), 5200); }
-  else { Snd.wrong(); banner('warn', T('st_failed'), T('warn_pen', { c: M(-total) }), 4200); }
+  if (worst.burn > 0) { play('burn'); banner('burn', T('burn_msg', { p: c.burnPct }), T('warn_pen', { c: M(-total) }), 5200); }
+  else if (worst.warn) { play('warn'); banner('warn', T('warn_n', { n: worst.strike, m: c.warnings }), T('warn_pen', { c: M(-total) }), 5200); }
+  else { play('wrong'); banner('warn', T('st_failed'), T('warn_pen', { c: M(-total) }), 4200); }
   if (auto && logs.length > 1) setTimeout(() => banner('warn', T('away_missed', { n: logs.length, c: sgn(total) }), '', 4200), 600);
 }
-function levelUp(n) { Snd.fanfare(); banner('good', '🏆 ' + T('levelup', { n }), '', 3800); }
+function levelUp(n) {
+  play('fanfare');
+  const L = Logic.level(Logic.earned(S.logs));
+  banner('good', '🏆 ' + loc(L.name), T('rank') + ' ' + n, 3800);
+}
 
 function animateBalance(target) {
   const from = S.shown, t0 = performance.now(), dur = 900;
@@ -894,7 +1155,7 @@ function animateBalance(target) {
   requestAnimationFrame(step);
 }
 function flyCoin(fromEl) {
-  const to = document.getElementById('coinTarget'); if (!fromEl || !to) return;
+  const to = document.getElementById('coinTarget'); if (!fromEl || !to || !fromEl.isConnected) return;
   const a = fromEl.getBoundingClientRect(), b = to.getBoundingClientRect();
   for (let i = 0; i < 8; i++) {
     const c = document.createElement('div'); c.className = 'coin flycoin'; c.textContent = '1';
@@ -907,17 +1168,63 @@ function flyCoin(fromEl) {
   }
 }
 
-/* ---------- окна ---------- */
+/* ---------- окна и камера ---------- */
 function modal(html) {
   closeModal();
   const m = document.createElement('div'); m.className = 'modal'; m.id = 'modal';
   m.innerHTML = `<div>${html}</div>`; document.body.appendChild(m);
   return m;
 }
-function closeModal() { const m = $('#modal'); if (m) m.remove(); }
+function closeModal() {
+  stopCam();
+  const m = $('#modal'); if (m) m.remove();
+}
 function ask(text, onYes) {
   const m = modal(`<h3>${esc(text)}</h3><div class="btnrow"><button class="btn red" data-act="askyes">${T('yes')}</button><button class="btn" data-act="close">${T('no')}</button></div>`);
   m._yes = onYes;
+}
+function stopCam() {
+  if (CAM && CAM.stream) CAM.stream.getTracks().forEach(t => t.stop());
+  CAM = null;
+}
+// Фото только с камеры: видео с камеры телефона, без выбора из галереи
+async function openCamera(onShot) {
+  stopCam();
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { fileCamera(onShot); return; }
+  modal(`<h3>${T('cam_title')}</h3><video id="cam" autoplay playsinline muted></video><canvas id="shot" style="display:none"></canvas>`
+    + `<div id="camErr" class="mut"></div><div class="btnrow"><button class="btn gold" data-act="snap">📷 ${T('snap')}</button><button class="btn" data-act="camcancel">${T('cancel')}</button></div>`);
+  CAM = { onShot, stream: null };
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false });
+    if (!CAM) { stream.getTracks().forEach(t => t.stop()); return; }
+    CAM.stream = stream;
+    const v = $('#cam'); if (v) { v.srcObject = stream; v.play().catch(() => {}); }
+  } catch (e) {
+    stopCam(); closeModal();
+    banner('warn', T('cam_fail'), '', 3500);
+    fileCamera(onShot);
+  }
+}
+function fileCamera(onShot) {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'image/*'; inp.setAttribute('capture', 'environment');
+  inp.onchange = () => {
+    const f = inp.files && inp.files[0]; if (!f) return;
+    const r = new FileReader(); r.onload = () => compress(r.result, onShot); r.readAsDataURL(f);
+  };
+  banner('warn', T('cam_fallback'), '', 3000);
+  inp.click();
+}
+// Сжатие: до 800 px по ширине, JPEG 0.5 (≈ 50–100 КБ)
+function compress(src, cb) {
+  const img = new Image();
+  img.onload = () => {
+    const sc2 = Math.min(1, 800 / img.width), cv = document.createElement('canvas');
+    cv.width = Math.round(img.width * sc2); cv.height = Math.round(img.height * sc2);
+    cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+    cb(cv.toDataURL('image/jpeg', 0.5));
+  };
+  img.src = src;
 }
 
 /* ---------- отрисовка ---------- */
@@ -928,6 +1235,7 @@ function typing() {
 function render() {
   const app = $('#app'); if (!app) return;
   if (typing()) { S.dirty = true; return; }
+  if (CAM) return; // пока открыта камера, не перерисовываем
   S.dirty = false;
   const v = S.view;
   let html = '';
@@ -945,8 +1253,8 @@ function langSel() {
   return `<select data-act-change="lang">${LANGS.map(([k, n]) => `<option value="${k}" ${S.lang === k ? 'selected' : ''}>${n}</option>`).join('')}</select>`;
 }
 function shell(body, full) {
-  const me = S.me;
   const head = full ? header() : '';
+  const pc = S.photos.length;
   const bar = `<div class="bar">${langSel()}<button class="chipbtn ${S.music ? 'on' : ''}" data-act="music">🎵 ${T('music')}</button>`
     + (isAdmin() ? `<button class="chipbtn ${S.view === 'admin' ? 'on' : ''}" data-act="${S.view === 'admin' ? 'back' : 'admin'}">${S.view === 'admin' ? '← ' + T('back') : '⚙ ' + T('admin_panel')}${S.view !== 'admin' && pendingCount() ? `<span class="badge">${pendingCount()}</span>` : ''}</button>` : '')
     + `<button class="chipbtn" data-act="logout">${T('logout')}</button></div>`;
@@ -954,7 +1262,7 @@ function shell(body, full) {
 }
 function header() {
   const me = S.me, L = Logic.level(Logic.earned(S.logs));
-  return `<header class="top"><div class="who">${avatar(me)}<div class="whot"><div class="nm">${esc(me.name)}</div><div class="lv">${T('level')} ${L.level}${me.relation ? ' · ' + esc(relLabel(me.relation)) : ''}</div></div></div>`
+  return `<header class="top"><div class="who">${avatar(me)}<div class="whot"><div class="nm">${esc(me.name)}</div><div class="lv">${esc(loc(L.name))}${me.relation ? ' · ' + esc(relLabel(me.relation)) : ''}</div></div></div>`
     + `<div class="coinpill" id="coinTarget"><span class="coin">1</span><b id="coinAmt" class="${S.shown < 0 ? 'neg' : ''}">${M(S.shown)}</b></div></header>`
     + `<div class="lvbar"><i style="width:${Math.round(L.pct * 100)}%"></i></div>`;
 }
@@ -974,16 +1282,27 @@ function viewLogin() {
     + `<button class="gbtn" data-act="login">${GLOGO}<span>${T('login_google')}</span></button><div id="loginErr" class="mut" style="margin-top:10px;color:#ff8a80"></div></div>`;
 }
 
-/* ---------- страница пользователя ---------- */
+/* ---------- страница пользователя: три вкладки ---------- */
 function viewHome() {
+  let body;
+  if (S.htab === 'rewards') body = viewRewards();
+  else if (S.htab === 'me') body = viewMe();
+  else body = viewToday();
+  const tabs = [['today', '📋', T('nav_today')], ['rewards', '🎁', T('nav_rewards')], ['me', '👤', T('nav_me')]];
+  return body + `<nav class="tabbar">${tabs.map(([k, i, n]) => `<button class="${S.htab === k ? 'on' : ''}" data-act="htab" data-id="${k}"><span>${i}</span>${n}</button>`).join('')}</nav>`;
+}
+
+function viewToday() {
   const c = cfgS(), now = clock(), me = S.me, idx = Logic.logIndex(S.logs);
   const ts = myTasks(now.date);
   const states = ts.map(t => ({ t, log: idx.get(Logic.logId(me.uid, now.date, t.id)), st: Logic.taskState(t, now.date, now, idx.get(Logic.logId(me.uid, now.date, t.id))) }));
   const ds = Logic.dayStats(S.tasks, S.logs, me, now.date, now);
+  const L = Logic.level(Logic.earned(S.logs));
+  const bonusToday = S.logs.find(l => l.kind === 'bonus' && l.date === now.date);
   let out = `<div class="card"><div class="mut">${esc(fmtDate(now))} · ${Logic.fmtMin(now.min)}</div>`;
   if (ts.length) out += `<h3>${T('day_progress', { d: ds.done, n: ds.total })}</h3><div class="pbar"><i style="width:${ds.total ? Math.round(ds.done / ds.total * 100) : 0}%"></i></div>`;
-  const L = Logic.level(Logic.earned(S.logs));
-  out += `<div class="mut">${T('level')} ${L.level} · ${T('to_next', { c: M(L.toNext) + ' ' + T('coins') })}</div></div>`;
+  if (bonusToday) out += `<div class="mut" style="color:var(--gold)">🎁 ${esc(kindLabel(bonusToday))} ${sgn(bonusToday.delta)}</div>`;
+  out += `<div class="mut">${esc(loc(L.name))} · ${T('to_next', { c: M(L.toNext) + ' ' + T('coins') })}</div></div>`;
 
   if (!ts.length) return out + `<div class="card center">${T('no_tasks')}</div>`;
 
@@ -994,18 +1313,41 @@ function viewHome() {
   else out += `<div class="card nowcard center"><h3>🎉 ${T('all_done_today')}</h3></div>`;
 
   out += states.map(({ t, log, st }) => {
-    const badge = st === 'done' ? `<span class="tbadge ok">✓ ${sgn(log.delta)}</span>`
+    const mode = Logic.photoMode(t);
+    const badge = st === 'done' ? (log.review === 'rejected' ? `<span class="tbadge bad">✗ ${T('photo_rejected')}</span>` : `<span class="tbadge ok">✓ ${sgn(log.delta)}</span>`)
       : (st === 'missed' || st === 'failed') ? `<span class="tbadge bad">✗ ${sgn(log.delta)}</span>`
       : st === 'expired' ? `<span class="tbadge bad">${T('st_expired')}</span>`
       : st === 'locked' ? `<span class="tbadge mut">🔒 ${T('opens_at', { t: Logic.fmtMin(Logic.toMin(t.time) - (t.earlyMin ?? 15)) })}</span>`
       : `<span class="tbadge ok">+${M(t.reward)}</span>`;
-    return `<div class="task st-${st}"><div class="trow"><span class="ticon">${esc(t.icon || '•')}</span><div><div class="ttime">${esc(t.time)}</div><div class="ttitle">${esc(loc(t.title))}</div></div>${badge}</div>`
-      + (st === 'active' ? `<button class="big green" data-act="done" data-id="${esc(t.id)}">${T('done_btn')}</button><button class="big red" data-act="fail" data-id="${esc(t.id)}">${T('fail_btn')}</button>` : '')
-      + `</div>`;
+    const photoNote = st === 'done' && log.review === 'pending' ? `<div class="mut">📷 ${T('photo_pending')}</div>` : '';
+    let btns = '';
+    if (st === 'active') {
+      if (mode === 'req') btns = `<button class="big green" data-act="done" data-id="${esc(t.id)}">${T('photo_req_btn')}</button>`;
+      else {
+        btns = `<button class="big green" data-act="done" data-id="${esc(t.id)}">${T('done_btn')}</button>`;
+        if (mode === 'opt') btns += `<button class="big gold" data-act="photodone" data-id="${esc(t.id)}">${T('photo_opt_btn')}</button>`;
+      }
+      btns += `<button class="big red" data-act="fail" data-id="${esc(t.id)}">${T('fail_btn')}</button>`;
+    }
+    return `<div class="task st-${st}"><div class="trow"><span class="ticon">${esc(t.icon || '•')}</span><div><div class="ttime">${esc(t.time)}</div><div class="ttitle">${esc(loc(t.title))}</div></div>${badge}</div>${photoNote}${btns}</div>`;
   }).join('');
-
-  out += weekCard(now, c) + monthCard(now, c);
   return out;
+}
+
+function viewRewards() {
+  const c = cfgS(), now = clock();
+  return weekCard(now, c) + monthCard(now, c);
+}
+
+function viewMe() {
+  const me = S.me, now = clock(), L = Logic.level(Logic.earned(S.logs));
+  const mine = S.logs.slice().sort((a, b) => (String(b.date) + (b.at || 0)).localeCompare(String(a.date) + (a.at || 0))).slice(0, 15);
+  const rows = mine.map(l => `<div class="hrow"><span class="mut">${esc(l.date)}</span><span>${esc(kindLabel(l))}${l.kind === 'done' || l.kind === 'missed' || l.kind === 'failed' ? ' · ' + esc(loc((taskById(l.taskId) || {}).title)) : ''}</span><b class="${l.delta < 0 ? 'neg' : ''}">${sgn(l.delta)}</b></div>`).join('');
+  return `<div class="card center">${avatar(me)}<h2 style="margin-top:8px">${esc(me.name)}</h2><div class="mut">${esc(me.email)}</div>`
+    + `<div class="rankbig">${esc(loc(L.name))}</div><div class="lvbar" style="margin:8px 0"><i style="width:${Math.round(L.pct * 100)}%"></i></div>`
+    + `<div class="grid2"><div class="stat"><b>${M(Logic.balance(S.logs))}</b><div class="mut">${T('balance')} · ${T('coins')}</div></div>`
+    + `<div class="stat"><b>${M(Logic.earned(S.logs))}</b><div class="mut">${T('earned_total')}</div></div></div></div>`
+    + `<div class="card"><h3>${T('history')}</h3>${rows || `<div class="mut">${T('no_history')}</div>`}</div>`;
 }
 
 function weekCard(now, c) {
@@ -1031,31 +1373,36 @@ function monthCard(now, c) {
       const cls = d.future || d.rate === null ? '' : d.rate >= .8 ? 'g' : d.rate >= .5 ? 'y' : 'r';
       return `<div class="d ${cls} ${d.today ? 't' : ''}">${i + 1}</div>`;
     }).join('');
-  let pay = '';
   const rate = c.usdPerCoin;
-  for (let k = 1; k <= 3; k++) {
-    const [yy, mm] = ym.split('-').map(Number);
-    const pm = new Date(Date.UTC(yy, mm - 1 - k, 1)).toISOString().slice(0, 7);
-    const r = Logic.monthReport(S.tasks, S.logs, me, pm, now);
-    if (!r.ended || r.net <= 0) continue;
-    const rq = S.myPayouts.find(p => p.month === pm);
-    const usd = Logic.toUsd(r.net, rate).toFixed(2);
-    pay += `<div class="prize" data-m="${pm}"><span class="pi">💵</span><div style="flex:1"><b>${pm}</b>: ${M(r.net)} ${T('coins')}${rate > 0 ? ` ≈ $${usd}` : ''}`
-      + (rq ? `<div class="mut">${rq.status === 'paid' ? '✅ ' + T('payout_paid') : rq.status === 'rejected' ? T('payout_rejected') : '⏳ ' + T('payout_wait')}</div>`
-        : rate > 0 ? `<div class="btnrow"><button class="btn gold sm" data-act="payout" data-m="${pm}" data-c="${r.net}">${T('request_payout')}</button></div>` : `<div class="mut">${T('rate_not_set')}</div>`)
-      + `</div></div>`;
-  }
-  const curUsd = rate > 0 ? ` ≈ $${Logic.toUsd(Math.max(0, mr.net), rate).toFixed(2)}` : '';
+  const usdNow = Logic.toUsd(Math.max(0, mr.net), rate).toFixed(2);
+  const rq = S.myPayouts.find(p => p.month === ym);
+  let pay;
+  if (rq) pay = `<div class="mut">${rq.status === 'paid' ? '✅ ' + T('payout_paid') : rq.status === 'rejected' ? T('payout_rejected') : '⏳ ' + T('payout_wait')}</div>`;
+  else if (!Logic.payoutDay(now, ym)) pay = `<div class="mut">${T('payout_day_only', { d: Logic.lastDayOf(ym) })}</div>`;
+  else if (mr.net <= 0) pay = `<div class="mut">${T('payout_none')}</div>`;
+  else if (!(rate > 0)) pay = `<div class="mut">${T('rate_not_set')}</div>`;
+  else pay = `<div class="btnrow"><button class="btn gold" data-act="payout" data-m="${ym}" data-c="${mr.net}">${T('request_payout')} · $${usdNow}</button></div>`;
+  const past = S.myPayouts.filter(p => p.month !== ym).sort((a, b) => String(b.month).localeCompare(String(a.month))).slice(0, 6)
+    .map(p => `<div class="prize"><span class="pi">💵</span><div><b>${esc(p.month)}</b>: ${M(p.coins)} ${T('coins')}${p.usd ? ` ≈ $${Number(p.usd).toFixed(2)}` : ''}<div class="mut">${p.status === 'paid' ? '✅ ' + T('payout_paid') : p.status === 'rejected' ? T('payout_rejected') : '⏳ ' + T('payout_wait')}</div></div></div>`).join('');
   return `<div class="card"><h2>📅 ${T('month_plan')}</h2><div class="cal">${cells}</div>`
-    + `<div style="margin-top:10px"><b>${T('earned_month')}:</b> <span style="color:var(--gold);font-weight:900">${sgn(mr.net)}</span> ${T('coins')}${curUsd}</div>`
-    + `<h3 style="margin-top:12px">💵 ${T('payout_title')}</h3><div class="mut">${T('payout_hint')}</div>${pay}</div>`;
+    + `<div style="margin-top:10px"><b>${T('earned_month')}:</b> <span style="color:var(--gold);font-weight:900">${sgn(mr.net)}</span> ${T('coins')}${rate > 0 ? ` ≈ $${usdNow}` : ''}</div>`
+    + `<h3 style="margin-top:12px">💵 ${T('payout_title')}</h3><div class="mut">${T('payout_hint')}</div>${pay}${past}</div>`;
 }
 
 /* ---------- админ-панель ---------- */
 function viewAdmin() {
-  const tabs = [['users', T('tab_users') + (pendingCount() ? `<span class="badge">${pendingCount()}</span>` : '')], ['add', T('tab_add')], ['tasks', T('tab_tasks')], ['settings', T('tab_settings')], ['payouts', T('tab_payouts') + (S.payouts.filter(p => p.status === 'requested').length ? `<span class="badge">${S.payouts.filter(p => p.status === 'requested').length}</span>` : '')]];
+  const req = S.payouts.filter(p => p.status === 'requested').length;
+  const tabs = [
+    ['users', T('tab_users') + (pendingCount() ? `<span class="badge">${pendingCount()}</span>` : '')],
+    ['add', T('tab_add')],
+    ['tasks', T('tab_tasks')],
+    ['photos', T('tab_photos') + (S.photos.length ? `<span class="badge">${S.photos.length}</span>` : '')],
+    ['payouts', T('tab_payouts') + (req ? `<span class="badge">${req}</span>` : '')],
+    ['sounds', T('tab_sounds')],
+    ['settings', T('tab_settings')]
+  ];
   const t = `<div class="tabs">${tabs.map(([k, n]) => `<button class="chipbtn ${S.tab === k ? 'on' : ''}" data-act="tab" data-id="${k}">${n}</button>`).join('')}</div>`;
-  const body = { users: admUsers, add: admAdd, tasks: admTasks, settings: admSettings, payouts: admPayouts }[S.tab]();
+  const body = { users: admUsers, add: admAdd, tasks: admTasks, photos: admPhotos, payouts: admPayouts, sounds: admSounds, settings: admSettings }[S.tab]();
   return `<h2>⚙ ${T('admin_panel')}</h2>${t}${body}`;
 }
 
@@ -1090,13 +1437,15 @@ function admAdd() {
 }
 
 function taskForm(t) {
-  const rels = ['*'].concat(REL.filter(r => r !== 'owner'));
+  const rels = ['*'].concat(REL);
+  const mode = Logic.photoMode(t);
   return `<details class="tk" data-tid="${esc(t.id)}" ${S.openTask === t.id ? 'open' : ''}><summary>${esc(t.icon || '')} ${esc(t.time)} — ${esc(loc(t.title))}${t.active === false ? ' ⏸' : ''}</summary>`
     + `<div class="grid2"><label class="f">${T('time')}<input data-tf="time" type="time" value="${esc(t.time)}"></label><label class="f">${T('icon')}<input data-tf="icon" value="${esc(t.icon || '')}"></label></div>`
     + ['uz', 'ru', 'en'].map(l => `<label class="f">${T('title_' + l)}<input data-tf="title_${l}" value="${esc((t.title || {})[l] || '')}"></label>`).join('')
     + `<div class="grid2"><label class="f">${T('reward')}<input data-tf="reward" type="number" step="0.01" min="0" value="${(t.reward / 100).toFixed(2)}"></label>`
     + `<label class="f">${T('grace')}<input data-tf="grace" type="number" min="0" value="${t.graceMin ?? 60}"></label></div>`
     + `<label class="f">${T('early')}<input data-tf="early" type="number" min="0" value="${t.earlyMin ?? 15}"></label>`
+    + `<label class="f">${T('photo_mode')}<select data-tf="photo">${['off', 'opt', 'req'].map(m => `<option value="${m}" ${mode === m ? 'selected' : ''}>${T('photo_' + m)}</option>`).join('')}</select></label>`
     + `<div class="mut">${T('assigned_to')}</div><div class="relgrid">${rels.map(r => `<label class="chk"><input type="checkbox" data-tr="${r}" ${(t.relations || []).includes(r) ? 'checked' : ''}> ${r === '*' ? T('rel_all') : T('rel_' + r)}</label>`).join('')}</div>`
     + `<label class="chk"><input type="checkbox" data-tf="active" ${t.active !== false ? 'checked' : ''}> ${T('active')}</label>`
     + `<div class="btnrow"><button class="btn gold" data-act="savetask" data-id="${esc(t.id)}">${T('save')}</button><button class="btn red" data-act="deltask" data-id="${esc(t.id)}">${T('remove')}</button></div></details>`;
@@ -1106,19 +1455,17 @@ function admTasks() {
   return `<div class="btnrow" style="margin:0 0 8px">${ts.length ? '' : `<button class="btn gold" data-act="seed">${T('load_defaults')}</button>`}<button class="btn" data-act="newtask">${T('add_task')}</button></div>` + ts.map(taskForm).join('');
 }
 
-function admSettings() {
-  const c = cfgS();
-  const prizeText = c.prizes.map(p => [p.icon, p.uz, p.ru, p.en].join(' | ')).join('\n');
-  const f = (k, label, v, extra) => `<label class="f">${label}<input data-sf="${k}" value="${esc(v)}" ${extra || ''}></label>`;
-  return `<div class="card"><h2>${T('tab_settings')}</h2>`
-    + f('tz', T('set_tz'), c.tz)
-    + f('missPenaltyPct', T('set_penalty'), c.missPenaltyPct, 'type="number" min="0"')
-    + f('warnings', T('set_warnings'), c.warnings, 'type="number" min="0"')
-    + f('burnPct', T('set_burn'), c.burnPct, 'type="number" min="0" max="100"')
-    + f('weeklyGoalPct', T('set_weekly'), c.weeklyGoalPct, 'type="number" min="0" max="100"')
-    + f('usdPerCoin', T('set_rate'), c.usdPerCoin, 'type="number" step="0.01" min="0"')
-    + `<label class="f">${T('prizes_edit')} (icon | uz | ru | en)<textarea data-sf="prizes" rows="7">${esc(prizeText)}</textarea></label>`
-    + `<div class="btnrow"><button class="btn gold" data-act="savesettings">${T('save')}</button></div><div id="setOk" class="mut"></div></div>`;
+function admPhotos() {
+  const now = Date.now();
+  const ps = S.photos.slice().sort((a, b) => (b.at || 0) - (a.at || 0));
+  if (!ps.length) return `<div class="card center">${T('photos_empty')}</div><div class="mut">${T('photos_hint')}</div>`;
+  return `<div class="mut" style="margin-bottom:8px">${T('photos_hint')}</div>` + ps.map(p => {
+    const u = S.users.find(x => x.uid === p.uid) || {}, t = taskById(p.taskId) || {};
+    const left = p.at ? Math.max(0, Math.round((p.at + Logic.PHOTO_TTL_MS - now) / 3600000)) : 48;
+    return `<div class="card photo"><img src="${p.photo}" alt=""><div><b>${esc(u.name || p.uid)}</b> · ${esc(t.time || '')} ${esc(loc(t.title) || p.taskId)}</div>`
+      + `<div class="mut">${esc(p.date)} · ${T('photo_left', { h: left })} · ${T('photo_pending')}</div>`
+      + `<div class="btnrow"><button class="btn green" data-act="phok" data-id="${esc(p.id)}">${T('approve_photo')}</button><button class="btn red" data-act="phno" data-id="${esc(p.id)}">${T('reject_photo')}</button></div></div>`;
+  }).join('');
 }
 
 function admPayouts() {
@@ -1127,6 +1474,42 @@ function admPayouts() {
   return list.map(p => `<div class="card"><b>${esc(p.name || p.uid)}</b> · ${esc(p.month)}<div>${M(p.coins)} ${T('coins')} ≈ $${Number(p.usd || 0).toFixed(2)}</div>`
     + (p.status === 'requested' ? `<div class="btnrow"><button class="btn green" data-act="paid" data-id="${esc(p.id)}">${T('mark_paid')}</button><button class="btn red" data-act="rejpay" data-id="${esc(p.id)}">${T('reject')}</button></div>`
       : `<div class="mut">${p.status === 'paid' ? '✅ ' + T('payout_paid') : T('payout_rejected')}</div>`) + `</div>`).join('');
+}
+
+const EV_SOUNDS = [['coin', 'ev_coin'], ['wrong', 'ev_wrong'], ['warn', 'ev_warn'], ['burn', 'ev_burn'], ['fanfare', 'ev_fanfare']];
+function admSounds() {
+  const all = S.settings.sounds || {};
+  const presetSel = (k, cur) => `<select data-snd="${k}" data-part="p">${Snd.PRESET_NAMES.map(n => `<option value="${n}" ${cur === n ? 'selected' : ''}>${T('preset_' + n)}</option>`).join('')}</select>`;
+  const rows = EV_SOUNDS.map(([k, lab]) => {
+    const s = all[k] || {};
+    return `<div class="card u"><b>${T(lab)}</b><div class="grid2"><label class="f">${presetSel(k, s.p || k)}</label>`
+      + `<button class="btn sm" data-act="sndprev" data-id="${k}">▶ ${T('preview')}</button></div>`
+      + `<label class="f">${T('snd_url')}<input data-snd="${k}" data-part="u" value="${esc(s.u || '')}" placeholder="https://…/sound.mp3"></label></div>`;
+  }).join('');
+  const m = all.music || {};
+  const musicRow = `<div class="card u"><b>${T('ev_music')}</b><div class="grid2"><label class="f"><select data-snd="music" data-part="p">`
+    + `<option value="chords" ${(m.p || 'chords') === 'chords' ? 'selected' : ''}>${T('music_chords')}</option>`
+    + `<option value="off" ${m.p === 'off' ? 'selected' : ''}>${T('music_off')}</option></select></label></div>`
+    + `<label class="f">${T('snd_url')}<input data-snd="music" data-part="u" value="${esc(m.u || '')}" placeholder="https://…/music.mp3"></label></div>`;
+  return `<div class="card"><h2>${T('tab_sounds')}</h2><div class="mut">${T('snd_intro')}</div></div>${rows}${musicRow}`
+    + `<div class="btnrow"><button class="btn gold" data-act="sndsave">${T('save')}</button></div><div id="sndOk" class="mut"></div>`;
+}
+
+function admSettings() {
+  const c = cfgS();
+  const prizeText = c.prizes.map(p => [p.icon, p.uz, p.ru, p.en].join(' | ')).join('\n');
+  const f = (k, label, v, extra) => `<label class="f">${label}<input data-sf="${k}" value="${esc(v)}" ${extra || ''}></label>`;
+  return `<div class="card"><h2>${T('tab_settings')}</h2>`
+    + f('tz', T('set_tz'), c.tz)
+    + f('budgetUsd', T('set_budget'), c.budgetUsd || 0, 'type="number" step="1" min="0"')
+    + `<div class="mut">${T('set_budget_hint')}</div>`
+    + `<div class="mut" style="margin:6px 0 10px">${T('rate_derived', { c: '$' + (c.usdPerCoin || 0).toFixed(3), n: c.rateCoins })}</div>`
+    + f('missPenaltyPct', T('set_penalty'), c.missPenaltyPct, 'type="number" min="0"')
+    + f('warnings', T('set_warnings'), c.warnings, 'type="number" min="0"')
+    + f('burnPct', T('set_burn'), c.burnPct, 'type="number" min="0" max="100"')
+    + f('weeklyGoalPct', T('set_weekly'), c.weeklyGoalPct, 'type="number" min="0" max="100"')
+    + `<label class="f">${T('prizes_edit')} (icon | uz | ru | en)<textarea data-sf="prizes" rows="7">${esc(prizeText)}</textarea></label>`
+    + `<div class="btnrow"><button class="btn gold" data-act="savesettings">${T('save')}</button></div><div id="setOk" class="mut"></div></div>`;
 }
 
 /* ---------- действия ---------- */
@@ -1147,20 +1530,51 @@ ACT.music = () => {
   if (S.music) Snd.startMusic(); else Snd.stopMusic();
   render();
 };
+function applyMusic() {
+  const m = (S.settings.sounds || {}).music || {};
+  const key = JSON.stringify(m);
+  if (key === S.mk) return;
+  S.mk = key; Snd.setMusic(m);
+}
 ACT.admin = () => { S.adminOpen = true; route(); render(); };
 ACT.back = () => { S.adminOpen = false; route(); render(); };
 ACT.tab = el => { S.tab = el.dataset.id; render(); };
+ACT.htab = el => { S.htab = el.dataset.id; render(); };
 ACT.close = () => closeModal();
 ACT.askyes = () => { const m = $('#modal'); const f = m && m._yes; closeModal(); if (f) guarded(f); };
 
-ACT.done = el => guarded(async () => {
-  const t = taskById(el.dataset.id), now = clock(); if (!t) return;
+// Камера
+ACT.snap = () => {
+  const v = $('#cam'), cv = $('#shot');
+  if (!v || !v.videoWidth || !CAM) return;
+  const k = Math.min(1, 800 / v.videoWidth);
+  cv.width = Math.round(v.videoWidth * k); cv.height = Math.round(v.videoHeight * k);
+  cv.getContext('2d').drawImage(v, 0, 0, cv.width, cv.height);
+  const data = cv.toDataURL('image/jpeg', 0.5);
+  const cb = CAM.onShot;
+  stopCam(); closeModal();
+  if (cb) cb(data);
+};
+ACT.camcancel = () => { stopCam(); closeModal(); };
+
+async function completeTask(t, now, photo, el) {
   const idx = Logic.logIndex(S.logs);
   if (Logic.taskState(t, now.date, now, idx.get(Logic.logId(S.me.uid, now.date, t.id))) !== 'active') return;
+  if (Logic.photoMode(t) === 'req' && !photo) { banner('warn', T('photo_req_note'), '', 3000); return; }
   document.querySelectorAll('.big').forEach(b => { b.disabled = true; });
-  flyCoin(el); Snd.coin();
-  await Store.addLog(Logic.doneLog(S.me, t, now));
+  flyCoin(el);
+  play('coin');
+  await Store.addLog(Logic.doneLog(S.me, t, now, photo));
+}
+ACT.done = el => guarded(async () => {
+  const t = taskById(el.dataset.id), now = clock(); if (!t) return;
+  if (Logic.photoMode(t) === 'req') { openCamera(p => guarded(() => completeTask(t, clock(), p, null))); return; }
+  await completeTask(t, now, null, el);
 });
+ACT.photodone = el => {
+  const t = taskById(el.dataset.id); if (!t) return;
+  openCamera(p => guarded(() => completeTask(t, clock(), p, null)));
+};
 ACT.fail = el => {
   const t = taskById(el.dataset.id), now = clock(); if (!t) return;
   const m = Logic.failLog(S.tasks, S.logs, S.me, t, now, S.settings);
@@ -1172,8 +1586,13 @@ ACT.fail = el => {
 };
 ACT.payout = el => guarded(async () => {
   const pm = el.dataset.m, coins = +el.dataset.c, rate = cfgS().usdPerCoin;
+  if (!Logic.payoutDay(clock(), pm) || !(coins > 0) || !(rate > 0)) return;
   await Store.addPayout({ id: `${S.me.uid}_${pm}`, uid: S.me.uid, name: S.me.name, month: pm, coins, usd: Logic.toUsd(coins, rate), rate, status: 'requested', at: Date.now() });
 });
+
+// админ: фото
+ACT.phok = el => guarded(() => Store.decidePhoto(el.dataset.id, { review: 'ok' }));
+ACT.phno = el => ask(T('reject_photo') + '?', () => Store.decidePhoto(el.dataset.id, { review: 'rejected', delta: 0 }));
 
 // админ: пользователи
 ACT.approve = el => guarded(async () => {
@@ -1191,8 +1610,8 @@ ACT.uprog = el => {
   un = Store.watchLogs(uid, logs => {
     if (got) return; got = true; setTimeout(() => un && un(), 0);
     const L = Logic.level(Logic.earned(logs)), rows = logs.slice().sort((a, b) => (b.date + (b.at || 0)).toString().localeCompare((a.date + (a.at || 0)).toString())).slice(0, 14)
-      .map(l => `<div class="mut">${esc(l.date)} · ${esc(l.kind === 'done' || l.kind === 'missed' || l.kind === 'failed' ? loc((taskById(l.taskId) || {}).title) || l.taskId : T('kind_' + l.kind))} · ${T('kind_' + l.kind)} · <b>${sgn(l.delta)}</b>${l.note ? ' · ' + esc(l.note) : ''}</div>`).join('');
-    modal(`<h2>${esc(u.name)}</h2><div>${T('balance')}: <b>${M(Logic.balance(logs))}</b> ${T('coins')} · ${T('level')} ${L.level}</div><h3 style="margin-top:12px">${T('last_logs')}</h3>${rows || '—'}<div class="btnrow"><button class="btn" data-act="close">${T('close')}</button></div>`);
+      .map(l => `<div class="mut">${esc(l.date)} · ${esc(l.kind === 'done' || l.kind === 'missed' || l.kind === 'failed' ? loc((taskById(l.taskId) || {}).title) || l.taskId : kindLabel(l))} · ${kindLabel(l)} · <b>${sgn(l.delta)}</b>${l.review ? ' · ' + T(l.review === 'ok' ? 'photo_ok' : l.review === 'rejected' ? 'photo_rejected' : 'photo_pending') : ''}${l.note ? ' · ' + esc(l.note) : ''}</div>`).join('');
+    modal(`<h2>${esc(u.name)}</h2><div>${T('balance')}: <b>${M(Logic.balance(logs))}</b> ${T('coins')} · ${esc(loc(L.name))}</div><h3 style="margin-top:12px">${T('last_logs')}</h3>${rows || '—'}<div class="btnrow"><button class="btn" data-act="close">${T('close')}</button></div>`);
   });
 };
 ACT.uadj = el => {
@@ -1219,12 +1638,13 @@ ACT.wldel = el => guarded(() => Store.delWhitelist(el.dataset.id));
 ACT.seed = () => guarded(async () => {
   for (const t of Logic.DEFAULT_TASKS) await Store.saveTask(Object.assign({}, t, { since: clock().date }));
   if (!S.settings || !S.settings.missPenaltyPct) {
-    const d = Logic.DEFAULTS; await Store.saveSettings({ tz: d.tz, missPenaltyPct: d.missPenaltyPct, warnings: d.warnings, burnPct: d.burnPct, weeklyGoalPct: d.weeklyGoalPct, usdPerCoin: d.usdPerCoin, prizes: d.prizes });
+    const d = Logic.DEFAULTS;
+    await Store.saveSettings(Object.assign({}, S.settings, { tz: d.tz, missPenaltyPct: d.missPenaltyPct, warnings: d.warnings, burnPct: d.burnPct, weeklyGoalPct: d.weeklyGoalPct, budgetUsd: 0, rateCoins: d.rateCoins, prizes: d.prizes, sounds: S.settings.sounds || {} }));
   }
 });
 ACT.newtask = () => guarded(async () => {
   const id = 't_' + Date.now().toString(36); S.openTask = id;
-  await Store.saveTask({ id, time: '09:00', icon: '⭐', title: { uz: 'Yangi vazifa', ru: 'Новое задание', en: 'New task' }, reward: 100, graceMin: 60, earlyMin: 15, relations: ['wife'], uids: [], active: true, since: clock().date });
+  await Store.saveTask({ id, time: '09:00', icon: '⭐', title: { uz: 'Yangi vazifa', ru: 'Новое задание', en: 'New task' }, reward: 1000, graceMin: 60, earlyMin: 15, relations: ['wife'], uids: [], active: true, since: clock().date, photo: 'opt' });
 });
 ACT.savetask = el => guarded(async () => {
   const d = document.querySelector(`details[data-tid="${CSS.escape(el.dataset.id)}"]`), g = k => d.querySelector(`[data-tf="${k}"]`);
@@ -1234,20 +1654,43 @@ ACT.savetask = el => guarded(async () => {
     title: { uz: g('title_uz').value, ru: g('title_ru').value, en: g('title_en').value },
     reward: Math.max(0, Math.round(parseFloat(g('reward').value || '0') * 100)),
     graceMin: Math.max(0, parseInt(g('grace').value || '0', 10)), earlyMin: Math.max(0, parseInt(g('early').value || '0', 10)),
+    photo: ['off', 'opt', 'req'].includes(g('photo').value) ? g('photo').value : 'opt',
     active: g('active').checked, relations: [...d.querySelectorAll('[data-tr]')].filter(i => i.checked).map(i => i.dataset.tr)
   });
   S.openTask = t.id; await Store.saveTask(t);
 });
 ACT.deltask = el => ask(T('confirm_remove'), () => Store.delTask(el.dataset.id));
 
-// админ: настройки и выплаты
+// админ: настройки, звуки, выплаты
 ACT.savesettings = () => guarded(async () => {
   const g = k => document.querySelector(`[data-sf="${k}"]`).value, n = (k, d) => { const v = parseFloat(g(k)); return isNaN(v) ? d : v; };
   const prizes = g('prizes').split('\n').map(l => l.split('|').map(s => s.trim())).filter(a => a.length >= 3 && a[1])
     .map(a => ({ icon: a[0] || '🎁', uz: a[1], ru: a[2] || a[1], en: a[3] || a[2] || a[1] }));
   const d = Logic.DEFAULTS;
-  await Store.saveSettings({ tz: g('tz') || d.tz, missPenaltyPct: n('missPenaltyPct', d.missPenaltyPct), warnings: Math.round(n('warnings', d.warnings)), burnPct: n('burnPct', d.burnPct), weeklyGoalPct: n('weeklyGoalPct', d.weeklyGoalPct), usdPerCoin: n('usdPerCoin', 0), prizes: prizes.length ? prizes : d.prizes });
+  await Store.saveSettings(Object.assign({}, S.settings, {
+    tz: g('tz') || d.tz, budgetUsd: Math.max(0, n('budgetUsd', 0)), rateCoins: d.rateCoins,
+    missPenaltyPct: n('missPenaltyPct', d.missPenaltyPct), warnings: Math.round(n('warnings', d.warnings)),
+    burnPct: n('burnPct', d.burnPct), weeklyGoalPct: n('weeklyGoalPct', d.weeklyGoalPct),
+    prizes: prizes.length ? prizes : d.prizes, sounds: S.settings.sounds || {}
+  }));
   const ok = $('#setOk'); if (ok) ok.textContent = '✓ ' + T('saved');
+});
+ACT.sndprev = el => {
+  const k = el.dataset.id;
+  const p = document.querySelector(`[data-snd="${k}"][data-part="p"]`).value;
+  const u = (document.querySelector(`[data-snd="${k}"][data-part="u"]`) || { value: '' }).value.trim();
+  Snd.play(k, { p, u });
+};
+ACT.sndsave = () => guarded(async () => {
+  const sounds = {};
+  const read = k => {
+    const p = document.querySelector(`[data-snd="${k}"][data-part="p"]`), u = document.querySelector(`[data-snd="${k}"][data-part="u"]`);
+    return { p: p ? p.value : undefined, u: u ? u.value.trim() : '' };
+  };
+  EV_SOUNDS.forEach(([k]) => { sounds[k] = read(k); });
+  sounds.music = read('music');
+  await Store.saveSettings(Object.assign({}, S.settings, { sounds }));
+  const ok = $('#sndOk'); if (ok) ok.textContent = '✓ ' + T('saved_ok');
 });
 ACT.paid = el => guarded(async () => {
   const p = S.payouts.find(x => x.id === el.dataset.id); if (!p) return;
