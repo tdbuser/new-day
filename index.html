@@ -132,6 +132,17 @@ body.shake #app{animation:shake .5s}
 .hrow b.neg{color:#ff8a80}
 #modal video{width:100%;border-radius:12px;background:#000;max-height:60vh}
 
+.fbar{display:grid;grid-template-columns:72px 1fr 44px;align-items:center;gap:8px;margin-top:6px}
+.fbar span{font-weight:800;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fbar b{text-align:right;font-size:15px}
+.fbar .pbar{margin:0}
+.fsub{margin:2px 0 0 80px;font-size:12px}
+.fam.lead{border-color:#e0b43a;box-shadow:0 0 0 2px rgba(224,180,58,.45),0 0 24px rgba(224,180,58,.25)}
+.fam.me{background:rgba(224,180,58,.06)}
+.pbar.mine i{background:linear-gradient(90deg,#e0b43a,#ffd86b)}
+.cmp{margin-top:10px}
+.tabbar button{font-size:13px}
+
 </style>
 </head>
 <body>
@@ -360,7 +371,28 @@ Object.assign(D, {
   snd_url: ["Yoki o'z fayl havolasi (mp3)", "Или ссылка на свой файл (mp3)", "Or a link to your own file (mp3)"],
   preview: ["Tinglash", "Прослушать", "Preview"],
   saved_ok: ["Saqlandi", "Сохранено", "Saved"],
-  photo_camera_only: ["Faqat kamera", "Только камера", "Camera only"]
+  photo_camera_only: ["Faqat kamera", "Только камера", "Camera only"],
+  rel_owner_other: ["Oila boshlig'i (admin)", "Глава семьи (админ)", "Head of family (admin)"],
+  nav_family: ["Reyting", "Рейтинг", "Ranking"],
+  fam_title: ["Oila reytingi", "Рейтинг семьи", "Family ranking"],
+  fam_hint: ["Kim vazifalarni qanday bajarayotgani: bugun, hafta va oy bo'yicha.", "Кто как выполняет задания: за сегодня, неделю и месяц.", "Who is doing their tasks and how well: today, this week and this month."],
+  fam_empty: ["Hali ma'lumot yo'q. Har kim ilovani bir marta ochganda paydo bo'ladi.", "Пока нет данных. Человек появится здесь, когда откроет приложение.", "No data yet. A person appears here once they open the app."],
+  fam_last: ["Oxirgi", "Последнее", "Last"],
+  fam_you: ["siz", "вы", "you"],
+  fam_streak: ["{n} kun ketma-ket", "{n} дн. подряд", "{n} days in a row"],
+  fam_today: ["Bugun", "Сегодня", "Today"],
+  fam_week: ["Hafta", "Неделя", "Week"],
+  fam_month: ["Oy", "Месяц", "Month"],
+  fam_done_of: ["{d} / {n} bajarildi · {m} o'tkazildi", "выполнено {d} из {n} · пропущено {m}", "{d} of {n} done · {m} missed"],
+  fam_no_tasks: ["Bugun vazifa yo'q", "Сегодня заданий нет", "No tasks today"],
+  fam_dm: ["bajarildi {d} · o'tkazildi {m}", "выполнено {d} · пропущено {m}", "{d} done · {m} missed"],
+  fam_month_coins: ["Oy monetalari", "Монеты за месяц", "Coins this month"],
+  fam_compare: ["Taqqoslash", "Сравнение", "Comparison"],
+  partner_done: ["{n} vazifani bajardi", "{n} выполнил(а) задание", "{n} completed a task"],
+  ev_partner: ["Boshqasi vazifani bajardi", "Другой выполнил задание", "Someone else completed a task"],
+  notif_btn: ["Bildirishnomalarni yoqish", "Включить уведомления", "Turn on notifications"],
+  alarms_btn: ["Kalendarga eslatmalar", "Напоминания в календарь", "Reminders to calendar"],
+  alarms_help: ["Fayl yuklab olindi. Uni oching va «Hammasini qo'shish» ni bosing: telefon har kuni vazifa vaqtida nomi bilan signal beradi. Vaqtlar o'zgarsa, eski tadbirlarni o'chirib, faylni qayta yuklang.", "Файл скачан. Откройте его (Загрузки) и нажмите «Добавить все»: телефон каждый день в время задания покажет напоминание с его названием. Если время заданий изменится, удалите старые события и скачайте файл заново.", "The file was downloaded. Open it and tap \"Add All\": every day your phone will remind you at each task's time with its name. If task times change, delete the old events and download the file again."]
 });
 
 
@@ -621,12 +653,65 @@ const Logic = (() => {
   const toUsd = (cents, rate) => (cents / 100) * (rate || 0);
   const money = c => (c / 100).toFixed(2);
 
+  // Серия идеальных дней подряд (сегодня считается, если уже идеальный)
+  function streak(tasks, logs, u, now) {
+    let d = perfectDay(tasks, logs, u, now.date, now) ? now.date : addDays(now.date, -1), n = 0, guard = 0;
+    while (guard++ < 120 && d >= (u.approvedDate || '0000-00-00') && perfectDay(tasks, logs, u, d, now)) { n++; d = addDays(d, -1); }
+    return n;
+  }
+  const pctOf = (done, missed) => (done + missed ? Math.round(done / (done + missed) * 100) : null);
+
+  // Карточка для рейтинга семьи: только цифры, без фото
+  function scoreCard(tasks, logs, u, now, settings) {
+    const td = dayStats(tasks, logs, u, now.date, now);
+    const wr = weekReport(tasks, logs, u, weekStart(now.date), now, settings);
+    const mr = monthReport(tasks, logs, u, monthOf(now.date), now);
+    const L = level(earned(logs));
+    const acts = logs.filter(l => l.kind === 'done' || l.kind === 'missed' || l.kind === 'failed')
+      .sort((a, b) => (a.at || 0) - (b.at || 0) || String(a.date).localeCompare(String(b.date)));
+    const lastLog = acts[acts.length - 1];
+    const t = lastLog ? tasks.find(x => x.id === lastLog.taskId) : null;
+    return {
+      uid: u.uid, name: u.name || '', photo: u.photo || '', relation: u.relation || '',
+      date: now.date,
+      todayDone: td.done, todayMissed: td.missed, todayTotal: td.total, todayPct: td.total ? Math.round(td.done / td.total * 100) : null,
+      weekPct: pctOf(wr.done, wr.missed), weekDone: wr.done, weekMissed: wr.missed,
+      monthPct: pctOf(mr.done, mr.missed), monthDone: mr.done, monthMissed: mr.missed, monthNet: mr.net,
+      earned: earned(logs), balance: balance(logs), level: L.level, streak: streak(tasks, logs, u, now),
+      last: lastLog ? { id: lastLog.id, kind: lastLog.kind, taskId: lastLog.taskId, title: t ? t.title : null, icon: t ? (t.icon || '') : '', date: lastLog.date } : null
+    };
+  }
+
+  // Время задания (дата + ЧЧ:ММ в часовом поясе tz) -> UTC в формате iCalendar
+  function icsUtc(date, time, tz) {
+    const [y, m, d] = date.split('-').map(Number), mins = toMin(time);
+    const guess = Date.UTC(y, m - 1, d, Math.floor(mins / 60), mins % 60);
+    const loc = tzNow(tz, guess), [ly, lm, ld] = loc.date.split('-').map(Number);
+    const off = Date.UTC(ly, lm - 1, ld, Math.floor(loc.min / 60), loc.min % 60) - guess;
+    return new Date(guess - off).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  }
+  // Файл календаря: каждое задание — ежедневное событие с будильником в его время
+  function icsCalendar(tasks, now, tz, titleOf, url) {
+    const e = s => String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+    const stamp = new Date(now.ms || Date.now()).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//NEW DAY//Yangi kun//RU', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:NEW DAY'];
+    sortTasks(tasks).forEach(t => {
+      const title = ((t.icon || '') + ' ' + titleOf(t)).trim();
+      lines.push('BEGIN:VEVENT', `UID:newday-${e(t.id)}@tdbuser.github.io`, `DTSTAMP:${stamp}`,
+        `DTSTART:${icsUtc(now.date, t.time, tz)}`, 'DURATION:PT15M', 'RRULE:FREQ=DAILY',
+        `SUMMARY:${e(title)}`, `DESCRIPTION:${e('NEW DAY · ' + t.time + (url ? '\n' + url : ''))}`, url ? `URL:${e(url)}` : '',
+        'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${e(title)}`, 'TRIGGER:PT0M', 'END:VALARM', 'END:VEVENT');
+    });
+    lines.push('END:VCALENDAR');
+    return lines.filter(Boolean).join('\r\n') + '\r\n';
+  }
+
   const api = {
     tzNow, toMin, fmtMin, addDays, weekday, weekStart, monthOf, daysInMonth, lastDayOf, prevMonth, PHOTO_TTL_MS,
     DEFAULTS, cfg, DEFAULT_TASKS, RANKS, photoMode,
     assigned, sortTasks, logIndex, logId, isMiss, taskState, dayLimit, makeMiss, pendingMisses, failLog, doneLog,
     photoExpired, balance, earned, level, dayStats, perfectDay, dayBonus, weekReport, weekBonus, monthReport, monthBonus,
-    payoutDay, toUsd, money, hashStr
+    payoutDay, toUsd, money, hashStr, streak, scoreCard, icsUtc, icsCalendar
   };
   if (typeof module !== 'undefined') module.exports = api;
   return api;
@@ -758,7 +843,7 @@ const Snd = (() => {
 /* ===== store_demo.js: демо-хранилище в localStorage (без интернета и Firebase) ===== */
 const DemoStore = (() => {
   const KEY = 'fp_demo_v1', AUTH = 'fp_demo_auth';
-  const fresh = () => ({ users: {}, whitelist: {}, tasks: {}, settings: {}, logs: {}, payouts: {} });
+  const fresh = () => ({ users: {}, whitelist: {}, tasks: {}, settings: {}, logs: {}, payouts: {}, scores: {} });
   let st = fresh(), subs = new Set(), authCb = null;
   const load = () => { try { st = Object.assign(fresh(), JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) { st = fresh(); } };
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) { /* переполнено: данные останутся в памяти */ } subs.forEach(f => f()); };
@@ -809,6 +894,9 @@ const DemoStore = (() => {
   };
   const updateLog = async (id, patch) => { if (st.logs[id]) Object.assign(st.logs[id], clone(patch)); save(); };
 
+  const watchScores = cb => watch(() => cb(list(st.scores)));
+  const saveScore = async (uid, d) => { st.scores[uid] = Object.assign(clone(d), { uid, updatedAt: Date.now() }); save(); };
+
   const watchPayouts = cb => watch(() => cb(list(st.payouts)));
   const watchMyPayouts = (uid, cb) => watch(() => cb(list(st.payouts).filter(p => p.uid === uid)));
   const addPayout = async p => { st.payouts[p.id] = clone(p); save(); };
@@ -816,7 +904,7 @@ const DemoStore = (() => {
 
   return { demo: true, init, onAuth, signIn, signOut, getUser, watchUser, createUser, updateUser, deleteUser, watchUsers,
     getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
-    watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout };
+    watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout, watchScores, saveScore };
 })();
 
 
@@ -880,6 +968,10 @@ const FirebaseStore = (() => {
   const decidePhoto = (id, patch) => F.updateDoc(ref('logs', id), Object.assign({}, patch, { hasPhoto: false, photo: F.deleteField() }));
   const updateLog = (id, patch) => F.updateDoc(ref('logs', id), patch);
 
+  // Рейтинг семьи: короткие карточки с цифрами (без фото)
+  const watchScores = cb => listen(col('scores'), (id, d) => Object.assign({}, d, { uid: id, updatedAt: ms(d.updatedAt) }), cb);
+  const saveScore = (uid, d) => F.setDoc(ref('scores', uid), Object.assign({}, d, { uid, updatedAt: F.serverTimestamp() }));
+
   const watchPayouts = cb => listen(col('payouts'), (id, d) => Object.assign({}, d, { id }), cb);
   const watchMyPayouts = (uid, cb) => listen(F.query(col('payouts'), F.where('uid', '==', uid)), (id, d) => Object.assign({}, d, { id }), cb);
   const addPayout = p => F.setDoc(ref('payouts', p.id), p);
@@ -887,7 +979,7 @@ const FirebaseStore = (() => {
 
   return { demo: false, init, onAuth, signIn, signOut, getUser, watchUser, createUser, updateUser, deleteUser, watchUsers,
     getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
-    watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout };
+    watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout, watchScores, saveScore };
 })();
 
 
@@ -909,7 +1001,8 @@ const S = {
   users: [], wl: [], payouts: [],
   view: 'boot', tab: 'users', htab: 'today', adminOpen: false, error: '',
   tasksLoaded: false, logsLoaded: false, shown: 0, lvl: 1, sel: {}, openTask: '', dirty: false,
-  music: safeGet('fp_music') !== '0', amBusy: false, amTried: {}, bnBusy: false, mk: '', unsubs: [], userUnsub: null
+  music: safeGet('fp_music') !== '0', amBusy: false, amTried: {}, bnBusy: false, mk: '', unsubs: [], userUnsub: null,
+  scores: [], scoresLoaded: false, lastPub: '', seenLast: {}
 };
 
 /* ---------- помощники ---------- */
@@ -930,7 +1023,7 @@ const taskById = id => S.tasks.find(t => t.id === id);
 const myTasks = date => Logic.sortTasks(S.tasks.filter(t => Logic.assigned(t, S.me, date)));
 const isAdmin = () => !!(S.me && S.me.status === 'approved' && S.me.isAdmin);
 const sc = ev => ((S.settings && S.settings.sounds) || {})[ev] || {};
-const play = ev => Snd.play(ev, sc(ev));
+const play = ev => Snd.play(ev, Object.assign(ev === 'partner' ? { p: 'bell' } : {}, sc(ev)));
 const avatar = u => u && u.photo ? `<img class="avatar" src="${esc(u.photo)}" alt="" referrerpolicy="no-referrer">` : `<div class="avatar">${esc(((u && u.name) || '?').trim().charAt(0).toUpperCase())}</div>`;
 const relLabel = r => (r && D['rel_' + r]) ? T('rel_' + r) : '';
 const relOptions = sel => `<option value="">${T('choose_rel')}</option>` + REL.map(r => `<option value="${r}" ${sel === r ? 'selected' : ''}>${T('rel_' + r)}</option>`).join('');
@@ -976,7 +1069,7 @@ function stopData() {
   S.unsubs.forEach(u => { try { u(); } catch (e) { /* ignore */ } });
   S.unsubs = [];
   if (S.userUnsub) { try { S.userUnsub(); } catch (e) { /* ignore */ } S.userUnsub = null; }
-  Object.assign(S, { me: null, tasks: [], settings: {}, logs: [], myPayouts: [], photos: [], users: [], wl: [], payouts: [], tasksLoaded: false, logsLoaded: false, adminOpen: false, tab: 'users', htab: 'today', sel: {}, amTried: {} });
+  Object.assign(S, { me: null, tasks: [], settings: {}, logs: [], myPayouts: [], photos: [], users: [], wl: [], payouts: [], tasksLoaded: false, logsLoaded: false, adminOpen: false, tab: 'users', htab: 'today', sel: {}, amTried: {}, scores: [], scoresLoaded: false, lastPub: '', seenLast: {} });
 }
 
 async function onAuth(au) {
@@ -1017,7 +1110,8 @@ function startData() {
   S.unsubs.forEach(u => { try { u(); } catch (e) { /* ignore */ } });
   S.unsubs = [];
   const uid = S.me.uid;
-  S.unsubs.push(Store.watchTasks(ts => { S.tasks = ts; S.tasksLoaded = true; render(); runAutoMiss(); }));
+  S.unsubs.push(Store.watchTasks(ts => { S.tasks = ts; S.tasksLoaded = true; render(); runAutoMiss(); publishScore(); }));
+  S.unsubs.push(Store.watchScores(onScores));
   S.unsubs.push(Store.watchSettings(s => { S.settings = s || {}; applyMusic(); render(); }));
   S.unsubs.push(Store.watchLogs(uid, onLogs));
   S.unsubs.push(Store.watchMyPayouts(uid, p => { S.myPayouts = p; render(); }));
@@ -1035,7 +1129,40 @@ function onLogs(logs) {
   if (!S.logsLoaded) { S.shown = bal; S.lvl = lvl; }
   else { animateBalance(bal); if (lvl > S.lvl) levelUp(lvl); S.lvl = lvl; }
   S.logsLoaded = true;
-  render(); runAutoMiss(); runBonuses();
+  render(); runAutoMiss(); runBonuses(); publishScore();
+}
+
+/* ---------- рейтинг семьи и сигнал о выполнении ---------- */
+// Своя карточка с цифрами для рейтинга (пишется, только если что-то изменилось)
+function publishScore() {
+  if (!S.me || S.me.status !== 'approved' || !S.logsLoaded || !S.tasksLoaded || !Store.saveScore) return;
+  const card = Logic.scoreCard(S.tasks, S.logs, S.me, clock(), S.settings);
+  const key = JSON.stringify(card);
+  if (key === S.lastPub) return;
+  S.lastPub = key;
+  Store.saveScore(S.me.uid, card).catch(e => { S.lastPub = ''; console.warn('рейтинг не обновлён', e && e.message); });
+}
+function onScores(list) {
+  const today = clock().date;
+  list.forEach(sc2 => {
+    if (!S.me || sc2.uid === S.me.uid) return;
+    const cur = sc2.last && sc2.last.id, prev = S.seenLast[sc2.uid];
+    if (S.scoresLoaded && cur && cur !== prev && sc2.last.kind === 'done' && sc2.last.date === today) partnerSignal(sc2);
+    S.seenLast[sc2.uid] = cur;
+  });
+  S.scores = list; S.scoresLoaded = true;
+  render();
+}
+const firstName = n => String(n || '').trim().split(/\s+/)[0] || '?';
+function partnerSignal(p) {
+  const what = ((p.last.icon || '') + ' ' + loc(p.last.title || {})).trim();
+  play('partner');
+  if (navigator.vibrate) navigator.vibrate([120, 80, 120]);
+  banner('good', '✅ ' + T('partner_done', { n: firstName(p.name) }), what, 6500);
+  try {
+    if (document.hidden && 'Notification' in window && Notification.permission === 'granted')
+      new Notification('NEW DAY', { body: T('partner_done', { n: firstName(p.name) }) + ': ' + what });
+  } catch (e) { /* уведомления недоступны */ }
 }
 
 function route() {
@@ -1106,7 +1233,7 @@ async function cleanupPhotos() {
 
 function tick() {
   if (S.view === 'home') render();
-  runAutoMiss(); runBonuses();
+  runAutoMiss(); runBonuses(); publishScore();
 }
 
 /* ---------- обратная связь: звуки, баннеры, вибрация ---------- */
@@ -1286,9 +1413,10 @@ function viewLogin() {
 function viewHome() {
   let body;
   if (S.htab === 'rewards') body = viewRewards();
+  else if (S.htab === 'family') body = viewFamily();
   else if (S.htab === 'me') body = viewMe();
   else body = viewToday();
-  const tabs = [['today', '📋', T('nav_today')], ['rewards', '🎁', T('nav_rewards')], ['me', '👤', T('nav_me')]];
+  const tabs = [['today', '📋', T('nav_today')], ['family', '🏆', T('nav_family')], ['rewards', '🎁', T('nav_rewards')], ['me', '👤', T('nav_me')]];
   return body + `<nav class="tabbar">${tabs.map(([k, i, n]) => `<button class="${S.htab === k ? 'on' : ''}" data-act="htab" data-id="${k}"><span>${i}</span>${n}</button>`).join('')}</nav>`;
 }
 
@@ -1302,7 +1430,9 @@ function viewToday() {
   let out = `<div class="card"><div class="mut">${esc(fmtDate(now))} · ${Logic.fmtMin(now.min)}</div>`;
   if (ts.length) out += `<h3>${T('day_progress', { d: ds.done, n: ds.total })}</h3><div class="pbar"><i style="width:${ds.total ? Math.round(ds.done / ds.total * 100) : 0}%"></i></div>`;
   if (bonusToday) out += `<div class="mut" style="color:var(--gold)">🎁 ${esc(kindLabel(bonusToday))} ${sgn(bonusToday.delta)}</div>`;
-  out += `<div class="mut">${esc(loc(L.name))} · ${T('to_next', { c: M(L.toNext) + ' ' + T('coins') })}</div></div>`;
+  out += `<div class="mut">${esc(loc(L.name))} · ${T('to_next', { c: M(L.toNext) + ' ' + T('coins') })}</div>`;
+  if (ts.length) out += `<div class="btnrow"><button class="btn sm" data-act="alarms">⏰ ${T('alarms_btn')}</button></div>`;
+  out += `</div>`;
 
   if (!ts.length) return out + `<div class="card center">${T('no_tasks')}</div>`;
 
@@ -1331,6 +1461,42 @@ function viewToday() {
     }
     return `<div class="task st-${st}"><div class="trow"><span class="ticon">${esc(t.icon || '•')}</span><div><div class="ttime">${esc(t.time)}</div><div class="ttitle">${esc(loc(t.title))}</div></div>${badge}</div>${photoNote}${btns}</div>`;
   }).join('');
+  return out;
+}
+
+/* ---------- рейтинг семьи ---------- */
+const pctTxt = p => (p === null || p === undefined ? '—' : p + '%');
+const pctW = p => (p === null || p === undefined ? 0 : Math.max(0, Math.min(100, p)));
+function familyRows() {
+  const today = clock().date;
+  return S.scores.filter(x => x && x.uid && (x.todayTotal || x.earned || x.weekDone || x.weekMissed))
+    .map(x => (x.date === today ? x : Object.assign({}, x, { todayDone: 0, todayMissed: 0, todayPct: x.todayTotal ? 0 : null, stale: true })))
+    .sort((a, b) => ((b.weekPct ?? -1) - (a.weekPct ?? -1)) || ((b.todayPct ?? -1) - (a.todayPct ?? -1)) || ((b.monthNet || 0) - (a.monthNet || 0)));
+}
+function viewFamily() {
+  const rows = familyRows();
+  let out = `<div class="card"><h2>🏆 ${T('fam_title')}</h2><div class="mut">${T('fam_hint')}</div>`;
+  if ('Notification' in window && Notification.permission === 'default') out += `<div class="btnrow"><button class="btn sm" data-act="notif">🔔 ${T('notif_btn')}</button></div>`;
+  out += `</div>`;
+  if (!rows.length) return out + `<div class="card center">${T('fam_empty')}</div>`;
+  const leader = rows.length > 1 && (rows[0].weekPct ?? -1) > (rows[1].weekPct ?? -1) ? rows[0].uid : '';
+  out += rows.map((r, i) => {
+    const me = r.uid === S.me.uid, L = Logic.level(r.earned || 0);
+    const bar = (lab, p, extra) => `<div class="fbar"><span>${lab}</span><div class="pbar"><i style="width:${pctW(p)}%"></i></div><b>${pctTxt(p)}</b></div>${extra ? `<div class="mut fsub">${extra}</div>` : ''}`;
+    const last = r.last && r.last.title ? `<div class="mut">${T('fam_last')}: ${esc(r.last.icon || '')} ${esc(loc(r.last.title))} · ${r.last.kind === 'done' ? '✅' : '❌'}</div>` : '';
+    return `<div class="card fam ${r.uid === leader ? 'lead' : ''} ${me ? 'me' : ''}">`
+      + `<div class="urow">${avatar(r)}<div style="min-width:0"><b>${r.uid === leader ? '👑 ' : ''}${i + 1}. ${esc(r.name)}${me ? ' · ' + T('fam_you') : ''}</b><div class="mut">${esc(loc(L.name))}${r.relation ? ' · ' + esc(r.relation === 'owner' && !me ? T('rel_owner_other') : relLabel(r.relation)) : ''}${r.streak ? ' · 🔥 ' + T('fam_streak', { n: r.streak }) : ''}</div></div></div>`
+      + bar(T('fam_today'), r.todayPct, r.todayTotal ? T('fam_done_of', { d: r.todayDone || 0, n: r.todayTotal, m: r.todayMissed || 0 }) : T('fam_no_tasks'))
+      + bar(T('fam_week'), r.weekPct, T('fam_dm', { d: r.weekDone || 0, m: r.weekMissed || 0 }))
+      + bar(T('fam_month'), r.monthPct, T('fam_dm', { d: r.monthDone || 0, m: r.monthMissed || 0 }))
+      + `<div class="grid2" style="margin-top:8px"><div class="stat"><b class="${(r.monthNet || 0) < 0 ? 'neg' : ''}">${sgn(r.monthNet || 0)}</b><div class="mut">${T('fam_month_coins')}</div></div>`
+      + `<div class="stat"><b>${M(r.earned || 0)}</b><div class="mut">${T('earned_total')}</div></div></div>${last}</div>`;
+  }).join('');
+  if (rows.length > 1) {
+    const metrics = [['fam_today', 'todayPct'], ['fam_week', 'weekPct'], ['fam_month', 'monthPct']];
+    out += `<div class="card"><h3>📊 ${T('fam_compare')}</h3>` + metrics.map(([lab, k]) => `<div class="cmp"><div class="mut">${T(lab)}</div>`
+      + rows.map(r => `<div class="fbar"><span>${esc(firstName(r.name))}</span><div class="pbar ${r.uid === S.me.uid ? 'mine' : ''}"><i style="width:${pctW(r[k])}%"></i></div><b>${pctTxt(r[k])}</b></div>`).join('') + `</div>`).join('') + `</div>`;
+  }
   return out;
 }
 
@@ -1476,13 +1642,13 @@ function admPayouts() {
       : `<div class="mut">${p.status === 'paid' ? '✅ ' + T('payout_paid') : T('payout_rejected')}</div>`) + `</div>`).join('');
 }
 
-const EV_SOUNDS = [['coin', 'ev_coin'], ['wrong', 'ev_wrong'], ['warn', 'ev_warn'], ['burn', 'ev_burn'], ['fanfare', 'ev_fanfare']];
+const EV_SOUNDS = [['coin', 'ev_coin'], ['wrong', 'ev_wrong'], ['warn', 'ev_warn'], ['burn', 'ev_burn'], ['fanfare', 'ev_fanfare'], ['partner', 'ev_partner']];
 function admSounds() {
   const all = S.settings.sounds || {};
   const presetSel = (k, cur) => `<select data-snd="${k}" data-part="p">${Snd.PRESET_NAMES.map(n => `<option value="${n}" ${cur === n ? 'selected' : ''}>${T('preset_' + n)}</option>`).join('')}</select>`;
   const rows = EV_SOUNDS.map(([k, lab]) => {
     const s = all[k] || {};
-    return `<div class="card u"><b>${T(lab)}</b><div class="grid2"><label class="f">${presetSel(k, s.p || k)}</label>`
+    return `<div class="card u"><b>${T(lab)}</b><div class="grid2"><label class="f">${presetSel(k, s.p || (k === 'partner' ? 'bell' : k))}</label>`
       + `<button class="btn sm" data-act="sndprev" data-id="${k}">▶ ${T('preview')}</button></div>`
       + `<label class="f">${T('snd_url')}<input data-snd="${k}" data-part="u" value="${esc(s.u || '')}" placeholder="https://…/sound.mp3"></label></div>`;
   }).join('');
@@ -1583,6 +1749,22 @@ ACT.fail = el => {
     if (Logic.taskState(t, now.date, now, idx.get(m.id)) === 'done') return;
     await Store.addLog(m); feedbackMiss([m], false);
   });
+};
+// Будильник: файл календаря с ежедневными событиями в время каждого задания
+ACT.alarms = () => {
+  const now = clock(), ts = myTasks(now.date);
+  if (!ts.length) return;
+  const url = location.origin + location.pathname;
+  const ics = Logic.icsCalendar(ts, now, tz(), t => loc(t.title), url);
+  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'new-day-alarms.ics';
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+  modal(`<h3>⏰ ${T('alarms_btn')}</h3><p>${T('alarms_help')}</p><div class="btnrow"><button class="btn" data-act="close">OK</button></div>`);
+};
+ACT.notif = () => {
+  try { Notification.requestPermission().then(() => render()); } catch (e) { /* нет поддержки */ }
 };
 ACT.payout = el => guarded(async () => {
   const pm = el.dataset.m, coins = +el.dataset.c, rate = cfgS().usdPerCoin;
