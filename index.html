@@ -392,7 +392,7 @@ label.f textarea{min-height:90px;line-height:1.4}
 .crumbs button{border:1px solid var(--line);background:rgba(255,255,255,.08);border-radius:12px;padding:8px 12px;font-weight:800;color:#fff}
 .crumbs span{color:var(--mut)}
 /* админ: вкладки сеткой, люди, звуки, переключатели */
-.admtabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:8px 0 10px}
+.admtabs{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:8px 0 10px}
 .admtabs button{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px;border-radius:14px;border:1px solid rgba(46,232,143,.25);background:rgba(255,255,255,.05);color:#e6fff3;font-size:11px;font-weight:800;line-height:1.1;min-width:0;overflow:hidden}
 .admtabs button span{font-size:22px}
 .admtabs button.on{border-color:#ffd23f;background:linear-gradient(180deg,rgba(255,210,63,.3),rgba(255,210,63,.08));color:#ffd23f;box-shadow:0 0 12px rgba(255,210,63,.3)}
@@ -427,6 +427,56 @@ details.how ul{line-height:1.5;padding-left:18px;margin:10px 0 0}details.how li{
 .vmodal.locked .vwrap{flex:1;aspect-ratio:auto;margin:0;border-radius:0}
 .vmodal.locked .vshield{display:block}
 .vmodal.locked .lockbtn{opacity:.55;background:rgba(0,0,0,.4)}
+/* ---- режимы отдыха и детский ---- */
+.modebtns{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:10px 0}
+.modebtn{display:flex;align-items:center;gap:10px;border:0;border-radius:20px;padding:16px 14px;font:inherit;font-size:18px;font-weight:900;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.35),inset 0 2px 0 rgba(255,255,255,.35);text-align:left}
+.modebtn span{font-size:38px;line-height:1}
+.modebtn.relax{background:linear-gradient(160deg,#fff27a,#ffd23f 55%,#f0b400);color:#111}
+.modebtn.kid{background:linear-gradient(160deg,#b57bff,#7c3aed 55%,#5b21b6);color:#fff}
+.modebtn:active{transform:scale(.97)}
+body.tubeon{overflow:hidden}
+.tube{position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;overflow:hidden;-webkit-user-select:none;user-select:none}
+.tube.relax{background:#ffd23f;color:#111}
+.tube.kid{background:#6d28d9;color:#fff}
+.tbar{display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top)) 14px 8px;font-size:18px}
+.tlogo{background:#ff0033;color:#fff;border-radius:8px;padding:2px 9px;font-size:15px}
+.texit{margin-left:auto;position:relative;width:44px;height:44px;border-radius:50%;border:0;background:rgba(0,0,0,.18);color:inherit;opacity:.45;font-size:20px;overflow:hidden;cursor:pointer;touch-action:none}
+.texit i{position:absolute;left:0;bottom:0;width:100%;height:0;background:rgba(255,255,255,.55)}
+.texit.holding{opacity:.9}.texit.holding i{height:100%;transition:height var(--hold) linear}
+.tsearch{display:flex;gap:6px;padding:0 14px 8px}
+.tsearch input{flex:1;min-width:0;border-radius:22px;border:2px solid rgba(0,0,0,.25);padding:10px 14px;font:inherit;font-size:16px;background:#fff;color:#111}
+.tsearch button{border:0;border-radius:22px;padding:0 14px;font:inherit;font-weight:800;background:#111;color:#ffd23f}
+.tfeed{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:4px 14px calc(20px + env(safe-area-inset-bottom));display:grid;gap:14px;align-content:start}
+.tcard{display:block;border:0;background:none;color:inherit;text-align:left;font:inherit;padding:0;cursor:pointer}
+.tthumb{aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:rgba(0,0,0,.25)}
+.tthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.tlist{height:100%;display:grid;place-items:center;font-size:22px;font-weight:900}
+.tmeta{padding:6px 2px}.tmeta b{display:block;font-size:15px;line-height:1.3}.tmeta small{opacity:.7}
+.tempty{padding:40px 10px;text-align:center;font-size:17px;font-weight:700}
+.tplayer{position:fixed;inset:0;z-index:910;background:#000;display:flex;flex-direction:column}
+.tplayer iframe{flex:1;width:100%;border:0}
+.tshield{position:absolute;inset:0 0 70px 0;z-index:2;touch-action:none}
+.tctl{display:flex;gap:8px;padding:8px 12px calc(10px + env(safe-area-inset-bottom));background:#000}
+.tctl button{flex:1;border:0;border-radius:12px;padding:12px;font:inherit;font-weight:800;background:#222;color:#fff}
+.tube .tplayer + .x{display:none}
+#tube .texit{z-index:920}
+.tube:has(.tplayer) .tbar{position:fixed;top:0;right:0;z-index:920;background:none}
+.tube:has(.tplayer) .tbar > :not(.texit){display:none}
+/* ---- просмотр как пользователь ---- */
+.viewas{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:8px;background:#7c3aed;color:#fff;font-weight:800;padding:8px 12px;border-radius:0 0 14px 14px;margin:-4px 0 8px}
+.viewas button{margin-left:auto;border:0;border-radius:10px;padding:6px 10px;font:inherit;font-weight:900;background:#fff;color:#5b21b6}
+/* ---- письма ---- */
+.writebtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:10px 0;border:0;border-radius:18px;padding:16px;font:inherit;font-size:19px;font-weight:900;color:#06241a;background:linear-gradient(160deg,#fff2a8,#ffd23f 50%,#e0951a);box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.writebtn em{font-style:normal;background:#b91c1c;color:#fff;border-radius:12px;padding:1px 8px;font-size:14px}
+.chatlist{max-height:50vh;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:6px 0}
+.bub{max-width:82%;padding:9px 12px;border-radius:16px;white-space:pre-wrap;word-break:break-word}
+.bub small{display:block;font-size:11px;opacity:.65;margin-top:3px}
+.bub.me{align-self:flex-end;background:#15803d;color:#fff;border-bottom-right-radius:4px}
+.bub.them{align-self:flex-start;background:#123c2e;border:1px solid var(--line);border-bottom-left-radius:4px}
+.chatin{display:flex;gap:6px;margin-top:8px}.chatin textarea{flex:1;min-width:0;border-radius:12px;padding:10px;font:inherit;font-size:16px}
+.thread{display:block;width:100%;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.thread.unread{border-color:var(--gold);box-shadow:0 0 0 2px rgba(255,210,63,.35)}
+.thread .badge{margin-left:auto}
 
 </style>
 </head>
@@ -896,7 +946,39 @@ Object.assign(D, {
   ev_partner: ["Boshqasi vazifani bajardi", "Другой выполнил задание", "Someone else completed a task"],
   notif_btn: ["Bildirishnomalarni yoqish", "Включить уведомления", "Turn on notifications"],
   alarms_btn: ["Kalendarga eslatmalar", "Напоминания в календарь", "Reminders to calendar"],
-  alarms_help: ["Fayl yuklab olindi. Uni oching va «Hammasini qo'shish» ni bosing: telefon har kuni vazifa vaqtida nomi bilan signal beradi. Vaqtlar o'zgarsa, eski tadbirlarni o'chirib, faylni qayta yuklang.", "Файл скачан. Откройте его (Загрузки) и нажмите «Добавить все»: телефон каждый день в время задания покажет напоминание с его названием. Если время заданий изменится, удалите старые события и скачайте файл заново.", "The file was downloaded. Open it and tap \"Add All\": every day your phone will remind you at each task's time with its name. If task times change, delete the old events and download the file again."]
+  alarms_help: ["Fayl yuklab olindi. Uni oching va «Hammasini qo'shish» ni bosing: telefon har kuni vazifa vaqtida nomi bilan signal beradi. Vaqtlar o'zgarsa, eski tadbirlarni o'chirib, faylni qayta yuklang.", "Файл скачан. Откройте его (Загрузки) и нажмите «Добавить все»: телефон каждый день в время задания покажет напоминание с его названием. Если время заданий изменится, удалите старые события и скачайте файл заново.", "The file was downloaded. Open it and tap \"Add All\": every day your phone will remind you at each task's time with its name. If task times change, delete the old events and download the file again."],
+  mode_relax: ["Dam olish", "Режим отдыха", "Relax mode"],
+  mode_kid: ["Bolalar rejimi", "Детский режим", "Kids mode"],
+  tube_channel: ["Kanal", "Канал", "Channel"],
+  tube_search: ["Qidirish", "Поиск", "Search"],
+  tube_find: ["Topish", "Найти", "Find"],
+  tube_empty: ["Hozircha video yo'q. Administrator qo'shadi.", "Пока нет видео. Их добавит администратор.", "No videos yet. The admin will add them."],
+  tube_empty_admin: ["Video yo'q. ⚙️ → 📺 Video bo'limida kanal, pleylist yoki video qo'shing.", "Видео нет. Добавьте каналы, плейлисты или видео: ⚙️ → 📺 Видео.", "No videos. Add channels, playlists or videos: ⚙️ → 📺 Video."],
+  tube_exit_hint: ["Chiqish uchun ✕ ni {s} soniya bosib turing", "Чтобы выйти, удерживайте ✕ {s} сек.", "Hold ✕ for {s} s to exit"],
+  tube_search_fail: ["Qidiruv ishlamadi", "Поиск не сработал", "Search failed"],
+  tube_admin: ["Video rejimlari", "Видео для режимов", "Video for modes"],
+  tube_admin_hint: ["Bu yerda «Dam olish» va «Bolalar rejimi» uchun faqat siz tanlagan kanallar, pleylistlar va videolar. Kimga rejim ochilishini «Odamlar» bo'limida belgilang.", "Здесь только то, что вы выбрали: каналы, плейлисты и видео для «Режима отдыха» и «Детского режима». Кому включить режим — галочки во вкладке «Люди».", "Only what you choose: channels, playlists and videos for Relax and Kids mode. Turn modes on per person in the People tab."],
+  tube_key: ["YouTube API kaliti (kanallar va qidiruv uchun)", "Ключ YouTube API (для каналов и поиска)", "YouTube API key (for channels and search)"],
+  tube_key_ok: ["Kalit bor: kanallardan yangi videolar va qidiruv ishlaydi.", "Ключ есть: новые видео каналов и поиск работают.", "Key set: channel feeds and search work."],
+  tube_key_none: ["Kalitsiz: alohida videolar va pleylistlar ishlaydi; kanal pleylist sifatida ochiladi, qidiruv yo'q.", "Без ключа: работают отдельные видео и плейлисты; канал откроется как плейлист, поиска нет.", "Without a key: single videos and playlists work; a channel opens as a playlist, no search."],
+  tube_link: ["Havola: kanal, pleylist yoki video", "Ссылка: канал, плейлист или видео", "Link: channel, playlist or video"],
+  tube_for: ["Qaysi rejim uchun", "Для какого режима", "For which mode"],
+  tube_bad_link: ["Havolani tanib bo'lmadi", "Не удалось распознать ссылку", "Could not recognise the link"],
+  tube_need_key_handle: ["@nom havolasi uchun kalit kerak. Yoki kanal havolasini /channel/UC… ko'rinishida qo'ying.", "Для ссылки вида @имя нужен ключ. Или вставьте ссылку вида /channel/UC…", "An @handle link needs the key. Or paste a /channel/UC… link."],
+  at_msgs: ["Xatlar", "Письма", "Messages"],
+  at_tube: ["Video", "Видео", "Video"],
+  viewas_btn: ["Uning ko'zi bilan", "Глазами", "View as"],
+  viewas_now: ["Siz {n} ko'rganini ko'ryapsiz (faqat ko'rish)", "Вы видите как {n} (только просмотр)", "Viewing as {n} (read-only)"],
+  viewas_exit: ["Chiqish", "Выйти", "Exit"],
+  viewas_ro: ["Ko'rish rejimi: o'zgarishlar saqlanmaydi", "Режим просмотра: изменения не сохраняются", "Preview: changes are not saved"],
+  write_admin: ["Administratorga yozish", "Написать админу", "Write to admin"],
+  admin_word: ["Administrator", "Администратор", "Admin"],
+  msg_ph: ["Xabar…", "Сообщение…", "Message…"],
+  msg_empty: ["Hali xabar yo'q", "Сообщений пока нет", "No messages yet"],
+  msg_from: ["{n} dan xabar", "Сообщение от {n}", "Message from {n}"],
+  msg_new: ["Yangi suhbat", "Новый разговор", "New conversation"],
+  msgs_hint: ["Oila a'zolarining xatlari. Yangi xat kelganda uzun signal, tebranish va banner.", "Письма от семьи. При новом письме — длинный сигнал, вибрация и баннер.", "Messages from family. A new one plays a long tone, vibrates and shows a banner."],
+  ev_msg: ["Yangi xabar", "Новое сообщение", "New message"]
 });
 
 
@@ -1374,10 +1456,16 @@ const Snd = (() => {
       if (!ensure()) return; const t = ctx.currentTime;
       tone(1318.5, t, 0.9, 'sine', 0.2); tone(987.8, t + 0.35, 1.1, 'sine', 0.2); tone(2637, t, 0.4, 'sine', 0.03);
     },
+    // Длинный сигнал «пришло сообщение», как SMS
+    sms() {
+      if (!ensure()) return; const t = ctx.currentTime;
+      const mel = [1318.5, 1568, 2093, 1568, 1318.5, 1760];
+      for (let r = 0; r < 2; r++) mel.forEach((f, i) => { tone(f, t + r * 1.3 + i * 0.16, 0.22, 'sine', 0.2); tone(f * 2, t + r * 1.3 + i * 0.16, 0.12, 'sine', 0.04); });
+    },
     tick() { if (ensure()) tone(1200, ctx.currentTime, 0.05, 'sine', 0.05); },
     off() {}
   };
-  const PRESET_NAMES = ['cash', 'coin', 'ding', 'bell', 'wrong', 'warn', 'burn', 'fanfare', 'off'];
+  const PRESET_NAMES = ['cash', 'coin', 'ding', 'sms', 'bell', 'wrong', 'warn', 'burn', 'fanfare', 'off'];
 
   // Звук события: если админ задал свою ссылку — играет файл, иначе пресет
   function play(event, sc) {
@@ -1438,7 +1526,7 @@ const Snd = (() => {
 /* ===== store_demo.js: демо-хранилище в localStorage (без интернета и Firebase) ===== */
 const DemoStore = (() => {
   const KEY = 'fp_demo_v1', AUTH = 'fp_demo_auth';
-  const fresh = () => ({ users: {}, whitelist: {}, tasks: {}, settings: {}, logs: {}, payouts: {}, scores: {}, claims: {}, recipes: {}, shared: {} });
+  const fresh = () => ({ users: {}, whitelist: {}, tasks: {}, settings: {}, logs: {}, payouts: {}, scores: {}, claims: {}, recipes: {}, shared: {}, messages: {} });
   let st = fresh(), subs = new Set(), authCb = null;
   const load = () => { try { st = Object.assign(fresh(), JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) { st = fresh(); } };
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) { /* переполнено: данные останутся в памяти */ } subs.forEach(f => f()); };
@@ -1504,6 +1592,11 @@ const DemoStore = (() => {
   const dumpCol = async n => Object.entries(st[n] || {}).map(([k, v]) => Object.assign({ _id: k }, clone(v)));
   const restoreDoc = async (n, id, d) => { st[n] = st[n] || {}; st[n][id] = clone(d); save(); };
 
+  const watchMyMessages = (uid, cb) => watch(() => cb(list(st.messages || {}).filter(m => m.uid === uid)));
+  const watchAllMessages = cb => watch(() => cb(list(st.messages || {})));
+  const addMessage = async m => { st.messages = st.messages || {}; st.messages[m.id] = clone(m); save(); };
+  const updateMessage = async (id, p) => { if (st.messages && st.messages[id]) Object.assign(st.messages[id], clone(p)); save(); };
+
   const watchPayouts = cb => watch(() => cb(list(st.payouts)));
   const watchMyPayouts = (uid, cb) => watch(() => cb(list(st.payouts).filter(p => p.uid === uid)));
   const addPayout = async p => { st.payouts[p.id] = clone(p); save(); };
@@ -1512,7 +1605,8 @@ const DemoStore = (() => {
   return { demo: true, init, onAuth, signIn, signOut, getUser, watchUser, createUser, updateUser, deleteUser, watchUsers,
     getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
     watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout, watchScores, saveScore,
-    watchClaims, watchMyClaims, addClaim, updateClaim, watchRecipes, saveRecipe, delRecipe, watchShared, saveShared, dumpCol, restoreDoc };
+    watchClaims, watchMyClaims, addClaim, updateClaim, watchRecipes, saveRecipe, delRecipe, watchShared, saveShared, dumpCol, restoreDoc,
+    watchMyMessages, watchAllMessages, addMessage, updateMessage };
 })();
 
 
@@ -1596,6 +1690,12 @@ const FirebaseStore = (() => {
   const dumpCol = async n => (await F.getDocs(col(n))).docs.map(d => Object.assign({ _id: d.id }, d.data()));
   const restoreDoc = (n, id, d) => F.setDoc(ref(n, id), d);
 
+  // Сообщения админу и ответы
+  const watchMyMessages = (uid, cb) => listen(F.query(col('messages'), F.where('uid', '==', uid)), (id, d) => Object.assign({}, d, { id }), cb);
+  const watchAllMessages = cb => listen(col('messages'), (id, d) => Object.assign({}, d, { id }), cb);
+  const addMessage = m => F.setDoc(ref('messages', m.id), m);
+  const updateMessage = (id, p) => F.updateDoc(ref('messages', id), p);
+
   const watchPayouts = cb => listen(col('payouts'), (id, d) => Object.assign({}, d, { id }), cb);
   const watchMyPayouts = (uid, cb) => listen(F.query(col('payouts'), F.where('uid', '==', uid)), (id, d) => Object.assign({}, d, { id }), cb);
   const addPayout = p => F.setDoc(ref('payouts', p.id), p);
@@ -1604,7 +1704,8 @@ const FirebaseStore = (() => {
   return { demo: false, init, onAuth, signIn, signOut, getUser, watchUser, createUser, updateUser, deleteUser, watchUsers,
     getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
     watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout, watchScores, saveScore,
-    watchClaims, watchMyClaims, addClaim, updateClaim, watchRecipes, saveRecipe, delRecipe, watchShared, saveShared, dumpCol, restoreDoc };
+    watchClaims, watchMyClaims, addClaim, updateClaim, watchRecipes, saveRecipe, delRecipe, watchShared, saveShared, dumpCol, restoreDoc,
+    watchMyMessages, watchAllMessages, addMessage, updateMessage };
 })();
 
 
@@ -1649,7 +1750,7 @@ const taskById = id => S.tasks.find(t => t.id === id);
 const myTasks = date => Logic.sortTasks(S.tasks.filter(t => Logic.assigned(t, S.me, date)));
 const isAdmin = () => !!(S.me && S.me.status === 'approved' && S.me.isAdmin);
 const sc = ev => ((S.settings && S.settings.sounds) || {})[ev] || {};
-const SND_DEFAULT = { coin: 'cash', partner: 'bell', taskdue: 'ding' };
+const SND_DEFAULT = { coin: 'cash', partner: 'bell', taskdue: 'ding', msg: 'sms' };
 const play = ev => Snd.play(ev, Object.assign(SND_DEFAULT[ev] ? { p: SND_DEFAULT[ev] } : {}, sc(ev)));
 const avatar = u => u && u.photo ? `<img class="avatar" src="${esc(u.photo)}" alt="" referrerpolicy="no-referrer">` : `<div class="avatar">${esc(((u && u.name) || '?').trim().charAt(0).toUpperCase())}</div>`;
 const relLabel = r => (r && D['rel_' + r]) ? T('rel_' + r) : '';
@@ -1711,6 +1812,7 @@ async function onAuth(au) {
     S.me = me;
     S.userUnsub = Store.watchUser(au.uid, u => {
       if (!u) { return; }
+      if (S.viewAs) { S.viewAs.saved.me = u; return; }
       const was = S.me && S.me.status, wasAdmin = S.me && S.me.isAdmin;
       S.me = u;
       if (u.status === 'approved' && (was !== 'approved' || wasAdmin !== u.isAdmin || !S.unsubs.length)) startData();
@@ -1742,8 +1844,10 @@ function startData() {
   S.unsubs.push(Store.watchScores(onScores));
   S.unsubs.push(Store.watchSettings(s => { S.settings = s || {}; applyMusic(); render(); }));
   S.unsubs.push(Store.watchLogs(uid, onLogs));
-  S.unsubs.push(Store.watchMyPayouts(uid, p => { S.myPayouts = p; render(); }));
-  S.unsubs.push(Store.watchMyClaims(uid, c => { S.myClaims = c; render(); }));
+  S.unsubs.push(Store.watchMyPayouts(uid, p => { if (S.viewAs) { S.viewAs.saved.myPayouts = p; return; } S.myPayouts = p; render(); }));
+  S.unsubs.push(Store.watchMyClaims(uid, c => { if (S.viewAs) { S.viewAs.saved.myClaims = c; return; } S.myClaims = c; render(); }));
+  S.msgsLoaded = false; S.msgs = [];
+  S.unsubs.push(S.me.isAdmin ? Store.watchAllMessages(onMessages) : Store.watchMyMessages(uid, onMessages));
   S.unsubs.push(Store.watchRecipes(r => { S.recipes = r; render(); }));
   S.unsubs.push(Store.watchShared('family', d => { S.shared = d || {}; render(); }));
   if (S.me.isAdmin) {
@@ -1756,6 +1860,7 @@ function startData() {
 }
 
 function onLogs(logs) {
+  if (S.viewAs) { const v = S.viewAs.saved; v.logs = logs; v.shown = Logic.balance(logs); return; }
   S.logs = logs;
   const bal = Logic.balance(logs), lvl = Logic.level(Logic.earned(logs)).level;
   if (!S.logsLoaded) { S.shown = bal; S.lvl = lvl; }
@@ -1767,7 +1872,7 @@ function onLogs(logs) {
 /* ---------- рейтинг семьи и сигнал о выполнении ---------- */
 // Своя карточка с цифрами для рейтинга (пишется, только если что-то изменилось)
 function publishScore() {
-  if (!S.me || S.me.status !== 'approved' || !S.logsLoaded || !S.tasksLoaded || !Store.saveScore) return;
+  if (S.viewAs || !S.me || S.me.status !== 'approved' || !S.logsLoaded || !S.tasksLoaded || !Store.saveScore) return;
   const card = Logic.scoreCard(S.tasks, S.logs, S.me, clock(), S.settings);
   const key = JSON.stringify(card);
   if (key === S.lastPub) return;
@@ -1807,7 +1912,7 @@ function route() {
 
 /* ---------- время: пропуски, бонусы, фото ---------- */
 async function runAutoMiss() {
-  if (S.amBusy || !S.me || S.me.status !== 'approved' || !S.logsLoaded || !S.tasksLoaded) return;
+  if (S.viewAs || S.amBusy || !S.me || S.me.status !== 'approved' || !S.logsLoaded || !S.tasksLoaded) return;
   const now = clock();
   const miss = Logic.pendingMisses(S.tasks, S.logs, S.me, now, S.settings).filter(m => (S.amTried[m.id] || 0) < 3);
   if (!miss.length) return;
@@ -1823,6 +1928,7 @@ async function runAutoMiss() {
 
 // Бонусы: серия за день, идеальная неделя (прошлая), идеальный месяц (прошлый)
 async function runBonuses() {
+  if (S.viewAs) return;
   if (S.bnBusy || !S.me || S.me.status !== 'approved' || !S.logsLoaded || !S.tasksLoaded) return;
   const now = clock(), idx = Logic.logIndex(S.logs), appr = S.me.approvedDate || '';
   const cands = [];
@@ -1904,10 +2010,11 @@ function levelUp(n) {
 }
 
 function animateBalance(target) {
-  const from = S.shown, t0 = performance.now(), dur = 900;
+  const from = S.shown, t0 = performance.now(), dur = 900, va = S.viewAs;
   const pill = document.getElementById('coinTarget');
   if (pill && target !== from) { pill.classList.remove('bump', 'drop'); void pill.offsetWidth; pill.classList.add(target > from ? 'bump' : 'drop'); if (target > from && typeof sparkle === 'function') setTimeout(sparkle, 650); }
   const step = now => {
+    if (S.viewAs !== va) return;
     const k = Math.min(1, (now - t0) / dur), v = Math.round(from + (target - from) * (1 - Math.pow(1 - k, 3)));
     S.shown = v;
     const el = document.getElementById('coinAmt');
@@ -2021,12 +2128,12 @@ function langSel() {
 }
 function shell(body, full) {
   const head = full ? header() : '';
-  return (Store && Store.demo ? `<div class="demo">${T('demo')}</div>` : '') + head + body;
+  return (Store && Store.demo ? `<div class="demo">${T('demo')}</div>` : '') + (typeof viewAsBar === 'function' ? viewAsBar() : '') + head + body;
 }
 function header() {
   const me = S.me, L = Logic.level(Logic.earned(S.logs));
   const onHome = S.view === 'home' && S.htab === 'today';
-  const pend = isAdmin() ? pendingCount() + S.photos.length + (S.claims || []).filter(c => c.status === 'pending').length + S.payouts.filter(p => p.status === 'requested').length : 0;
+  const pend = isAdmin() ? unreadFor(S.me.uid) + pendingCount() + S.photos.length + (S.claims || []).filter(c => c.status === 'pending').length + S.payouts.filter(p => p.status === 'requested').length : 0;
   return `<header class="top"><button class="homebtn ${onHome ? 'on' : ''}" data-act="home" aria-label="home">🏠</button>`
     + `<div class="whot"><div class="nm">${esc(firstName(me.name))}</div><div class="lv">${esc(loc(L.name))}</div></div>`
     + (isAdmin() ? `<button class="admbtn ${S.view === 'admin' ? 'on' : ''}" data-act="${S.view === 'admin' ? 'home' : 'admin'}" aria-label="admin">⚙️${pend ? `<span class="badge">${pend}</span>` : ''}</button>` : '')
@@ -2067,7 +2174,7 @@ function viewHome() {
   if (S.htab === 'rewards') body = viewRewards();
   else if (S.htab === 'menu') body = viewMenu();
   else if (S.htab === 'me') body = viewMe();
-  else body = viewToday();
+  else body = modeButtons() + viewToday();
   const tabs = [['today', '✅', T('nav_tasks')], ['rewards', '🎁', T('nav_rewards')], ['menu', '📂', T('nav_menu')], ['me', '👤', T('nav_me')]];
   return body + `<nav class="tabbar">${tabs.map(([k, i, n]) => `<button class="${S.htab === k ? 'on' : ''}" data-act="htab" data-id="${k}"><span>${i}</span>${n}</button>`).join('')}</nav>`;
 }
@@ -2080,7 +2187,7 @@ function viewMenu() {
   const m = MENU.find(x => x[0] === S.menu);
   if (!m) {
     const soon = Logic.upcomingEvents(eventsNow(), clock().date, 7)[0];
-    return `<div class="card"><h2>📂 ${T('nav_menu')}</h2><div class="mut">${T('menu_hint')}</div></div><div class="folders">`
+    return writeAdminBtn() + `<div class="card"><h2>📂 ${T('nav_menu')}</h2><div class="mut">${T('menu_hint')}</div></div><div class="folders">`
       + MENU.map(([k, i, t, sub]) => `<button class="folder" data-act="menu" data-id="${k}"><span class="fi">${i}</span><b>${T(t)}</b><small>${T(sub)}</small>`
         + (k === 'events' && soon ? `<em>${esc(soon.icon || '🎉')} ${soon.left === 0 ? T('ev_today') : T('ev_in', { n: soon.left })}</em>` : '') + `</button>`).join('') + `</div>`;
   }
@@ -2202,7 +2309,7 @@ function viewMe() {
     + `<div class="btnrow"><button class="btn" data-act="alarms">⏰ ${T('alarms_btn')}</button><button class="btn" data-act="replayIntro">🎬 ${T('intro_replay')}</button></div>`
     + (isAdmin() ? `<div class="btnrow"><button class="btn gold" data-act="admin">⚙️ ${T('admin_panel')}</button></div>` : '')
     + `<div class="btnrow"><button class="btn ghostred" data-act="logout">🚪 ${T('logout')}</button></div></div>`
-    + `<div class="card"><h3>${T('history')}</h3>${rows || `<div class="mut">${T('no_history')}</div>`}</div>`
+    + writeAdminBtn() + `<div class="card"><h3>${T('history')}</h3>${rows || `<div class="mut">${T('no_history')}</div>`}</div>`
     + (window.navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches) ? ''
       : `<div class="card"><h3>📲 ${T('install_title')}</h3><div class="mut">${T(/iPhone|iPad|iPod/.test(navigator.userAgent) ? 'install_ios' : 'install_android')}</div></div>`);
 }
@@ -2252,10 +2359,11 @@ function viewAdmin() {
   const tabs = [
     ['users', '👥', T('at_users'), pendingCount()], ['tasks', '📋', T('at_tasks'), 0], ['add', '➕', T('at_add'), 0],
     ['photos', '📷', T('at_photos'), S.photos.length], ['claims', '🛍️', T('at_claims'), cl], ['payouts', '💵', T('at_pay'), req],
+    ['msgs', '💬', T('at_msgs'), unreadFor(S.me.uid)], ['tube', '📺', T('at_tube'), 0],
     ['sounds', '🔊', T('at_sounds'), 0], ['fun', '🎈', T('at_fun'), 0], ['settings', '⚙️', T('at_set'), 0]
   ];
   const t = `<div class="admtabs">${tabs.map(([k, i, n, b]) => `<button class="${S.tab === k ? 'on' : ''}" data-act="tab" data-id="${k}"><span>${i}</span>${n}${b ? `<em>${b}</em>` : ''}</button>`).join('')}</div>`;
-  const body = { users: admUsers, add: admAdd, tasks: admTasks, photos: admPhotos, payouts: admPayouts, claims: admClaims, sounds: admSounds, fun: admFun, settings: admSettings }[S.tab]();
+  const body = { users: admUsers, add: admAdd, tasks: admTasks, photos: admPhotos, payouts: admPayouts, claims: admClaims, sounds: admSounds, fun: admFun, settings: admSettings, msgs: admMsgs, tube: admTube }[S.tab]();
   return `<h2>⚙️ ${T('admin_panel')}</h2>${t}${body}`;
 }
 
@@ -2269,8 +2377,11 @@ function admUsers() {
     return `<div class="card u ${u.status}"><div class="urow">${avatar(u)}<div style="min-width:0"><b>${esc(u.name)}</b><div class="mut" style="overflow:hidden;text-overflow:ellipsis">${esc(u.email)}</div></div><span class="chip ${u.status}">${T('st_' + u.status)}</span></div>`
       + `<label class="f">${T('relation')}<select data-uf="relation" data-uid="${esc(u.uid)}">${relOptions(rel)}</select></label>`
       + `<label class="chk"><input type="checkbox" data-uf="isAdmin" data-uid="${esc(u.uid)}" ${adm ? 'checked' : ''} ${self ? 'disabled' : ''}> ${T('is_admin')}</label>`
+      + `<label class="chk"><input type="checkbox" data-mode2="relax" data-uid="${esc(u.uid)}" ${(u.modes || {}).relax ? 'checked' : ''}> 👩 ${T('mode_relax')}</label>`
+      + `<label class="chk"><input type="checkbox" data-mode2="kid" data-uid="${esc(u.uid)}" ${(u.modes || {}).kid ? 'checked' : ''}> 🧒 ${T('mode_kid')}</label>`
       + `<div class="btnrow">`
       + (u.status !== 'approved' ? `<button class="btn green" data-act="approve" data-uid="${esc(u.uid)}">${T('approve')}</button>` : '')
+      + (u.status === 'approved' && !self ? `<button class="btn" data-act="viewAs" data-uid="${esc(u.uid)}">👁 ${T('viewas_btn')}</button><button class="btn" data-act="openThread" data-uid="${esc(u.uid)}">✉️</button>` : '')
       + (u.status === 'approved' ? `<button class="btn gold" data-act="utasks" data-uid="${esc(u.uid)}">📋 ${T('tab_tasks')}</button><button class="btn" data-act="uprog" data-uid="${esc(u.uid)}">${T('progress')}</button><button class="btn" data-act="uadj" data-uid="${esc(u.uid)}">${T('adjust')}</button>` : '')
       + (!self && u.status !== 'blocked' ? `<button class="btn" data-act="ublock" data-uid="${esc(u.uid)}">${T('block')}</button>` : '')
       + (!self && u.status === 'blocked' ? `<button class="btn" data-act="approve" data-uid="${esc(u.uid)}">${T('unblock')}</button>` : '')
@@ -2340,7 +2451,7 @@ function admPayouts() {
       : `<div class="mut">${p.status === 'paid' ? '✅ ' + T('payout_paid') : T('payout_rejected')}</div>`) + `</div>`).join('');
 }
 
-const EV_SOUNDS = [['coin', 'ev_coin'], ['taskdue', 'ev_taskdue'], ['wrong', 'ev_wrong'], ['warn', 'ev_warn'], ['burn', 'ev_burn'], ['fanfare', 'ev_fanfare'], ['partner', 'ev_partner']];
+const EV_SOUNDS = [['msg', 'ev_msg'], ['coin', 'ev_coin'], ['taskdue', 'ev_taskdue'], ['wrong', 'ev_wrong'], ['warn', 'ev_warn'], ['burn', 'ev_burn'], ['fanfare', 'ev_fanfare'], ['partner', 'ev_partner']];
 function admSounds() {
   const all = S.settings.sounds || {};
   const presetSel = (k, cur) => `<select data-snd="${k}" data-part="p">${Snd.PRESET_NAMES.map(n => `<option value="${n}" ${cur === n ? 'selected' : ''}>${T('preset_' + n)}</option>`).join('')}</select>`;
@@ -2645,7 +2756,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const o = document.createElement('div'); o.id = 'ovl'; document.body.appendChild(o);
   boot();
 });
-window.__app = { S, tick, clock, render, Logic };
+window.__app = { S, tick, clock, render, Logic, get Store() { return Store; } };
 
 
 /* ===== parenting.js: «Мама и малыш» — живые игры по возрасту, игры руками, вопрос-ответ, советы ===== */
@@ -3945,8 +4056,8 @@ function applyFx() {
 /* ---------- экран «Начать день» и приветствие (первый вход и повтор из профиля) ---------- */
 const INTRO = [['🌅', 'in1'], ['✅', 'in2'], ['🎁', 'in3'], ['🍽️', 'in4'], ['🍳', 'in5'], ['👨‍👩‍👧', 'in6'], ['✨', 'in7']];
 function showStart() {
-  if (S.started || window.__skipStart || document.getElementById('startov')) return;
-  const seen = safeGet('fp_intro') === '1';
+  if (S.started || (window.__skipStart && !S.viewAs) || document.getElementById('startov')) return;
+  const seen = !S.viewIntro && safeGet('fp_intro') === '1';
   const ov = document.createElement('div'); ov.id = 'startov'; ov.className = 'startov';
   document.body.appendChild(ov);
   S.introI = seen ? INTRO.length : 0;
@@ -3966,8 +4077,8 @@ function drawStart() {
       + `<button class="big gold pulse" data-act="startDay">▶ ${T('start_day')}</button></div>`;
   }
 }
-ACT.introNext = () => { S.introI++; if (S.introI >= INTRO.length) { safeSet('fp_intro', '1'); ACT.startDay(); return; } drawStart(); };
-ACT.introSkip = () => { safeSet('fp_intro', '1'); S.introI = INTRO.length; drawStart(); };
+ACT.introNext = () => { S.introI++; if (S.introI >= INTRO.length) { if (!S.viewAs) safeSet('fp_intro', '1'); ACT.startDay(); return; } drawStart(); };
+ACT.introSkip = () => { if (!S.viewAs) safeSet('fp_intro', '1'); S.introI = INTRO.length; drawStart(); };
 ACT.startDay = () => {
   S.started = true; S.startedAt = Date.now();
   try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { /* нет поддержки */ }
@@ -4032,7 +4143,7 @@ ACT.hsay = el => { const t = taskById(el.dataset.id), h = howtoFor(t); if (h) sp
 const voiceOn = () => (S.settings || {}).voice !== false && safeGet('fp_voice') !== '0';
 const hasVoice = l => { try { return speechSynthesis.getVoices().some(v => (v.lang || '').toLowerCase().startsWith(l)); } catch (e) { return false; } };
 function voiceTick() {
-  if (!S.started || S.view === 'login' || !S.me || S.me.status !== 'approved' || !S.tasksLoaded || !S.logsLoaded) return;
+  if (!S.started || S.tube || S.view === 'login' || !S.me || S.me.status !== 'approved' || !S.tasksLoaded || !S.logsLoaded) return;
   const now = clock(), idx = Logic.logIndex(S.logs);
   let anyActive = false;
   myTasks(now.date).forEach(t => {
@@ -4072,6 +4183,262 @@ document.addEventListener('click', e => {
   if (e.target.closest && e.target.closest('#hapt')) return;
   if (e.target.closest && e.target.closest('button,a,[data-act],select,label')) haptic();
 }, true);
+
+
+/* ===== tube.js: «Режим отдыха» и «Детский режим» (свой YouTube с фильтром админа),
+   «Посмотреть как пользователь», «Написать админу» ===== */
+
+/* ---------- настройки видео-режимов (в settings.tube) ---------- */
+const tubeCfg = () => Object.assign({ key: '', relax: [], kid: [] }, (S.settings && S.settings.tube) || {});
+const ytChannelId = u => { const m = String(u || '').match(/\/channel\/(UC[\w-]{22})/); return m ? m[1] : (/^UC[\w-]{22}$/.test(String(u || '').trim()) ? String(u).trim() : ''); };
+const ytHandle = u => { const m = String(u || '').match(/youtube\.com\/@([\w.\-]+)/) || String(u || '').trim().match(/^@([\w.\-]+)$/); return m ? m[1] : ''; };
+async function ytApi(path, params) {
+  const key = tubeCfg().key; if (!key) throw new Error('nokey');
+  const q = new URLSearchParams(Object.assign({ key }, params)).toString();
+  const r = await fetch(`https://www.googleapis.com/youtube/v3/${path}?${q}`);
+  const j = await r.json(); if (j.error) throw new Error(j.error.message || 'api'); return j;
+}
+// Разобрать ссылку админа: видео, плейлист или канал
+async function parseTubeLink(url) {
+  const p = ytParse(url), ch = ytChannelId(url), h = ytHandle(url);
+  if (p && p.vid) return { type: 'video', ref: p.vid };
+  if (p && p.list) return { type: 'playlist', ref: p.list };
+  if (ch) return { type: 'channel', ref: ch };
+  if (h) {
+    const j = await ytApi('channels', { part: 'snippet', forHandle: '@' + h });
+    if (j.items && j.items[0]) return { type: 'channel', ref: j.items[0].id, title: j.items[0].snippet.title, thumb: (j.items[0].snippet.thumbnails.default || {}).url };
+  }
+  return null;
+}
+
+/* ---------- лента: видео из каналов и плейлистов админа ---------- */
+const FEED_CACHE = {};
+const vidCard = (id, title, channel, at) => ({ kind: 'video', id, title: title || '', channel: channel || '', at: at || '' });
+async function buildFeed(mode) {
+  const cfg = tubeCfg(), items = cfg[mode] || [], key = !!cfg.key;
+  const ck = mode + JSON.stringify(items) + key;
+  if (FEED_CACHE[ck] && Date.now() - FEED_CACHE[ck].t < 30 * 60000) return FEED_CACHE[ck].list;
+  const out = [], seen = new Set();
+  const push = c => { if (c.kind === 'video') { if (seen.has(c.id)) return; seen.add(c.id); } out.push(c); };
+  for (const it of items) {
+    try {
+      if (it.type === 'video') push(vidCard(it.ref, it.title, '', '9999'));
+      else if (key) {
+        const pl = it.type === 'channel' ? 'UU' + it.ref.slice(2) : it.ref;
+        const j = await ytApi('playlistItems', { part: 'snippet', playlistId: pl, maxResults: it.type === 'channel' ? 12 : 20 });
+        (j.items || []).forEach(x => { const s2 = x.snippet || {}, rid = (s2.resourceId || {}).videoId; if (rid && s2.title !== 'Private video' && s2.title !== 'Deleted video') push(vidCard(rid, s2.title, s2.videoOwnerChannelTitle || s2.channelTitle || it.title, s2.publishedAt)); });
+      } else push({ kind: 'list', id: it.type === 'channel' ? 'UU' + it.ref.slice(2) : it.ref, title: it.title || (it.type === 'channel' ? T('tube_channel') : T('playlist')), channel: '', type: it.type });
+    } catch (e) { console.warn('лента', it, e && e.message); if (it.type !== 'video') push({ kind: 'list', id: it.type === 'channel' ? 'UU' + it.ref.slice(2) : it.ref, title: it.title || T('playlist'), channel: '', type: it.type }); }
+  }
+  // «рекомендации»: свежие сверху, но вперемешку между каналами
+  out.sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')));
+  FEED_CACHE[ck] = { t: Date.now(), list: out };
+  return out;
+}
+
+/* ---------- экран «YouTube» во весь экран ---------- */
+function openTube(mode) {
+  if (S.tube) return;
+  S.tube = { mode, list: [], q: '', results: null, loading: true, idx: -1 };
+  S.quiet = true; Snd.stopMusic();
+  const ov = document.createElement('div'); ov.id = 'tube'; ov.className = 'tube ' + mode;
+  document.body.appendChild(ov); document.body.classList.add('tubeon');
+  drawTube();
+  buildFeed(mode).then(l => { if (!S.tube) return; S.tube.list = l; S.tube.loading = false; drawTube(); });
+}
+function closeTube() {
+  const ov = document.getElementById('tube'); if (ov) ov.remove();
+  document.body.classList.remove('tubeon'); S.tube = null; S.quiet = false;
+}
+function drawTube() {
+  const ov = document.getElementById('tube'), tb = S.tube; if (!ov || !tb) return;
+  const kid = tb.mode === 'kid', cfg = tubeCfg();
+  const list = tb.results || tb.list;
+  const exitHold = kid ? 3 : 1.5;
+  ov.innerHTML = `<div class="tbar"><span class="tlogo">▶</span><b>${kid ? '🧒 ' + T('mode_kid') : '👩 ' + T('mode_relax')}</b>`
+    + `<button class="texit" id="tExit" style="--hold:${exitHold}s" aria-label="exit">✕<i></i></button></div>`
+    + (!kid ? (cfg.key ? `<form class="tsearch" id="tSearch"><input id="tQ" type="search" placeholder="🔍 ${esc(T('tube_search'))}" value="${esc(tb.q)}"><button>${T('tube_find')}</button>${tb.results ? `<button type="button" data-tube="clear">✕</button>` : ''}</form>` : '') : '')
+    + `<div class="tfeed">`
+    + (tb.loading ? `<div class="tempty">⏳</div>` : !list.length ? `<div class="tempty">${T(isAdminReal() ? 'tube_empty_admin' : 'tube_empty')}</div>`
+      : list.map((c, i) => `<button class="tcard" data-tube="play" data-i="${i}"><div class="tthumb">${c.kind === 'video' ? `<img src="https://i.ytimg.com/vi/${c.id}/hqdefault.jpg" loading="lazy" alt="" referrerpolicy="no-referrer">` : `<div class="tlist">📃 ${T(c.type === 'channel' ? 'tube_channel' : 'playlist')}</div>`}</div>`
+        + `<div class="tmeta"><b>${esc(c.title)}</b><small>${esc(c.channel || '')}</small></div></button>`).join(''))
+    + `</div>` + (tb.idx >= 0 ? playerHtml(list[tb.idx], kid) : '');
+  wireTube(ov, exitHold);
+}
+function playerHtml(c, kid) {
+  if (!c) return '';
+  const src = c.kind === 'video' ? `https://www.youtube-nocookie.com/embed/${c.id}?autoplay=1&playsinline=1&rel=0&modestbranding=1&enablejsapi=1&fs=0&iv_load_policy=3`
+    : `https://www.youtube-nocookie.com/embed/videoseries?list=${c.id}&autoplay=1&playsinline=1&rel=0&modestbranding=1&enablejsapi=1&fs=0`;
+  return `<div class="tplayer"><iframe id="tFrame" src="${src}" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>`
+    + (kid ? `<div class="tshield" id="tShield"></div>` : '')
+    + `<div class="tctl"><button data-tube="back">← ${T('back')}</button><button data-tube="prev">⬆</button><button data-tube="next">⬇</button></div></div>`;
+}
+const isAdminReal = () => !!(S.viewAs ? S.viewAs.saved.me.isAdmin : isAdmin());
+function wireTube(ov, exitHold) {
+  const ex = ov.querySelector('#tExit'); let h = null;
+  const start = e => { e.preventDefault(); ex.classList.add('holding'); h = setTimeout(() => { closeTube(); render(); }, exitHold * 1000); };
+  const stop = () => { ex.classList.remove('holding'); if (h) { clearTimeout(h); h = null; } };
+  ex.addEventListener('pointerdown', start); ['pointerup', 'pointerleave', 'pointercancel'].forEach(k => ex.addEventListener(k, stop));
+  ex.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); if (!h) banner('good', '✕', T('tube_exit_hint', { s: exitHold }), 1800); });
+  const f = ov.querySelector('#tSearch');
+  if (f) f.addEventListener('submit', async e => {
+    e.preventDefault(); const q = ov.querySelector('#tQ').value.trim(); if (!q) return;
+    S.tube.q = q; S.tube.loading = true; drawTube();
+    try {
+      const j = await ytApi('search', { part: 'snippet', q, type: 'video', maxResults: 25, safeSearch: 'strict', relevanceLanguage: S.lang === 'uz' ? 'uz' : 'ru' });
+      S.tube.results = (j.items || []).map(x => vidCard(x.id.videoId, x.snippet.title, x.snippet.channelTitle, x.snippet.publishedAt));
+    } catch (er) { banner('warn', T('tube_search_fail'), String(er && er.message || ''), 3500); }
+    S.tube.loading = false; S.tube.idx = -1; drawTube();
+  });
+  ov.querySelectorAll('[data-tube]').forEach(b => b.addEventListener('click', e => {
+    e.stopPropagation(); const a = b.dataset.tube, tb = S.tube, list = tb.results || tb.list;
+    if (a === 'play') { tb.idx = +b.dataset.i; drawTube(); }
+    else if (a === 'back') { tb.idx = -1; drawTube(); }
+    else if (a === 'next') { tb.idx = (tb.idx + 1) % list.length; drawTube(); }
+    else if (a === 'prev') { tb.idx = (tb.idx - 1 + list.length) % list.length; drawTube(); }
+    else if (a === 'clear') { tb.results = null; tb.q = ''; drawTube(); }
+  }));
+  // детский режим: касание — пауза/продолжить, свайп вверх/вниз — следующее/предыдущее
+  const sh = ov.querySelector('#tShield'), fr = ov.querySelector('#tFrame');
+  const cmd = func => { try { fr.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args: [] }), '*'); } catch (e) { /* нет плеера */ } };
+  if (fr) fr.addEventListener('load', () => { try { fr.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1 }), '*'); } catch (e) { /* ignore */ } });
+  if (sh) {
+    let y0 = null, paused = false;
+    sh.addEventListener('pointerdown', e => { y0 = e.clientY; });
+    sh.addEventListener('pointerup', e => {
+      const dy = y0 === null ? 0 : e.clientY - y0; y0 = null;
+      const tb = S.tube, list = tb.results || tb.list;
+      if (dy < -60) { tb.idx = (tb.idx + 1) % list.length; drawTube(); }
+      else if (dy > 60) { tb.idx = (tb.idx - 1 + list.length) % list.length; drawTube(); }
+      else { paused = !paused; cmd(paused ? 'pauseVideo' : 'playVideo'); }
+    });
+  }
+}
+// Видео закончилось — следующее (сообщения от плеера YouTube)
+window.addEventListener('message', e => {
+  if (!S.tube || S.tube.idx < 0 || !/youtube/.test(e.origin)) return;
+  let d = null; try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (er) { return; }
+  if (d && d.event === 'infoDelivery' && d.info && d.info.playerState === 0) {
+    const tb = S.tube, list = tb.results || tb.list;
+    if (list[tb.idx] && list[tb.idx].kind === 'video') { tb.idx = (tb.idx + 1) % list.length; drawTube(); }
+  }
+});
+ACT.mode = el => openTube(el.dataset.id);
+// Кнопки режимов на главном экране — только тем, кому админ включил
+function modeButtons() {
+  const m = (S.me && S.me.modes) || {};
+  if (!m.relax && !m.kid) return '';
+  return `<div class="modebtns">${m.relax ? `<button class="modebtn relax" data-act="mode" data-id="relax"><span>👩</span><b>${T('mode_relax')}</b></button>` : ''}`
+    + `${m.kid ? `<button class="modebtn kid" data-act="mode" data-id="kid"><span>🧒</span><b>${T('mode_kid')}</b></button>` : ''}</div>`;
+}
+
+/* ---------- админ: видео для режимов ---------- */
+function admTube() {
+  const cfg = tubeCfg();
+  const rows = mode => (cfg[mode] || []).map(it => `<div class="hrow"><span>${it.type === 'video' ? '🎬' : it.type === 'playlist' ? '📃' : '📺'}</span><span>${esc(it.title || it.ref)}</span><button class="btn red sm" data-act="tdel" data-mode="${mode}" data-id="${esc(it.id)}">✕</button></div>`).join('') || `<div class="mut">—</div>`;
+  return `<div class="card"><h2>📺 ${T('tube_admin')}</h2><div class="mut">${T('tube_admin_hint')}</div>`
+    + `<label class="f">🔑 ${T('tube_key')}<input id="tKey" value="${esc(cfg.key || '')}" placeholder="AIza…"></label><div class="mut">${T(cfg.key ? 'tube_key_ok' : 'tube_key_none')}</div>`
+    + `<div class="btnrow"><button class="btn sm" data-act="tkeysave">💾 ${T('save')}</button></div>`
+    + `<label class="f">${T('tube_link')}<input id="tUrl" placeholder="youtube.com/@channel · /channel/UC… · playlist?list=… · youtu.be/…"></label>`
+    + `<div class="grid2"><label class="f">${T('tube_for')}<select id="tMode"><option value="relax">👩 ${T('mode_relax')}</option><option value="kid">🧒 ${T('mode_kid')}</option></select></label><label class="f">${T('vid_title')}<input id="tTitle"></label></div>`
+    + `<div id="tErr" class="mut" style="color:#ff8a80"></div><div class="btnrow"><button class="btn gold" data-act="tadd">＋ ${T('add_btn')}</button></div>`
+    + `<h3 style="margin-top:12px">👩 ${T('mode_relax')}</h3>${rows('relax')}<h3 style="margin-top:12px">🧒 ${T('mode_kid')}</h3>${rows('kid')}</div>`;
+}
+const saveTube = t => Store.saveSettings(Object.assign({}, S.settings, { tube: t }));
+ACT.tkeysave = () => guarded(async () => { const t = tubeCfg(); t.key = ($('#tKey').value || '').trim(); await saveTube(t); });
+ACT.tadd = () => guarded(async () => {
+  const url = ($('#tUrl').value || '').trim(), mode = $('#tMode').value, err = $('#tErr'); if (!url) return;
+  let it = null;
+  try { it = await parseTubeLink(url); } catch (e) { err.textContent = e.message === 'nokey' ? T('tube_need_key_handle') : String(e.message); return; }
+  if (!it) { err.textContent = T('tube_bad_link'); return; }
+  const t = tubeCfg();
+  t[mode] = (t[mode] || []).concat([Object.assign({ id: 'tb_' + Date.now().toString(36), title: ($('#tTitle').value || '').trim() || it.title || '' }, it)]);
+  await saveTube(t);
+});
+ACT.tdel = el => ask(T('confirm_remove'), () => { const t = tubeCfg(); t[el.dataset.mode] = (t[el.dataset.mode] || []).filter(x => x.id !== el.dataset.id); return saveTube(t); });
+// Галочки режимов у пользователя
+document.addEventListener('change', e => {
+  const m = e.target.dataset && e.target.dataset.mode2; if (!m) return;
+  const uid = e.target.dataset.uid, u = S.users.find(x => x.uid === uid); if (!u) return;
+  guarded(() => Store.updateUser(uid, { modes: Object.assign({}, u.modes || {}, { [m]: e.target.checked }) }));
+});
+
+/* ---------- «Посмотреть как пользователь» (только просмотр) ---------- */
+const WRITE_FN = ['createUser', 'updateUser', 'deleteUser', 'addWhitelist', 'delWhitelist', 'saveTask', 'delTask', 'saveSettings', 'addLog', 'delLog', 'decidePhoto', 'updateLog',
+  'addPayout', 'updatePayout', 'saveScore', 'addClaim', 'updateClaim', 'saveRecipe', 'delRecipe', 'saveShared', 'restoreDoc', 'addMessage', 'updateMessage'];
+let roLast = 0;
+const readOnly = st => new Proxy(st, { get(o, k) { if (WRITE_FN.includes(k)) return async () => { if (Date.now() - roLast > 3000) { roLast = Date.now(); banner('warn', '👁 ' + T('viewas_ro'), '', 2200); } }; return o[k]; } });
+ACT.viewAs = el => {
+  const uid = el.dataset.uid, u = S.users.find(x => x.uid === uid); if (!u || S.viewAs) return;
+  closeModal();
+  S.viewAs = { uid, saved: { me: S.me, logs: S.logs, shown: S.shown, myClaims: S.myClaims, myPayouts: S.myPayouts, store: Store }, unsub: null };
+  Store = readOnly(Store);
+  S.me = Object.assign({}, u, { isAdmin: false }); S.logs = []; S.myClaims = []; S.myPayouts = []; S.shown = 0;
+  S.viewAs.unsub = S.viewAs.saved.store.watchLogs(uid, logs => { if (!S.viewAs) return; S.logs = logs; S.shown = Logic.balance(logs); render(); });
+  S.adminOpen = false; S.htab = 'today'; S.menu = ''; S.started = false; S.introI = 0; S.viewIntro = true;
+  route(); render(); window.scrollTo(0, 0);
+};
+ACT.viewExit = () => {
+  const v = S.viewAs; if (!v) return;
+  try { v.unsub && v.unsub(); } catch (e) { /* ignore */ }
+  Store = v.saved.store; Object.assign(S, { me: v.saved.me, logs: v.saved.logs, shown: v.saved.shown, myClaims: v.saved.myClaims, myPayouts: v.saved.myPayouts });
+  S.viewAs = null; S.viewIntro = false; S.started = true;
+  const ov = document.getElementById('startov'); if (ov) ov.remove();
+  closeTube(); S.adminOpen = true; S.tab = 'users'; route(); render();
+};
+const viewAsBar = () => (S.viewAs ? `<div class="viewas">👁 ${T('viewas_now', { n: esc(firstName(S.me.name)) })}<button data-act="viewExit">✕ ${T('viewas_exit')}</button></div>` : '');
+
+/* ---------- сообщения: «Написать админу» и ответы ---------- */
+const threadOf = uid => (S.msgs || []).filter(m => m.uid === uid).sort((a, b) => (a.at || 0) - (b.at || 0));
+const unreadFor = me => (S.msgs || []).filter(m => !m.read && m.from !== me).length;
+function onMessages(list) {
+  const meId = (S.viewAs ? S.viewAs.saved.me : S.me).uid, known = S.msgKnown || new Set();
+  const fresh = list.filter(m => !known.has(m.id) && m.from !== meId && !m.read);
+  if (S.msgsLoaded && fresh.length) {
+    const m = fresh[fresh.length - 1];
+    play('msg'); if (navigator.vibrate) navigator.vibrate([400, 150, 400, 150, 800]);
+    banner('good', '✉️ ' + T('msg_from', { n: m.name || '' }), String(m.text || '').slice(0, 90), 7000);
+  }
+  S.msgKnown = new Set(list.map(m => m.id)); S.msgs = list; S.msgsLoaded = true;
+  const box = document.getElementById('chatList'); if (box) drawChat();
+  render();
+}
+function openChat(uid) {
+  S.chatUid = uid;
+  const who = uid === S.me.uid ? T('admin_word') : ((S.users.find(u => u.uid === uid) || {}).name || '');
+  const m = modal(`<h3>✉️ ${esc(who)}</h3><div class="chatlist" id="chatList"></div><div class="chatin"><textarea id="chatText" rows="2" placeholder="${esc(T('msg_ph'))}"></textarea><button class="btn gold" data-act="chatSend">➤</button></div>`
+    + `<div class="btnrow"><button class="btn" data-act="close">${T('close')}</button></div>`);
+  m._stop = () => { S.chatUid = null; };
+  drawChat();
+}
+function drawChat() {
+  const box = document.getElementById('chatList'); if (!box || !S.chatUid) return;
+  const meId = S.me.uid, th = threadOf(S.chatUid);
+  box.innerHTML = th.length ? th.map(m => `<div class="bub ${m.from === meId ? 'me' : 'them'}">${esc(m.text)}<small>${new Date(m.at || 0).toLocaleString(S.lang === 'en' ? 'en-GB' : 'ru-RU', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}${m.from === meId && m.read ? ' ✓✓' : ''}</small></div>`).join('') : `<div class="mut center">${T('msg_empty')}</div>`;
+  box.scrollTop = box.scrollHeight;
+  th.filter(m => m.from !== meId && !m.read).forEach(m => Store.updateMessage(m.id, { read: true }).catch(() => {}));
+}
+ACT.chatSend = () => guarded(async () => {
+  const t = ($('#chatText').value || '').trim(); if (!t || !S.chatUid) return;
+  const id = `${S.chatUid}_${Date.now()}`;
+  await Store.addMessage({ id, uid: S.chatUid, from: S.me.uid, name: S.me.name, text: t.slice(0, 1900), at: Date.now(), read: false });
+  $('#chatText').value = ''; Snd.tick && Snd.tick();
+});
+ACT.writeAdmin = () => openChat(S.me.uid);
+ACT.openThread = el => openChat(el.dataset.uid);
+const writeAdminBtn = () => (isAdmin() || S.viewAs ? (S.viewAs ? `<button class="writebtn" data-act="writeAdmin">✉️ ${T('write_admin')}</button>` : '') : `<button class="writebtn" data-act="writeAdmin">✉️ ${T('write_admin')}${unreadFor(S.me.uid) ? `<em>${unreadFor(S.me.uid)}</em>` : ''}</button>`);
+function admMsgs() {
+  const by = {};
+  (S.msgs || []).forEach(m => { (by[m.uid] = by[m.uid] || []).push(m); });
+  const meId = S.me.uid;
+  const threads = Object.entries(by).map(([uid, ms]) => { ms.sort((a, b) => (a.at || 0) - (b.at || 0)); return { uid, ms, last: ms[ms.length - 1], unread: ms.filter(m => !m.read && m.from !== meId).length }; })
+    .sort((a, b) => (b.last.at || 0) - (a.last.at || 0));
+  const others = S.users.filter(u => u.status === 'approved' && u.uid !== meId && !by[u.uid]);
+  return `<div class="card"><h2>💬 ${T('at_msgs')}</h2><div class="mut">${T('msgs_hint')}</div></div>`
+    + threads.map(t => { const u = S.users.find(x => x.uid === t.uid) || { name: t.last.name };
+      return `<button class="card thread ${t.unread ? 'unread' : ''}" data-act="openThread" data-uid="${esc(t.uid)}"><div class="urow">${avatar(u)}<div style="min-width:0;flex:1"><b>${esc(u.name || '')}</b><div class="mut" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.last.from === meId ? '↩ ' : ''}${esc(t.last.text)}</div></div>${t.unread ? `<span class="badge">${t.unread}</span>` : ''}</div></button>`; }).join('')
+    + (others.length ? `<div class="card"><h3>${T('msg_new')}</h3>${others.map(u => `<button class="btn" data-act="openThread" data-uid="${esc(u.uid)}">✉️ ${esc(firstName(u.name))}</button>`).join(' ')}</div>` : '');
+}
 
 </script>
 </body>
