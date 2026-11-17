@@ -290,6 +290,62 @@ h1,h2{background:linear-gradient(180deg,#fff6c2,#ffd23f 55%,#e0951a);-webkit-bac
 .cthemes button.on{outline:3px solid #fff;outline-offset:2px}
 .cardimg{width:100%;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
 a.btn{display:inline-block;text-decoration:none;color:#fff}
+/* панель часов */
+.top{flex-wrap:wrap}
+.clockbar{flex-basis:100%;display:flex;align-items:center;gap:10px;font-size:13px;color:#cfe9dc;padding:4px 10px;border-radius:12px;background:rgba(0,0,0,.28);border:1px solid rgba(46,232,143,.2)}
+.clockbar b{font-size:16px;color:var(--gold);font-variant-numeric:tabular-nums}
+.clockbar .cw{margin-left:auto;font-weight:800;color:#fff}.clockbar small{color:var(--mut);font-weight:600}
+/* эффекты */
+.fx{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.fx i{position:absolute;top:-30px;font-style:normal;color:#fff;animation:fxfall linear infinite}
+.fx.rain i{width:1.5px;height:16px;background:linear-gradient(transparent,rgba(170,220,255,.65));animation-name:fxrain}
+@keyframes fxfall{to{transform:translate(30px,110vh) rotate(360deg)}}
+@keyframes fxrain{to{transform:translate(-20px,110vh)}}
+/* праздники */
+.evbtns{margin-top:6px}.evbtns .btn{padding:6px 10px;font-size:13px}
+.evrow.bday{border-color:rgba(255,120,190,.45)}
+.preplist{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;margin:10px 0}
+.gvar{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.gvar button{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06);font-weight:900}
+.gvar button.on{background:#ffd23f;color:#2a1b00;border-color:#ffd23f}
+label.f textarea{min-height:90px;line-height:1.4}
+/* магазин и сундук */
+.avail{display:flex;align-items:center;gap:10px;margin:10px 0}.avail b{font-size:26px;color:var(--gold)}.avail span{color:var(--mut)}
+.chestbtn{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border-radius:20px;border:2px solid #ffd23f;color:#fff;text-align:left;background:linear-gradient(135deg,rgba(255,210,63,.28),rgba(46,232,143,.12));box-shadow:0 0 26px rgba(255,210,63,.3);animation:glow 2.2s ease-in-out infinite}
+.chestbtn .chesti{font-size:46px;animation:float 2.4s ease-in-out infinite}.chestbtn small{display:block;color:var(--mut);font-size:12px}
+.chestbtn.off,.rcard.off{opacity:.5;animation:none}
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.rcard{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;border-radius:16px;border:1px solid rgba(255,210,63,.45);background:rgba(255,255,255,.06);color:#fff}
+.rcard span{font-size:32px}.rcard b{font-size:12px;text-align:center;line-height:1.2}.rcard i{font-style:normal;color:var(--gold);font-weight:900;font-size:13px}
+.chestbox{position:relative;z-index:0;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:60vh}
+.chestbig{font-size:140px;cursor:pointer;z-index:2;filter:drop-shadow(0 10px 30px rgba(255,210,63,.6));animation:float 2s ease-in-out infinite}
+.chestbig.shake2{animation:chshake .12s linear 10}
+.chestbig.open{animation:pop .5s;font-size:150px}
+@keyframes chshake{25%{transform:rotate(-8deg) scale(1.05)}75%{transform:rotate(8deg) scale(1.05)}}
+.rays{pointer-events:none;position:absolute;width:520px;height:520px;border-radius:50%;opacity:0;background:repeating-conic-gradient(rgba(255,210,63,.35) 0 10deg,transparent 10deg 20deg);transition:opacity .4s}
+.rays.on{opacity:1;animation:spinr 8s linear infinite}
+@keyframes spinr{to{transform:rotate(360deg)}}
+.prizecard{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 18px;border-radius:18px;background:linear-gradient(180deg,#fff2a8,#ffd23f 45%,#e0951a);color:#2a1b00;z-index:2;position:relative}
+.prizecard b{font-size:22px}
+/* рецепты и сказки */
+.search{flex:1;min-width:0;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.35);border:1px solid var(--line);color:#fff;font-size:16px}
+.rrow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;color:#fff;padding:10px 12px}
+.rrow img{width:64px;height:64px;border-radius:12px;object-fit:cover}.rico{font-size:40px;width:64px;text-align:center}
+.rrow span{display:flex;flex-direction:column}.rrow small{color:var(--mut)}
+.taletext{flex:1;overflow:auto;line-height:1.6;background:#fffaf0;color:#2b2112;border-radius:16px;padding:16px 18px;font-family:Georgia,"Times New Roman",serif}
+.taletext p{margin:0 0 14px}
+/* старт и приветствие */
+.startov{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 50% 30%,#14634a,#06241a 60%,#020a07);transition:opacity .45s}
+.startov.bye{opacity:0}
+.intro{width:min(480px,100%);text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.intro .iic{font-size:110px;animation:pop .5s,float 3s ease-in-out .5s infinite;filter:drop-shadow(0 10px 30px rgba(255,210,63,.45))}
+.intro p{font-size:19px;line-height:1.45;color:#e6fff3;margin:0 0 10px}
+.intro .big{min-width:240px}
+.intro .skip{background:none;border:0;color:var(--mut);margin-top:6px;font-weight:800}
+.dots{display:flex;gap:6px}.dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25)}.dots i.on{background:#ffd23f;width:22px;border-radius:6px}
+.startcoin svg{width:140px;height:140px;filter:drop-shadow(0 10px 30px rgba(255,180,0,.6));animation:float 3s ease-in-out infinite}
+.big.pulse{animation:pulseb 1.6s ease-in-out infinite}
+@keyframes pulseb{50%{transform:scale(1.05);box-shadow:0 6px 0 #8a5200,0 0 40px rgba(255,210,63,.75)}}
+#chestTxt{position:relative;z-index:3}
 
 </style>
 </head>
@@ -600,6 +656,61 @@ Object.assign(D, {
   cp_love_wish: ["Sen mening eng katta baxtimsan.", "Ты — моё самое большое счастье.", "You are my greatest happiness."],
   cp_thanks: ["Rahmat!", "Спасибо!", "Thank you!"],
   cp_thanks_wish: ["Har bir kun uchun minnatdorman.", "Благодарю за каждый день.", "Grateful for every day."],
+  bday_of: ["{n} tug'ilgan kuni", "День рождения: {n}", "{n}'s birthday"],
+  bday_turns: ["{n} yosh to'ladi", "исполнится {n}", "turns {n}"],
+  congrats: ["Tabriklash", "Поздравить", "Congratulate"],
+  prep: ["Tayyorgarlik", "Подготовка", "Preparation"],
+  events_hint2: ["Tug'ilgan kunlar (yoshi bilan), O'zbekiston bayramlari va oilaviy sanalar. Eslatma: 30, 7, 3 kun oldin va o'sha kuni.", "Дни рождения с возрастом, праздники Узбекистана и семейные даты. Напоминания за 30, 7, 3 дня и в сам день.", "Birthdays with age, Uzbekistan holidays and family dates. Reminders 30, 7, 3 days before and on the day."],
+  ev_to_phone: ["Telefon kalendariga qo'shish", "Добавить в календарь телефона", "Add to phone calendar"],
+  ev_ics_help: ["Fayl yuklab olindi. Uni oching va «Hammasini qo'shish»ni bosing: tug'ilgan kunlar va bayramlar har yili eslatma bilan kalendarda bo'ladi.", "Файл скачан. Откройте его и нажмите «Добавить все»: дни рождения и праздники будут в календаре каждый год с напоминаниями.", "The file was downloaded. Open it and tap Add All: birthdays and holidays will be in your calendar every year with reminders."],
+  prep_gift: ["Sovg'a", "Подарок", "Gift"], prep_cake: ["Tort", "Торт", "Cake"], prep_sweets: ["Shirinliklar", "Сладости", "Sweets"], prep_menu: ["Menyu", "Меню", "Menu"],
+  prep_shop: ["Xaridlar", "Покупки", "Shopping"], prep_decor: ["Bezak", "Декор", "Decorations"], prep_invite: ["Taklifnomalar", "Приглашения", "Invitations"],
+  tone_child: ["ertakdek, bolalarcha", "сказочное, детское", "fairy-tale, for a child"], tone_kid: ["quvnoq, bolalarcha", "весёлое, детское", "fun, for a kid"],
+  tone_wife: ["romantik", "романтическое", "romantic"], tone_husband: ["mehrli", "тёплое для мужа", "warm, for husband"], tone_parent: ["hurmat va minnatdorlik", "уважение и благодарность", "respect and gratitude"],
+  tone_sister: ["iliq", "тёплое", "warm"], tone_friend: ["do'stona", "дружеское", "friendly"], tone_wedding: ["to'y tabrigi", "свадебное", "wedding"], tone_holiday: ["bayram tabrigi", "праздничное", "holiday"],
+  g_text: ["Tabrik matni (o'zgartirish mumkin)", "Текст поздравления (можно изменить)", "Greeting text (editable)"],
+  g_fav: ["Saralanganlar", "В избранное", "Favorite"], g_copy: ["Nusxa olish", "Копировать", "Copy"], g_copied: ["Nusxa olindi", "Скопировано", "Copied"],
+  g_photo_card: ["Fotootkritka", "Фотооткрытка", "Photo card"], g_send: ["Yuborish", "Отправить", "Send"],
+  g_nophone: ["Telefon raqami yo'q — yuborishda raqamni o'zingiz tanlaysiz.", "Номера нет — при отправке выберите контакт сами.", "No phone number — pick the contact when sending."],
+  g_nophone_admin: ["Raqam yo'q. Qo'shish: Admin panel → Dam olish → sana yonidagi ✎.", "Номера нет. Добавить: Админ-панель → Досуг → ✎ рядом с датой.", "No number. Add it: Admin panel → Leisure → ✎ next to the date."],
+  ev_name: ["Ism / nomi", "Имя / название", "Name / title"], ev_note: ["Izoh", "Заметка", "Note"],
+  shop_title: ["Mukofotlar do'koni", "Магазин наград", "Rewards shop"],
+  shop_hint: ["Monetalarni haqiqiy oilaviy mukofotlarga almashtiring. So'rovni admin tasdiqlaydi.", "Меняйте монеты на настоящие семейные награды. Заявку подтверждает администратор.", "Exchange coins for real family rewards. The admin approves each request."],
+  shop_avail: ["mavjud", "доступно", "available"],
+  chest_title: ["Syurpriz sandiq", "Сундук-сюрприз", "Surprise chest"],
+  chest_odds: ["shirinlik 40%, somsa 30%, lag'mon 15%, shashlik 10%, Regal 5%", "сладости 40%, самса 30%, лагман 15%, шашлык 10%, Regal 5%", "sweets 40%, samsa 30%, lagman 15%, shashlik 10%, Regal 5%"],
+  chest_tap: ["Sandiqni bosing!", "Нажмите на сундук!", "Tap the chest!"], chest_won: ["Sizning sovg'angiz! So'rov adminga yuborildi.", "Ваш приз! Заявка отправлена администратору.", "Your prize! The request was sent to the admin."],
+  claims_my: ["Mening so'rovlarim", "Мои заявки", "My requests"], claims_none: ["So'rovlar yo'q", "Заявок нет", "No requests"],
+  cl_pending: ["kutilmoqda", "ожидает", "pending"], cl_approved: ["tasdiqlandi", "одобрено", "approved"], cl_received: ["olindi ✓", "получено ✓", "received ✓"], cl_canceled: ["bekor", "отменено", "canceled"],
+  cl_cancel_q: ["So'rovni bekor qilasizmi?", "Отменить заявку?", "Cancel the request?"], cl_mark_received: ["Olindi deb belgilash", "Отметить «получено»", "Mark received"],
+  shop_nomoney: ["Monetalar yetmaydi", "Не хватает монет", "Not enough coins"],
+  shop_confirm: ["«{t}» uchun {c} moneta sarflansinmi?", "Обменять {c} монет на «{t}»?", "Spend {c} coins on \"{t}\"?"],
+  shop_sent: ["So'rov yuborildi, admin tasdiqlaydi", "Заявка отправлена, ждите одобрения", "Request sent, waiting for approval"],
+  shop_catalog: ["Mukofotlar katalogi", "Каталог наград", "Rewards catalog"], rw_price: ["Narxi (monetada)", "Цена (в монетах)", "Price (coins)"],
+  tab_claims: ["Mukofotlar", "Награды", "Rewards"],
+  r_search: ["Retsept qidirish", "Поиск рецепта", "Search recipes"], r_add: ["Retsept", "Рецепт", "Recipe"], r_mine: ["Bizning retseptlar", "Наши рецепты", "Our recipes"],
+  r_empty: ["Hali retsept yo'q. «＋ Retsept» bosing va oilaviy retseptingizni yozing.", "Рецептов пока нет. Нажмите «＋ Рецепт» и запишите семейный рецепт.", "No recipes yet. Tap + Recipe to add a family recipe."],
+  r_ingr: ["Masalliqlar", "Ингредиенты", "Ingredients"], r_steps: ["Tayyorlash", "Приготовление", "Steps"], r_line: ["har biri yangi qatorda", "каждый с новой строки", "one per line"], r_photo: ["Rasm", "Фото", "Photo"],
+  tales_read: ["Ertak o'qiymiz", "Читаем сказки", "Read a tale"], tales_read_hint: ["Ona o'qiydi yoki telefon o'qib beradi. Harf hajmini kattalashtirish mumkin.", "Мама читает вслух или телефон читает сам. Шрифт можно увеличить.", "Mom reads aloud or the phone reads. The font can be enlarged."],
+  start_day: ["Kunni boshlash", "Начать день", "Start the day"], start_tasks: ["bugun {n} ta vazifa", "сегодня заданий: {n}", "{n} tasks today"], skip: ["O'tkazib yuborish", "Пропустить", "Skip"],
+  in1_t: ["Yangi dunyo", "Новый мир", "A new world"], in1: ["NEW DAY — oilangiz uchun o'yin: har kun yangi imkoniyat.", "NEW DAY — игра для вашей семьи: каждый день — новый шанс.", "NEW DAY is a game for your family: every day is a new chance."],
+  in2_t: ["Vazifalar", "Задания", "Tasks"], in2: ["Vaqtida bajaring — monetalar oling, darajangiz o'sadi.", "Выполняйте вовремя — получайте монеты и растите в ранге.", "Do tasks on time to earn coins and rank up."],
+  in3_t: ["Mukofotlar", "Награды", "Rewards"], in3: ["Monetalarni sandiq va haqiqiy sovg'alarga almashtiring.", "Меняйте монеты на сундуки и настоящие подарки.", "Swap coins for chests and real gifts."],
+  in4_t: ["Haqiqiy taassurotlar", "Настоящие впечатления", "Real experiences"], in4: ["Regal'da baliq, shashlik, somsa, lag'mon, shirinliklar — oila bilan.", "Рыба в Regal, шашлыки, самса, лагман, сладости — всей семьёй.", "Fish at Regal, shashlik, samsa, lagman, sweets — together."],
+  in5_t: ["Uy va retseptlar", "Дом и рецепты", "Home and recipes"], in5: ["Retsept videolari va oilaviy retseptlar bir joyda.", "Видео-рецепты и семейные рецепты в одном месте.", "Recipe videos and family recipes in one place."],
+  in6_t: ["Oila va ertaklar", "Семья и сказки", "Family and tales"], in6: ["Tug'ilgan kunlar, bayramlar, ertaklar va bola bilan o'yinlar.", "Дни рождения, праздники, сказки и игры с ребёнком.", "Birthdays, holidays, tales and games with your child."],
+  in7_t: ["Boshladik!", "Начинаем!", "Let's go!"], in7: ["Har kuni ochganingizda sizni yangi kun kutadi.", "Каждый раз, открывая приложение, вас ждёт новый день.", "Each time you open the app, a new day awaits."],
+  me_settings: ["Sozlamalar", "Настройки", "Settings"], intro_replay: ["Tanishuvni qayta ko'rish", "Посмотреть приветствие", "Replay intro"],
+  fx_on: ["Effektlarni yoqish", "Включить эффекты", "Turn effects on"], fx_off: ["Effektlarni o'chirish", "Выключить эффекты", "Turn effects off"],
+  fx_title: ["Atmosfera effektlari", "Атмосферные эффекты", "Atmosphere effects"], fx_all: ["Butun oila uchun yoqilgan (qor, yomg'ir, Yangi yil)", "Включены для всей семьи (снег, дождь, Новый год)", "On for the whole family (snow, rain, New Year)"],
+  fx_all_hint: ["O'chirsangiz — hamma telefonlarda o'chadi.", "Если выключить — выключится у всех.", "Turning it off disables it for everyone."],
+  bk_title: ["Zaxira nusxa", "Резервная копия", "Backup"], bk_hint: ["Barcha oilaviy ma'lumotlarni bitta faylga saqlang. Kerak bo'lsa, shu fayldan tiklang.", "Сохраните все данные семьи в один файл. При необходимости восстановите из него.", "Save all family data to one file. Restore from it if needed."],
+  bk_download: ["Yuklab olish", "Скачать", "Download"], bk_restore: ["Tiklash", "Восстановить", "Restore"], bk_done: ["Zaxira nusxa yuklab olindi", "Резервная копия скачана", "Backup downloaded"],
+  bk_bad: ["Bu NEW DAY zaxira fayli emas", "Это не файл резервной копии NEW DAY", "Not a NEW DAY backup file"],
+  bk_restore_q: ["{d} sanasidagi nusxadan tiklansinmi? Mavjud yozuvlar ustiga yoziladi.", "Восстановить из копии от {d}? Совпадающие записи будут перезаписаны.", "Restore from the backup of {d}? Matching records will be overwritten."],
+  bk_restored: ["Tiklandi: {n} ta yozuv", "Восстановлено записей: {n}", "Restored records: {n}"],
+  sched: ["Takrorlanishi", "Повтор", "Repeat"], sched_daily: ["Har kuni", "Каждый день", "Every day"], sched_days: ["Hafta kunlari bo'yicha (belgilang)", "По дням недели (отметьте ниже)", "On weekdays (tick below)"],
+  sched_once: ["Bir marta (sana)", "Разово (дата)", "Once (date)"], sched_once_date: ["Bir martalik sana", "Дата разового задания", "One-time date"],
   nav_fun: ["Dam olish", "Досуг", "Leisure"],
   fun_kitchen: ["Oshxona", "Кухня", "Kitchen"],
   fun_kids: ["Ona va bola", "Мама и малыш", "Mom & kid"],
@@ -764,7 +875,12 @@ const Logic = (() => {
     const r = t.relations || [];
     const ok = r.includes('*') || (u.relation && r.includes(u.relation)) || (t.uids || []).includes(u.uid);
     if (!ok) return false;
-    return !date || date >= maxStr(t.since || '', u.approvedDate || '');
+    if (!date) return true;
+    if (date < maxStr(t.since || '', u.approvedDate || '')) return false;
+    // расписание: разовое (once = дата) или по дням недели (days = [0..6], 0 = воскресенье)
+    if (t.once) return date === t.once;
+    if (Array.isArray(t.days) && t.days.length && t.days.length < 7) return t.days.includes(weekday(date));
+    return true;
   }
   const sortTasks = ts => ts.slice().sort((a, b) => toMin(a.time) - toMin(b.time) || String(a.id).localeCompare(String(b.id)));
   const logIndex = logs => new Map(logs.map(l => [l.id, l]));
@@ -955,10 +1071,47 @@ const Logic = (() => {
   }
 
   // Праздники и события: разовые (дата) и ежегодные (месяц-день)
+  // Дни рождения из мастер-ТЗ (раздел 9), официальные праздники Узбекистана с фиксированной датой, свадьба 22.11
+  const B = (id, date, rel, icon, uz, ru, en) => ({ id, date, yearly: true, kind: 'bday', rel, icon, name: { uz, ru, en }, title: { uz, ru, en }, phone: '' });
+  const H = (id, md, icon, uz, ru, en) => ({ id, date: '2000-' + md, yearly: true, kind: 'holiday', icon, title: { uz, ru, en } });
   const DEFAULT_EVENTS = [
-    { id: 'ev_newyear', date: '2027-01-01', yearly: true, icon: '🎄', title: { uz: 'Yangi yil', ru: 'Новый год', en: 'New Year' } },
-    { id: 'ev_wedding_1122', date: '2026-11-22', yearly: false, icon: '💍', title: { uz: "Tanishlarning to'yi", ru: 'Свадьба знакомых', en: "Friends' wedding" } }
+    B('bd_daughter', '2023-11-23', 'daughter', '🎀', 'Dilnoza', 'Дильноза', 'Dilnoza'),
+    B('bd_wife', '1999-12-30', 'wife', '🌹', 'Dildora', 'Дилдора', 'Dildora'),
+    B('bd_owner', '1991-03-17', 'owner', '🎩', 'Dilshod', 'Дильшод', 'Dilshod'),
+    B('bd_sister', '1990-03-17', 'sister', '🌷', 'Opa', 'Сестра', 'Sister'),
+    B('bd_father', '1962-04-12', 'father', '👨', 'Dada', 'Папа', 'Father'),
+    B('bd_mother', '1965-06-03', 'mother', '👩', 'Oyi', 'Мама', 'Mother'),
+    B('bd_nephew', '2023-07-23', 'nephew', '🧸', 'Jiyan', 'Племянник', 'Nephew'),
+    { id: 'ev_wedding_1122', date: '2026-11-22', yearly: false, kind: 'event', icon: '💍', title: { uz: "Tanishlarning to'yi", ru: 'Свадьба знакомых', en: "Friends' wedding" } },
+    H('ev_newyear', '01-01', '🎄', 'Yangi yil', 'Новый год', 'New Year'),
+    H('hol_defenders', '01-14', '🎖️', 'Vatan himoyachilari kuni', 'День защитников Родины', 'Defenders of the Motherland Day'),
+    H('hol_women', '03-08', '💐', 'Xalqaro xotin-qizlar kuni', 'Международный женский день', "International Women's Day"),
+    H('hol_navruz', '03-21', '🌱', "Navro'z", 'Навруз', 'Navruz'),
+    H('hol_memory', '05-09', '🕯️', 'Xotira va qadrlash kuni', 'День памяти и почестей', 'Day of Remembrance and Honour'),
+    H('hol_indep', '09-01', '🇺🇿', 'Mustaqillik kuni', 'День независимости', 'Independence Day'),
+    H('hol_teachers', '10-01', '📚', "O'qituvchi va murabbiylar kuni", 'День учителя и наставника', "Teachers' Day"),
+    H('hol_constitution', '12-08', '📜', 'Konstitutsiya kuni', 'День Конституции', 'Constitution Day')
   ];
+  // Сколько лет исполнится в день события
+  const ageOn = (ev, on) => (ev && ev.kind === 'bday' && /^\d{4}/.test(ev.date || '') ? (+on.slice(0, 4)) - (+ev.date.slice(0, 4)) : null);
+  // Напоминания: за 30, 7, 3 дня и в сам день
+  const REMIND_DAYS = [30, 7, 3, 0];
+  const dueReminders = (events, today, steps) => upcomingEvents(events, today, 31).filter(e => (steps || REMIND_DAYS).includes(e.left));
+  // Календарь телефона: ежегодные события на весь день с напоминаниями
+  function eventsIcs(events, today, titleOf) {
+    const e2 = s => String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+    const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//NEW DAY//Yangi kun//RU', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:NEW DAY'];
+    (events || []).forEach(ev => {
+      const on = nextOccur(ev, today); if (!on) return;
+      const d = on.replace(/-/g, ''), nd = addDays(on, 1).replace(/-/g, ''), t = titleOf(ev);
+      lines.push('BEGIN:VEVENT', `UID:newday-${ev.id}@tdbuser.github.io`, `DTSTAMP:${d}T000000Z`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${nd}`,
+        ev.yearly ? 'RRULE:FREQ=YEARLY' : '', `SUMMARY:${e2(t)}`);
+      [['-P29DT15H', '30'], ['-P6DT15H', '7'], ['-P2DT15H', '3'], ['PT9H', '0']].forEach(([tr]) => lines.push('BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${e2(t)}`, `TRIGGER:${tr}`, 'END:VALARM'));
+      lines.push('END:VEVENT');
+    });
+    lines.push('END:VCALENDAR');
+    return lines.filter(Boolean).join('\r\n') + '\r\n';
+  }
   const eventsOf = s => (s && Array.isArray(s.events) ? s.events : DEFAULT_EVENTS);
   const daysBetween = (a, b) => { const p = x => { const [y, m, d] = x.split('-').map(Number); return Date.UTC(y, m - 1, d); }; return Math.round((p(b) - p(a)) / 86400000); };
   function nextOccur(ev, today) {
@@ -992,7 +1145,8 @@ const Logic = (() => {
     sortTasks(tasks).forEach(t => {
       const title = ((t.icon || '') + ' ' + titleOf(t)).trim();
       lines.push('BEGIN:VEVENT', `UID:newday-${e(t.id)}@tdbuser.github.io`, `DTSTAMP:${stamp}`,
-        `DTSTART:${icsUtc(now.date, t.time, tz)}`, 'DURATION:PT15M', 'RRULE:FREQ=DAILY',
+        `DTSTART:${icsUtc(t.once && t.once >= now.date ? t.once : now.date, t.time, tz)}`, 'DURATION:PT15M',
+        t.once ? '' : (Array.isArray(t.days) && t.days.length && t.days.length < 7 ? 'RRULE:FREQ=WEEKLY;BYDAY=' + t.days.map(d => ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'][d]).join(',') : 'RRULE:FREQ=DAILY'),
         `SUMMARY:${e(title)}`, `DESCRIPTION:${e('NEW DAY · ' + t.time + (url ? '\n' + url : ''))}`, url ? `URL:${e(url)}` : '',
         'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${e(title)}`, 'TRIGGER:PT0M', 'END:VALARM', 'END:VEVENT');
     });
@@ -1006,7 +1160,7 @@ const Logic = (() => {
     assigned, sortTasks, logIndex, logId, isMiss, taskState, dayLimit, makeMiss, pendingMisses, failLog, doneLog,
     photoExpired, balance, earned, level, dayStats, perfectDay, dayBonus, weekReport, weekBonus, monthReport, monthBonus,
     payoutDay, toUsd, money, hashStr, streak, scoreCard, icsUtc, icsCalendar,
-    DEFAULT_EVENTS, eventsOf, daysBetween, nextOccur, upcomingEvents
+    DEFAULT_EVENTS, eventsOf, daysBetween, nextOccur, upcomingEvents, ageOn, REMIND_DAYS, dueReminders, eventsIcs
   };
   if (typeof module !== 'undefined') module.exports = api;
   return api;
@@ -1138,7 +1292,7 @@ const Snd = (() => {
 /* ===== store_demo.js: демо-хранилище в localStorage (без интернета и Firebase) ===== */
 const DemoStore = (() => {
   const KEY = 'fp_demo_v1', AUTH = 'fp_demo_auth';
-  const fresh = () => ({ users: {}, whitelist: {}, tasks: {}, settings: {}, logs: {}, payouts: {}, scores: {} });
+  const fresh = () => ({ users: {}, whitelist: {}, tasks: {}, settings: {}, logs: {}, payouts: {}, scores: {}, claims: {}, recipes: {}, shared: {} });
   let st = fresh(), subs = new Set(), authCb = null;
   const load = () => { try { st = Object.assign(fresh(), JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) { st = fresh(); } };
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) { /* переполнено: данные останутся в памяти */ } subs.forEach(f => f()); };
@@ -1192,6 +1346,18 @@ const DemoStore = (() => {
   const watchScores = cb => watch(() => cb(list(st.scores)));
   const saveScore = async (uid, d) => { st.scores[uid] = Object.assign(clone(d), { uid, updatedAt: Date.now() }); save(); };
 
+  const watchClaims = cb => watch(() => cb(list(st.claims)));
+  const watchMyClaims = (uid, cb) => watch(() => cb(list(st.claims).filter(c => c.uid === uid)));
+  const addClaim = async c => { st.claims[c.id] = clone(c); save(); };
+  const updateClaim = async (id, p) => { if (st.claims[id]) Object.assign(st.claims[id], clone(p)); save(); };
+  const watchRecipes = cb => watch(() => cb(list(st.recipes)));
+  const saveRecipe = async r => { st.recipes[r.id] = clone(r); save(); };
+  const delRecipe = async id => { delete st.recipes[id]; save(); };
+  const watchShared = (id, cb) => watch(() => cb(clone(st.shared[id] || {})));
+  const saveShared = async (id, o) => { st.shared[id] = Object.assign(st.shared[id] || {}, clone(o)); save(); };
+  const dumpCol = async n => Object.entries(st[n] || {}).map(([k, v]) => Object.assign({ _id: k }, clone(v)));
+  const restoreDoc = async (n, id, d) => { st[n] = st[n] || {}; st[n][id] = clone(d); save(); };
+
   const watchPayouts = cb => watch(() => cb(list(st.payouts)));
   const watchMyPayouts = (uid, cb) => watch(() => cb(list(st.payouts).filter(p => p.uid === uid)));
   const addPayout = async p => { st.payouts[p.id] = clone(p); save(); };
@@ -1199,7 +1365,8 @@ const DemoStore = (() => {
 
   return { demo: true, init, onAuth, signIn, signOut, getUser, watchUser, createUser, updateUser, deleteUser, watchUsers,
     getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
-    watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout, watchScores, saveScore };
+    watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout, watchScores, saveScore,
+    watchClaims, watchMyClaims, addClaim, updateClaim, watchRecipes, saveRecipe, delRecipe, watchShared, saveShared, dumpCol, restoreDoc };
 })();
 
 
@@ -1267,6 +1434,22 @@ const FirebaseStore = (() => {
   const watchScores = cb => listen(col('scores'), (id, d) => Object.assign({}, d, { uid: id, updatedAt: ms(d.updatedAt) }), cb);
   const saveScore = (uid, d) => F.setDoc(ref('scores', uid), Object.assign({}, d, { uid, updatedAt: F.serverTimestamp() }));
 
+  // Заявки на награды (магазин и сундуки)
+  const watchClaims = cb => listen(col('claims'), (id, d) => Object.assign({}, d, { id }), cb);
+  const watchMyClaims = (uid, cb) => listen(F.query(col('claims'), F.where('uid', '==', uid)), (id, d) => Object.assign({}, d, { id }), cb);
+  const addClaim = c => F.setDoc(ref('claims', c.id), c);
+  const updateClaim = (id, p) => F.updateDoc(ref('claims', id), p);
+  // Семейные рецепты
+  const watchRecipes = cb => listen(col('recipes'), (id, d) => Object.assign({}, d, { id }), cb);
+  const saveRecipe = r => F.setDoc(ref('recipes', r.id), r);
+  const delRecipe = id => F.deleteDoc(ref('recipes', id));
+  // Общие данные семьи (план подготовки к праздникам)
+  const watchShared = (id, cb) => F.onSnapshot(ref('shared', id), s => cb(s.exists() ? s.data() : {}), errCb);
+  const saveShared = (id, o) => F.setDoc(ref('shared', id), o, { merge: true });
+  // Резервная копия: прочитать коллекцию целиком (только админ)
+  const dumpCol = async n => (await F.getDocs(col(n))).docs.map(d => Object.assign({ _id: d.id }, d.data()));
+  const restoreDoc = (n, id, d) => F.setDoc(ref(n, id), d);
+
   const watchPayouts = cb => listen(col('payouts'), (id, d) => Object.assign({}, d, { id }), cb);
   const watchMyPayouts = (uid, cb) => listen(F.query(col('payouts'), F.where('uid', '==', uid)), (id, d) => Object.assign({}, d, { id }), cb);
   const addPayout = p => F.setDoc(ref('payouts', p.id), p);
@@ -1274,7 +1457,8 @@ const FirebaseStore = (() => {
 
   return { demo: false, init, onAuth, signIn, signOut, getUser, watchUser, createUser, updateUser, deleteUser, watchUsers,
     getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
-    watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout, watchScores, saveScore };
+    watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout, watchScores, saveScore,
+    watchClaims, watchMyClaims, addClaim, updateClaim, watchRecipes, saveRecipe, delRecipe, watchShared, saveShared, dumpCol, restoreDoc };
 })();
 
 
@@ -1297,7 +1481,8 @@ const S = {
   view: 'boot', tab: 'users', htab: 'today', adminOpen: false, error: '',
   tasksLoaded: false, logsLoaded: false, shown: 0, lvl: 1, sel: {}, openTask: '', dirty: false,
   music: safeGet('fp_music') !== '0', amBusy: false, amTried: {}, bnBusy: false, mk: '', unsubs: [], userUnsub: null,
-  scores: [], scoresLoaded: false, lastPub: '', seenLast: {}
+  scores: [], scoresLoaded: false, lastPub: '', seenLast: {},
+  claims: [], myClaims: [], recipes: [], shared: {}, started: false
 };
 
 /* ---------- помощники ---------- */
@@ -1364,7 +1549,7 @@ function stopData() {
   S.unsubs.forEach(u => { try { u(); } catch (e) { /* ignore */ } });
   S.unsubs = [];
   if (S.userUnsub) { try { S.userUnsub(); } catch (e) { /* ignore */ } S.userUnsub = null; }
-  Object.assign(S, { me: null, tasks: [], settings: {}, logs: [], myPayouts: [], photos: [], users: [], wl: [], payouts: [], tasksLoaded: false, logsLoaded: false, adminOpen: false, tab: 'users', htab: 'today', sel: {}, amTried: {}, scores: [], scoresLoaded: false, lastPub: '', seenLast: {} });
+  Object.assign(S, { me: null, tasks: [], settings: {}, logs: [], myPayouts: [], photos: [], users: [], wl: [], payouts: [], tasksLoaded: false, logsLoaded: false, adminOpen: false, tab: 'users', htab: 'today', sel: {}, amTried: {}, scores: [], scoresLoaded: false, lastPub: '', seenLast: {}, claims: [], myClaims: [], recipes: [], shared: {} });
 }
 
 async function onAuth(au) {
@@ -1410,10 +1595,14 @@ function startData() {
   S.unsubs.push(Store.watchSettings(s => { S.settings = s || {}; applyMusic(); render(); }));
   S.unsubs.push(Store.watchLogs(uid, onLogs));
   S.unsubs.push(Store.watchMyPayouts(uid, p => { S.myPayouts = p; render(); }));
+  S.unsubs.push(Store.watchMyClaims(uid, c => { S.myClaims = c; render(); }));
+  S.unsubs.push(Store.watchRecipes(r => { S.recipes = r; render(); }));
+  S.unsubs.push(Store.watchShared('family', d => { S.shared = d || {}; render(); }));
   if (S.me.isAdmin) {
     S.unsubs.push(Store.watchUsers(u => { S.users = u; render(); }));
     S.unsubs.push(Store.watchWhitelist(w => { S.wl = w; render(); }));
     S.unsubs.push(Store.watchPayouts(p => { S.payouts = p; render(); }));
+    S.unsubs.push(Store.watchClaims(c => { S.claims = c; render(); }));
     S.unsubs.push(Store.watchPhotos(p => { S.photos = p; cleanupPhotos(); render(); }));
   }
 }
@@ -1674,6 +1863,8 @@ function render() {
   else html = shell(viewHome(), true);
   app.innerHTML = html;
   document.documentElement.lang = S.lang;
+  if (typeof applyFx === 'function') applyFx();
+  if (v === 'home' && !S.started && typeof showStart === 'function') showStart();
 }
 function langSel() {
   return `<select data-act-change="lang">${LANGS.map(([k, n]) => `<option value="${k}" ${S.lang === k ? 'selected' : ''}>${n}</option>`).join('')}</select>`;
@@ -1689,7 +1880,7 @@ function shell(body, full) {
 function header() {
   const me = S.me, L = Logic.level(Logic.earned(S.logs));
   return `<header class="top"><div class="who">${avatar(me)}<div class="whot"><div class="nm">${esc(me.name)}</div><div class="lv">${esc(loc(L.name))}${me.relation ? ' · ' + esc(relLabel(me.relation)) : ''}</div></div></div>`
-    + `<div class="coinpill" id="coinTarget">${COINSTACK}<b id="coinAmt" class="${S.shown < 0 ? 'neg' : ''}">${M(S.shown)}</b></div></header>`
+    + `<div class="coinpill" id="coinTarget">${COINSTACK}<b id="coinAmt" class="${S.shown < 0 ? 'neg' : ''}">${M(S.shown)}</b></div>${typeof clockBar === 'function' ? clockBar() : ''}</header>`
     + `<div class="lvbar"><i style="width:${Math.round(L.pct * 100)}%"></i></div>`;
 }
 // Стопка из трёх золотых монет, как кэш в играх
@@ -1738,7 +1929,7 @@ function viewToday() {
   const ds = Logic.dayStats(S.tasks, S.logs, me, now.date, now);
   const L = Logic.level(Logic.earned(S.logs));
   const bonusToday = S.logs.find(l => l.kind === 'bonus' && l.date === now.date);
-  let out = `<div class="card"><div class="mut">${esc(fmtDate(now))} · ${Logic.fmtMin(now.min)}</div>${typeof weatherLine === 'function' ? weatherLine() : ''}`;
+  let out = `<div class="card"><div class="mut">${esc(fmtDate(now))} · ${Logic.fmtMin(now.min)}</div>`;
   if (ts.length) out += `<h3>${T('day_progress', { d: ds.done, n: ds.total })}</h3><div class="pbar"><i style="width:${ds.total ? Math.round(ds.done / ds.total * 100) : 0}%"></i></div>`;
   if (bonusToday) out += `<div class="mut" style="color:var(--gold)">🎁 ${esc(kindLabel(bonusToday))} ${sgn(bonusToday.delta)}</div>`;
   out += `<div class="mut">${esc(loc(L.name))} · ${T('to_next', { c: M(L.toNext) + ' ' + T('coins') })}</div>`;
@@ -1815,7 +2006,7 @@ function viewFamily() {
 
 function viewRewards() {
   const c = cfgS(), now = clock();
-  return weekCard(now, c) + monthCard(now, c);
+  return (typeof shopCard === 'function' ? shopCard() : '') + weekCard(now, c) + monthCard(now, c);
 }
 
 function viewMe() {
@@ -1827,6 +2018,7 @@ function viewMe() {
     + `<div class="grid2"><div class="stat"><b>${M(Logic.balance(S.logs))}</b><div class="mut">${T('balance')} · ${T('coins')}</div></div>`
     + `<div class="stat"><b>${M(Logic.earned(S.logs))}</b><div class="mut">${T('earned_total')}</div></div></div></div>`
     + `<div class="card"><h3>${T('history')}</h3>${rows || `<div class="mut">${T('no_history')}</div>`}</div>`
+    + `<div class="card"><h3>⚙️ ${T('me_settings')}</h3><div class="btnrow"><button class="btn" data-act="replayIntro">🎬 ${T('intro_replay')}</button><button class="btn" data-act="fxToggle">${safeGet('fp_fx') === '0' ? '✨ ' + T('fx_on') : '🚫 ' + T('fx_off')}</button></div></div>`
     + (window.navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches) ? ''
       : `<div class="card"><h3>📲 ${T('install_title')}</h3><div class="mut">${T(/iPhone|iPad|iPod/.test(navigator.userAgent) ? 'install_ios' : 'install_android')}</div></div>`);
 }
@@ -1879,12 +2071,13 @@ function viewAdmin() {
     ['tasks', T('tab_tasks')],
     ['photos', T('tab_photos') + (S.photos.length ? `<span class="badge">${S.photos.length}</span>` : '')],
     ['payouts', T('tab_payouts') + (req ? `<span class="badge">${req}</span>` : '')],
+    ['claims', '🛍️ ' + T('tab_claims') + ((S.claims || []).some(c => c.status === 'pending') ? `<span class="badge">${(S.claims || []).filter(c => c.status === 'pending').length}</span>` : '')],
     ['sounds', T('tab_sounds')],
     ['fun', '🎈 ' + T('nav_fun')],
     ['settings', T('tab_settings')]
   ];
   const t = `<div class="tabs">${tabs.map(([k, n]) => `<button class="chipbtn ${S.tab === k ? 'on' : ''}" data-act="tab" data-id="${k}">${n}</button>`).join('')}</div>`;
-  const body = { users: admUsers, add: admAdd, tasks: admTasks, photos: admPhotos, payouts: admPayouts, sounds: admSounds, fun: admFun, settings: admSettings }[S.tab]();
+  const body = { users: admUsers, add: admAdd, tasks: admTasks, photos: admPhotos, payouts: admPayouts, claims: admClaims, sounds: admSounds, fun: admFun, settings: admSettings }[S.tab]();
   return `<h2>⚙ ${T('admin_panel')}</h2>${t}${body}`;
 }
 
@@ -1927,6 +2120,9 @@ function taskForm(t) {
     + `<div class="grid2"><label class="f">${T('reward')}<input data-tf="reward" type="number" step="0.01" min="0" value="${(t.reward / 100).toFixed(2)}"></label>`
     + `<label class="f">${T('grace')}<input data-tf="grace" type="number" min="0" value="${t.graceMin ?? 60}"></label></div>`
     + `<label class="f">${T('early')}<input data-tf="early" type="number" min="0" value="${t.earlyMin ?? 15}"></label>`
+    + `<label class="f">${T('sched')}<select data-tf="sched">${['daily', 'days', 'once'].map(k => `<option value="${k}" ${(t.once ? 'once' : (Array.isArray(t.days) && t.days.length && t.days.length < 7 ? 'days' : 'daily')) === k ? 'selected' : ''}>${T('sched_' + k)}</option>`).join('')}</select></label>`
+    + `<div class="relgrid">${[1, 2, 3, 4, 5, 6, 0].map(d => `<label class="chk"><input type="checkbox" data-td="${d}" ${(!Array.isArray(t.days) || !t.days.length || t.days.includes(d)) ? 'checked' : ''}> ${CALH[S.lang][(d + 6) % 7]}</label>`).join('')}</div>`
+    + `<label class="f">${T('sched_once_date')}<input data-tf="once" type="date" value="${esc(t.once || '')}"></label>`
     + `<label class="f">${T('photo_mode')}<select data-tf="photo">${['off', 'opt', 'req'].map(m => `<option value="${m}" ${mode === m ? 'selected' : ''}>${T('photo_' + m)}</option>`).join('')}</select></label>`
     + `<div class="mut">${T('assigned_to')}</div><div class="relgrid">${rels.map(r => `<label class="chk"><input type="checkbox" data-tr="${r}" ${(t.relations || []).includes(r) ? 'checked' : ''}> ${r === '*' ? T('rel_all') : T('rel_' + r)}</label>`).join('')}</div>`
     + `<label class="chk"><input type="checkbox" data-tf="active" ${t.active !== false ? 'checked' : ''}> ${T('active')}</label>`
@@ -1991,7 +2187,8 @@ function admSettings() {
     + f('burnPct', T('set_burn'), c.burnPct, 'type="number" min="0" max="100"')
     + f('weeklyGoalPct', T('set_weekly'), c.weeklyGoalPct, 'type="number" min="0" max="100"')
     + `<label class="f">${T('prizes_edit')} (icon | uz | ru | en)<textarea data-sf="prizes" rows="7">${esc(prizeText)}</textarea></label>`
-    + `<div class="btnrow"><button class="btn gold" data-act="savesettings">${T('save')}</button></div><div id="setOk" class="mut"></div></div>`;
+    + `<div class="btnrow"><button class="btn gold" data-act="savesettings">${T('save')}</button></div><div id="setOk" class="mut"></div></div>`
+    + (typeof admBackup === 'function' ? admBackup() : '');
 }
 
 /* ---------- действия ---------- */
@@ -2155,6 +2352,10 @@ ACT.savetask = el => guarded(async () => {
     photo: ['off', 'opt', 'req'].includes(g('photo').value) ? g('photo').value : 'opt',
     active: g('active').checked, relations: [...d.querySelectorAll('[data-tr]')].filter(i => i.checked).map(i => i.dataset.tr)
   });
+  const sched = g('sched') ? g('sched').value : 'daily';
+  const days = [...d.querySelectorAll('[data-td]')].filter(i => i.checked).map(i => +i.dataset.td).sort();
+  t.days = sched === 'days' ? days : [];
+  t.once = sched === 'once' ? (g('once').value || clock().date) : '';
   S.openTask = t.id; await Store.saveTask(t);
 });
 ACT.deltask = el => ask(T('confirm_remove'), () => Store.delTask(el.dataset.id));
@@ -2486,6 +2687,74 @@ const KIDS = (() => {
 })();
 
 
+/* ===== content.js: поздравления по тону (ru/uz) и народные сказки для чтения ===== */
+// {name} — имя, {age} — возраст, {hol} — название праздника
+const GREET = {
+  child: [
+    { ru: '🎀 {name}, наша маленькая принцесса! Сегодня тебе {age}! Пусть каждый день будет как сказка: с улыбками, игрушками, сладостями и мамиными-папиными объятиями. Мы тебя очень любим! 🧁🎈', uz: "🎀 {name}, bizning kichkina malikamiz! Bugun senga {age} yosh! Har kuning ertakdek bo'lsin: tabassum, o'yinchoq, shirinlik va onang-dadangning quchog'i bilan. Seni juda yaxshi ko'ramiz! 🧁🎈" },
+    { ru: '🌈 С днём рождения, солнышко {name}! Расти здоровой, весёлой и доброй, как фея из сказки. Пусть сбываются все твои маленькие мечты! ✨', uz: "🌈 Tug'ilgan kuning bilan, quyoshim {name}! Ertakdagi parida sog', quvnoq va mehribon bo'lib o's. Barcha kichik orzularing ushalsin! ✨" },
+    { ru: '🦄 Ура! Нашей {name} уже {age}! Желаем много-много смеха, новых открытий, ярких мультиков и самых вкусных тортиков! 🎂', uz: "🦄 Hurra! {name}ga allaqachon {age} yosh! Ko'p-ko'p kulgu, yangi kashfiyotlar, rang-barang multfilmlar va eng mazali tortlar tilaymiz! 🎂" }
+  ],
+  kid: [
+    { ru: '🧸 С днём рождения, {name}! Тебе {age} — ты совсем большой! Расти сильным, весёлым и любознательным! 🚗🎈', uz: "🧸 Tug'ilgan kuning bilan, {name}! Senga {age} yosh — sen endi kattasan! Kuchli, quvnoq va qiziquvchan bo'lib o's! 🚗🎈" },
+    { ru: '🎉 {name}, поздравляем! Пусть будет много игрушек, друзей, прыжков, мячиков и смеха! 🥳', uz: "🎉 {name}, tabriklaymiz! O'yinchoq, do'stlar, sakrashlar, to'plar va kulgu ko'p bo'lsin! 🥳" }
+  ],
+  wife: [
+    { ru: '🌹 Любимая {name}, с днём рождения! Ты — свет нашего дома, моя опора и самая красивая женщина на свете. Спасибо за твою нежность, заботу и нашу Дильнозу. Я люблю тебя! ❤️', uz: "🌹 Suyuklim {name}, tug'ilgan kuning bilan! Sen — uyimizning nuri, tayanchim va dunyodagi eng go'zal ayolsan. Mehring, g'amxo'rliging va Dilnozamiz uchun rahmat. Seni sevaman! ❤️" },
+    { ru: '💐 {name}, моя королева! Пусть каждый твой день будет наполнен счастьем, а глаза сияют от радости. Я всегда рядом. 💞', uz: "💐 {name}, mening malikam! Har kuning baxtga to'lsin, ko'zlaring quvonchdan porlasin. Men doim yoningdaman. 💞" },
+    { ru: '✨ С днём рождения, родная! Ты делаешь каждый наш день новым и светлым. Люблю тебя больше, чем можно сказать словами. 🌙❤️', uz: "✨ Tug'ilgan kuning bilan, jonim! Sen har kunimizni yangi va yorug' qilasan. Seni so'z bilan aytib bo'lmaydigan darajada sevaman. 🌙❤️" }
+  ],
+  husband: [
+    { ru: '🎩 Любимый {name}, с днём рождения! Ты — опора нашей семьи и самый лучший папа для Дильнозы. Пусть удача и здоровье всегда будут с тобой! ❤️', uz: "🎩 Suyuklim {name}, tug'ilgan kuning bilan! Sen oilamiz tayanchi va Dilnoza uchun eng yaxshi dadasan. Omad va sog'lik doim sen bilan bo'lsin! ❤️" },
+    { ru: '💪 {name}, поздравляю! Пусть все твои планы сбываются, а дома всегда ждут тепло и любовь. 🏡💛', uz: "💪 {name}, tabriklayman! Barcha rejalaring amalga oshsin, uyda doim iliqlik va mehr kutib tursin. 🏡💛" }
+  ],
+  parent: [
+    { ru: '🌷 Дорогой(ая) {name}, с днём рождения! Спасибо за вашу любовь, заботу и мудрость. Желаем крепкого здоровья, долгих лет и радости от детей и внуков. 🙏', uz: "🌷 Aziz {name}, tug'ilgan kuningiz bilan! Mehringiz, g'amxo'rligingiz va donoligingiz uchun rahmat. Mustahkam sog'lik, uzoq umr va farzandlar, nevaralar quvonchini tilaymiz. 🙏" },
+    { ru: '💐 Поздравляем с днём рождения! Вы — наша гордость и опора. Пусть в вашем доме всегда будут мир, достаток и тепло. ❤️', uz: "💐 Tug'ilgan kuningiz muborak! Siz bizning faxrimiz va tayanchimizsiz. Xonadoningizda doim tinchlik, to'kinlik va iliqlik bo'lsin. ❤️" }
+  ],
+  sister: [
+    { ru: '🌸 Сестрёнка, с днём рождения! Ты всегда рядом — в радости и в трудности. Желаю счастья, здоровья и исполнения всех желаний! 💛', uz: "🌸 Opajon, tug'ilgan kuning bilan! Sen doim yonimdasan — quvonchda ham, qiyinchilikda ham. Baxt, sog'lik va barcha orzularing ushalishini tilayman! 💛" },
+    { ru: '🎂 {name}, поздравляю! Пусть жизнь дарит улыбки, а дом будет полон любви и смеха. 🥰', uz: "🎂 {name}, tabriklayman! Hayot tabassum hadya etsin, uying mehr va kulguga to'lsin. 🥰" }
+  ],
+  friend: [
+    { ru: '🎉 {name}, с праздником! Желаю здоровья, удачи и много светлых дней! ✨', uz: "🎉 {name}, bayramingiz bilan! Sog'lik, omad va ko'p yorug' kunlar tilayman! ✨" }
+  ],
+  wedding: [
+    { ru: '💍 Поздравляем с днём свадьбы! Пусть ваша семья будет крепкой, дом — полным, а любовь — на всю жизнь! 🕊️', uz: "💍 To'yingiz muborak! Oilangiz mustahkam, xonadoningiz to'kin, muhabbatingiz bir umrlik bo'lsin! 🕊️" },
+    { ru: '🌹 Счастья молодым! Пусть в вашем доме всегда звучит детский смех, а сердца бьются в унисон. ❤️', uz: "🌹 Yoshlarga baxt! Uyingizda doim bolalar kulgusi yangrasin, qalblaringiz hamohang ursin. ❤️" }
+  ],
+  holiday: [
+    { ru: '✨ С праздником — {hol}! Мира, добра и радости вашей семье! 🌟', uz: "✨ {hol} bayrami muborak! Oilangizga tinchlik, ezgulik va quvonch tilaymiz! 🌟" },
+    { ru: '🎉 Поздравляем: {hol}! Пусть этот день принесёт тепло, улыбки и хорошие новости. 💛', uz: "🎉 {hol} bilan tabriklaymiz! Bu kun iliqlik, tabassum va xushxabarlar olib kelsin. 💛" }
+  ]
+};
+const TONE_OF = ev => {
+  if (!ev) return 'friend';
+  if (ev.kind === 'holiday') return 'holiday';
+  if (ev.id === 'ev_wedding_1122' || /wedding|to'y|свадьб/i.test(JSON.stringify(ev.title || ''))) return 'wedding';
+  return { daughter: 'child', son: 'child', nephew: 'kid', wife: 'wife', owner: 'husband', mother: 'parent', father: 'parent', sister: 'sister', brother: 'sister' }[ev.rel] || 'friend';
+};
+
+// Народные сказки (общественное достояние), короткий пересказ для малышей
+const TALES = [
+  { id: 'kolobok', icon: '🟡', t: { ru: 'Колобок', uz: 'Kolobok' },
+    ru: 'Жили-были дед да баба. Испекла баба Колобок и положила на окошко остыть. А Колобок — прыг с окошка и покатился по дорожке.\n\nВстретил он Зайца: «Колобок, я тебя съем!» — «Не ешь меня, я тебе песенку спою: я от дедушки ушёл, я от бабушки ушёл, и от тебя, Заяц, уйду!» И покатился дальше.\n\nТак же ушёл Колобок от Волка и от Медведя. А потом встретил Лису. «Ах, какая чудесная песенка! Только я стала плохо слышать. Сядь мне на носок и спой ещё разок!» Колобок прыгнул Лисе на нос… а Лиса — ам! — и съела его.\n\nВывод для малыша: нельзя убегать от мамы и папы и верить хитрым незнакомцам.',
+    uz: "Bir bor ekan, bir yo'q ekan, bir chol va kampir yashagan ekan. Kampir Kolobok pishirib, sovusin deb derazaga qo'yibdi. Kolobok esa — sakrab, yo'lakdan dumalab ketibdi.\n\nQuyonni uchratibdi: «Kolobok, seni yeyman!» — «Meni yema, senga qo'shiq aytib beraman: bobomdan qochdim, buvimdan qochdim, sendan ham, Quyon, qochaman!» Va dumalab ketibdi.\n\nShunday qilib Kolobok Bo'ri va Ayiqdan ham qochibdi. Keyin Tulkini uchratibdi. «Voy, qanday ajoyib qo'shiq! Faqat qulog'im og'ir. Burnimga o'tirib, yana bir bor ayt!» Kolobok Tulkining burniga sakrabdi… Tulki esa — ham! — uni yeb qo'yibdi.\n\nBola uchun xulosa: onang va dadangdan qochma, ayyor begonalarga ishonma." },
+  { id: 'repka', icon: '🥕', t: { ru: 'Репка', uz: 'Sholg\'om' },
+    ru: 'Посадил дед репку. Выросла репка большая-пребольшая. Стал дед репку тянуть: тянет-потянет, вытянуть не может.\n\nПозвал дед бабку. Бабка за дедку, дедка за репку — тянут-потянут, вытянуть не могут. Позвала бабка внучку. Внучка позвала Жучку, Жучка — кошку, кошка — мышку.\n\nМышка за кошку, кошка за Жучку, Жучка за внучку, внучка за бабку, бабка за дедку, дедка за репку — тянут-потянут… и вытянули репку!\n\nВывод: когда все помогают друг другу, получается даже очень трудное дело.',
+    uz: "Bobo sholg'om ekibdi. Sholg'om katta-a-a bo'lib o'sibdi. Bobo sholg'omni torta boshlabdi: tortibdi-tortibdi, sug'urib ololmabdi.\n\nBobo buvini chaqiribdi. Buvi boboni, bobo sholg'omni — tortibdi-tortibdi, sug'urib ololmabdi. Buvi nabirani chaqiribdi. Nabira kuchukni, kuchuk mushukni, mushuk sichqonchani chaqiribdi.\n\nSichqoncha mushukni, mushuk kuchukni, kuchuk nabirani, nabira buvini, buvi boboni, bobo sholg'omni — tortibdi-tortibdi… va sholg'omni sug'urib olishibdi!\n\nXulosa: hamma bir-biriga yordam bersa, eng qiyin ish ham bitadi." },
+  { id: 'teremok', icon: '🏠', t: { ru: 'Теремок', uz: 'Kichkina uycha' },
+    ru: 'Стоит в поле теремок. Прибежала мышка-норушка: «Кто в теремочке живёт?» Никого нет — стала мышка там жить.\n\nПрискакала лягушка-квакушка — стали жить вдвоём. Прибежал зайчик-побегайчик — стали жить втроём. Пришла лисичка-сестричка, потом волчок-серый бочок. Все дружно жили, песни пели.\n\nПришёл медведь: «Пустите и меня!» Полез в теремок — и сломал его. Звери не стали ругаться. Все вместе построили новый теремок — больше и лучше прежнего!\n\nВывод: друзья не ссорятся из-за беды, а вместе всё исправляют.',
+    uz: "Dalada kichkina uycha turgan ekan. Sichqoncha yugurib kelibdi: «Uychada kim yashaydi?» Hech kim yo'q — sichqoncha o'sha yerda yashay boshlabdi.\n\nQurbaqa sakrab kelibdi — ikkovlon yashay boshlashibdi. Quyoncha yugurib kelibdi — uchovlon yashashibdi. Keyin tulki, so'ng kulrang bo'ri kelibdi. Hammasi ahil yashab, qo'shiq aytishibdi.\n\nAyiq kelibdi: «Meni ham kiritinglar!» Uychaga kiraman deb, uni buzib qo'yibdi. Hayvonlar urishmabdi. Hammasi birga yangi uycha qurishibdi — avvalgisidan ham katta va chiroyli!\n\nXulosa: do'stlar baloga urishmaydi, birga hammasini tuzatishadi." },
+  { id: 'ryaba', icon: '🥚', t: { ru: 'Курочка Ряба', uz: 'Chipor tovuq' },
+    ru: 'Жили-были дед да баба, и была у них курочка Ряба. Снесла курочка яичко — не простое, а золотое.\n\nДед бил-бил — не разбил. Баба била-била — не разбила. Мышка бежала, хвостиком махнула — яичко упало и разбилось. Дед и баба плачут.\n\nА курочка кудахчет: «Не плачь, дед, не плачь, баба! Я снесу вам яичко другое — не золотое, а простое!»\n\nВывод: не так важно золото, как то, что мы вместе и заботимся друг о друге.',
+    uz: "Bir bor ekan, chol va kampir yashagan ekan, ularning Chipor tovug'i bor ekan. Tovuq tuxum qo'yibdi — oddiy emas, oltin tuxum.\n\nChol urib-urib — sindirolmabdi. Kampir urib-urib — sindirolmabdi. Sichqoncha yugurib o'tib, dumini silkitibdi — tuxum tushib sinibdi. Chol va kampir yig'lashibdi.\n\nTovuq esa qaqillabdi: «Yig'lama, chol, yig'lama, kampir! Men sizlarga boshqa tuxum qo'yaman — oltin emas, oddiy!»\n\nXulosa: oltin emas, birga bo'lish va bir-biringga g'amxo'rlik qilish muhim." },
+  { id: 'zumrad', icon: '🌟', t: { ru: 'Зумрад и Киммат', uz: 'Zumrad va Qimmat' },
+    ru: 'Жила-была добрая и трудолюбивая девочка Зумрад и её ленивая сводная сестра Киммат. Мачеха не любила Зумрад и отправила её в лес.\n\nВ лесу Зумрад встретила старушку. Девочка помогла ей: прибрала дом, приготовила обед, вежливо разговаривала. Старушка дала ей в подарок сундучок — а дома в нём оказались золото и украшения.\n\nТогда мачеха отправила в лес Киммат. Но Киммат грубила старушке и ничего не хотела делать. Она тоже получила сундучок, но из него выползли змеи.\n\nВывод: доброта и трудолюбие всегда вознаграждаются, а лень и грубость приводят к беде.',
+    uz: "Bir bor ekan, mehribon va mehnatkash qizcha Zumrad va uning dangasa o'gay singlisi Qimmat yashagan ekan. O'gay ona Zumradni yoqtirmay, uni o'rmonga jo'natibdi.\n\nO'rmonda Zumrad bir kampirni uchratibdi. Qizcha unga yordam beribdi: uyini yig'ishtiribdi, ovqat pishiribdi, odob bilan gaplashibdi. Kampir unga sandiqcha sovg'a qilibdi — uyda ochsa, ichida oltin va zeb-ziynatlar bor ekan.\n\nShunda o'gay ona Qimmatni o'rmonga jo'natibdi. Ammo Qimmat kampirga qo'pollik qilibdi va hech narsa qilishni xohlamabdi. U ham sandiqcha olibdi, lekin ichidan ilonlar chiqibdi.\n\nXulosa: mehribonlik va mehnatsevarlik doim taqdirlanadi, dangasalik va qo'pollik esa baloga olib keladi." }
+];
+
+
 /* ===== fun.js: праздники, кухня (видео-рецепты), детский уголок (сказки и игры) ===== */
 const RCATS = [['first', '🍲'], ['second', '🍛'], ['salad', '🥗'], ['dessert', '🍰'], ['cocktail', '🍹']];
 const VCATS = RCATS.concat([['tales', '📖'], ['mom', '👩‍👧']]);
@@ -2547,14 +2816,6 @@ ACT.vplay = el => {
 };
 
 /* ---------- праздники ---------- */
-function eventsCard(now) {
-  const up = Logic.upcomingEvents(eventsNow(), now.date, 14);
-  if (!up.length) return '';
-  return `<div class="card evcard"><h3>🎉 ${T('ev_soon')}</h3>` + up.map(e => {
-    const when = e.left === 0 ? `<b class="evtoday">${T('ev_today')}</b>` : e.left === 1 ? T('ev_tomorrow') : T('ev_in', { n: e.left });
-    return `<div class="evrow"><span class="evi">${esc(e.icon || '🎉')}</span><div><b>${esc(loc(e.title))}</b><div class="mut">${esc(e.on)}</div></div><span class="evwhen">${when}</span></div>`;
-  }).join('') + `</div>`;
-}
 // В день события: поздравление и конфетти один раз за запуск
 function celebrate(now) {
   S.celebrated = S.celebrated || {};
@@ -2562,7 +2823,7 @@ function celebrate(now) {
     const k = e.id + '_' + now.date;
     if (S.celebrated[k]) return;
     S.celebrated[k] = 1;
-    setTimeout(() => { confetti(); play('fanfare'); banner('good', `${e.icon || '🎉'} ${loc(e.title)}`, T('ev_today'), 6000); }, 600);
+    setTimeout(() => { confetti(); play('fanfare'); banner('good', `${e.icon || '🎉'} ${evTitle(e)}`, e.kind === 'bday' ? T('bday_turns', { n: Logic.ageOn(e, e.on) }) : T('ev_today'), 6000); }, 600);
   });
 }
 function confetti() {
@@ -2598,16 +2859,10 @@ function viewKitchen() {
     return `<button class="chipbtn ${cat === k ? 'on' : ''}" data-act="rcat" data-id="${k}">${i} ${T('rc_' + k)}${n ? ` <small>${n}</small>` : ''}</button>`;
   }).join('');
   const vids = all.filter(v => v.cat === cat);
-  return `<div class="card"><h2>🍳 ${T('fun_kitchen')}</h2><div class="mut">${T('kitchen_hint')}</div><div class="tabs" style="margin-top:8px">${chips}</div></div>`
-    + (vids.length ? `<div class="vgrid">${vids.map(videoTile).join('')}</div>` : `<div class="card center mut">${T(isAdmin() ? 'videos_empty_admin' : 'videos_empty')}</div>`);
-}
-
-function viewEvents() {
-  const now = clock(), up = Logic.upcomingEvents(eventsNow(), now.date, 400);
-  return `<div class="card"><h2>🎉 ${T('fun_events')}</h2><div class="mut">${T('events_hint')}</div></div>`
-    + (up.length ? up.map(e => `<div class="card evrow big"><span class="evi">${esc(e.icon || '🎉')}</span><div><b>${esc(loc(e.title))}</b><div class="mut">${esc(e.on)}${e.yearly ? ' · ' + T('ev_yearly') : ''}</div></div>`
-      + `<span class="evwhen">${e.left === 0 ? `<b class="evtoday">${T('ev_today')}</b>` : e.left === 1 ? T('ev_tomorrow') : T('ev_in', { n: e.left })}</span></div>`).join('')
-      : `<div class="card center mut">${T('events_empty')}</div>`);
+  const mine = `<button class="chipbtn ${cat === 'mine' ? 'on' : ''}" data-act="rcat" data-id="mine">📒 ${T('r_mine')}${(S.recipes || []).length ? ` <small>${S.recipes.length}</small>` : ''}</button>`;
+  const head = `<div class="card"><h2>🍳 ${T('fun_kitchen')}</h2><div class="mut">${T('kitchen_hint')}</div><div class="tabs" style="margin-top:8px">${mine}${chips}</div></div>`;
+  if (cat === 'mine') return head + viewRecipes();
+  return head + (vids.length ? `<div class="vgrid">${vids.map(videoTile).join('')}</div>` : `<div class="card center mut">${T(isAdmin() ? 'videos_empty_admin' : 'videos_empty')}</div>`);
 }
 
 /* ---------- детский уголок ---------- */
@@ -2628,10 +2883,10 @@ const lsS = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catc
 const playedToday = () => (lsJ('fp_played', {})[clock().date] || []);
 function viewKids() {
   const kt = S.ktab || 'together';
-  const sub = [['together', '🎲'], ['hands', '✋'], ['qa', '❓'], ['advice', '💡'], ['screen', '📱'], ['video', '📺']];
+  const sub = [['together', '🎲'], ['hands', '✋'], ['qa', '❓'], ['tales', '📖'], ['advice', '💡'], ['screen', '📱'], ['video', '📺']];
   const head = `<div class="card kidhead"><h2>👩‍👧 ${T('fun_kids')}</h2><div class="mut">${T('kids_hint2')}</div>`
     + `<div class="ksub">${sub.map(([k, i]) => `<button class="${kt === k ? 'on' : ''}" data-act="ktab" data-id="${k}"><span>${i}</span>${T('k_' + k)}</button>`).join('')}</div></div>`;
-  const body = { together: kidsTogether, hands: kidsHands, qa: kidsQA, advice: kidsAdvice, screen: kidsScreen, video: kidsVideo }[kt]();
+  const body = { together: kidsTogether, hands: kidsHands, qa: kidsQA, tales: kidsTales, advice: kidsAdvice, screen: kidsScreen, video: kidsVideo }[kt]();
   return head + body;
 }
 ACT.ktab = el => { S.ktab = el.dataset.id; S.kopen = ''; render(); };
@@ -2815,7 +3070,7 @@ function gameAnimals() {
 /* ---------- админ: «Досуг» ---------- */
 function admFun() {
   const evs = eventsNow().slice().sort((a, b) => String(a.date).slice(5).localeCompare(String(b.date).slice(5)));
-  const evRows = evs.map(e => `<div class="hrow"><span>${esc(e.icon || '🎉')} <b>${esc(loc(e.title))}</b></span><span class="mut">${esc(e.yearly ? e.date.slice(5) + ' · ' + T('ev_yearly') : e.date)}</span><button class="btn red sm" data-act="evdel" data-id="${esc(e.id)}">✕</button></div>`).join('');
+  const evRows = evs.map(e => `<div class="hrow"><span>${esc(e.icon || '🎉')} <b>${esc(evTitle(e))}</b></span><span class="mut">${esc(e.yearly ? e.date.slice(5).split('-').reverse().join('.') + (e.kind === 'bday' ? ' · ' + e.date.slice(0, 4) : '') : e.date)}${e.phone ? ' · 📞' : ''}</span><button class="btn sm" data-act="evedit" data-id="${esc(e.id)}">✎</button><button class="btn red sm" data-act="evdel" data-id="${esc(e.id)}">✕</button></div>`).join('');
   const vids = mediaOf();
   const vRows = VCATS.map(([k, i]) => {
     const vs = vids.filter(v => v.cat === k);
@@ -2976,6 +3231,441 @@ ACT.cshare = async () => {
     else banner('warn', T('card_noshare'), '', 3500);
   } catch (e) { /* пользователь отменил */ }
 };
+
+
+/* ===== family.js: календарь и дни рождения, подготовка, «Поздравить», магазин наград и сундук,
+   рецепты, сказки, панель часов и погоды, эффекты, экран «Начать день», приветствие, резервная копия ===== */
+const evTitle = e => (e && e.kind === 'bday' ? T('bday_of', { n: loc(e.name) }) : loc(e && e.title));
+const fmtDM = d => { const [y, m, dd] = d.split('-').map(Number); return `${dd} ${MN[S.lang][m - 1]}`; };
+const whenTxt = e => (e.left === 0 ? `<b class="evtoday">${T('ev_today')}</b>` : e.left === 1 ? T('ev_tomorrow') : T('ev_in', { n: e.left }));
+const ageTxt = e => { const a = Logic.ageOn(e, e.on); return a !== null && a >= 0 ? ' · ' + T('bday_turns', { n: a }) : ''; };
+
+/* ---------- карточка «Скоро» на главном экране + напоминания ---------- */
+function eventsCard(now) {
+  const up = Logic.upcomingEvents(eventsNow(), now.date, 30).slice(0, 4);
+  remindEvents(now);
+  if (!up.length) return '';
+  return `<div class="card evcard"><h3>🎉 ${T('ev_soon')}</h3>` + up.map(e =>
+    `<div class="evrow"><span class="evi">${esc(e.icon || '🎉')}</span><div><b>${esc(evTitle(e))}</b><div class="mut">${esc(fmtDM(e.on))}${ageTxt(e)}</div></div>`
+    + `<span class="evwhen">${whenTxt(e)}</span></div>`
+    + (e.left <= 7 ? `<div class="btnrow evbtns"><button class="btn gold sm" data-act="congrats" data-id="${esc(e.id)}">🎉 ${T('congrats')}</button><button class="btn sm" data-act="prepopen" data-id="${esc(e.id)}">📋 ${T('prep')}</button></div>` : '')).join('')
+    + `</div>`;
+}
+// За 30, 7, 3 дня и в сам день — один раз за день на этом телефоне
+function remindEvents(now) {
+  Logic.dueReminders(eventsNow(), now.date).forEach(e => {
+    const k = `fp_rem_${e.id}_${now.date}`;
+    if (safeGet(k) || e.left === 0) return;
+    safeSet(k, '1');
+    setTimeout(() => { play('partner'); banner('good', `${e.icon || '🔔'} ${evTitle(e)}`, T('ev_in', { n: e.left }) + ageTxt(e).replace(' · ', ' · '), 6000); }, 1400);
+  });
+}
+
+/* ---------- вкладка «Праздники» ---------- */
+function viewEvents() {
+  const now = clock(), up = Logic.upcomingEvents(eventsNow(), now.date, 400);
+  const row = e => `<div class="card evrow big ${e.kind === 'bday' ? 'bday' : ''}"><span class="evi">${esc(e.icon || '🎉')}</span><div style="min-width:0"><b>${esc(evTitle(e))}</b>`
+    + `<div class="mut">${esc(fmtDM(e.on))}${ageTxt(e)}${e.yearly && e.kind !== 'bday' ? ' · ' + T('ev_yearly') : ''}</div>`
+    + `<div class="btnrow evbtns"><button class="btn gold sm" data-act="congrats" data-id="${esc(e.id)}">🎉 ${T('congrats')}</button>`
+    + (e.kind !== 'holiday' || e.id === 'ev_newyear' ? `<button class="btn sm" data-act="prepopen" data-id="${esc(e.id)}">📋 ${T('prep')} ${prepCount(e)}</button>` : '') + `</div></div>`
+    + `<span class="evwhen">${whenTxt(e)}</span></div>`;
+  return `<div class="card"><h2>🎉 ${T('fun_events')}</h2><div class="mut">${T('events_hint2')}</div>`
+    + `<div class="btnrow"><button class="btn gold" data-act="evics">📅 ${T('ev_to_phone')}</button></div></div>`
+    + (up.length ? up.map(row).join('') : `<div class="card center mut">${T('events_empty')}</div>`);
+}
+ACT.evics = () => {
+  const ics = Logic.eventsIcs(eventsNow(), clock().date, e => ((e.icon || '') + ' ' + evTitle(e)).trim());
+  downloadFile(ics, 'new-day-holidays.ics', 'text/calendar;charset=utf-8');
+  modal(`<h3>📅 ${T('ev_to_phone')}</h3><p>${T('ev_ics_help')}</p><div class="btnrow"><button class="btn" data-act="close">OK</button></div>`);
+};
+function downloadFile(text, name, type) {
+  const blob = text instanceof Blob ? text : new Blob([text], { type });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+}
+
+/* ---------- план подготовки (общий для семьи) ---------- */
+const PREP = ['gift', 'cake', 'sweets', 'menu', 'shop', 'decor', 'invite'];
+const PREP_ICON = { gift: '🎁', cake: '🎂', sweets: '🍬', menu: '🍽️', shop: '🛒', decor: '🎈', invite: '✉️' };
+const prepKey = e => `${e.id}_${(e.on || clock().date).slice(0, 4)}`;
+const prepOf = e => ((S.shared && S.shared.prep && S.shared.prep[prepKey(e)]) || []);
+const prepCount = e => { const n = prepOf(e).length; return n ? `${n}/${PREP.length}` : ''; };
+const evById = id => { const e = eventsNow().find(x => x.id === id); if (!e) return null; const on = Logic.nextOccur(e, clock().date) || e.date; return Object.assign({}, e, { on, left: Logic.daysBetween(clock().date, on) }); };
+function prepModal(id) {
+  const e = evById(id); if (!e) return;
+  const done = prepOf(e);
+  const m = modal(`<h3>📋 ${T('prep')}: ${esc(evTitle(e))}</h3><div class="mut">${esc(fmtDM(e.on))}${ageTxt(e)} · ${whenTxt(e)}</div>`
+    + `<div class="preplist">${PREP.map(k => `<label class="chk prep"><input type="checkbox" data-prep="${k}" ${done.includes(k) ? 'checked' : ''}> ${PREP_ICON[k]} ${T('prep_' + k)}</label>`).join('')}</div>`
+    + `<div class="btnrow"><button class="btn gold" data-act="close">${T('close')}</button></div>`);
+  m.addEventListener('change', ev => {
+    const k = ev.target.dataset.prep; if (!k) return;
+    const cur = new Set(prepOf(e)); ev.target.checked ? cur.add(k) : cur.delete(k);
+    const prep = Object.assign({}, (S.shared && S.shared.prep) || {}, { [prepKey(e)]: [...cur] });
+    Store.saveShared('family', { prep }).catch(err => banner('warn', T('login_fail'), String(err && err.code || ''), 3000));
+    if (cur.size === PREP.length) { confetti(); play('fanfare'); }
+  });
+}
+ACT.prepopen = el => prepModal(el.dataset.id);
+
+/* ---------- «Поздравить»: тексты по тону, открытка, фотооткрытка, SMS/WhatsApp/Telegram ---------- */
+const fill = (s, e) => s.split('{name}').join(e.kind === 'bday' ? loc(e.name) : '').split('{age}').join(String(Logic.ageOn(e, e.on) ?? '')).split('{hol}').join(evTitle(e)).replace(/\s+,/g, ',');
+ACT.congrats = el => { const e = evById(el.dataset.id); if (!e) return; S.studio = { e, i: 0, text: '', photo: null }; studioOpen(); };
+function studioTexts(e) {
+  const lang = S.lang === 'uz' ? 'uz' : 'ru';
+  const favs = lsJ('fp_greet_fav', []).filter(f => f.tone === TONE_OF(e)).map(f => f.text);
+  return favs.concat((GREET[TONE_OF(e)] || GREET.friend).map(g => fill(g[lang] || g.ru, e)));
+}
+function studioOpen() {
+  const st = S.studio, e = st.e, texts = studioTexts(e);
+  if (!st.text) st.text = texts[st.i % texts.length];
+  const ph = String(e.phone || '').replace(/[^\d+]/g, '');
+  const m = modal(`<h3>🎉 ${T('congrats')}: ${esc(evTitle(e))}</h3><div class="mut">${esc(fmtDM(e.on))}${ageTxt(e)} · ${T('tone_' + TONE_OF(e))}</div>`
+    + `<div class="gvar">${texts.map((t, i) => `<button class="${st.text === t ? 'on' : ''}" data-act="gpick" data-id="${i}">${i + 1}</button>`).join('')}</div>`
+    + `<label class="f">${T('g_text')}<textarea id="gText" rows="6">${esc(st.text)}</textarea></label>`
+    + `<div class="btnrow"><button class="btn sm" data-act="gfav">⭐ ${T('g_fav')}</button><button class="btn sm" data-act="gcopy">📋 ${T('g_copy')}</button></div>`
+    + `<h3 style="margin-top:12px">💌 ${T('fun_cards')}</h3><div class="btnrow"><button class="btn gold" data-act="gcard">✨ ${T('card_make')}</button><button class="btn" data-act="gphoto">🖼️ ${T('g_photo_card')}</button></div>`
+    + `<h3 style="margin-top:12px">📤 ${T('g_send')}</h3><div class="cbtns">`
+    + `<button class="cbtn call" data-act="gsms">✉️ SMS</button><button class="cbtn wa" data-act="gwa">💬 WhatsApp</button><button class="cbtn tg" data-act="gtg">✈️ Telegram</button></div>`
+    + (ph ? '' : `<div class="mut" style="margin-top:6px">${T(isAdmin() ? 'g_nophone_admin' : 'g_nophone')}</div>`)
+    + `<div class="btnrow"><button class="btn" data-act="close">${T('close')}</button></div>`);
+  m.querySelector('#gText').addEventListener('input', ev => { st.text = ev.target.value; });
+}
+const gText = () => { const t = $('#gText'); if (t) S.studio.text = t.value; return S.studio.text; };
+ACT.gpick = el => { const texts = studioTexts(S.studio.e); S.studio.text = texts[+el.dataset.id]; studioOpen(); };
+ACT.gfav = () => { const f = lsJ('fp_greet_fav', []); f.unshift({ tone: TONE_OF(S.studio.e), text: gText() }); lsS('fp_greet_fav', f.slice(0, 30)); banner('good', '⭐ ' + T('saved_ok'), '', 1800); };
+ACT.gcopy = () => { try { navigator.clipboard.writeText(gText()); banner('good', '📋 ' + T('g_copied'), '', 1800); } catch (e) { /* нет доступа */ } };
+const gPhone = () => String(S.studio.e.phone || '').replace(/[^\d+]/g, '');
+const isIOS = () => /iPhone|iPad|iPod/.test(navigator.userAgent);
+ACT.gsms = () => { location.href = `sms:${gPhone()}${isIOS() ? '&' : '?'}body=${encodeURIComponent(gText())}`; };
+ACT.gwa = () => { window.open(`https://wa.me/${gPhone().replace(/^\+/, '')}?text=${encodeURIComponent(gText())}`, '_blank'); };
+ACT.gtg = () => { window.open(`https://t.me/share/url?url=${encodeURIComponent(location.origin + location.pathname)}&text=${encodeURIComponent(gText())}`, '_blank'); };
+ACT.gcard = () => { gText(); studioCard(null); };
+ACT.gphoto = () => {
+  gText();
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
+  inp.onchange = () => { const f = inp.files && inp.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { const img = new Image(); img.onload = () => studioCard(img); img.src = r.result; }; r.readAsDataURL(f); };
+  inp.click();
+};
+function studioCard(photo) {
+  const st = S.studio, e = st.e, age = Logic.ageOn(e, e.on);
+  const cv = drawCardX({ icon: e.icon || '🎉', title: e.kind === 'bday' ? loc(e.name) : evTitle(e), sub: (age !== null && age >= 0 ? T('bday_turns', { n: age }) + ' · ' : '') + fmtDM(e.on), text: st.text, from: S.me ? firstName(S.me.name) : '', photo, th: e.rel === 'wife' || e.rel === 'daughter' ? 1 : 0 });
+  const url = cv.toDataURL('image/png'); S.cardUrl = url;
+  modal(`<h3>💌 ${esc(evTitle(e))}</h3><img class="cardimg" src="${url}" alt=""><div class="btnrow"><button class="btn gold" data-act="cshare">📤 ${T('card_share')}</button><a class="btn" href="${url}" download="new-day-card.png">⬇ ${T('card_save')}</a><button class="btn" data-act="gback">← ${T('back')}</button></div>`);
+  confetti();
+}
+ACT.gback = () => studioOpen();
+// Открытка: фон, рамка, фото или значок, имя, возраст и дата, текст, подпись
+function drawCardX(o) {
+  const th = CARD_THEMES[o.th || 0], W = 1080, H = 1350, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const x = cv.getContext('2d');
+  const g = x.createRadialGradient(W / 2, H * 0.25, 50, W / 2, H / 2, H * 0.8); g.addColorStop(0, th[1]); g.addColorStop(1, th[2]);
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  for (let i = 0; i < 160; i++) { x.fillStyle = `rgba(255,220,120,${Math.random() * 0.6})`; x.beginPath(); x.arc(Math.random() * W, Math.random() * H, Math.random() * 2.6, 0, 7); x.fill(); }
+  x.font = '64px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
+  ['🌸', '✨', '🎈', '💛', '🌷', '⭐'].forEach((em, i) => x.fillText(em, i % 2 ? W - 120 : 120, 140 + i * 190));
+  x.strokeStyle = th[3]; x.lineWidth = 6; x.beginPath(); x.roundRect ? x.roundRect(48, 48, W - 96, H - 96, 48) : x.rect(48, 48, W - 96, H - 96); x.stroke();
+  let y = 330;
+  if (o.photo) {
+    const r = 210, cx = W / 2, cy = 320, s = Math.min(o.photo.width, o.photo.height);
+    x.save(); x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); x.clip();
+    x.drawImage(o.photo, (o.photo.width - s) / 2, (o.photo.height - s) / 2, s, s, cx - r, cy - r, r * 2, r * 2); x.restore();
+    x.lineWidth = 12; x.strokeStyle = th[3]; x.beginPath(); x.arc(cx, cy, r + 6, 0, Math.PI * 2); x.stroke();
+    y = 330;
+  } else { x.font = '230px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; x.fillText(o.icon, W / 2, 320); }
+  const gold = x.createLinearGradient(0, 560, 0, 700); gold.addColorStop(0, '#fff6c2'); gold.addColorStop(0.5, th[3]); gold.addColorStop(1, '#e0951a');
+  x.fillStyle = gold; x.shadowColor = 'rgba(255,210,63,.55)'; x.shadowBlur = 30; x.font = '900 104px Nunito, Arial, sans-serif';
+  wrapLines(x, o.title, W - 200).slice(0, 2).forEach((l, i) => x.fillText(l, W / 2, 640 + i * 112));
+  x.shadowBlur = 0; x.fillStyle = th[3]; x.font = '800 48px Nunito, Arial, sans-serif'; x.fillText(o.sub || '', W / 2, 770);
+  x.fillStyle = '#ffffff'; x.font = '700 40px Nunito, Arial, sans-serif';
+  const tl = wrapLines(x, String(o.text || '').replace(/\s+/g, ' '), W - 230).slice(0, 7);
+  tl.forEach((l, i) => x.fillText(l, W / 2, 860 + i * 54));
+  if (o.from) { x.fillStyle = th[3]; x.font = '800 50px Nunito, Arial, sans-serif'; x.fillText('— ' + o.from, W / 2, Math.min(1210, 900 + tl.length * 54 + 40)); }
+  x.fillStyle = 'rgba(255,255,255,.45)'; x.font = '700 30px Nunito, Arial, sans-serif'; x.fillText('NEW DAY ✦', W / 2, H - 92);
+  return cv;
+}
+
+/* ---------- админ: правка события (имя, дата, телефон) ---------- */
+ACT.evedit = el => {
+  const e = eventsNow().find(x => x.id === el.dataset.id); if (!e) return;
+  const nm = e.kind === 'bday' ? e.name : e.title;
+  const m = modal(`<h3>✎ ${esc(evTitle(e))}</h3>`
+    + `<label class="f">${T('ev_name')} (uz)<input id="eeUz" value="${esc((nm || {}).uz || '')}"></label><label class="f">${T('ev_name')} (ru)<input id="eeRu" value="${esc((nm || {}).ru || '')}"></label>`
+    + `<div class="grid2"><label class="f">${T('ev_date')}<input id="eeDate" type="date" value="${esc(e.date)}"></label><label class="f">${T('icon')}<input id="eeIcon" value="${esc(e.icon || '')}"></label></div>`
+    + `<label class="f">${T('c_phone')}<input id="eePhone" type="tel" value="${esc(e.phone || '')}" placeholder="+998 90 123 45 67"></label>`
+    + `<label class="f">${T('ev_note')}<input id="eeNote" value="${esc(e.note || '')}"></label>`
+    + `<div class="btnrow"><button class="btn gold" data-act="evsave" data-id="${esc(e.id)}">${T('save')}</button><button class="btn" data-act="close">${T('cancel')}</button></div>`);
+  m._id = e.id;
+};
+ACT.evsave = el => guarded(async () => {
+  const id = el.dataset.id, uz = $('#eeUz').value.trim(), ru = $('#eeRu').value.trim() || uz;
+  const evs = eventsNow().map(e => {
+    if (e.id !== id) return e;
+    const nm = { uz: uz || ru, ru, en: (e.kind === 'bday' ? e.name : e.title || {}).en || ru };
+    return Object.assign({}, e, e.kind === 'bday' ? { name: nm, title: nm } : { title: nm },
+      { date: $('#eeDate').value || e.date, icon: $('#eeIcon').value.trim() || e.icon, phone: $('#eePhone').value.trim(), note: $('#eeNote').value.trim() });
+  });
+  closeModal(); await saveEvents(evs);
+});
+
+/* ---------- магазин наград и сундук-сюрприз ---------- */
+const R = (id, icon, price, uz, ru, en) => ({ id, icon, price, title: { uz, ru, en } });
+const DEFAULT_REWARDS = [
+  R('rw_sweets', '🍬', 15000, 'Shirinliklar', 'Сладости', 'Sweets'),
+  R('rw_samsa', '🥟', 25000, 'Somsa buyurtma', 'Заказ самсы', 'Samsa delivery'),
+  R('rw_lagman', '🍜', 40000, "Uyg'ur lag'moni", 'Уйгурский лагман', 'Uyghur lagman'),
+  R('rw_shashlik', '🍢', 60000, 'Shashlik', 'Шашлыки', 'Shashlik'),
+  R('rw_regal', '🐟', 100000, 'Regal restorani (baliq)', 'Ресторан Regal (рыба)', 'Regal restaurant (fish)'),
+  R('rw_table', '🎊', 150000, 'Bayramona oilaviy dasturxon', 'Праздничный семейный стол', 'Festive family table')
+];
+const CHEST = { price: 25000, odds: [['rw_sweets', 40], ['rw_samsa', 30], ['rw_lagman', 15], ['rw_shashlik', 10], ['rw_regal', 5]] };
+const rewardsOf = () => (S.settings && Array.isArray(S.settings.rewards) && S.settings.rewards.length ? S.settings.rewards : DEFAULT_REWARDS);
+const rewardById = id => rewardsOf().find(r => r.id === id) || DEFAULT_REWARDS.find(r => r.id === id);
+const reserved = () => (S.myClaims || []).filter(c => c.status === 'pending').reduce((s, c) => s + (c.price || 0), 0);
+const available = () => Logic.balance(S.logs) - reserved();
+function shopCard() {
+  const av = available();
+  const claims = (S.myClaims || []).slice().sort((a, b) => (b.at || 0) - (a.at || 0)).slice(0, 8);
+  return `<div class="card shop"><h2>🛍️ ${T('shop_title')}</h2><div class="mut">${T('shop_hint')}</div>`
+    + `<div class="avail">${COINSTACK}<b>${M(av)}</b><span>${T('shop_avail')}</span></div>`
+    + `<button class="chestbtn ${av >= CHEST.price ? '' : 'off'}" data-act="chest"><span class="chesti">🎁</span><span><b>${T('chest_title')}</b><small>${M(CHEST.price)} ${T('coins')} · ${T('chest_odds')}</small></span></button>`
+    + `<div class="rgrid">${rewardsOf().map(r => `<button class="rcard ${av >= r.price ? '' : 'off'}" data-act="buy" data-id="${esc(r.id)}"><span>${esc(r.icon)}</span><b>${esc(loc(r.title))}</b><i>${M(r.price)}</i></button>`).join('')}</div>`
+    + (claims.length ? `<h3 style="margin-top:12px">${T('claims_my')}</h3>` + claims.map(c => `<div class="hrow"><span>${esc(c.icon || '🎁')}</span><span>${esc(loc(c.title))}${c.via === 'chest' ? ' · 🎁' : ''}</span><b>${T('cl_' + c.status)}</b>${c.status === 'pending' ? `<button class="btn sm" data-act="clcancel" data-id="${esc(c.id)}">✕</button>` : ''}</div>`).join('') : '')
+    + `</div>`;
+}
+async function claimReward(r, via) {
+  const id = `${S.me.uid}_${Date.now()}`;
+  await Store.addClaim({ id, uid: S.me.uid, name: S.me.name, rewardId: r.id, title: r.title, icon: r.icon, price: via === 'chest' ? CHEST.price : r.price, via, status: 'pending', at: Date.now() });
+}
+ACT.buy = el => {
+  const r = rewardById(el.dataset.id); if (!r) return;
+  if (available() < r.price) { banner('warn', T('shop_nomoney'), M(r.price - available()) + ' ' + T('coins'), 3000); return; }
+  ask(T('shop_confirm', { t: loc(r.title), c: M(r.price) }), async () => { await claimReward(r, 'shop'); play('fanfare'); confetti(); banner('good', `${r.icon} ${loc(r.title)}`, T('shop_sent'), 4200); });
+};
+ACT.clcancel = el => ask(T('cl_cancel_q'), () => Store.updateClaim(el.dataset.id, { status: 'canceled' }));
+ACT.chest = () => {
+  if (available() < CHEST.price) { banner('warn', T('shop_nomoney'), M(CHEST.price - available()) + ' ' + T('coins'), 3000); return; }
+  const roll = Math.random() * 100; let acc = 0, pick = CHEST.odds[0][0];
+  for (const [id, p] of CHEST.odds) { acc += p; if (roll < acc) { pick = id; break; } }
+  const r = rewardById(pick);
+  S.quiet = true; Snd.stopMusic();
+  const m = modal(`<div class="chestbox"><div class="chestbig" id="chestBig">🎁</div><div class="rays"></div><div id="chestTxt" class="mut">${T('chest_tap')}</div></div>`);
+  m.classList.add('game');
+  let opened = false;
+  m.querySelector('#chestBig').onclick = async ev => {
+    ev.stopPropagation(); if (opened) return; opened = true;
+    const big = m.querySelector('#chestBig'); big.classList.add('shake2'); Snd.tick && Snd.tick();
+    setTimeout(async () => {
+      big.classList.remove('shake2'); big.classList.add('open'); big.textContent = r.icon;
+      m.querySelector('.rays').classList.add('on'); confetti(); play('fanfare');
+      m.querySelector('#chestTxt').innerHTML = `<div class="prizecard"><b>${esc(loc(r.title))}</b><span>${T('chest_won')}</span></div><div class="btnrow" style="justify-content:center"><button class="btn gold" data-act="close">OK</button></div>`;
+      try { await claimReward(r, 'chest'); } catch (e) { banner('warn', T('login_fail'), String(e && e.code || ''), 3000); }
+    }, 1300);
+  };
+};
+// Админ: заявки на награды и каталог
+function admClaims() {
+  const list = (S.claims || []).slice().sort((a, b) => ((a.status === 'pending' ? 0 : 1) - (b.status === 'pending' ? 0 : 1)) || (b.at || 0) - (a.at || 0));
+  const rows = list.map(c => `<div class="card"><b>${esc(c.icon || '🎁')} ${esc(loc(c.title))}</b>${c.via === 'chest' ? ' · 🎁' : ''}<div class="mut">${esc(c.name || '')} · ${M(c.price)} ${T('coins')} · ${T('cl_' + c.status)}</div>`
+    + (c.status === 'pending' ? `<div class="btnrow"><button class="btn green" data-act="clok" data-id="${esc(c.id)}">${T('approve')}</button><button class="btn red" data-act="clno" data-id="${esc(c.id)}">${T('reject')}</button></div>`
+      : c.status === 'approved' ? `<div class="btnrow"><button class="btn gold" data-act="clgot" data-id="${esc(c.id)}">✓ ${T('cl_mark_received')}</button></div>` : '') + `</div>`).join('');
+  const cat = rewardsOf().map(r => `<div class="hrow"><span>${esc(r.icon)} <b>${esc(loc(r.title))}</b></span><span class="mut">${M(r.price)}</span><button class="btn red sm" data-act="rwdel" data-id="${esc(r.id)}">✕</button></div>`).join('');
+  return (rows || `<div class="card center">${T('claims_none')}</div>`)
+    + `<div class="card"><h3>🛍️ ${T('shop_catalog')}</h3>${cat}<div class="grid2"><label class="f">${T('ev_title')}<input id="rwT"></label><label class="f">${T('icon')}<input id="rwI" value="🎁"></label></div>`
+    + `<label class="f">${T('rw_price')}<input id="rwP" type="number" min="1" step="1"></label><div class="btnrow"><button class="btn gold" data-act="rwadd">${T('add_btn')}</button></div></div>`;
+}
+ACT.clok = el => guarded(async () => {
+  const c = (S.claims || []).find(x => x.id === el.dataset.id); if (!c) return;
+  await Store.addLog({ id: `spend_${c.id}`, uid: c.uid, date: clock().date, taskId: 'reward', kind: 'spend', delta: -Math.abs(c.price), note: loc(c.title) });
+  await Store.updateClaim(c.id, { status: 'approved' });
+});
+ACT.clno = el => ask(T('reject') + '?', () => Store.updateClaim(el.dataset.id, { status: 'canceled' }));
+ACT.clgot = el => guarded(() => Store.updateClaim(el.dataset.id, { status: 'received' }));
+ACT.rwadd = () => guarded(async () => {
+  const t = ($('#rwT').value || '').trim(), p = Math.round(parseFloat($('#rwP').value || '0') * 100);
+  if (!t || !(p > 0)) return;
+  const r = { id: 'rw_' + Date.now().toString(36), icon: ($('#rwI').value || '🎁').trim(), price: p, title: { uz: t, ru: t, en: t } };
+  await Store.saveSettings(Object.assign({}, S.settings, { rewards: rewardsOf().concat([r]) }));
+});
+ACT.rwdel = el => ask(T('confirm_remove'), () => Store.saveSettings(Object.assign({}, S.settings, { rewards: rewardsOf().filter(r => r.id !== el.dataset.id) })));
+
+/* ---------- рецепты семьи ---------- */
+function viewRecipes() {
+  const q = (S.rq || '').toLowerCase(), favs = lsJ('fp_rfav', []);
+  const list = (S.recipes || []).filter(r => !q || (r.title + ' ' + (r.ingredients || '')).toLowerCase().includes(q))
+    .sort((a, b) => (favs.includes(b.id) - favs.includes(a.id)) || String(a.title).localeCompare(String(b.title)));
+  return `<div class="card"><div class="btnrow" style="margin-top:0"><input id="rq" class="search" placeholder="🔍 ${T('r_search')}" value="${esc(S.rq || '')}"><button class="btn gold" data-act="radd">＋ ${T('r_add')}</button></div></div>`
+    + (list.length ? list.map(r => `<button class="card rrow" data-act="rview" data-id="${esc(r.id)}">${r.photo ? `<img src="${r.photo}" alt="">` : `<span class="rico">${esc(RCATS.find(c => c[0] === r.cat) ? RCATS.find(c => c[0] === r.cat)[1] : '🍽️')}</span>`}`
+      + `<span><b>${favs.includes(r.id) ? '⭐ ' : ''}${esc(r.title)}</b><small>${esc(T('rc_' + (r.cat || 'second')))}${r.time ? ' · ⏱ ' + esc(r.time) + ' ' + T('hm_m') : ''}</small></span></button>`).join('')
+      : `<div class="card center mut">${T('r_empty')}</div>`);
+}
+document.addEventListener('input', e => { if (e.target.id === 'rq') { S.rq = e.target.value; } });
+document.addEventListener('keyup', e => { if (e.target.id === 'rq' && e.key === 'Enter') { e.target.blur(); render(); } });
+document.addEventListener('focusout', e => { if (e.target.id === 'rq') setTimeout(render, 60); });
+ACT.radd = () => recipeForm({ id: 'r_' + Date.now().toString(36), title: '', cat: 'second', time: '', ingredients: '', steps: '', by: S.me.uid });
+ACT.rview = el => {
+  const r = (S.recipes || []).find(x => x.id === el.dataset.id); if (!r) return;
+  const favs = lsJ('fp_rfav', []), mine = r.by === S.me.uid || isAdmin();
+  const lines = s => String(s || '').split('\n').map(x => x.trim()).filter(Boolean);
+  modal(`${r.photo ? `<img class="cardimg" src="${r.photo}" alt="">` : ''}<h2 style="margin-top:8px">${esc(r.title)}</h2><div class="mut">${esc(T('rc_' + (r.cat || 'second')))}${r.time ? ' · ⏱ ' + esc(r.time) + ' ' + T('hm_m') : ''}</div>`
+    + `<h3 style="margin-top:10px">🧺 ${T('r_ingr')}</h3><ul>${lines(r.ingredients).map(x => `<li>${esc(x)}</li>`).join('')}</ul>`
+    + `<h3>👩‍🍳 ${T('r_steps')}</h3><ol>${lines(r.steps).map(x => `<li>${esc(x)}</li>`).join('')}</ol>`
+    + `<div class="btnrow"><button class="btn" data-act="rfav" data-id="${esc(r.id)}">${favs.includes(r.id) ? '★' : '☆'} ${T('g_fav')}</button>`
+    + (mine ? `<button class="btn" data-act="redit" data-id="${esc(r.id)}">✎</button><button class="btn red" data-act="rdel" data-id="${esc(r.id)}">✕</button>` : '')
+    + `<button class="btn" data-act="close">${T('close')}</button></div>`);
+};
+ACT.rfav = el => { const f = lsJ('fp_rfav', []), id = el.dataset.id; lsS('fp_rfav', f.includes(id) ? f.filter(x => x !== id) : f.concat([id])); closeModal(); render(); };
+ACT.redit = el => { const r = (S.recipes || []).find(x => x.id === el.dataset.id); if (r) recipeForm(Object.assign({}, r)); };
+ACT.rdel = el => ask(T('confirm_remove'), () => Store.delRecipe(el.dataset.id));
+function recipeForm(r) {
+  S.rdraft = r;
+  modal(`<h3>🍳 ${T('r_add')}</h3><label class="f">${T('ev_title')}<input id="rT" value="${esc(r.title)}"></label>`
+    + `<div class="grid2"><label class="f">${T('vid_cat')}<select id="rC">${RCATS.map(([k, i]) => `<option value="${k}" ${r.cat === k ? 'selected' : ''}>${i} ${T('rc_' + k)}</option>`).join('')}</select></label>`
+    + `<label class="f">⏱ ${T('hm_m')}<input id="rTm" type="number" min="0" value="${esc(r.time || '')}"></label></div>`
+    + `<label class="f">${T('r_ingr')} (${T('r_line')})<textarea id="rI" rows="5">${esc(r.ingredients || '')}</textarea></label>`
+    + `<label class="f">${T('r_steps')} (${T('r_line')})<textarea id="rS" rows="6">${esc(r.steps || '')}</textarea></label>`
+    + `<div class="btnrow"><button class="btn" data-act="rphoto">📷 ${T('r_photo')}${r.photo ? ' ✓' : ''}</button></div>`
+    + `<div class="btnrow"><button class="btn gold" data-act="rsave">${T('save')}</button><button class="btn" data-act="close">${T('cancel')}</button></div>`);
+}
+const rRead = () => { const d = S.rdraft; Object.assign(d, { title: $('#rT').value.trim(), cat: $('#rC').value, time: $('#rTm').value, ingredients: $('#rI').value, steps: $('#rS').value }); return d; };
+ACT.rphoto = () => {
+  rRead();
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
+  inp.onchange = () => { const f = inp.files && inp.files[0]; if (!f) return; const fr = new FileReader(); fr.onload = () => compress(fr.result, d => { S.rdraft.photo = d; recipeForm(S.rdraft); }); fr.readAsDataURL(f); };
+  inp.click();
+};
+ACT.rsave = () => guarded(async () => {
+  const r = rRead(); if (!r.title) return;
+  r.by = r.by || S.me.uid; closeModal(); await Store.saveRecipe(r);
+});
+
+/* ---------- сказки для чтения ---------- */
+function kidsTales() {
+  return `<div class="card"><h3>📖 ${T('tales_read')}</h3><div class="mut">${T('tales_read_hint')}</div></div>`
+    + `<div class="kgames">${TALES.map(t => `<button class="kgame" data-act="tale" data-id="${t.id}"><span>${t.icon}</span>${esc(loc(t.t))}</button>`).join('')}</div>`
+    + `<div class="btnrow"><button class="btn" data-act="ktab" data-id="video">📺 ${T('tales')} (YouTube)</button></div>`;
+}
+ACT.tale = el => {
+  const t = TALES.find(x => x.id === el.dataset.id); if (!t) return;
+  const txt = S.lang === 'uz' ? t.uz : t.ru;
+  S.taleSize = S.taleSize || 22;
+  const m = modal(`<div class="ghead"><b>${t.icon} ${esc(loc(t.t))}</b><span></span><button class="btn sm" data-act="close">✕</button></div>`
+    + `<div class="btnrow" style="margin-top:0"><button class="btn sm" data-act="tfont" data-id="-2">A−</button><button class="btn sm" data-act="tfont" data-id="2">A+</button><button class="btn sm gold" data-act="tread">🔊 ${T('k_qa_read')}</button></div>`
+    + `<div class="taletext" id="taleText" style="font-size:${S.taleSize}px">${txt.split('\n\n').map(p => `<p>${esc(p)}</p>`).join('')}</div>`);
+  m.classList.add('game'); m._tale = txt;
+};
+ACT.tfont = el => { S.taleSize = Math.max(16, Math.min(34, (S.taleSize || 22) + +el.dataset.id)); const t = $('#taleText'); if (t) t.style.fontSize = S.taleSize + 'px'; };
+ACT.tread = () => { const m = $('#modal'); if (m && m._tale) speak(m._tale); };
+
+/* ---------- закреплённая панель: часы, дата, погода ---------- */
+function clockBar() {
+  const now = clock(), w = S.wx && S.wx.now ? WMO(S.wx.now.weather_code) : null;
+  if (typeof loadWeather === 'function') loadWeather();
+  const [, m, d] = now.date.split('-').map(Number);
+  return `<div class="clockbar"><b>${Logic.fmtMin(now.min)}</b><span>${esc(WD[S.lang][Logic.weekday(now.date)].slice(0, 3))}, ${d} ${esc(MN[S.lang][m - 1].slice(0, 3))}</span>`
+    + (w ? `<span class="cw">${w[0]} ${Math.round(S.wx.now.temperature_2m)}° <small>${esc(cityOf().name)}</small></span>` : '') + `</div>`;
+}
+
+/* ---------- атмосферные эффекты: снег, дождь, новогодний режим ---------- */
+const fxAllowed = () => (S.settings || {}).effects !== false && safeGet('fp_fx') !== '0';
+const isNewYear = d => { const md = d.slice(5); return md >= '12-15' || md <= '01-10'; };
+function fxMode() {
+  if (!fxAllowed()) return '';
+  const c = S.wx && S.wx.now ? S.wx.now.weather_code : -1;
+  if ((c >= 71 && c <= 77) || c === 85 || c === 86) return 'snow';
+  if ((c >= 51 && c <= 67) || (c >= 80 && c <= 82) || c >= 95) return 'rain';
+  if (isNewYear(clock().date)) return 'snow';
+  return '';
+}
+function applyFx() {
+  const mode = S.view === 'home' || S.view === 'admin' ? fxMode() : '';
+  let fx = document.getElementById('fx');
+  if (fx && fx.dataset.mode === mode) return;
+  if (fx) fx.remove();
+  if (!mode) return;
+  fx = document.createElement('div'); fx.id = 'fx'; fx.dataset.mode = mode; fx.className = 'fx ' + mode;
+  for (let i = 0; i < (mode === 'snow' ? 26 : 34); i++) {
+    const s = document.createElement('i');
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.animationDuration = (mode === 'snow' ? 7 + Math.random() * 7 : 0.8 + Math.random() * 0.6) + 's';
+    s.style.animationDelay = (-Math.random() * 10) + 's';
+    if (mode === 'snow') { s.textContent = '❄'; s.style.fontSize = (8 + Math.random() * 10) + 'px'; s.style.opacity = 0.35 + Math.random() * 0.45; }
+    fx.appendChild(s);
+  }
+  document.body.appendChild(fx);
+}
+
+/* ---------- экран «Начать день» и приветствие (первый вход и повтор из профиля) ---------- */
+const INTRO = [['🌅', 'in1'], ['✅', 'in2'], ['🎁', 'in3'], ['🍽️', 'in4'], ['🍳', 'in5'], ['👨‍👩‍👧', 'in6'], ['✨', 'in7']];
+function showStart() {
+  if (S.started || window.__skipStart || document.getElementById('startov')) return;
+  const seen = safeGet('fp_intro') === '1';
+  const ov = document.createElement('div'); ov.id = 'startov'; ov.className = 'startov';
+  document.body.appendChild(ov);
+  S.introI = seen ? INTRO.length : 0;
+  drawStart();
+}
+function drawStart() {
+  const ov = document.getElementById('startov'); if (!ov) return;
+  const i = S.introI;
+  if (i < INTRO.length) {
+    const [ic, k] = INTRO[i];
+    ov.innerHTML = `<div class="intro"><div class="dots">${INTRO.map((_, n) => `<i class="${n === i ? 'on' : ''}"></i>`).join('')}</div><div class="iic">${ic}</div><h1>${T(k + '_t')}</h1><p>${T(k)}</p>`
+      + `<div class="btnrow" style="justify-content:center"><button class="big gold" data-act="introNext">${i === INTRO.length - 1 ? '▶ ' + T('start_day') : T('k_qa_next') + ' ➡'}</button></div>`
+      + `<button class="skip" data-act="introSkip">${T('skip')}</button></div>`;
+  } else {
+    const n = myTasks(clock().date).length;
+    ov.innerHTML = `<div class="intro start"><div class="startcoin">${COINSTACK}</div><h1>${T('app_name')}</h1><p>${esc(fmtDate(clock()))}${n ? ' · ' + T('start_tasks', { n }) : ''}</p>`
+      + `<button class="big gold pulse" data-act="startDay">▶ ${T('start_day')}</button></div>`;
+  }
+}
+ACT.introNext = () => { S.introI++; if (S.introI >= INTRO.length) { safeSet('fp_intro', '1'); ACT.startDay(); return; } drawStart(); };
+ACT.introSkip = () => { safeSet('fp_intro', '1'); S.introI = INTRO.length; drawStart(); };
+ACT.startDay = () => {
+  S.started = true;
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { /* нет поддержки */ }
+  Snd.unlock();
+  if (S.music && !Snd.on) Snd.startMusic();
+  play('coin');
+  const ov = document.getElementById('startov'); if (ov) { ov.classList.add('bye'); setTimeout(() => ov.remove(), 450); }
+};
+ACT.replayIntro = () => { S.started = false; safeSet('fp_intro', '0'); const ov = document.getElementById('startov'); if (ov) ov.remove(); showStart(); };
+ACT.fxToggle = () => { safeSet('fp_fx', safeGet('fp_fx') === '0' ? '1' : '0'); render(); };
+
+/* ---------- резервная копия (админ) ---------- */
+const BK_COLS = ['users', 'whitelist', 'tasks', 'settings', 'logs', 'payouts', 'scores', 'claims', 'recipes', 'shared'];
+const RESTORE_COLS = ['whitelist', 'tasks', 'settings', 'logs', 'payouts', 'claims', 'recipes', 'shared'];
+ACT.backup = () => guarded(async () => {
+  const out = { app: 'NEW DAY', at: new Date().toISOString(), data: {} };
+  for (const c of BK_COLS) { try { out.data[c] = await Store.dumpCol(c); } catch (e) { out.data[c] = { error: String(e && e.code || e) }; } }
+  downloadFile(JSON.stringify(out, null, 1), `new-day-backup-${clock().date}.json`, 'application/json');
+  banner('good', '💾 ' + T('bk_done'), '', 3000);
+});
+ACT.restore = () => {
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'application/json,.json';
+  inp.onchange = () => {
+    const f = inp.files && inp.files[0]; if (!f) return;
+    const fr = new FileReader();
+    fr.onload = () => {
+      let j = null; try { j = JSON.parse(fr.result); } catch (e) { /* плохой файл */ }
+      if (!j || j.app !== 'NEW DAY' || !j.data) { banner('warn', T('bk_bad'), '', 3000); return; }
+      ask(T('bk_restore_q', { d: String(j.at || '').slice(0, 10) }), async () => {
+        let n = 0;
+        for (const c of RESTORE_COLS) for (const d of (Array.isArray(j.data[c]) ? j.data[c] : [])) { const id = d._id; const o = Object.assign({}, d); delete o._id; if (id) { await Store.restoreDoc(c, id, o); n++; } }
+        banner('good', '♻️ ' + T('bk_restored', { n }), '', 4000);
+      });
+    };
+    fr.readAsText(f);
+  };
+  inp.click();
+};
+function admBackup() {
+  const fx = (S.settings || {}).effects !== false;
+  return `<div class="card"><h2>✨ ${T('fx_title')}</h2><label class="chk"><input type="checkbox" data-act-change="fxall" ${fx ? 'checked' : ''}> ${T('fx_all')}</label><div class="mut">${T('fx_all_hint')}</div></div>`
+    + `<div class="card"><h2>💾 ${T('bk_title')}</h2><div class="mut">${T('bk_hint')}</div><div class="btnrow"><button class="btn gold" data-act="backup">⬇ ${T('bk_download')}</button><button class="btn" data-act="restore">⬆ ${T('bk_restore')}</button></div></div>`;
+}
+document.addEventListener('change', e => {
+  if (e.target.dataset && e.target.dataset.actChange === 'fxall') guarded(() => Store.saveSettings(Object.assign({}, S.settings, { effects: e.target.checked })));
+});
 
 </script>
 </body>
