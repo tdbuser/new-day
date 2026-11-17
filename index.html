@@ -346,6 +346,87 @@ label.f textarea{min-height:90px;line-height:1.4}
 .big.pulse{animation:pulseb 1.6s ease-in-out infinite}
 @keyframes pulseb{50%{transform:scale(1.05);box-shadow:0 6px 0 #8a5200,0 0 40px rgba(255,210,63,.75)}}
 #chestTxt{position:relative;z-index:3}
+/* ===== простая навигация: 🏠 слева, монеты справа ===== */
+.top{gap:8px}
+.homebtn{width:52px;height:52px;flex:none;border-radius:16px;font-size:28px;border:2px solid rgba(255,210,63,.6);background:linear-gradient(180deg,rgba(255,210,63,.25),rgba(255,210,63,.05));box-shadow:0 0 16px rgba(255,210,63,.3)}
+.homebtn.on{background:linear-gradient(180deg,#fff2a8,#ffd23f 45%,#e0951a);box-shadow:0 0 22px rgba(255,210,63,.6)}
+.top .whot{flex:1;min-width:0}.top .nm{max-width:none}
+.admbtn{position:relative;width:46px;height:46px;flex:none;border-radius:14px;font-size:22px;border:1px solid var(--line);background:rgba(255,255,255,.08)}
+.admbtn.on{border-color:#ffd23f;box-shadow:0 0 14px rgba(255,210,63,.5)}
+.admbtn .badge{position:absolute;top:-6px;right:-6px;margin:0}
+.coinpill{cursor:pointer}
+/* главный экран: одна главная карточка */
+.hero{position:relative;text-align:center;margin:12px 0;padding:18px 16px 16px;border-radius:28px;border:2px solid rgba(46,232,143,.35);background:radial-gradient(circle at 50% 0%,rgba(46,232,143,.22),rgba(5,28,20,.92) 70%);box-shadow:0 14px 40px rgba(0,0,0,.45)}
+.hero.now{border-color:#ffd23f;background:radial-gradient(circle at 50% 0%,rgba(255,210,63,.3),rgba(5,28,20,.94) 70%);box-shadow:0 0 0 1px rgba(255,210,63,.4),0 0 50px rgba(255,210,63,.25)}
+.hero .nowtag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);font-size:14px;padding:4px 14px;box-shadow:0 0 16px rgba(255,210,63,.6)}
+.heroi{font-size:72px;line-height:1.1;filter:drop-shadow(0 8px 20px rgba(0,0,0,.4));animation:float 3s ease-in-out infinite}
+.hero h1{font-size:30px;margin:6px 0 4px}.hero h2{margin:6px 0}
+.heromut{color:#dff7ea;font-size:15px}
+.countdown{font-size:22px;font-weight:900;color:#2ee88f;margin:4px 0}
+.herobtn{min-height:84px;font-size:26px;margin-top:14px;white-space:normal}
+.herobtn b{display:inline-block;background:rgba(0,0,0,.25);border-radius:12px;padding:2px 10px;margin-left:6px;font-size:20px}
+.big.green.pulse{animation:pulseg 1.5s ease-in-out infinite}
+@keyframes pulseg{50%{transform:scale(1.04);box-shadow:0 6px 0 #0b4f25,inset 0 2px 0 rgba(255,255,255,.3),0 0 46px rgba(46,232,143,.85)}}
+.herosub{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.btn.ghostred{border-color:rgba(255,90,90,.6);color:#ffb4b4;background:rgba(185,28,28,.12)}
+.daycard{padding:12px 16px}.dayrow{display:flex;justify-content:space-between;align-items:center}
+.dayrow .pos{color:#2ee88f;font-weight:900}.dayrow .neg{color:#ff8a80;font-weight:900}
+.tlist{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.trow2{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;border:1px solid rgba(46,232,143,.2);background:rgba(255,255,255,.04)}
+.trow2 .ttime{font-weight:900;color:var(--gold);font-size:14px;width:44px;flex:none}
+.trow2 .ticon{font-size:26px}
+.trow2 .tmain{flex:1;min-width:0;display:flex;flex-direction:column}.trow2 .tmain b{font-size:16px;line-height:1.25}.trow2 .tmain small{color:var(--mut);font-size:12px}
+.trow2.st-done{border-color:rgba(46,232,143,.55);background:rgba(46,232,143,.08)}
+.trow2.st-active{border-color:#ffd23f;background:rgba(255,210,63,.1)}
+.trow2.st-missed,.trow2.st-failed,.trow2.st-expired{border-color:rgba(255,90,90,.45);background:rgba(185,28,28,.1)}
+.trow2.st-locked,.trow2.st-future,.trow2.st-plan{opacity:.75}
+.tbadge.now{color:#ffd23f}
+.hbtn{flex:none;width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.06);font-size:16px}
+.howsteps{line-height:1.5;padding-left:22px}.howsteps li{margin:6px 0}
+/* меню-папки */
+.folders{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.folder{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:16px 14px;border-radius:22px;color:#fff;border:1px solid rgba(255,210,63,.35);background:linear-gradient(160deg,rgba(24,104,74,.55),rgba(5,28,20,.9));box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 10px 24px rgba(0,0,0,.35)}
+.folder .fi{font-size:42px}.folder b{font-size:17px}.folder small{color:var(--mut);font-size:12px;line-height:1.3}
+.folder em{position:absolute;top:10px;right:10px;font-style:normal;font-size:11px;font-weight:900;background:#ffd23f;color:#2a1b00;border-radius:999px;padding:2px 8px}
+.crumbs{display:flex;align-items:center;gap:8px;margin:10px 0 0;font-size:15px}
+.crumbs button{border:1px solid var(--line);background:rgba(255,255,255,.08);border-radius:12px;padding:8px 12px;font-weight:800;color:#fff}
+.crumbs span{color:var(--mut)}
+/* админ: вкладки сеткой, люди, звуки, переключатели */
+.admtabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:8px 0 10px}
+.admtabs button{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px;border-radius:14px;border:1px solid rgba(46,232,143,.25);background:rgba(255,255,255,.05);color:#e6fff3;font-size:11px;font-weight:800;line-height:1.1;min-width:0;overflow:hidden}
+.admtabs button span{font-size:22px}
+.admtabs button.on{border-color:#ffd23f;background:linear-gradient(180deg,rgba(255,210,63,.3),rgba(255,210,63,.08));color:#ffd23f;box-shadow:0 0 12px rgba(255,210,63,.3)}
+.admtabs em{position:absolute;top:3px;right:4px;font-style:normal;background:#e11d48;color:#fff;border-radius:999px;font-size:10px;padding:0 5px}
+.whochips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px}
+.whochips button{border:1px solid var(--line);background:rgba(255,255,255,.06);border-radius:999px;padding:8px 12px;font-weight:800;color:#fff}
+.whochips button.on{background:#2ee88f;color:#04281a;border-color:#2ee88f}
+.whochips small{opacity:.75}
+.tkmeta{font-size:12px;color:var(--mut);font-weight:600;margin-top:2px}
+details.tk summary{font-size:16px}
+.sndctl{display:flex;gap:6px;align-items:center;margin-top:8px}
+.sndctl select{flex:1;padding:10px;border-radius:12px;background:rgba(0,0,0,.35);border:1px solid var(--line);color:#fff;font-size:15px}
+.sndctl select option{color:#000}
+.swrow{display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px;padding:10px 4px;background:none;border:0;border-bottom:1px solid rgba(255,255,255,.08);color:#fff;font-weight:800;text-align:left}
+.sw{width:50px;height:30px;border-radius:999px;background:rgba(255,255,255,.2);position:relative;flex:none;transition:background .2s}
+.sw::after{content:'';position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .2s}
+.sw.on{background:#2ee88f}.sw.on::after{left:23px}
+label.f select{display:block;width:100%;margin-top:4px;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.35);border:1px solid var(--line);color:#fff;font-size:16px}
+details.how summary{font-weight:900;font-size:17px;cursor:pointer}
+details.how ul{line-height:1.5;padding-left:18px;margin:10px 0 0}details.how li{margin:6px 0;list-style:none}
+/* видео и детский замок */
+.vhead{display:flex;align-items:center;gap:10px}.vhead h3{flex:1;margin:0}
+.lockbtn{position:relative;width:52px;height:52px;flex:none;border-radius:16px;border:2px solid #ffd23f;background:rgba(255,210,63,.15);font-size:26px;touch-action:none;user-select:none;-webkit-user-select:none}
+.lockbtn i{position:absolute;inset:-4px;border-radius:18px;border:4px solid #2ee88f;clip-path:inset(0 100% 0 0)}
+.lockbtn.holding i{animation:holdfill 3s linear forwards}
+@keyframes holdfill{to{clip-path:inset(0 0 0 0)}}
+.vshield{display:none;position:absolute;inset:0;z-index:5}
+.vmodal.locked{padding:0;background:#000}
+.vmodal.locked>div{width:100vw;max-width:none;height:100vh;height:100dvh;max-height:none;border:0;border-radius:0;padding:0;display:flex;flex-direction:column;background:#000}
+.vmodal.locked .vhead{position:absolute;top:calc(8px + env(safe-area-inset-top));right:8px;z-index:9}
+.vmodal.locked .vhead h3,.vmodal.locked .vbtns,.vmodal.locked .vlockhint{display:none}
+.vmodal.locked .vwrap{flex:1;aspect-ratio:auto;margin:0;border-radius:0}
+.vmodal.locked .vshield{display:block}
+.vmodal.locked .lockbtn{opacity:.55;background:rgba(0,0,0,.4)}
 
 </style>
 </head>
@@ -711,6 +792,46 @@ Object.assign(D, {
   bk_restored: ["Tiklandi: {n} ta yozuv", "Восстановлено записей: {n}", "Restored records: {n}"],
   sched: ["Takrorlanishi", "Повтор", "Repeat"], sched_daily: ["Har kuni", "Каждый день", "Every day"], sched_days: ["Hafta kunlari bo'yicha (belgilang)", "По дням недели (отметьте ниже)", "On weekdays (tick below)"],
   sched_once: ["Bir marta (sana)", "Разово (дата)", "Once (date)"], sched_once_date: ["Bir martalik sana", "Дата разового задания", "One-time date"],
+  nav_tasks: ["Vazifalar", "Задания", "Tasks"], nav_menu: ["Menyu", "Меню", "Menu"],
+  menu_hint: ["Bo'limni tanlang. Asosiy narsa — vazifalar, ular bosh ekranda.", "Выберите раздел. Главное — задания, они на главном экране.", "Pick a section. Tasks stay on the home screen."],
+  menu_kids: ["O'yinlar, savollar, maslahatlar, ertaklar", "Игры, вопросы, советы, сказки", "Games, questions, tips, tales"],
+  menu_kitchen: ["Retsept videolari va bizning retseptlar", "Видео-рецепты и наши рецепты", "Recipe videos and our recipes"],
+  menu_events: ["Tug'ilgan kunlar, bayramlar, tayyorgarlik", "Дни рождения, праздники, подготовка", "Birthdays, holidays, preparation"],
+  menu_family: ["Kim qanday bajaryapti", "Кто как выполняет задания", "Who is doing how"],
+  menu_cards: ["Tabriknoma yasash va yuborish", "Сделать и отправить открытку", "Make and send a card"],
+  menu_contacts: ["Qo'ng'iroq, WhatsApp, Telegram", "Позвонить, WhatsApp, Telegram", "Call, WhatsApp, Telegram"],
+  sched_once_short: ["bir marta {d}", "разово {d}", "once {d}"], sched_daily_short: ["har kuni", "каждый день", "every day"],
+  no_tasks_admin: ["Admin panel → Vazifalar → «Standartlarni yuklash» yoki «＋ Vazifa».", "Админ-панель → Задания → «Загрузить стандартные» или «＋ Задание».", "Admin → Tasks → Load defaults or + Task."],
+  until: ["{t} gacha", "до {t}", "until {t}"], left_t: ["{t} qoldi", "осталось {t}", "{t} left"],
+  reward_will: ["Mukofot: +{c} moneta", "Награда: +{c} монет", "Reward: +{c} coins"], today_earned: ["Bugun: {c} moneta", "Сегодня: {c} монет", "Today: {c} coins"],
+  how_title: ["Bu qanday ishlaydi?", "Как это работает?", "How does it work?"],
+  how_done: ["Vazifa o'z vaqtida bajarilsa: +{c} moneta (admin har vazifaga o'zi belgilaydi).", "Задание выполнено вовремя: +{c} монет (сумму задаёт админ для каждого задания).", "Task done on time: +{c} coins (set by the admin per task)."],
+  how_miss: ["O'tkazib yuborish: vazifa mukofotining {p}% jarima. Kuniga {w} ta ogohlantirish, keyingisida kunlik limitning {b}% yonadi.", "Пропуск: штраф {p}% от награды. {w} предупреждения в день, на следующем сгорает {b}% дневного лимита.", "Missed: {p}% penalty. {w} warnings a day, the next burns {b}% of the daily limit."],
+  how_streak: ["Ketma-ket ideal kunlar: har kun +{s}% bonus (ko'pi bilan +{m}%).", "Серия идеальных дней: +{s}% бонус за каждый день (до +{m}%).", "Perfect-day streak: +{s}% per day (up to +{m}%)."],
+  how_week: ["Haftada {g}% bajarilsa — hafta sovg'asi; {i}% dan oshsa — +{wb}. Oyda {i}% — +{mb}.", "Неделя от {g}% — приз недели; от {i}% — ещё +{wb}. Месяц от {i}% — +{mb}.", "Week ≥{g}% — weekly prize; ≥{i}% — +{wb}. Month ≥{i}% — +{mb}."],
+  how_shop: ["Monetalarni do'konda haqiqiy mukofotlarga almashtirish mumkin (admin tasdiqlaydi).", "Монеты можно обменять в магазине на настоящие награды (после одобрения админа).", "Swap coins for real rewards in the shop (admin approves)."],
+  how_money: ["Oyning oxirgi kuni qolgan monetalar pulga almashadi: 1 moneta = {r}. Admin kartaga o'tkazadi.", "В последний день месяца оставшиеся монеты меняются на деньги: 1 монета = {r}. Админ переводит на карту.", "On the last day of the month coins convert to money: 1 coin = {r}. The admin pays to your card."],
+  how_money_norate: ["Monetani pulga almashtirish kursini admin hali belgilamagan.", "Курс обмена монет на деньги админ ещё не задал.", "The admin hasn't set the coin-to-money rate yet."],
+  language: ["Til", "Язык", "Language"], voice_hints: ["Ovozli eslatmalar va maslahatlar", "Голосовые напоминания и советы", "Voice reminders and tips"],
+  all_tasks: ["Hammasi", "Все", "All"],
+  adm_tasks_hint: ["Odamni tanlang — faqat uning vazifalari ko'rinadi. Vazifani ochib vaqt, mukofot, kimga va takrorlanishini o'zgartiring.", "Выберите человека — увидите только его задания. Откройте задание, чтобы изменить время, награду, кому и как часто.", "Pick a person to see only their tasks. Open a task to edit time, reward, assignees and repeat."],
+  snd_changed: ["o'zgartirilgan", "изменён", "changed"],
+  snd_intro2: ["Har bir hodisa uchun: ro'yxatdan tovush tanlang, ▶ bilan tinglang yoki mp3 havolasini qo'ying. ↺ — standart tovushga qaytarish. Oxirida «Saqlash».", "Для каждого события: выберите звук из списка, ▶ — послушать, или вставьте ссылку на свой mp3. ↺ — вернуть стандартный. В конце «Сохранить».", "For each event pick a sound, ▶ to preview, or paste an mp3 link. ↺ resets to default. Then Save."],
+  music_hint: ["Havolani o'chirsangiz yoki u ishlamasa — standart musiqa chaladi.", "Если ссылку удалить или она не работает — играет стандартная музыка.", "If the link is removed or broken, the default music plays."],
+  voice_all: ["Butun oila uchun ovozli eslatmalar", "Голосовые подсказки для всей семьи", "Voice hints for the whole family"],
+  voice_all_hint: ["O'chirilsa — hamma telefonlarda jim bo'ladi. Har kim Profilda o'zi uchun ham o'chira oladi.", "Если выключить — замолчат у всех. Каждый может выключить у себя в Профиле.", "Off = silent for everyone. Each person can also turn it off in Profile."],
+  snd_reset_done: ["Standart tovush tanlandi", "Выбран стандартный звук", "Default sound selected"], snd_reset_save: ["«Saqlash»ni bosing", "Нажмите «Сохранить»", "Tap Save"],
+  ev_taskdue: ["Vazifa vaqti keldi", "Наступило время задания", "Task time"], preset_cash: ["Kesh (o'yin avtomati)", "Кэш (игровой автомат)", "Cash (slot machine)"], preset_ding: ["Din-don", "Динь-дон", "Ding-dong"],
+  lock_hint: ["🔒 — bola rejimi: ekran bosilmaydi, chiqib bo'lmaydi. O'chirish uchun 🔒 ni 3 soniya bosib turing.", "🔒 — детский режим: экран не реагирует, выйти нельзя. Чтобы снять — удерживайте 🔒 3 секунды.", "🔒 — kid mode: the screen ignores taps. Hold 🔒 for 3 seconds to unlock."],
+  locked_on: ["Bola rejimi yoqildi", "Детский замок включён", "Kid lock on"], lock_unlock_hint: ["O'chirish: 🔒 ni 3 soniya bosib turing", "Снять: удерживайте 🔒 3 секунды", "Unlock: hold 🔒 for 3 seconds"],
+  due_banner: ["Vazifa vaqti — {t}. Bosh ekranga qarang", "Время задания — {t}. Посмотрите на главный экран", "Task time — {t}. Check the home screen"],
+  voice_task: ["Vazifa vaqti keldi: {t}. Bosh ekranga qarang.", "Время задания: {t}. Посмотрите на главный экран.", "Task time: {t}. Please check the home screen."],
+  voice_hello: ["Xush kelibsiz! Bugun {n} ta vazifa. Omad!", "Добро пожаловать! Сегодня заданий: {n}. Удачи!", "Welcome! {n} tasks today. Good luck!"],
+  tip_play: ["Maslahat: Dilnoza bilan «{g}» o'ynang.", "Совет: поиграйте с Дильнозой в «{g}».", "Tip: play “{g}” with Dilnoza."],
+  tip_where: ["Menyu → Ona va bola", "Меню → Мама и малыш", "Menu → Mom & kid"],
+  howto_btn: ["Qanday to'g'ri", "Как правильно", "How to"], howto_title: ["Qanday to'g'ri bajarish", "Как правильно выполнять", "How to do it right"], howto_video: ["Video ko'rsatma", "Видео-инструкция", "Video guide"],
+  at_users: ["Odamlar", "Люди", "People"], at_tasks: ["Vazifalar", "Задания", "Tasks"], at_add: ["Qo'shish", "Добавить", "Add"], at_photos: ["Foto", "Фото", "Photos"],
+  at_claims: ["Sovg'alar", "Награды", "Rewards"], at_pay: ["To'lov", "Выплаты", "Payouts"], at_sounds: ["Ovoz", "Звуки", "Sounds"], at_fun: ["Dam olish", "Досуг", "Leisure"], at_set: ["Sozlama", "Настройки", "Settings"],
   nav_fun: ["Dam olish", "Досуг", "Leisure"],
   fun_kitchen: ["Oshxona", "Кухня", "Kitchen"],
   fun_kids: ["Ona va bola", "Мама и малыш", "Mom & kid"],
@@ -1112,7 +1233,12 @@ const Logic = (() => {
     lines.push('END:VCALENDAR');
     return lines.filter(Boolean).join('\r\n') + '\r\n';
   }
-  const eventsOf = s => (s && Array.isArray(s.events) ? s.events : DEFAULT_EVENTS);
+  // Сохранённые события + стандартные (дни рождения, праздники), если админ их не удалял
+  const eventsOf = s => {
+    if (!s || !Array.isArray(s.events)) return DEFAULT_EVENTS;
+    const have = new Set(s.events.map(e => e.id)), removed = new Set(s.eventsRemoved || []);
+    return s.events.concat(DEFAULT_EVENTS.filter(e => !have.has(e.id) && !removed.has(e.id)));
+  };
   const daysBetween = (a, b) => { const p = x => { const [y, m, d] = x.split('-').map(Number); return Date.UTC(y, m - 1, d); }; return Math.round((p(b) - p(a)) / 86400000); };
   function nextOccur(ev, today) {
     if (!ev || !/^\d{4}-\d{2}-\d{2}$/.test(ev.date || '')) return null;
@@ -1232,10 +1358,26 @@ const Snd = (() => {
       [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, i) => tone(f, t + i * 0.11, 0.35, 'triangle', 0.16));
       tone(1046.5, t + 0.6, 0.9, 'sine', 0.14);
     },
+    // Кэш как в игровом автомате: «ка-чинг» и каскад падающих монет
+    cash() {
+      if (!ensure()) return; const t = ctx.currentTime;
+      tone(1568, t, 0.12, 'square', 0.09); tone(2093, t + 0.07, 0.5, 'square', 0.09); tone(3136, t + 0.07, 0.45, 'sine', 0.06);
+      noise(t + 0.02, 0.18, 0.06);
+      for (let i = 0; i < 16; i++) {
+        const tt = t + 0.22 + i * 0.06 + Math.random() * 0.02, f = 2200 + Math.random() * 1800;
+        tone(f, tt, 0.12, 'triangle', 0.055); tone(f * 1.5, tt + 0.01, 0.08, 'sine', 0.025);
+      }
+      tone(1046.5, t + 1.25, 0.6, 'triangle', 0.08); tone(1568, t + 1.3, 0.7, 'sine', 0.06);
+    },
+    // Напоминание о задании: мягкий «динь-дон»
+    ding() {
+      if (!ensure()) return; const t = ctx.currentTime;
+      tone(1318.5, t, 0.9, 'sine', 0.2); tone(987.8, t + 0.35, 1.1, 'sine', 0.2); tone(2637, t, 0.4, 'sine', 0.03);
+    },
     tick() { if (ensure()) tone(1200, ctx.currentTime, 0.05, 'sine', 0.05); },
     off() {}
   };
-  const PRESET_NAMES = ['coin', 'bell', 'wrong', 'warn', 'burn', 'fanfare', 'off'];
+  const PRESET_NAMES = ['cash', 'coin', 'ding', 'bell', 'wrong', 'warn', 'burn', 'fanfare', 'off'];
 
   // Звук события: если админ задал свою ссылку — играет файл, иначе пресет
   function play(event, sc) {
@@ -1262,7 +1404,11 @@ const Snd = (() => {
     musicOn = true;
     if (musicPreset === 'off') return;
     if (musicUrl) {
-      if (!musicAudio) { musicAudio = new Audio(musicUrl); musicAudio.loop = true; }
+      if (!musicAudio) {
+        musicAudio = new Audio(musicUrl); musicAudio.loop = true; musicAudio.volume = 0.5;
+        // ссылка не работает — играет стандартная музыка
+        musicAudio.onerror = () => { musicUrl = ''; musicAudio = null; if (musicOn) { musicOn = false; startMusic(); } };
+      }
       musicAudio.play().catch(() => {});
       return;
     }
@@ -1503,7 +1649,8 @@ const taskById = id => S.tasks.find(t => t.id === id);
 const myTasks = date => Logic.sortTasks(S.tasks.filter(t => Logic.assigned(t, S.me, date)));
 const isAdmin = () => !!(S.me && S.me.status === 'approved' && S.me.isAdmin);
 const sc = ev => ((S.settings && S.settings.sounds) || {})[ev] || {};
-const play = ev => Snd.play(ev, Object.assign(ev === 'partner' ? { p: 'bell' } : {}, sc(ev)));
+const SND_DEFAULT = { coin: 'cash', partner: 'bell', taskdue: 'ding' };
+const play = ev => Snd.play(ev, Object.assign(SND_DEFAULT[ev] ? { p: SND_DEFAULT[ev] } : {}, sc(ev)));
 const avatar = u => u && u.photo ? `<img class="avatar" src="${esc(u.photo)}" alt="" referrerpolicy="no-referrer">` : `<div class="avatar">${esc(((u && u.name) || '?').trim().charAt(0).toUpperCase())}</div>`;
 const relLabel = r => (r && D['rel_' + r]) ? T('rel_' + r) : '';
 const relOptions = sel => `<option value="">${T('choose_rel')}</option>` + REL.map(r => `<option value="${r}" ${sel === r ? 'selected' : ''}>${T('rel_' + r)}</option>`).join('');
@@ -1521,6 +1668,7 @@ const MN = {
   ru: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'],
   en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 };
+const WDS = { uz: ['Ya', 'Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh'], ru: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'], en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] };
 const CALH = { uz: ['D', 'S', 'Ch', 'P', 'J', 'Sh', 'Y'], ru: ['П', 'В', 'С', 'Ч', 'П', 'С', 'В'], en: ['M', 'T', 'W', 'T', 'F', 'S', 'S'] };
 function fmtDate(now) {
   const [, m, d] = now.date.split('-').map(Number), w = WD[S.lang][Logic.weekday(now.date)], mo = MN[S.lang][m - 1];
@@ -1718,6 +1866,7 @@ async function cleanupPhotos() {
 function tick() {
   if (S.view === 'home') render();
   runAutoMiss(); runBonuses(); publishScore();
+  if (typeof voiceTick === 'function') voiceTick();
 }
 
 /* ---------- обратная связь: звуки, баннеры, вибрация ---------- */
@@ -1789,6 +1938,7 @@ function modal(html) {
   return m;
 }
 function closeModal() {
+  if (S.kidLock) return; // детский замок на видео: закрыть нельзя
   stopCam();
   const m = $('#modal'); if (m) { if (m._stop) { try { m._stop(); } catch (e) { /* ignore */ } } m.remove(); }
   try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) { /* ignore */ }
@@ -1871,16 +2021,16 @@ function langSel() {
 }
 function shell(body, full) {
   const head = full ? header() : '';
-  const pc = S.photos.length;
-  const bar = `<div class="bar">${langSel()}<button class="chipbtn ${S.music ? 'on' : ''}" data-act="music">🎵 ${T('music')}</button>`
-    + (isAdmin() ? `<button class="chipbtn ${S.view === 'admin' ? 'on' : ''}" data-act="${S.view === 'admin' ? 'back' : 'admin'}">${S.view === 'admin' ? '← ' + T('back') : '⚙ ' + T('admin_panel')}${S.view !== 'admin' && pendingCount() ? `<span class="badge">${pendingCount()}</span>` : ''}</button>` : '')
-    + `<button class="chipbtn" data-act="logout">${T('logout')}</button></div>`;
-  return (Store && Store.demo ? `<div class="demo">${T('demo')}</div>` : '') + head + bar + body;
+  return (Store && Store.demo ? `<div class="demo">${T('demo')}</div>` : '') + head + body;
 }
 function header() {
   const me = S.me, L = Logic.level(Logic.earned(S.logs));
-  return `<header class="top"><div class="who">${avatar(me)}<div class="whot"><div class="nm">${esc(me.name)}</div><div class="lv">${esc(loc(L.name))}${me.relation ? ' · ' + esc(relLabel(me.relation)) : ''}</div></div></div>`
-    + `<div class="coinpill" id="coinTarget">${COINSTACK}<b id="coinAmt" class="${S.shown < 0 ? 'neg' : ''}">${M(S.shown)}</b></div>${typeof clockBar === 'function' ? clockBar() : ''}</header>`
+  const onHome = S.view === 'home' && S.htab === 'today';
+  const pend = isAdmin() ? pendingCount() + S.photos.length + (S.claims || []).filter(c => c.status === 'pending').length + S.payouts.filter(p => p.status === 'requested').length : 0;
+  return `<header class="top"><button class="homebtn ${onHome ? 'on' : ''}" data-act="home" aria-label="home">🏠</button>`
+    + `<div class="whot"><div class="nm">${esc(firstName(me.name))}</div><div class="lv">${esc(loc(L.name))}</div></div>`
+    + (isAdmin() ? `<button class="admbtn ${S.view === 'admin' ? 'on' : ''}" data-act="${S.view === 'admin' ? 'home' : 'admin'}" aria-label="admin">⚙️${pend ? `<span class="badge">${pend}</span>` : ''}</button>` : '')
+    + `<div class="coinpill" id="coinTarget" data-act="htab" data-id="rewards">${COINSTACK}<b id="coinAmt" class="${S.shown < 0 ? 'neg' : ''}">${M(S.shown)}</b></div>${typeof clockBar === 'function' ? clockBar() : ''}</header>`
     + `<div class="lvbar"><i style="width:${Math.round(L.pct * 100)}%"></i></div>`;
 }
 // Стопка из трёх золотых монет, как кэш в играх
@@ -1912,59 +2062,78 @@ function viewLogin() {
 
 /* ---------- страница пользователя: три вкладки ---------- */
 function viewHome() {
+  if (S.htab === 'family' || S.htab === 'fun') { S.menu = S.htab === 'family' ? 'family' : (S.menu || ''); S.htab = 'menu'; }
   let body;
   if (S.htab === 'rewards') body = viewRewards();
-  else if (S.htab === 'family') body = viewFamily();
-  else if (S.htab === 'fun') body = viewFun();
+  else if (S.htab === 'menu') body = viewMenu();
   else if (S.htab === 'me') body = viewMe();
   else body = viewToday();
-  const tabs = [['today', '📋', T('nav_today')], ['family', '🏆', T('nav_family')], ['fun', '🎈', T('nav_fun')], ['rewards', '🎁', T('nav_rewards')], ['me', '👤', T('nav_me')]];
+  const tabs = [['today', '✅', T('nav_tasks')], ['rewards', '🎁', T('nav_rewards')], ['menu', '📂', T('nav_menu')], ['me', '👤', T('nav_me')]];
   return body + `<nav class="tabbar">${tabs.map(([k, i, n]) => `<button class="${S.htab === k ? 'on' : ''}" data-act="htab" data-id="${k}"><span>${i}</span>${n}</button>`).join('')}</nav>`;
+}
+// «Меню»: разделы как папки; внутри раздела — путь «Меню › Раздел»
+const MENU = [
+  ['kids', '👩‍👧', 'fun_kids', 'menu_kids'], ['kitchen', '🍳', 'fun_kitchen', 'menu_kitchen'], ['events', '🎉', 'fun_events', 'menu_events'],
+  ['family', '🏆', 'nav_family', 'menu_family'], ['cards', '💌', 'fun_cards', 'menu_cards'], ['contacts', '📞', 'fun_contacts', 'menu_contacts']
+];
+function viewMenu() {
+  const m = MENU.find(x => x[0] === S.menu);
+  if (!m) {
+    const soon = Logic.upcomingEvents(eventsNow(), clock().date, 7)[0];
+    return `<div class="card"><h2>📂 ${T('nav_menu')}</h2><div class="mut">${T('menu_hint')}</div></div><div class="folders">`
+      + MENU.map(([k, i, t, sub]) => `<button class="folder" data-act="menu" data-id="${k}"><span class="fi">${i}</span><b>${T(t)}</b><small>${T(sub)}</small>`
+        + (k === 'events' && soon ? `<em>${esc(soon.icon || '🎉')} ${soon.left === 0 ? T('ev_today') : T('ev_in', { n: soon.left })}</em>` : '') + `</button>`).join('') + `</div>`;
+  }
+  const body = { kids: viewKids, kitchen: viewKitchen, events: viewEvents, family: viewFamily, cards: viewCards, contacts: viewContacts }[m[0]]();
+  return `<div class="crumbs"><button data-act="menu" data-id="">📂 ${T('nav_menu')}</button><span>›</span><b>${m[1]} ${T(m[2])}</b></div>` + body;
+}
+// Подпись расписания задания
+function schedTxt(t) {
+  if (t.once) { const [, mm, dd] = t.once.split('-'); return T('sched_once_short', { d: `${dd}.${mm}` }); }
+  if (Array.isArray(t.days) && t.days.length && t.days.length < 7) return t.days.slice().sort((a, b) => ((a + 6) % 7) - ((b + 6) % 7)).map(d => WDS[S.lang][d]).join(', ');
+  return T('sched_daily_short');
 }
 
 function viewToday() {
-  const c = cfgS(), now = clock(), me = S.me, idx = Logic.logIndex(S.logs);
+  const now = clock(), me = S.me, idx = Logic.logIndex(S.logs);
   const ts = myTasks(now.date);
-  const states = ts.map(t => ({ t, log: idx.get(Logic.logId(me.uid, now.date, t.id)), st: Logic.taskState(t, now.date, now, idx.get(Logic.logId(me.uid, now.date, t.id))) }));
+  const states = ts.map(t => { const log = idx.get(Logic.logId(me.uid, now.date, t.id)); return { t, log, st: Logic.taskState(t, now.date, now, log) }; });
   const ds = Logic.dayStats(S.tasks, S.logs, me, now.date, now);
-  const L = Logic.level(Logic.earned(S.logs));
-  const bonusToday = S.logs.find(l => l.kind === 'bonus' && l.date === now.date);
-  let out = `<div class="card"><div class="mut">${esc(fmtDate(now))} · ${Logic.fmtMin(now.min)}</div>`;
-  if (ts.length) out += `<h3>${T('day_progress', { d: ds.done, n: ds.total })}</h3><div class="pbar"><i style="width:${ds.total ? Math.round(ds.done / ds.total * 100) : 0}%"></i></div>`;
-  if (bonusToday) out += `<div class="mut" style="color:var(--gold)">🎁 ${esc(kindLabel(bonusToday))} ${sgn(bonusToday.delta)}</div>`;
-  out += `<div class="mut">${esc(loc(L.name))} · ${T('to_next', { c: M(L.toNext) + ' ' + T('coins') })}</div>`;
-  if (ts.length) out += `<div class="btnrow"><button class="btn sm" data-act="alarms">⏰ ${T('alarms_btn')}</button></div>`;
-  out += `</div>`;
-
+  const todayNet = S.logs.filter(l => l.date === now.date).reduce((a, l) => a + (l.delta || 0), 0);
+  const actives = states.filter(s => s.st === 'active'), next = states.find(s => s.st === 'locked');
+  let out = '';
+  if (!ts.length) {
+    out += `<div class="hero"><div class="heroi">🌅</div><h2>${T('no_tasks')}</h2>${isAdmin() ? `<div class="mut">${T('no_tasks_admin')}</div><div class="btnrow" style="justify-content:center"><button class="btn gold" data-act="admin">⚙️ ${T('admin_panel')}</button></div>` : ''}</div>`;
+  } else if (actives.length) {
+    const a = actives[0], t = a.t, mode = Logic.photoMode(t);
+    const until = Logic.fmtMin(Logic.toMin(t.time) + (t.graceMin ?? 60)), left = Logic.toMin(t.time) + (t.graceMin ?? 60) - now.min;
+    out += `<div class="hero now"><span class="nowtag">⚡ ${T('now')}</span><div class="heroi">${esc(t.icon || '⭐')}</div><h1>${esc(loc(t.title))}</h1>`
+      + `<div class="heromut">${T('until', { t: until })} · ${T('left_t', { t: fmtDur(Math.max(0, left)) })}</div>`
+      + `<button class="big green pulse herobtn" data-act="done" data-id="${esc(t.id)}">${mode === 'req' ? '📷 ' + T('photo_req_btn').replace(/^📷\s*/, '') : '✅ ' + T('done_btn').replace(/[✔✓]/g, '').trim()} <b>+${M(t.reward)}</b></button>`
+      + `<div class="herosub">${howtoFor(t) ? `<button class="btn" data-act="howto" data-id="${esc(t.id)}">ℹ️ ${T('howto_btn')}</button>` : ''}${mode === 'opt' ? `<button class="btn" data-act="photodone" data-id="${esc(t.id)}">📷 ${T('photo_opt_btn').replace(/^📷\s*/, '')}</button>` : ''}<button class="btn ghostred" data-act="fail" data-id="${esc(t.id)}">✗ ${T('fail_btn')}</button></div></div>`;
+  } else if (next) {
+    const t = next.t, opens = Logic.toMin(t.time) - (t.earlyMin ?? 15);
+    out += `<div class="hero next"><span class="nowtag">${T('next_task')}</span><div class="heroi">${esc(t.icon || '⭐')}</div><h2>${esc(t.time)} — ${esc(loc(t.title))}</h2>`
+      + `<div class="countdown">⏳ ${T('in_t', { t: fmtDur(Math.max(0, opens - now.min)) })}</div><div class="heromut">${T('reward_will', { c: M(t.reward) })}</div></div>`;
+  } else {
+    out += `<div class="hero done"><div class="heroi">🏆</div><h2>${T('all_done_today')}</h2><div class="heromut">${T('today_earned', { c: sgn(todayNet) })}</div></div>`;
+  }
+  if (ts.length) {
+    out += `<div class="card daycard"><div class="dayrow"><b>${T('day_progress', { d: ds.done, n: ds.total })}</b><span class="${todayNet < 0 ? 'neg' : 'pos'}">${sgn(todayNet)}</span></div>`
+      + `<div class="pbar"><i style="width:${ds.total ? Math.round(ds.done / ds.total * 100) : 0}%"></i></div></div>`;
+    out += `<div class="tlist">` + states.map(({ t, log, st }, i) => {
+      const isHero = actives.length && actives[0].t.id === t.id;
+      const badge = st === 'done' ? (log.review === 'rejected' ? `<span class="tbadge bad">✗</span>` : `<span class="tbadge ok">✓ ${sgn(log.delta)}</span>`)
+        : (st === 'missed' || st === 'failed') ? `<span class="tbadge bad">✗ ${sgn(log.delta)}</span>`
+        : st === 'expired' ? `<span class="tbadge bad">⌛</span>`
+        : st === 'active' ? (isHero ? `<span class="tbadge now">⚡ ${T('now')}</span>` : `<button class="btn green sm" data-act="done" data-id="${esc(t.id)}">✅ +${M(t.reward)}</button>`)
+        : `<span class="tbadge mut">+${M(t.reward)}</span>`;
+      const photoNote = st === 'done' && log.review === 'pending' ? ` · 📷 ${T('photo_pending')}` : '';
+      return `<div class="trow2 st-${st}"><span class="ttime">${esc(t.time)}</span><span class="ticon">${esc(t.icon || '•')}</span><div class="tmain"><b>${esc(loc(t.title))}</b><small>🔁 ${esc(schedTxt(t))}${photoNote}</small></div>${howtoFor(t) ? `<button class="hbtn" data-act="howto" data-id="${esc(t.id)}" aria-label="how">ℹ️</button>` : ''}${badge}</div>`;
+    }).join('') + `</div>`;
+  }
   out += eventsCard(now);
   celebrate(now);
-  if (!ts.length) return out + `<div class="card center">${T('no_tasks')}</div>`;
-
-  const active = states.find(s => s.st === 'active');
-  const next = states.find(s => s.st === 'locked');
-  if (active) out += `<div class="mut" style="margin-top:6px"><span class="nowtag">${T('now')}</span></div>`;
-  else if (next) out += `<div class="card nowcard"><span class="nowtag">${T('next_task')}</span><div class="ttitle">${esc(next.t.icon || '')} ${esc(next.t.time)} — ${esc(loc(next.t.title))}</div><div class="mut">${T('in_t', { t: fmtDur(Math.max(0, Logic.toMin(next.t.time) - (next.t.earlyMin ?? 15) - now.min)) })}</div></div>`;
-  else out += `<div class="card nowcard center"><h3>🎉 ${T('all_done_today')}</h3></div>`;
-
-  out += states.map(({ t, log, st }) => {
-    const mode = Logic.photoMode(t);
-    const badge = st === 'done' ? (log.review === 'rejected' ? `<span class="tbadge bad">✗ ${T('photo_rejected')}</span>` : `<span class="tbadge ok">✓ ${sgn(log.delta)}</span>`)
-      : (st === 'missed' || st === 'failed') ? `<span class="tbadge bad">✗ ${sgn(log.delta)}</span>`
-      : st === 'expired' ? `<span class="tbadge bad">${T('st_expired')}</span>`
-      : st === 'locked' ? `<span class="tbadge mut">🔒 ${T('opens_at', { t: Logic.fmtMin(Logic.toMin(t.time) - (t.earlyMin ?? 15)) })}</span>`
-      : `<span class="tbadge ok">+${M(t.reward)}</span>`;
-    const photoNote = st === 'done' && log.review === 'pending' ? `<div class="mut">📷 ${T('photo_pending')}</div>` : '';
-    let btns = '';
-    if (st === 'active') {
-      if (mode === 'req') btns = `<button class="big green" data-act="done" data-id="${esc(t.id)}">${T('photo_req_btn')}</button>`;
-      else {
-        btns = `<button class="big green" data-act="done" data-id="${esc(t.id)}">${T('done_btn')}</button>`;
-        if (mode === 'opt') btns += `<button class="big gold" data-act="photodone" data-id="${esc(t.id)}">${T('photo_opt_btn')}</button>`;
-      }
-      btns += `<button class="big red" data-act="fail" data-id="${esc(t.id)}">${T('fail_btn')}</button>`;
-    }
-    return `<div class="task st-${st}"><div class="trow"><span class="ticon">${esc(t.icon || '•')}</span><div><div class="ttime">${esc(t.time)}</div><div class="ttitle">${esc(loc(t.title))}</div></div>${badge}</div>${photoNote}${btns}</div>`;
-  }).join('');
   return out;
 }
 
@@ -1994,7 +2163,8 @@ function viewFamily() {
       + bar(T('fam_week'), r.weekPct, T('fam_dm', { d: r.weekDone || 0, m: r.weekMissed || 0 }))
       + bar(T('fam_month'), r.monthPct, T('fam_dm', { d: r.monthDone || 0, m: r.monthMissed || 0 }))
       + `<div class="grid2" style="margin-top:8px"><div class="stat"><b class="${(r.monthNet || 0) < 0 ? 'neg' : ''}">${sgn(r.monthNet || 0)}</b><div class="mut">${T('fam_month_coins')}</div></div>`
-      + `<div class="stat"><b>${M(r.earned || 0)}</b><div class="mut">${T('earned_total')}</div></div></div>${last}</div>`;
+      + `<div class="stat"><b>${M(r.earned || 0)}</b><div class="mut">${T('earned_total')}</div></div></div>${last}`
+      + `<div class="btnrow"><button class="btn sm" data-act="utasks" data-uid="${esc(r.uid)}">📋 ${T('tab_tasks')}</button></div></div>`;
   }).join('');
   if (rows.length > 1) {
     const metrics = [['fam_today', 'todayPct'], ['fam_week', 'weekPct'], ['fam_month', 'monthPct']];
@@ -2006,19 +2176,33 @@ function viewFamily() {
 
 function viewRewards() {
   const c = cfgS(), now = clock();
-  return (typeof shopCard === 'function' ? shopCard() : '') + weekCard(now, c) + monthCard(now, c);
+  const rw = Logic.sortTasks(S.tasks.filter(t => Logic.assigned(t, S.me, null)))[0];
+  const how = `<details class="card how" ${S.howOpen ? 'open' : ''}><summary data-act="howtoggle">❓ ${T('how_title')}</summary><ul>`
+    + `<li>✅ ${T('how_done', { c: M(rw ? rw.reward : 1000) })}</li>`
+    + `<li>⚠️ ${T('how_miss', { p: c.missPenaltyPct, w: c.warnings, b: c.burnPct })}</li>`
+    + `<li>🔥 ${T('how_streak', { s: c.streakStepPct, m: c.streakMaxPct })}</li>`
+    + `<li>🏆 ${T('how_week', { g: c.weeklyGoalPct, i: c.idealPct, wb: M(c.idealWeekBonus), mb: M(c.idealMonthBonus) })}</li>`
+    + `<li>🛍️ ${T('how_shop')}</li>`
+    + `<li>💵 ${c.usdPerCoin > 0 ? T('how_money', { r: '$' + c.usdPerCoin.toFixed(3) }) : T('how_money_norate')}</li></ul></details>`;
+  return how + (typeof shopCard === 'function' ? shopCard() : '') + weekCard(now, c) + monthCard(now, c);
 }
 
 function viewMe() {
-  const me = S.me, now = clock(), L = Logic.level(Logic.earned(S.logs));
+  const me = S.me, L = Logic.level(Logic.earned(S.logs));
   const mine = S.logs.slice().sort((a, b) => (String(b.date) + (b.at || 0)).localeCompare(String(a.date) + (a.at || 0))).slice(0, 15);
   const rows = mine.map(l => `<div class="hrow"><span class="mut">${esc(l.date)}</span><span>${esc(kindLabel(l))}${l.kind === 'done' || l.kind === 'missed' || l.kind === 'failed' ? ' · ' + esc(loc((taskById(l.taskId) || {}).title)) : ''}</span><b class="${l.delta < 0 ? 'neg' : ''}">${sgn(l.delta)}</b></div>`).join('');
+  const sw = (act, on, label) => `<button class="swrow" data-act="${act}"><span>${label}</span><i class="sw ${on ? 'on' : ''}"></i></button>`;
+  const voiceOn = safeGet('fp_voice') !== '0', fxOn = safeGet('fp_fx') !== '0';
   return `<div class="card center">${avatar(me)}<h2 style="margin-top:8px">${esc(me.name)}</h2><div class="mut">${esc(me.email)}</div>`
     + `<div class="rankbig">${esc(loc(L.name))}</div><div class="lvbar" style="margin:8px 0"><i style="width:${Math.round(L.pct * 100)}%"></i></div>`
     + `<div class="grid2"><div class="stat"><b>${M(Logic.balance(S.logs))}</b><div class="mut">${T('balance')} · ${T('coins')}</div></div>`
     + `<div class="stat"><b>${M(Logic.earned(S.logs))}</b><div class="mut">${T('earned_total')}</div></div></div></div>`
+    + `<div class="card"><h3>⚙️ ${T('me_settings')}</h3><label class="f">🌐 ${T('language')}${langSel()}</label>`
+    + sw('music', S.music, '🎵 ' + T('music')) + sw('voiceToggle', voiceOn, '🗣️ ' + T('voice_hints')) + sw('fxToggle', fxOn, '❄️ ' + T('fx_title'))
+    + `<div class="btnrow"><button class="btn" data-act="alarms">⏰ ${T('alarms_btn')}</button><button class="btn" data-act="replayIntro">🎬 ${T('intro_replay')}</button></div>`
+    + (isAdmin() ? `<div class="btnrow"><button class="btn gold" data-act="admin">⚙️ ${T('admin_panel')}</button></div>` : '')
+    + `<div class="btnrow"><button class="btn ghostred" data-act="logout">🚪 ${T('logout')}</button></div></div>`
     + `<div class="card"><h3>${T('history')}</h3>${rows || `<div class="mut">${T('no_history')}</div>`}</div>`
-    + `<div class="card"><h3>⚙️ ${T('me_settings')}</h3><div class="btnrow"><button class="btn" data-act="replayIntro">🎬 ${T('intro_replay')}</button><button class="btn" data-act="fxToggle">${safeGet('fp_fx') === '0' ? '✨ ' + T('fx_on') : '🚫 ' + T('fx_off')}</button></div></div>`
     + (window.navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches) ? ''
       : `<div class="card"><h3>📲 ${T('install_title')}</h3><div class="mut">${T(/iPhone|iPad|iPod/.test(navigator.userAgent) ? 'install_ios' : 'install_android')}</div></div>`);
 }
@@ -2064,21 +2248,15 @@ function monthCard(now, c) {
 
 /* ---------- админ-панель ---------- */
 function viewAdmin() {
-  const req = S.payouts.filter(p => p.status === 'requested').length;
+  const req = S.payouts.filter(p => p.status === 'requested').length, cl = (S.claims || []).filter(c => c.status === 'pending').length;
   const tabs = [
-    ['users', T('tab_users') + (pendingCount() ? `<span class="badge">${pendingCount()}</span>` : '')],
-    ['add', T('tab_add')],
-    ['tasks', T('tab_tasks')],
-    ['photos', T('tab_photos') + (S.photos.length ? `<span class="badge">${S.photos.length}</span>` : '')],
-    ['payouts', T('tab_payouts') + (req ? `<span class="badge">${req}</span>` : '')],
-    ['claims', '🛍️ ' + T('tab_claims') + ((S.claims || []).some(c => c.status === 'pending') ? `<span class="badge">${(S.claims || []).filter(c => c.status === 'pending').length}</span>` : '')],
-    ['sounds', T('tab_sounds')],
-    ['fun', '🎈 ' + T('nav_fun')],
-    ['settings', T('tab_settings')]
+    ['users', '👥', T('at_users'), pendingCount()], ['tasks', '📋', T('at_tasks'), 0], ['add', '➕', T('at_add'), 0],
+    ['photos', '📷', T('at_photos'), S.photos.length], ['claims', '🛍️', T('at_claims'), cl], ['payouts', '💵', T('at_pay'), req],
+    ['sounds', '🔊', T('at_sounds'), 0], ['fun', '🎈', T('at_fun'), 0], ['settings', '⚙️', T('at_set'), 0]
   ];
-  const t = `<div class="tabs">${tabs.map(([k, n]) => `<button class="chipbtn ${S.tab === k ? 'on' : ''}" data-act="tab" data-id="${k}">${n}</button>`).join('')}</div>`;
+  const t = `<div class="admtabs">${tabs.map(([k, i, n, b]) => `<button class="${S.tab === k ? 'on' : ''}" data-act="tab" data-id="${k}"><span>${i}</span>${n}${b ? `<em>${b}</em>` : ''}</button>`).join('')}</div>`;
   const body = { users: admUsers, add: admAdd, tasks: admTasks, photos: admPhotos, payouts: admPayouts, claims: admClaims, sounds: admSounds, fun: admFun, settings: admSettings }[S.tab]();
-  return `<h2>⚙ ${T('admin_panel')}</h2>${t}${body}`;
+  return `<h2>⚙️ ${T('admin_panel')}</h2>${t}${body}`;
 }
 
 function admUsers() {
@@ -2093,7 +2271,7 @@ function admUsers() {
       + `<label class="chk"><input type="checkbox" data-uf="isAdmin" data-uid="${esc(u.uid)}" ${adm ? 'checked' : ''} ${self ? 'disabled' : ''}> ${T('is_admin')}</label>`
       + `<div class="btnrow">`
       + (u.status !== 'approved' ? `<button class="btn green" data-act="approve" data-uid="${esc(u.uid)}">${T('approve')}</button>` : '')
-      + (u.status === 'approved' ? `<button class="btn" data-act="uprog" data-uid="${esc(u.uid)}">${T('progress')}</button><button class="btn" data-act="uadj" data-uid="${esc(u.uid)}">${T('adjust')}</button>` : '')
+      + (u.status === 'approved' ? `<button class="btn gold" data-act="utasks" data-uid="${esc(u.uid)}">📋 ${T('tab_tasks')}</button><button class="btn" data-act="uprog" data-uid="${esc(u.uid)}">${T('progress')}</button><button class="btn" data-act="uadj" data-uid="${esc(u.uid)}">${T('adjust')}</button>` : '')
       + (!self && u.status !== 'blocked' ? `<button class="btn" data-act="ublock" data-uid="${esc(u.uid)}">${T('block')}</button>` : '')
       + (!self && u.status === 'blocked' ? `<button class="btn" data-act="approve" data-uid="${esc(u.uid)}">${T('unblock')}</button>` : '')
       + (!self ? `<button class="btn red" data-act="udel" data-uid="${esc(u.uid)}">${T('remove')}</button>` : '')
@@ -2121,7 +2299,7 @@ function taskForm(t) {
     + `<label class="f">${T('grace')}<input data-tf="grace" type="number" min="0" value="${t.graceMin ?? 60}"></label></div>`
     + `<label class="f">${T('early')}<input data-tf="early" type="number" min="0" value="${t.earlyMin ?? 15}"></label>`
     + `<label class="f">${T('sched')}<select data-tf="sched">${['daily', 'days', 'once'].map(k => `<option value="${k}" ${(t.once ? 'once' : (Array.isArray(t.days) && t.days.length && t.days.length < 7 ? 'days' : 'daily')) === k ? 'selected' : ''}>${T('sched_' + k)}</option>`).join('')}</select></label>`
-    + `<div class="relgrid">${[1, 2, 3, 4, 5, 6, 0].map(d => `<label class="chk"><input type="checkbox" data-td="${d}" ${(!Array.isArray(t.days) || !t.days.length || t.days.includes(d)) ? 'checked' : ''}> ${CALH[S.lang][(d + 6) % 7]}</label>`).join('')}</div>`
+    + `<div class="relgrid">${[1, 2, 3, 4, 5, 6, 0].map(d => `<label class="chk"><input type="checkbox" data-td="${d}" ${(!Array.isArray(t.days) || !t.days.length || t.days.includes(d)) ? 'checked' : ''}> ${WDS[S.lang][d]}</label>`).join('')}</div>`
     + `<label class="f">${T('sched_once_date')}<input data-tf="once" type="date" value="${esc(t.once || '')}"></label>`
     + `<label class="f">${T('photo_mode')}<select data-tf="photo">${['off', 'opt', 'req'].map(m => `<option value="${m}" ${mode === m ? 'selected' : ''}>${T('photo_' + m)}</option>`).join('')}</select></label>`
     + `<div class="mut">${T('assigned_to')}</div><div class="relgrid">${rels.map(r => `<label class="chk"><input type="checkbox" data-tr="${r}" ${(t.relations || []).includes(r) ? 'checked' : ''}> ${r === '*' ? T('rel_all') : T('rel_' + r)}</label>`).join('')}</div>`
@@ -2130,7 +2308,15 @@ function taskForm(t) {
 }
 function admTasks() {
   const ts = Logic.sortTasks(S.tasks);
-  return `<div class="btnrow" style="margin:0 0 8px">${ts.length ? '' : `<button class="btn gold" data-act="seed">${T('load_defaults')}</button>`}<button class="btn" data-act="newtask">${T('add_task')}</button></div>` + ts.map(taskForm).join('');
+  const people = S.users.filter(u => u.status === 'approved');
+  const who = S.tfor || 'all';
+  const chips = `<div class="whochips"><button class="${who === 'all' ? 'on' : ''}" data-act="tfor" data-id="all">📋 ${T('all_tasks')} <small>${ts.length}</small></button>`
+    + people.map(u => `<button class="${who === u.uid ? 'on' : ''}" data-act="tfor" data-id="${esc(u.uid)}">${esc(firstName(u.name))} <small>${ts.filter(t => Logic.assigned(t, u, null)).length}</small></button>`).join('') + `</div>`;
+  const list = who === 'all' ? ts : ts.filter(t => { const u = people.find(x => x.uid === who); return u && Logic.assigned(t, u, null); });
+  const forWho = t => people.filter(u => Logic.assigned(t, u, null)).map(u => firstName(u.name)).join(', ') || '—';
+  return `<div class="card"><h3>📋 ${T('tab_tasks')}</h3><div class="mut">${T('adm_tasks_hint')}</div>${chips}`
+    + `<div class="btnrow">${ts.length ? '' : `<button class="btn gold" data-act="seed">${T('load_defaults')}</button>`}<button class="btn gold" data-act="newtask">＋ ${T('add_task')}</button></div></div>`
+    + list.map(t => taskForm(t).replace('</summary>', `<div class="tkmeta">👤 ${esc(forWho(t))} · 🔁 ${esc(schedTxt(t))} · +${M(t.reward)}</div></summary>`)).join('');
 }
 
 function admPhotos() {
@@ -2154,23 +2340,25 @@ function admPayouts() {
       : `<div class="mut">${p.status === 'paid' ? '✅ ' + T('payout_paid') : T('payout_rejected')}</div>`) + `</div>`).join('');
 }
 
-const EV_SOUNDS = [['coin', 'ev_coin'], ['wrong', 'ev_wrong'], ['warn', 'ev_warn'], ['burn', 'ev_burn'], ['fanfare', 'ev_fanfare'], ['partner', 'ev_partner']];
+const EV_SOUNDS = [['coin', 'ev_coin'], ['taskdue', 'ev_taskdue'], ['wrong', 'ev_wrong'], ['warn', 'ev_warn'], ['burn', 'ev_burn'], ['fanfare', 'ev_fanfare'], ['partner', 'ev_partner']];
 function admSounds() {
   const all = S.settings.sounds || {};
   const presetSel = (k, cur) => `<select data-snd="${k}" data-part="p">${Snd.PRESET_NAMES.map(n => `<option value="${n}" ${cur === n ? 'selected' : ''}>${T('preset_' + n)}</option>`).join('')}</select>`;
   const rows = EV_SOUNDS.map(([k, lab]) => {
-    const s = all[k] || {};
-    return `<div class="card u"><b>${T(lab)}</b><div class="grid2"><label class="f">${presetSel(k, s.p || (k === 'partner' ? 'bell' : k))}</label>`
-      + `<button class="btn sm" data-act="sndprev" data-id="${k}">▶ ${T('preview')}</button></div>`
+    const s = all[k] || {}, def = SND_DEFAULT[k] || k;
+    return `<div class="card u sndrow"><b>${T(lab)}</b>${(s.p && s.p !== def) || s.u ? ` <span class="chip pending">${T('snd_changed')}</span>` : ''}`
+      + `<div class="sndctl">${presetSel(k, s.p || def)}<button class="btn sm" data-act="sndprev" data-id="${k}">▶</button><button class="btn sm" data-act="sndreset" data-id="${k}" title="reset">↺</button></div>`
       + `<label class="f">${T('snd_url')}<input data-snd="${k}" data-part="u" value="${esc(s.u || '')}" placeholder="https://…/sound.mp3"></label></div>`;
   }).join('');
   const m = all.music || {};
-  const musicRow = `<div class="card u"><b>${T('ev_music')}</b><div class="grid2"><label class="f"><select data-snd="music" data-part="p">`
+  const musicRow = `<div class="card u sndrow"><b>🎵 ${T('ev_music')}</b>${m.u || m.p === 'off' ? ` <span class="chip pending">${T('snd_changed')}</span>` : ''}<div class="sndctl"><select data-snd="music" data-part="p">`
     + `<option value="chords" ${(m.p || 'chords') === 'chords' ? 'selected' : ''}>${T('music_chords')}</option>`
-    + `<option value="off" ${m.p === 'off' ? 'selected' : ''}>${T('music_off')}</option></select></label></div>`
-    + `<label class="f">${T('snd_url')}<input data-snd="music" data-part="u" value="${esc(m.u || '')}" placeholder="https://…/music.mp3"></label></div>`;
-  return `<div class="card"><h2>${T('tab_sounds')}</h2><div class="mut">${T('snd_intro')}</div></div>${rows}${musicRow}`
-    + `<div class="btnrow"><button class="btn gold" data-act="sndsave">${T('save')}</button></div><div id="sndOk" class="mut"></div>`;
+    + `<option value="off" ${m.p === 'off' ? 'selected' : ''}>${T('music_off')}</option></select><button class="btn sm" data-act="sndreset" data-id="music">↺</button></div>`
+    + `<label class="f">${T('snd_url')}<input data-snd="music" data-part="u" value="${esc(m.u || '')}" placeholder="https://…/music.mp3"></label><div class="mut">${T('music_hint')}</div></div>`;
+  const v = (S.settings || {}).voice !== false;
+  return `<div class="card"><h2>🔊 ${T('tab_sounds')}</h2><div class="mut">${T('snd_intro2')}</div></div>`
+    + `<div class="card"><button class="swrow" data-act="voiceAll"><span>🗣️ ${T('voice_all')}</span><i class="sw ${v ? 'on' : ''}"></i></button><div class="mut">${T('voice_all_hint')}</div></div>`
+    + rows + musicRow + `<div class="btnrow"><button class="btn gold" data-act="sndsave">💾 ${T('save')}</button></div><div id="sndOk" class="mut"></div>`;
 }
 
 function admSettings() {
@@ -2379,6 +2567,35 @@ ACT.sndprev = el => {
   const p = document.querySelector(`[data-snd="${k}"][data-part="p"]`).value;
   const u = (document.querySelector(`[data-snd="${k}"][data-part="u"]`) || { value: '' }).value.trim();
   Snd.play(k, { p, u });
+};
+ACT.sndreset = el => {
+  const k = el.dataset.id, p = document.querySelector(`[data-snd="${k}"][data-part="p"]`), u = document.querySelector(`[data-snd="${k}"][data-part="u"]`);
+  if (p) p.value = k === 'music' ? 'chords' : (SND_DEFAULT[k] || k);
+  if (u) u.value = '';
+  banner('good', '↺ ' + T('snd_reset_done'), T('snd_reset_save'), 2200);
+};
+ACT.voiceAll = () => guarded(() => Store.saveSettings(Object.assign({}, S.settings, { voice: (S.settings || {}).voice === false })));
+ACT.voiceToggle = () => { safeSet('fp_voice', safeGet('fp_voice') === '0' ? '1' : '0'); render(); };
+ACT.home = () => { S.adminOpen = false; S.htab = 'today'; S.menu = ''; route(); render(); window.scrollTo(0, 0); };
+ACT.menu = el => { S.menu = el.dataset.id; S.htab = 'menu'; render(); window.scrollTo(0, 0); };
+ACT.tfor = el => { S.tfor = el.dataset.id; render(); };
+ACT.howtoggle = (el, e) => { e.preventDefault(); S.howOpen = !S.howOpen; render(); };
+// Задания человека: что назначено и что сделано сегодня
+ACT.utasks = el => {
+  const uid = el.dataset.uid, u = S.users.find(x => x.uid === uid) || S.scores.find(x => x.uid === uid) || { uid, name: '?' };
+  const now = clock(), ts = Logic.sortTasks(S.tasks.filter(t => Logic.assigned(t, Object.assign({ approvedDate: '' }, u), now.date)));
+  const show = logs => {
+    const idx = Logic.logIndex(logs || []);
+    modal(`<h2>📋 ${esc(u.name)}</h2><div class="mut">${esc(fmtDate(now))}</div><div class="tlist">`
+      + (ts.length ? ts.map(t => { const st = logs ? Logic.taskState(t, now.date, now, idx.get(Logic.logId(uid, now.date, t.id))) : 'plan';
+        const b = st === 'done' ? '<span class="tbadge ok">✓</span>' : (st === 'missed' || st === 'failed' || st === 'expired') ? '<span class="tbadge bad">✗</span>' : st === 'active' ? `<span class="tbadge now">⚡</span>` : `<span class="tbadge mut">+${M(t.reward)}</span>`;
+        return `<div class="trow2 st-${st}"><span class="ttime">${esc(t.time)}</span><span class="ticon">${esc(t.icon || '•')}</span><div class="tmain"><b>${esc(loc(t.title))}</b><small>🔁 ${esc(schedTxt(t))}</small></div>${b}</div>`; }).join('')
+        : `<div class="mut">${T('fam_no_tasks')}</div>`)
+      + `</div><div class="btnrow"><button class="btn" data-act="close">${T('close')}</button></div>`);
+  };
+  if (!isAdmin()) { show(null); return; }
+  let un = null, got = false;
+  un = Store.watchLogs(uid, logs => { if (got) return; got = true; setTimeout(() => un && un(), 0); show(logs); });
 };
 ACT.sndsave = () => guarded(async () => {
   const sounds = {};
@@ -2754,6 +2971,121 @@ const TALES = [
     uz: "Bir bor ekan, mehribon va mehnatkash qizcha Zumrad va uning dangasa o'gay singlisi Qimmat yashagan ekan. O'gay ona Zumradni yoqtirmay, uni o'rmonga jo'natibdi.\n\nO'rmonda Zumrad bir kampirni uchratibdi. Qizcha unga yordam beribdi: uyini yig'ishtiribdi, ovqat pishiribdi, odob bilan gaplashibdi. Kampir unga sandiqcha sovg'a qilibdi — uyda ochsa, ichida oltin va zeb-ziynatlar bor ekan.\n\nShunda o'gay ona Qimmatni o'rmonga jo'natibdi. Ammo Qimmat kampirga qo'pollik qilibdi va hech narsa qilishni xohlamabdi. U ham sandiqcha olibdi, lekin ichidan ilonlar chiqibdi.\n\nXulosa: mehribonlik va mehnatsevarlik doim taqdirlanadi, dangasalik va qo'pollik esa baloga olib keladi." }
 ];
 
+// «Как правильно»: короткие инструкции к ежедневным заданиям (+ видео)
+const HT = (vid, ru, uz) => ({ vid, ru, uz });
+const HOWTO = {
+  wake: HT('https://youtu.be/62piQhWPiYc', [
+    'Не вскакивайте резко: полежите минуту, потянитесь.',
+    'Отодвиньте шторы — дневной свет помогает проснуться. Если тело тёплое после сна, окно на проветривание откройте чуть позже, когда оденетесь.',
+    'Выпейте стакан тёплой воды (из термоса или чуть остывший кипяток).',
+    'Умойте лицо прохладной водой, почистите зубы.',
+    'Проветрите комнату 5–10 минут и заправьте постель.',
+    'Ребёнка будите мягко: свет, ласковый голос, весёлая зарядка вместе.'
+  ], [
+    "Keskin turmang: bir daqiqa yotib, cho'ziling.",
+    "Pardani oching — kunduzgi yorug'lik uyg'onishga yordam beradi. Uyqudan keyin tana iliq bo'lsa, derazani kiyinib olgach, birozdan keyin oching.",
+    "Bir stakan iliq suv iching (termosdan yoki sovigan qaynoq suv).",
+    "Yuzingizni salqin suv bilan yuving, tishlaringizni tozalang.",
+    "Xonani 5–10 daqiqa shamollating, o'rinni yig'ishtiring.",
+    "Bolani yumshoq uyg'oting: yorug'lik, mehrli ovoz, birga quvnoq badantarbiya."
+  ]),
+  teeth: HT('https://youtu.be/6w9TiUbxVFc', [
+    'Паста с фтором: детям до 3 лет — с рисовое зёрнышко, 3–6 лет — с горошину.',
+    'Чистим 2 минуты: включите песенку или песочные часы.',
+    'Мягкие маленькие круговые движения: снаружи, изнутри и жевательные поверхности.',
+    'Аккуратно почистите язык.',
+    'Пасту выплюнуть, сильно не полоскать.',
+    'Сначала ребёнок сам, потом мама дочищает. Щётку менять раз в 3 месяца.'
+  ], [
+    "Ftorli pasta: 3 yoshgacha — guruch donasicha, 3–6 yoshda — no'xatdek.",
+    "2 daqiqa tozalaymiz: qo'shiq yoki qum soat qo'ying.",
+    "Yumshoq kichik doiraviy harakatlar: tashqi, ichki va chaynash yuzalari.",
+    "Tilni ehtiyotkorlik bilan tozalang.",
+    "Pastani tupuring, ko'p chayqamang.",
+    "Avval bola o'zi, keyin ona tugatadi. Cho'tkani har 3 oyda almashtiring."
+  ]),
+  meal: HT('', [
+    'Перед едой — вымыть руки с мылом.',
+    'Садимся за стол вместе, без телефона и мультиков.',
+    'Маленькие порции; ребёнок сам решает, сколько съесть — не заставляйте.',
+    'Овощи и фрукты — на каждом приёме пищи.',
+    'Пить — воду; сок и сладкие напитки ограничить.',
+    'После еды — поблагодарить, помочь убрать тарелку.'
+  ], [
+    "Ovqatdan oldin qo'lni sovun bilan yuving.",
+    "Dasturxonga birga o'tiramiz, telefon va multfilmsiz.",
+    "Kichik porsiyalar; qancha yeyishni bola o'zi hal qiladi — majburlamang.",
+    "Har ovqatda sabzavot va meva bo'lsin.",
+    "Ichish uchun — suv; sharbat va shirin ichimliklarni cheklang.",
+    "Ovqatdan keyin rahmat aytish, likopchani olib qo'yishga yordam berish."
+  ]),
+  nap: HT('https://youtu.be/eq4MY7N6hTU', [
+    'В одно и то же время каждый день.',
+    'Тихо, прохладно, шторы задёрнуты.',
+    'Перед сном — спокойная игра или книжка, без экрана.',
+    'Сон 1–1,5 часа; не позже 15:30–16:00, чтобы вечером уснуть вовремя.'
+  ], [
+    "Har kuni bir xil vaqtda.",
+    "Jim, salqin, pardalar yopiq.",
+    "Uyqudan oldin — tinch o'yin yoki kitob, ekransiz.",
+    "Uyqu 1–1,5 soat; kechqurun vaqtida uxlash uchun 15:30–16:00 dan kechikmasin."
+  ]),
+  sleep: HT('https://youtu.be/eq4MY7N6hTU', [
+    'Экран выключить за 1 час до сна.',
+    'Ритуал каждый вечер: купание → пижама → зубы → книжка → свет выключен.',
+    'Проветрить комнату; прохладно и темно, ночник — тёплый и тусклый.',
+    'Ложиться в одно и то же время, даже в выходные.',
+    'Пожелать спокойной ночи и обнять — ребёнку важно чувство безопасности.'
+  ], [
+    "Uyqudan 1 soat oldin ekranni o'chiring.",
+    "Har kecha marosim: cho'milish → pijama → tish → kitob → chiroq o'chadi.",
+    "Xonani shamollating; salqin va qorong'i, tungi chiroq — iliq va xira.",
+    "Har kuni bir vaqtda yoting, dam olish kunlari ham.",
+    "Xayrli tun tilab, quchoqlang — bolaga xavfsizlik hissi muhim."
+  ]),
+  bath: HT('https://youtu.be/qcbwFdBkGeA', [
+    'Вода около 37 °C — проверьте локтем, она должна быть просто тёплой.',
+    'Никогда не оставляйте ребёнка в воде одного, даже на секунду.',
+    'Коврик против скольжения, всё нужное — заранее под рукой.',
+    'Шампунь — без слёз, смывать, наклоняя голову назад, чтобы не попало в глаза.',
+    'Вытереть тёплым полотенцем, особенно складочки; надеть пижаму.',
+    'Купание вечером успокаивает — хорошее начало ритуала сна.'
+  ], [
+    "Suv taxminan 37 °C — tirsagingiz bilan tekshiring, shunchaki iliq bo'lsin.",
+    "Bolani suvda hech qachon yolg'iz qoldirmang, bir soniya ham.",
+    "Sirpanmaydigan gilamcha, kerakli narsalar oldindan qo'l ostida.",
+    "Ko'z yoshsiz shampun, ko'zga tushmasligi uchun boshini orqaga egib yuving.",
+    "Iliq sochiq bilan, ayniqsa burmalarni arting; pijama kiygizing.",
+    "Kechki cho'milish tinchlantiradi — uyqu marosimining yaxshi boshlanishi."
+  ]),
+  medicine: HT('', [
+    'Давайте только то и столько, сколько назначил врач или написано на упаковке.',
+    'Если врач велел — во время или после еды.',
+    'Не называйте лекарство «конфетой».',
+    'Храните лекарства высоко и закрыто, вне доступа ребёнка.',
+    'Если пропустили приём — не давайте двойную порцию, уточните у врача или в инструкции.'
+  ], [
+    "Faqat shifokor buyurgan yoki qadoqda yozilgan miqdorda bering.",
+    "Shifokor aytgan bo'lsa — ovqat paytida yoki keyin.",
+    "Dorini «konfet» deb atamang.",
+    "Dorilarni baland va yopiq joyda, bola yeta olmaydigan joyda saqlang.",
+    "Qabul o'tkazib yuborilsa — ikki baravar bermang, shifokor yoki yo'riqnomadan aniqlang."
+  ])
+};
+// Подобрать инструкцию к заданию: по id или по словам в названии
+function howtoFor(t) {
+  if (!t) return null;
+  const id = String(t.id || ''), ti = JSON.stringify(t.title || '').toLowerCase();
+  if (id === 'wake' || /подъём|подъем|просып|uyg'on/.test(ti)) return HOWTO.wake;
+  if (id.startsWith('teeth') || /зуб|tish/.test(ti)) return HOWTO.teeth;
+  if (id === 'medicine' || /лекар|кальц|препарат|dori/.test(ti)) return HOWTO.medicine;
+  if (id === 'nap' || /дневной сон|kunduzgi uyqu/.test(ti)) return HOWTO.nap;
+  if (id === 'sleep' || /отбой|сон|uxlash/.test(ti)) return HOWTO.sleep;
+  if (/купа|ванн|cho'mil/.test(ti)) return HOWTO.bath;
+  if (['breakfast', 'lunch', 'snack', 'dinner'].includes(id) || /завтрак|обед|ужин|полдник|nonushta|tushlik|ovqat|tamaddi/.test(ti)) return HOWTO.meal;
+  return null;
+}
+
 
 /* ===== fun.js: праздники, кухня (видео-рецепты), детский уголок (сказки и игры) ===== */
 const RCATS = [['first', '🍲'], ['second', '🍛'], ['salad', '🥗'], ['dessert', '🍰'], ['cocktail', '🍹']];
@@ -2809,11 +3141,27 @@ function videoTile(v) {
 // Видео открывается в отдельном окне: обновление экрана его не перезапускает
 ACT.vplay = el => {
   const v = mediaOf().find(x => x.id === el.dataset.id) || DEFAULT_VIDEOS.find(x => x.id === el.dataset.id); if (!v) return;
-  const p = ytParse(v.url); if (!p) return;
-  S.quiet = true; Snd.stopMusic();
-  modal(`<h3>${esc(v.title || 'YouTube')}</h3><div class="vwrap"><iframe src="${ytEmbed(p)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`
-    + `<div class="btnrow"><a class="btn" href="${esc(v.url)}" target="_blank" rel="noopener">YouTube ↗</a><button class="btn" data-act="close">${T('close')}</button></div>`);
+  openVideo(v.url, v.title);
 };
+ACT.vurl = el => openVideo(el.dataset.url, el.dataset.title || '');
+// Видео: кнопка 🔒 «детский замок» — касания не работают, выйти нельзя; снять — удерживать 🔒 3 секунды
+function openVideo(url, title) {
+  const p = ytParse(url); if (!p) return;
+  S.quiet = true; Snd.stopMusic();
+  const m = modal(`<div class="vhead"><h3>${esc(title || 'YouTube')}</h3><button class="lockbtn" id="vLock" aria-label="lock">🔒</button></div>`
+    + `<div class="vwrap"><iframe src="${ytEmbed(p)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe><div class="vshield"></div></div>`
+    + `<div class="mut vlockhint">${T('lock_hint')}</div>`
+    + `<div class="btnrow vbtns"><a class="btn" href="${esc(url)}" target="_blank" rel="noopener">YouTube ↗</a><button class="btn" data-act="close">${T('close')}</button></div>`);
+  m.classList.add('vmodal');
+  const lock = m.querySelector('#vLock'); let hold = null;
+  const setLocked = on => { m.classList.toggle('locked', on); S.kidLock = on; lock.innerHTML = on ? '🔒<i></i>' : '🔓'; if (on) banner('good', '🔒 ' + T('locked_on'), T('lock_unlock_hint'), 2600); };
+  lock.innerHTML = '🔓';
+  lock.addEventListener('click', e => { e.stopPropagation(); if (!m.classList.contains('locked')) setLocked(true); });
+  const start = e => { if (!m.classList.contains('locked')) return; e.preventDefault(); lock.classList.add('holding'); hold = setTimeout(() => { lock.classList.remove('holding'); setLocked(false); }, 3000); };
+  const stop = () => { lock.classList.remove('holding'); if (hold) { clearTimeout(hold); hold = null; } };
+  lock.addEventListener('pointerdown', start); ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => lock.addEventListener(ev, stop));
+  m._stop = () => { S.kidLock = false; };
+}
 
 /* ---------- праздники ---------- */
 // В день события: поздравление и конфетти один раз за запуск
@@ -3097,7 +3445,7 @@ ACT.evadd = () => guarded(async () => {
   const ev = { id: 'ev_' + Date.now().toString(36), date, yearly: $('#evYearly').checked, icon: ($('#evIcon').value || '🎉').trim(), title: { uz: title, ru: title, en: title } };
   await saveEvents(eventsNow().concat([ev]));
 });
-ACT.evdel = el => ask(T('confirm_remove'), () => saveEvents(eventsNow().filter(e => e.id !== el.dataset.id)));
+ACT.evdel = el => ask(T('confirm_remove'), () => Store.saveSettings(Object.assign({}, S.settings, { events: eventsNow().filter(e => e.id !== el.dataset.id), eventsRemoved: (S.settings.eventsRemoved || []).concat([el.dataset.id]) })));
 ACT.vidadd = () => guarded(async () => {
   const url = ($('#vUrl').value || '').trim(), err = $('#vErr');
   if (!ytParse(url)) { err.textContent = T('vid_bad'); return; }
@@ -3621,11 +3969,13 @@ function drawStart() {
 ACT.introNext = () => { S.introI++; if (S.introI >= INTRO.length) { safeSet('fp_intro', '1'); ACT.startDay(); return; } drawStart(); };
 ACT.introSkip = () => { safeSet('fp_intro', '1'); S.introI = INTRO.length; drawStart(); };
 ACT.startDay = () => {
-  S.started = true;
+  S.started = true; S.startedAt = Date.now();
   try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { /* нет поддержки */ }
   Snd.unlock();
   if (S.music && !Snd.on) Snd.startMusic();
   play('coin');
+  try { const n = myTasks(clock().date).length; const L0 = S.lang; if (L0 === 'uz' && !hasVoice('uz')) S.lang = 'ru'; const msg = T('voice_hello', { n }); S.lang = L0; if (voiceOn()) speak(msg); else if (window.speechSynthesis) speechSynthesis.speak(new SpeechSynthesisUtterance('')); } catch (e) { /* без голоса */ }
+  setTimeout(() => { if (typeof voiceTick === 'function') voiceTick(); }, 2500);
   const ov = document.getElementById('startov'); if (ov) { ov.classList.add('bye'); setTimeout(() => ov.remove(), 450); }
 };
 ACT.replayIntro = () => { S.started = false; safeSet('fp_intro', '0'); const ov = document.getElementById('startov'); if (ov) ov.remove(); showStart(); };
@@ -3666,6 +4016,62 @@ function admBackup() {
 document.addEventListener('change', e => {
   if (e.target.dataset && e.target.dataset.actChange === 'fxall') guarded(() => Store.saveSettings(Object.assign({}, S.settings, { effects: e.target.checked })));
 });
+
+/* ---------- «Как правильно» к заданию ---------- */
+ACT.howto = el => {
+  const t = taskById(el.dataset.id), h = howtoFor(t); if (!h) return;
+  const steps = (S.lang === 'uz' ? h.uz : h.ru) || h.ru;
+  modal(`<h2>${esc(t.icon || 'ℹ️')} ${esc(loc(t.title))}</h2><div class="mut">${T('howto_title')}</div>`
+    + `<ol class="howsteps">${steps.map(x => `<li>${esc(x)}</li>`).join('')}</ol>`
+    + `<div class="btnrow">${h.vid ? `<button class="btn gold" data-act="vurl" data-url="${esc(h.vid)}" data-title="${esc(loc(t.title))}">▶ ${T('howto_video')}</button>` : ''}`
+    + `<button class="btn" data-act="hsay" data-id="${esc(t.id)}">🔊 ${T('k_qa_read')}</button><button class="btn" data-act="close">${T('close')}</button></div>`);
+};
+ACT.hsay = el => { const t = taskById(el.dataset.id), h = howtoFor(t); if (h) speak(((S.lang === 'uz' ? h.uz : h.ru) || h.ru).join('. ')); };
+
+/* ---------- голос: время задания, приветствие, советы ---------- */
+const voiceOn = () => (S.settings || {}).voice !== false && safeGet('fp_voice') !== '0';
+const hasVoice = l => { try { return speechSynthesis.getVoices().some(v => (v.lang || '').toLowerCase().startsWith(l)); } catch (e) { return false; } };
+function voiceTick() {
+  if (!S.started || S.view === 'login' || !S.me || S.me.status !== 'approved' || !S.tasksLoaded || !S.logsLoaded) return;
+  const now = clock(), idx = Logic.logIndex(S.logs);
+  let anyActive = false;
+  myTasks(now.date).forEach(t => {
+    const st = Logic.taskState(t, now.date, now, idx.get(Logic.logId(S.me.uid, now.date, t.id)));
+    if (st !== 'active') return;
+    anyActive = true;
+    const k = `fp_due_${t.id}_${now.date}`, open = Logic.toMin(t.time) - (t.earlyMin ?? 15);
+    if (safeGet(k) || now.min - open > 25) return;
+    safeSet(k, '1');
+    play('taskdue'); if (navigator.vibrate) navigator.vibrate([80, 60, 80]);
+    banner('good', `${t.icon || '⏰'} ${loc(t.title)}`, T('due_banner', { t: t.time }), 6000);
+    const L0 = S.lang; if (L0 === 'uz' && !hasVoice('uz')) S.lang = 'ru';
+    const msg = T('voice_task', { t: loc(t.title) }); S.lang = L0;
+    if (voiceOn()) setTimeout(() => speak(msg), 900);
+  });
+  // совет раз в 40 минут, когда нет срочного задания
+  if (!anyActive && voiceOn() && Date.now() - (S.lastTip || S.startedAt || Date.now()) > 40 * 60000) {
+    S.lastTip = Date.now();
+    const g = KIDS.TOGETHER.filter(x => x.age === 3)[Math.floor(Math.random() * 6)];
+    const L0 = S.lang; const tipFor = () => T('tip_play', { g: loc(g.t) });
+    banner('good', '💡 ' + tipFor(), T('tip_where'), 6500);
+    if (L0 === 'uz' && !hasVoice('uz')) S.lang = 'ru'; const msg = tipFor(); S.lang = L0;
+    speak(msg);
+  }
+}
+
+/* ---------- отклик при каждом нажатии ---------- */
+const HAPT = (() => { const l = document.createElement('label'); l.id = 'hapt'; l.setAttribute('aria-hidden', 'true'); l.style.cssText = 'position:fixed;left:-200px;top:0;width:1px;height:1px;opacity:0;pointer-events:none'; l.innerHTML = '<input type="checkbox" switch tabindex="-1">'; return l; })();
+window.addEventListener('DOMContentLoaded', () => document.body.appendChild(HAPT));
+function haptic() {
+  try {
+    if (navigator.vibrate) { navigator.vibrate(12); return; }
+    if (isIOS()) HAPT.click(); // iOS 18+: переключатель даёт лёгкий тактильный отклик
+  } catch (e) { /* нет поддержки */ }
+}
+document.addEventListener('click', e => {
+  if (e.target.closest && e.target.closest('#hapt')) return;
+  if (e.target.closest && e.target.closest('button,a,[data-act],select,label')) haptic();
+}, true);
 
 </script>
 </body>
