@@ -5,7 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#06241a">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%98%80%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NEW DAY">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="alternate icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%98%80%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <title>NEW DAY — Yangi kun — Новый день</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
@@ -142,6 +149,147 @@ body.shake #app{animation:shake .5s}
 .pbar.mine i{background:linear-gradient(90deg,#e0b43a,#ffd86b)}
 .cmp{margin-top:10px}
 .tabbar button{font-size:13px}
+
+.evcard .evrow,.evrow{display:flex;align-items:center;gap:10px;margin-top:8px}
+.evrow.big{margin-top:0}
+.evi{font-size:28px;flex:none}
+.evwhen{margin-left:auto;font-weight:800;color:var(--gold);white-space:nowrap;font-size:14px}
+.evtoday{color:var(--mint)}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}
+.confetti span{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{to{transform:translateY(110vh) rotate(540deg)}}
+.vgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.vtile{position:relative;background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:14px;overflow:hidden;padding:0;color:#fff;text-align:left;font:inherit}
+.vtile img,.plthumb{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#0b2e22}
+.plthumb{display:grid;place-items:center;font-size:36px}
+.vplay{position:absolute;top:calc(28% - 18px);left:calc(50% - 22px);width:44px;height:36px;border-radius:10px;background:rgba(220,0,0,.9);display:grid;place-items:center;font-size:16px}
+.vt{display:block;padding:6px 8px 8px;font-weight:800;font-size:13px;line-height:1.25}
+.vwrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;margin:8px 0}
+.vwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.kgames{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.kgame{background:linear-gradient(160deg,#1f7a58,#0e3d2c);border:2px solid var(--gold);border-radius:18px;color:#fff;font:900 15px Nunito,system-ui,sans-serif;padding:14px 6px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.kgame span{font-size:40px}
+.modal.game>div{width:min(560px,100%);height:min(92vh,760px);display:flex;flex-direction:column}
+.ghead{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.ghead b{font-size:18px;color:var(--gold)}
+.ghead span{margin-left:auto;font-weight:900;font-size:18px}
+.garea{position:relative;flex:1;border-radius:16px;overflow:hidden;background:linear-gradient(#7cc7ff,#d9f1ff)}
+.balloon{position:absolute;bottom:-70px;font-size:52px;background:none;border:0;padding:0;animation:rise linear forwards;touch-action:manipulation}
+.balloon.pop{animation-play-state:paused;transform:scale(1.4)}
+@keyframes rise{to{bottom:110%}}
+.mgrid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mcard{border-radius:16px;border:2px solid var(--gold);background:linear-gradient(160deg,#ffd23f,#e0951a);font-size:44px;min-height:80px;touch-action:manipulation}
+.mcard span{visibility:hidden}
+.mcard.up{background:#fff}
+.mcard.up span{visibility:visible}
+.mcard.ok{background:#c9f7de;border-color:var(--mint)}
+.abig{min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:40px;border-radius:16px;background:rgba(255,255,255,.08);margin-bottom:10px}
+.abig span{font-size:90px;line-height:1}
+.abig b{font-size:26px;color:var(--gold)}
+.abig i{font-style:normal;font-size:20px}
+.abig.bounce{animation:bounce .5s}
+@keyframes bounce{40%{transform:scale(1.15)}}
+.agrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.acard{font-size:48px;border-radius:16px;border:2px solid var(--line);background:rgba(255,255,255,.08);padding:10px 0;touch-action:manipulation}
+.tabbar button{font-size:12px;padding:6px 0}
+
+/* ===== игровой «премиум» вид: стекло, золото, свечение ===== */
+@property --spin{syntax:'<angle>';inherits:false;initial-value:0deg}
+body{background:
+  radial-gradient(1200px 600px at 50% -10%,rgba(46,232,143,.18),transparent 60%),
+  radial-gradient(800px 500px at 110% 30%,rgba(255,210,63,.10),transparent 60%),
+  radial-gradient(ellipse at top,#0f4a36 0%,#06241a 55%,#030d09 100%) fixed}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.55;
+  background-image:radial-gradient(1.4px 1.4px at 12% 18%,#ffd23f,transparent),radial-gradient(1px 1px at 72% 12%,#fff2a8,transparent),
+  radial-gradient(1.2px 1.2px at 38% 62%,#ffd23f,transparent),radial-gradient(1px 1px at 88% 74%,#fff2a8,transparent),
+  radial-gradient(1.3px 1.3px at 22% 86%,#2ee88f,transparent),radial-gradient(1px 1px at 58% 36%,#fff,transparent),
+  radial-gradient(1.2px 1.2px at 92% 44%,#ffd23f,transparent),radial-gradient(1px 1px at 6% 52%,#fff2a8,transparent);
+  animation:twinkle 5s ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.25}to{opacity:.7}}
+#app{position:relative;z-index:1}
+h1,h2{background:linear-gradient(180deg,#fff6c2,#ffd23f 55%,#e0951a);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 2px 8px rgba(255,210,63,.25))}
+.card{background:linear-gradient(160deg,rgba(24,104,74,.42),rgba(5,28,20,.88) 55%);border:1px solid rgba(46,232,143,.28);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 12px 32px rgba(0,0,0,.38),0 0 0 1px rgba(0,0,0,.2);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.top{background:linear-gradient(#06241af5,#06241acc 80%,transparent)}
+.avatar{box-shadow:0 0 0 3px rgba(255,210,63,.25),0 0 18px rgba(255,210,63,.35)}
+/* баланс: стопка монет, вращающаяся золотая рамка, блик */
+.coinpill{position:relative;overflow:hidden;padding:5px 16px 5px 6px;border:2px solid transparent;
+  background:linear-gradient(180deg,#0b2f22,#041710) padding-box,conic-gradient(from var(--spin),#ffd23f,#2ee88f,#fff2a8,#e0951a,#ffd23f) border-box;
+  animation:spin 6s linear infinite;box-shadow:0 0 22px rgba(255,210,63,.45),inset 0 0 14px rgba(255,210,63,.15)}
+@keyframes spin{to{--spin:360deg}}
+.coinpill::after{content:'';position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);animation:shine 3.6s ease-in-out infinite}
+@keyframes shine{0%,55%{left:-60%}100%{left:130%}}
+.cstack{width:38px;height:38px;flex:none;filter:drop-shadow(0 2px 6px rgba(255,180,0,.55));animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-2px)}}
+.coinpill b{font-size:25px;text-shadow:0 0 12px rgba(255,210,63,.6)}
+.coinpill.bump{animation:spin 6s linear infinite,bump .7s}
+.coinpill.drop{animation:spin 6s linear infinite,drop .7s}
+@keyframes bump{30%{transform:scale(1.14);box-shadow:0 0 40px rgba(255,210,63,.95)}}
+@keyframes drop{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.spark{position:fixed;z-index:95;pointer-events:none;color:#ffd23f;font-size:16px;text-shadow:0 0 8px #ffd23f}
+.lvbar{height:7px;box-shadow:inset 0 1px 2px rgba(0,0,0,.5)}
+.pbar i,.lvbar i{background:linear-gradient(90deg,#2ee88f,#ffd23f),repeating-linear-gradient(45deg,rgba(255,255,255,.18) 0 8px,transparent 8px 16px);background-blend-mode:overlay;background-size:100% 100%,32px 32px;animation:stripes 1.2s linear infinite;box-shadow:0 0 12px rgba(46,232,143,.5)}
+@keyframes stripes{to{background-position:0 0,32px 0}}
+/* кнопки: объём, блеск, свечение */
+.big{position:relative;border-radius:22px;box-shadow:0 6px 0 rgba(0,0,0,.4),inset 0 2px 0 rgba(255,255,255,.28),0 10px 26px rgba(0,0,0,.35);text-shadow:0 2px 0 rgba(0,0,0,.25)}
+.big::after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.22),transparent 45%);pointer-events:none}
+.big.green{background:linear-gradient(180deg,#34d975,#14803c);box-shadow:0 6px 0 #0b4f25,inset 0 2px 0 rgba(255,255,255,.3),0 0 26px rgba(46,232,143,.35)}
+.big.red{background:linear-gradient(180deg,#f05252,#991b1b);box-shadow:0 6px 0 #5c0f0f,inset 0 2px 0 rgba(255,255,255,.25),0 0 22px rgba(255,60,60,.25)}
+.big.gold{background:linear-gradient(180deg,#fff2a8,#ffd23f 40%,#e0951a);color:#2a1b00;text-shadow:0 1px 0 rgba(255,255,255,.4);box-shadow:0 6px 0 #8a5200,inset 0 2px 0 rgba(255,255,255,.5),0 0 26px rgba(255,210,63,.4)}
+.btn.gold{background:linear-gradient(180deg,#fff2a8,#ffd23f 45%,#e0951a);box-shadow:0 3px 0 #8a5200,0 0 14px rgba(255,210,63,.35)}
+.chipbtn.on{background:linear-gradient(180deg,rgba(255,210,63,.22),rgba(255,210,63,.06));box-shadow:0 0 14px rgba(255,210,63,.25)}
+.task.st-active{background:linear-gradient(160deg,rgba(255,210,63,.16),rgba(255,210,63,.04));box-shadow:0 0 0 1px rgba(255,210,63,.4),0 0 30px rgba(255,210,63,.18);animation:glow 2.2s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 1px rgba(255,210,63,.7),0 0 42px rgba(255,210,63,.32)}}
+/* нижнее меню: стекло и золотая подсветка */
+.tabbar{background:linear-gradient(180deg,rgba(8,46,33,.82),rgba(3,16,11,.96));-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid rgba(255,210,63,.55);box-shadow:0 -8px 30px rgba(0,0,0,.5)}
+.tabbar button.on{background:linear-gradient(180deg,#fff2a8,#ffd23f 45%,#e0951a);color:#2a1b00;box-shadow:0 0 18px rgba(255,210,63,.55),inset 0 1px 0 rgba(255,255,255,.6)}
+.tabbar button span{filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.modal>div{background:linear-gradient(160deg,#0d3d2b,#041710);box-shadow:0 0 0 1px rgba(255,210,63,.4),0 20px 60px rgba(0,0,0,.6)}
+/* «Мама и малыш» */
+.ksub{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.ksub button{border:1px solid rgba(46,232,143,.3);background:rgba(255,255,255,.06);border-radius:16px;padding:8px 4px;color:#e6fff3;font-weight:800;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.ksub button span{font-size:24px}
+.ksub button.on{background:linear-gradient(180deg,rgba(255,210,63,.28),rgba(255,210,63,.08));border-color:#ffd23f;color:#ffd23f;box-shadow:0 0 16px rgba(255,210,63,.3)}
+.agechips{display:flex;gap:6px;margin-top:10px}
+.agechips button{flex:1;border-radius:999px;border:1px solid rgba(46,232,143,.3);background:rgba(255,255,255,.06);padding:8px 0;font-weight:900;color:#e6fff3}
+.agechips button.on{background:#2ee88f;color:#04281a;border-color:#2ee88f;box-shadow:0 0 14px rgba(46,232,143,.5)}
+.act{padding:0;overflow:hidden}
+.acthead{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;color:#fff;text-align:left;padding:14px 16px}
+.acti{font-size:34px;flex:none;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+.actt{display:flex;flex-direction:column;min-width:0}.actt b{font-size:17px}.actt small{color:var(--mut);font-size:13px}
+.actc{margin-left:auto;color:var(--gold);font-weight:900}
+.act.open{border-color:rgba(255,210,63,.6)}
+.act.done{border-color:rgba(46,232,143,.7)}
+.actbody{padding:0 16px 16px}
+.actbody p{margin:4px 0 10px;line-height:1.45}
+.actbody ul{margin:4px 0 10px;padding-left:20px;line-height:1.45}.actbody li{margin:4px 0}
+.lbl{font-weight:900;color:var(--gold);font-size:14px;margin-top:6px}.lbl.ok{color:#2ee88f}.lbl.bad{color:#ff8a80}
+.docbox{background:rgba(59,130,246,.14);border:1px solid rgba(96,165,250,.5);border-radius:14px;padding:10px 12px;font-size:14px;line-height:1.45;margin:8px 0}
+.safe{background:rgba(255,210,63,.1);border:1px solid rgba(255,210,63,.4);border-radius:12px;padding:8px 10px;font-size:13px;margin-top:10px}
+.kplayedn{margin-top:10px;font-weight:900;color:#2ee88f}
+.qacard{margin:12px 0;padding:22px 16px;border-radius:26px;text-align:center;background:radial-gradient(circle at 50% 0%,rgba(255,210,63,.25),rgba(5,28,20,.92) 70%);border:2px solid rgba(255,210,63,.6);box-shadow:0 0 40px rgba(255,210,63,.18)}
+.qan{color:var(--mut);font-weight:800;font-size:13px}
+.qaq{font-size:28px;font-weight:900;line-height:1.25;margin:14px 0 16px}
+.qaa{font-size:20px;font-weight:800;color:#2ee88f;margin:4px 0 6px;animation:pop .3s}
+.qabtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 10px}
+.qabtns .big{font-size:18px;min-height:58px}
+
+.wx{display:flex;align-items:center;gap:8px;margin:6px 0 2px;font-size:14px;color:#dff7ea}
+.wx .wxi{font-size:24px}.wx b{font-size:22px;color:#fff}.wx span:last-child{color:var(--mut)}
+.ccard .crow{display:flex;align-items:center;gap:12px}
+.cico{font-size:34px}
+.cbtns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.cbtn{display:block;text-align:center;text-decoration:none;color:#fff;font-weight:900;font-size:14px;padding:12px 4px;border-radius:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 3px 0 rgba(0,0,0,.35)}
+.cbtn.call{background:linear-gradient(180deg,#34d975,#14803c)}.cbtn.wa{background:linear-gradient(180deg,#3ee08a,#128c4a)}.cbtn.tg{background:linear-gradient(180deg,#45b4f0,#1c7fc0)}
+.cpres{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:10px}
+.cpres button{font-size:26px;padding:8px 0;border-radius:14px;border:1px solid rgba(46,232,143,.3);background:rgba(255,255,255,.06)}
+.cpres button.on{border-color:#ffd23f;background:rgba(255,210,63,.2);box-shadow:0 0 14px rgba(255,210,63,.35)}
+.cthemes{display:flex;gap:10px;margin:10px 0}
+.cthemes button{width:46px;height:46px;border-radius:14px;border:2px solid}
+.cthemes button.on{outline:3px solid #fff;outline-offset:2px}
+.cardimg{width:100%;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+a.btn{display:inline-block;text-decoration:none;color:#fff}
 
 </style>
 </head>
@@ -373,6 +521,130 @@ Object.assign(D, {
   saved_ok: ["Saqlandi", "Сохранено", "Saved"],
   photo_camera_only: ["Faqat kamera", "Только камера", "Camera only"],
   rel_owner_other: ["Oila boshlig'i (admin)", "Глава семьи (админ)", "Head of family (admin)"],
+  kids_hint2: ["Haqiqiy o'yinlar, maslahatlar va savollar — telefonsiz, birga.", "Живые игры, советы и вопросы — вместе, без экрана.", "Real games, tips and questions — together, without a screen."],
+  k_together: ["Birga", "Вместе", "Together"],
+  k_hands: ["Qo'llar", "Руками", "Hands-on"],
+  k_qa: ["Savollar", "Вопросы", "Questions"],
+  k_advice: ["Maslahat", "Советы", "Tips"],
+  k_screen: ["Ekranda", "На экране", "On screen"],
+  k_video: ["Video", "Видео", "Videos"],
+  k_age: ["{n} yosh", "{n} г.", "{n} y"],
+  k_need: ["Nima kerak", "Что понадобится", "You need"],
+  k_how: ["Qanday o'ynash", "Как играть", "How to play"],
+  k_learn: ["Nimani o'rgatadi", "Чему учит", "What it teaches"],
+  k_played: ["Bugun o'ynadik", "Сыграли сегодня", "Played today"],
+  k_unplay: ["Belgini olib tashlash", "Снять отметку", "Undo"],
+  k_played_ok: ["Ajoyib! Birga vaqt — eng yaxshi sovg'a", "Отлично! Время вместе — лучший подарок", "Great! Time together is the best gift"],
+  k_played_n: ["Bugun birga o'ynaldi: {n}", "Сегодня сыграли вместе: {n}", "Played together today: {n}"],
+  k_together_hint: ["Yoshni tanlang. Bosing — nima kerak, qanday o'ynash va nimani o'rgatishi ochiladi.", "Выберите возраст. Нажмите на игру — откроется, что нужно, как играть и чему учит.", "Pick an age. Tap a game to see what you need, how to play and what it teaches."],
+  k_hands_hint: ["Qo'l bilan o'yinlar: mayda motorika nutq va kelajakdagi yozuvni rivojlantiradi.", "Игры руками: мелкая моторика развивает речь и готовит руку к письму.", "Hands-on games: fine motor skills support speech and later writing."],
+  k_safety: ["Mayda narsalar (yorma, loviya, tugma) — faqat yoningizda. 3 yoshgacha og'izga sig'adigan narsalarni bermang.", "Мелкие предметы (крупа, фасоль, пуговицы) — только когда вы рядом. До 3 лет не давайте то, что помещается в рот целиком.", "Small items (grains, beans, buttons) only when you are right there. Under 3, nothing that fits whole in the mouth."],
+  k_qa_hint: ["Savolni ovoz chiqarib o'qing, bola ovoz bilan javob bersin. To'g'ri javob — yulduzcha!", "Читайте вопрос вслух — ребёнок отвечает голосом. Правильный ответ — звёздочка!", "Read the question aloud — your child answers by voice. A right answer earns a star!"],
+  k_qa_show: ["Javobni ko'rsatish", "Показать ответ", "Show answer"],
+  k_qa_ok: ["Javob berdi", "Ответил(а)", "Answered"],
+  k_qa_next: ["Keyingi", "Дальше", "Next"],
+  k_qa_read: ["Telefon o'qib bersin", "Пусть телефон прочитает", "Read it aloud"],
+  k_advice_hint: ["Ko'p uchraydigan muammolar: nima qilish, nima qilmaslik va qachon shifokorga borish.", "Частые трудности: что делать, чего не делать и когда идти к врачу.", "Common challenges: what to do, what not to do, and when to see a doctor."],
+  k_do: ["Nima qilish kerak", "Что делать", "Do"],
+  k_dont: ["Nima qilmaslik kerak", "Чего не делать", "Don't"],
+  k_doc: ["Qachon shifokorga", "Когда к врачу", "When to see a doctor"],
+  k_not_med: ["Bu umumiy maslahatlar, shifokor ko'rigini almashtirmaydi. Xavotir bo'lsa — pediatrga.", "Это общие советы, они не заменяют врача. Если тревожно — к педиатру.", "These are general tips, not a substitute for a doctor. If worried, see a pediatrician."],
+  k_screen_hint: ["Qisqa ekran o'yinlari. Kuniga ekran 1 soatdan oshmasin.", "Короткие игры на экране. Экрана в день — не больше часа.", "Short on-screen games. Keep screen time under an hour a day."],
+  rc_mom: ["Onalar uchun darslar", "Уроки для мам", "Lessons for moms"],
+  mom_empty: ["Onalar uchun video darslar hali qo'shilmagan.", "Видео-уроки для мам пока не добавлены.", "No video lessons for moms yet."],
+  mom_empty_admin: ["Qo'shish: Admin panel → Dam olish → bo'lim «Onalar uchun darslar», YouTube havolasi.", "Добавить: Админ-панель → Досуг → раздел «Уроки для мам», ссылка YouTube.", "Add: Admin panel → Leisure → section \"Lessons for moms\", YouTube link."],
+  k_video_lesson: ["Video dars", "Видео-урок", "Video lesson"],
+  fun_cards: ["Tabriknoma", "Открытки", "Cards"],
+  fun_contacts: ["Kontaktlar", "Контакты", "Contacts"],
+  contacts_hint: ["Oila va yaqinlar: bir bosishda qo'ng'iroq, WhatsApp yoki Telegram.", "Семья и близкие: позвонить, WhatsApp или Telegram в одно касание.", "Family and close ones: call, WhatsApp or Telegram in one tap."],
+  contacts_empty: ["Kontaktlar hali qo'shilmagan.", "Контакты пока не добавлены.", "No contacts yet."],
+  contacts_empty_admin: ["Qo'shish: Admin panel → Dam olish → Kontaktlar.", "Добавить: Админ-панель → Досуг → Контакты.", "Add: Admin panel → Leisure → Contacts."],
+  c_call: ["Qo'ng'iroq", "Позвонить", "Call"],
+  c_name: ["Ism", "Имя", "Name"],
+  c_name_ph: ["Masalan: Buvi", "Например: Бабушка", "e.g. Grandma"],
+  c_phone: ["Telefon", "Телефон", "Phone"],
+  c_tg: ["Telegram (ixtiyoriy)", "Telegram (необязательно)", "Telegram (optional)"],
+  c_need: ["Ism va telefon yoki Telegram kiriting", "Введите имя и телефон или Telegram", "Enter a name and a phone or Telegram"],
+  w_title: ["Ob-havo", "Погода", "Weather"],
+  w_now_city: ["Hozirgi shahar", "Сейчас город", "Current city"],
+  w_city: ["Shahar nomi", "Название города", "City name"],
+  w_notfound: ["Shahar topilmadi", "Город не найден", "City not found"],
+  w_tomorrow: ["ertaga", "завтра", "tomorrow"],
+  w_clear: ["ochiq", "ясно", "clear"],
+  w_partly: ["qisman bulutli", "переменная облачность", "partly cloudy"],
+  w_cloudy: ["bulutli", "облачно", "cloudy"],
+  w_fog: ["tuman", "туман", "fog"],
+  w_drizzle: ["mayda yomg'ir", "морось", "drizzle"],
+  w_rain: ["yomg'ir", "дождь", "rain"],
+  w_snow: ["qor", "снег", "snow"],
+  w_storm: ["momaqaldiroq", "гроза", "thunderstorm"],
+  cards_hint: ["Bayramni tanlang, ism yozing — chiroyli tabriknoma tayyor. Uni WhatsApp yoki Telegramga yuboring.", "Выберите праздник и имя — красивая открытка готова. Отправьте её в WhatsApp или Telegram.", "Pick an occasion and a name — a beautiful card is ready to send."],
+  card_to: ["Kimga", "Кому", "To"],
+  card_to_ph: ["Masalan: Onajon", "Например: Мамочка", "e.g. Mom"],
+  card_from: ["Kimdan", "От кого", "From"],
+  card_make: ["Tabriknoma yasash", "Сделать открытку", "Make a card"],
+  card_share: ["Yuborish", "Отправить", "Share"],
+  card_save: ["Saqlash", "Сохранить", "Save"],
+  card_noshare: ["Bu brauzer yuborishni qo'llamaydi. «Saqlash»ni bosing.", "Этот браузер не умеет отправлять. Нажмите «Сохранить».", "This browser can't share. Tap Save."],
+  cp_bday: ["Tug'ilgan kuning bilan!", "С днём рождения!", "Happy birthday!"],
+  cp_bday_wish: ["Sog'lik, baxt va har kuni yangi quvonch tilayman!", "Желаю здоровья, счастья и новой радости каждый день!", "Wishing you health, happiness and new joy every day!"],
+  cp_wedding: ["To'yingiz muborak!", "Поздравляю со свадьбой!", "Happy wedding day!"],
+  cp_wedding_wish: ["Bir umr birga, mehr va baxt bilan!", "Пусть любовь и счастье будут с вами всю жизнь!", "May love and happiness stay with you forever!"],
+  cp_newyear: ["Yangi yil muborak!", "С Новым годом!", "Happy New Year!"],
+  cp_newyear_wish: ["Yangi yil oilangizga tinchlik va to'kinlik olib kelsin!", "Пусть новый год принесёт семье мир и достаток!", "May the new year bring your family peace and plenty!"],
+  cp_eid: ["Hayit muborak!", "С праздником Хайит!", "Eid Mubarak!"],
+  cp_eid_wish: ["Duolaringiz ijobat bo'lsin, xonadoningiz nurga to'lsin!", "Пусть молитвы будут услышаны, а дом полон света!", "May your prayers be answered and your home full of light!"],
+  cp_women: ["8-mart bayrami muborak!", "С 8 Марта!", "Happy Women's Day!"],
+  cp_women_wish: ["Go'zallik, mehr va bahoriy kayfiyat tilayman!", "Красоты, любви и весеннего настроения!", "Beauty, love and a spring mood to you!"],
+  cp_love: ["Seni yaxshi ko'raman!", "Я тебя люблю!", "I love you!"],
+  cp_love_wish: ["Sen mening eng katta baxtimsan.", "Ты — моё самое большое счастье.", "You are my greatest happiness."],
+  cp_thanks: ["Rahmat!", "Спасибо!", "Thank you!"],
+  cp_thanks_wish: ["Har bir kun uchun minnatdorman.", "Благодарю за каждый день.", "Grateful for every day."],
+  nav_fun: ["Dam olish", "Досуг", "Leisure"],
+  fun_kitchen: ["Oshxona", "Кухня", "Kitchen"],
+  fun_kids: ["Ona va bola", "Мама и малыш", "Mom & kid"],
+  fun_events: ["Bayramlar", "Праздники", "Holidays"],
+  playlist: ["Pleylist", "Плейлист", "Playlist"],
+  kitchen_hint: ["Bo'limni tanlang va retsept videosini oching.", "Выберите раздел и откройте видео-рецепт.", "Pick a section and open a recipe video."],
+  rc_first: ["Birinchi taomlar", "Первые блюда", "Soups"],
+  rc_second: ["Ikkinchi taomlar", "Вторые блюда", "Main dishes"],
+  rc_salad: ["Salatlar", "Салаты", "Salads"],
+  rc_dessert: ["Shirinliklar", "Десерты", "Desserts"],
+  rc_cocktail: ["Kokteyllar", "Коктейли", "Cocktails"],
+  rc_tales: ["Ertaklar", "Сказки", "Fairy tales"],
+  videos_empty: ["Bu bo'limda hali video yo'q.", "В этом разделе пока нет видео.", "No videos in this section yet."],
+  videos_empty_admin: ["Hali video yo'q. Admin panel → Dam olish bo'limida YouTube havolasini qo'shing.", "Видео пока нет. Добавьте ссылку YouTube: Админ-панель → Досуг.", "No videos yet. Add a YouTube link: Admin panel → Leisure."],
+  ev_soon: ["Yaqin bayramlar", "Скоро праздники", "Coming up"],
+  ev_today: ["Bugun!", "Сегодня!", "Today!"],
+  ev_tomorrow: ["Ertaga", "Завтра", "Tomorrow"],
+  ev_in: ["{n} kundan keyin", "через {n} дн.", "in {n} days"],
+  ev_yearly: ["har yili", "каждый год", "every year"],
+  events_hint: ["Oila bayramlari, tug'ilgan kunlar va muhim sanalar.", "Семейные праздники, дни рождения и важные даты.", "Family holidays, birthdays and important dates."],
+  events_empty: ["Sanalar yo'q", "Дат пока нет", "No dates yet"],
+  kids_hint: ["Dilnoza uchun o'yinlar va ertaklar.", "Игры и сказки для Дильнозы.", "Games and fairy tales for Dilnoza."],
+  tales: ["Ertaklar", "Сказки", "Fairy tales"],
+  tales_empty: ["Ertaklar hali qo'shilmagan.", "Сказки пока не добавлены.", "No fairy tales added yet."],
+  tales_empty_admin: ["Ertak qo'shish: Admin panel → Dam olish → bo'lim «Ertaklar», YouTube havolasi.", "Чтобы добавить сказку: Админ-панель → Досуг → раздел «Сказки», ссылка YouTube.", "To add a tale: Admin panel → Leisure → section \"Fairy tales\", YouTube link."],
+  g_balloons: ["Sharlar", "Шарики", "Balloons"],
+  g_memory: ["Juftini top", "Найди пару", "Find the pair"],
+  g_animals: ["Hayvonlar", "Животные", "Animals"],
+  g_win: ["Barakalla!", "Молодец!", "Well done!"],
+  adm_events_hint: ["Tug'ilgan kun uchun «har yili» belgisini qoldiring. Bir martalik voqea uchun (to'y) belgini olib tashlang.", "Для дня рождения оставьте «каждый год». Для разового события (свадьба) снимите галочку.", "For a birthday keep \"every year\". For a one-time event (a wedding) untick it."],
+  ev_date: ["Sana", "Дата", "Date"],
+  ev_title: ["Nomi", "Название", "Title"],
+  ev_title_ph: ["Masalan: Dilnozaning tug'ilgan kuni", "Например: День рождения Дильнозы", "e.g. Dilnoza's birthday"],
+  ev_yearly_chk: ["Har yili takrorlansin", "Повторять каждый год", "Repeat every year"],
+  ev_need_date: ["Sanani tanlang", "Выберите дату", "Pick a date"],
+  ev_need_title: ["Nomini yozing", "Введите название", "Enter a title"],
+  adm_videos: ["Videolar (YouTube)", "Видео (YouTube)", "Videos (YouTube)"],
+  adm_videos_hint: ["Video yoki pleylist havolasini qo'ying. Retseptlar «Oshxona»da, ertaklar «Bolalar uchun»da chiqadi.", "Вставьте ссылку на видео или плейлист. Рецепты появятся в «Кухне», сказки — в «Детям».", "Paste a video or playlist link. Recipes appear in Kitchen, tales in For kids."],
+  vid_cat: ["Bo'lim", "Раздел", "Section"],
+  vid_url: ["YouTube havolasi", "Ссылка YouTube", "YouTube link"],
+  vid_title: ["Nomi (ixtiyoriy)", "Название (необязательно)", "Title (optional)"],
+  vid_bad: ["Bu YouTube havolasi emas", "Это не ссылка YouTube", "This is not a YouTube link"],
+  install_title: ["Telefonga o'rnatish", "Установить на телефон", "Install on your phone"],
+  install_ios: ["Safari'da «Ulashish» ⬆️ tugmasini bosing → «Uy ekraniga» → «Qo'shish». Ilova belgisi ekranda paydo bo'ladi.", "В Safari нажмите «Поделиться» ⬆️ → «На экран «Домой»» → «Добавить». Значок приложения появится на экране.", "In Safari tap Share ⬆️ → Add to Home Screen → Add. The app icon will appear on your screen."],
+  install_android: ["Chrome menyusi ⋮ → «Bosh ekranga qo'shish».", "Меню Chrome ⋮ → «Добавить на главный экран».", "Chrome menu ⋮ → Add to Home screen."],
   nav_family: ["Reyting", "Рейтинг", "Ranking"],
   fam_title: ["Oila reytingi", "Рейтинг семьи", "Family ranking"],
   fam_hint: ["Kim vazifalarni qanday bajarayotgani: bugun, hafta va oy bo'yicha.", "Кто как выполняет задания: за сегодня, неделю и месяц.", "Who is doing their tasks and how well: today, this week and this month."],
@@ -682,6 +954,28 @@ const Logic = (() => {
     };
   }
 
+  // Праздники и события: разовые (дата) и ежегодные (месяц-день)
+  const DEFAULT_EVENTS = [
+    { id: 'ev_newyear', date: '2027-01-01', yearly: true, icon: '🎄', title: { uz: 'Yangi yil', ru: 'Новый год', en: 'New Year' } },
+    { id: 'ev_wedding_1122', date: '2026-11-22', yearly: false, icon: '💍', title: { uz: "Tanishlarning to'yi", ru: 'Свадьба знакомых', en: "Friends' wedding" } }
+  ];
+  const eventsOf = s => (s && Array.isArray(s.events) ? s.events : DEFAULT_EVENTS);
+  const daysBetween = (a, b) => { const p = x => { const [y, m, d] = x.split('-').map(Number); return Date.UTC(y, m - 1, d); }; return Math.round((p(b) - p(a)) / 86400000); };
+  function nextOccur(ev, today) {
+    if (!ev || !/^\d{4}-\d{2}-\d{2}$/.test(ev.date || '')) return null;
+    if (!ev.yearly) return ev.date >= today ? ev.date : null;
+    const md = ev.date.slice(5), y = +today.slice(0, 4);
+    let d = `${y}-${md}`;
+    if (md === '02-29' && daysInMonth(`${y}-02`) < 29) d = `${y}-03-01`;
+    if (d < today) d = `${y + 1}-${md === '02-29' && daysInMonth(`${y + 1}-02`) < 29 ? '03-01' : md}`;
+    return d;
+  }
+  // Ближайшие события в пределах N дней, по порядку
+  function upcomingEvents(events, today, within) {
+    return (events || []).map(ev => { const d = nextOccur(ev, today); return d ? Object.assign({}, ev, { on: d, left: daysBetween(today, d) }) : null; })
+      .filter(e => e && e.left <= within).sort((a, b) => a.left - b.left || String(a.id).localeCompare(String(b.id)));
+  }
+
   // Время задания (дата + ЧЧ:ММ в часовом поясе tz) -> UTC в формате iCalendar
   function icsUtc(date, time, tz) {
     const [y, m, d] = date.split('-').map(Number), mins = toMin(time);
@@ -711,7 +1005,8 @@ const Logic = (() => {
     DEFAULTS, cfg, DEFAULT_TASKS, RANKS, photoMode,
     assigned, sortTasks, logIndex, logId, isMiss, taskState, dayLimit, makeMiss, pendingMisses, failLog, doneLog,
     photoExpired, balance, earned, level, dayStats, perfectDay, dayBonus, weekReport, weekBonus, monthReport, monthBonus,
-    payoutDay, toUsd, money, hashStr, streak, scoreCard, icsUtc, icsCalendar
+    payoutDay, toUsd, money, hashStr, streak, scoreCard, icsUtc, icsCalendar,
+    DEFAULT_EVENTS, eventsOf, daysBetween, nextOccur, upcomingEvents
   };
   if (typeof module !== 'undefined') module.exports = api;
   return api;
@@ -1272,6 +1567,8 @@ function levelUp(n) {
 
 function animateBalance(target) {
   const from = S.shown, t0 = performance.now(), dur = 900;
+  const pill = document.getElementById('coinTarget');
+  if (pill && target !== from) { pill.classList.remove('bump', 'drop'); void pill.offsetWidth; pill.classList.add(target > from ? 'bump' : 'drop'); if (target > from && typeof sparkle === 'function') setTimeout(sparkle, 650); }
   const step = now => {
     const k = Math.min(1, (now - t0) / dur), v = Math.round(from + (target - from) * (1 - Math.pow(1 - k, 3)));
     S.shown = v;
@@ -1304,7 +1601,9 @@ function modal(html) {
 }
 function closeModal() {
   stopCam();
-  const m = $('#modal'); if (m) m.remove();
+  const m = $('#modal'); if (m) { if (m._stop) { try { m._stop(); } catch (e) { /* ignore */ } } m.remove(); }
+  try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) { /* ignore */ }
+  S.quiet = false;
 }
 function ask(text, onYes) {
   const m = modal(`<h3>${esc(text)}</h3><div class="btnrow"><button class="btn red" data-act="askyes">${T('yes')}</button><button class="btn" data-act="close">${T('no')}</button></div>`);
@@ -1390,9 +1689,20 @@ function shell(body, full) {
 function header() {
   const me = S.me, L = Logic.level(Logic.earned(S.logs));
   return `<header class="top"><div class="who">${avatar(me)}<div class="whot"><div class="nm">${esc(me.name)}</div><div class="lv">${esc(loc(L.name))}${me.relation ? ' · ' + esc(relLabel(me.relation)) : ''}</div></div></div>`
-    + `<div class="coinpill" id="coinTarget"><span class="coin">1</span><b id="coinAmt" class="${S.shown < 0 ? 'neg' : ''}">${M(S.shown)}</b></div></header>`
+    + `<div class="coinpill" id="coinTarget">${COINSTACK}<b id="coinAmt" class="${S.shown < 0 ? 'neg' : ''}">${M(S.shown)}</b></div></header>`
     + `<div class="lvbar"><i style="width:${Math.round(L.pct * 100)}%"></i></div>`;
 }
+// Стопка из трёх золотых монет, как кэш в играх
+const COINSTACK = (() => {
+  const coin = (y, top) => `<ellipse cx="24" cy="${y + 5}" rx="17" ry="6.2" fill="url(#cse)"/><rect x="7" y="${y}" width="34" height="5" fill="url(#cse)"/>`
+    + `<ellipse cx="24" cy="${y}" rx="17" ry="6.2" fill="url(#csg)" stroke="#b86f0a" stroke-width="1"/>`
+    + `<ellipse cx="24" cy="${y}" rx="11.5" ry="3.9" fill="none" stroke="rgba(138,82,0,.45)" stroke-width="1.2"/>`
+    + (top ? `<path d="M24 ${y - 3.2} l1.1 2.1 2.3.3-1.7 1.6.4 2.3-2.1-1.1-2.1 1.1.4-2.3-1.7-1.6 2.3-.3z" fill="#fff8d0" opacity=".95"/>` : '');
+  return `<svg class="cstack" viewBox="0 0 48 48" aria-hidden="true"><defs>`
+    + `<linearGradient id="csg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff6c2"/><stop offset=".45" stop-color="#ffd23f"/><stop offset="1" stop-color="#e0951a"/></linearGradient>`
+    + `<linearGradient id="cse" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d98a12"/><stop offset="1" stop-color="#7a4600"/></linearGradient></defs>`
+    + coin(36, false) + coin(27, false) + coin(18, true) + `</svg>`;
+})();
 const pendingCount = () => S.users.filter(u => u.status === 'pending').length;
 
 function viewError() {
@@ -1414,9 +1724,10 @@ function viewHome() {
   let body;
   if (S.htab === 'rewards') body = viewRewards();
   else if (S.htab === 'family') body = viewFamily();
+  else if (S.htab === 'fun') body = viewFun();
   else if (S.htab === 'me') body = viewMe();
   else body = viewToday();
-  const tabs = [['today', '📋', T('nav_today')], ['family', '🏆', T('nav_family')], ['rewards', '🎁', T('nav_rewards')], ['me', '👤', T('nav_me')]];
+  const tabs = [['today', '📋', T('nav_today')], ['family', '🏆', T('nav_family')], ['fun', '🎈', T('nav_fun')], ['rewards', '🎁', T('nav_rewards')], ['me', '👤', T('nav_me')]];
   return body + `<nav class="tabbar">${tabs.map(([k, i, n]) => `<button class="${S.htab === k ? 'on' : ''}" data-act="htab" data-id="${k}"><span>${i}</span>${n}</button>`).join('')}</nav>`;
 }
 
@@ -1427,13 +1738,15 @@ function viewToday() {
   const ds = Logic.dayStats(S.tasks, S.logs, me, now.date, now);
   const L = Logic.level(Logic.earned(S.logs));
   const bonusToday = S.logs.find(l => l.kind === 'bonus' && l.date === now.date);
-  let out = `<div class="card"><div class="mut">${esc(fmtDate(now))} · ${Logic.fmtMin(now.min)}</div>`;
+  let out = `<div class="card"><div class="mut">${esc(fmtDate(now))} · ${Logic.fmtMin(now.min)}</div>${typeof weatherLine === 'function' ? weatherLine() : ''}`;
   if (ts.length) out += `<h3>${T('day_progress', { d: ds.done, n: ds.total })}</h3><div class="pbar"><i style="width:${ds.total ? Math.round(ds.done / ds.total * 100) : 0}%"></i></div>`;
   if (bonusToday) out += `<div class="mut" style="color:var(--gold)">🎁 ${esc(kindLabel(bonusToday))} ${sgn(bonusToday.delta)}</div>`;
   out += `<div class="mut">${esc(loc(L.name))} · ${T('to_next', { c: M(L.toNext) + ' ' + T('coins') })}</div>`;
   if (ts.length) out += `<div class="btnrow"><button class="btn sm" data-act="alarms">⏰ ${T('alarms_btn')}</button></div>`;
   out += `</div>`;
 
+  out += eventsCard(now);
+  celebrate(now);
   if (!ts.length) return out + `<div class="card center">${T('no_tasks')}</div>`;
 
   const active = states.find(s => s.st === 'active');
@@ -1513,7 +1826,9 @@ function viewMe() {
     + `<div class="rankbig">${esc(loc(L.name))}</div><div class="lvbar" style="margin:8px 0"><i style="width:${Math.round(L.pct * 100)}%"></i></div>`
     + `<div class="grid2"><div class="stat"><b>${M(Logic.balance(S.logs))}</b><div class="mut">${T('balance')} · ${T('coins')}</div></div>`
     + `<div class="stat"><b>${M(Logic.earned(S.logs))}</b><div class="mut">${T('earned_total')}</div></div></div></div>`
-    + `<div class="card"><h3>${T('history')}</h3>${rows || `<div class="mut">${T('no_history')}</div>`}</div>`;
+    + `<div class="card"><h3>${T('history')}</h3>${rows || `<div class="mut">${T('no_history')}</div>`}</div>`
+    + (window.navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches) ? ''
+      : `<div class="card"><h3>📲 ${T('install_title')}</h3><div class="mut">${T(/iPhone|iPad|iPod/.test(navigator.userAgent) ? 'install_ios' : 'install_android')}</div></div>`);
 }
 
 function weekCard(now, c) {
@@ -1565,10 +1880,11 @@ function viewAdmin() {
     ['photos', T('tab_photos') + (S.photos.length ? `<span class="badge">${S.photos.length}</span>` : '')],
     ['payouts', T('tab_payouts') + (req ? `<span class="badge">${req}</span>` : '')],
     ['sounds', T('tab_sounds')],
+    ['fun', '🎈 ' + T('nav_fun')],
     ['settings', T('tab_settings')]
   ];
   const t = `<div class="tabs">${tabs.map(([k, n]) => `<button class="chipbtn ${S.tab === k ? 'on' : ''}" data-act="tab" data-id="${k}">${n}</button>`).join('')}</div>`;
-  const body = { users: admUsers, add: admAdd, tasks: admTasks, photos: admPhotos, payouts: admPayouts, sounds: admSounds, settings: admSettings }[S.tab]();
+  const body = { users: admUsers, add: admAdd, tasks: admTasks, photos: admPhotos, payouts: admPayouts, sounds: admSounds, fun: admFun, settings: admSettings }[S.tab]();
   return `<h2>⚙ ${T('admin_panel')}</h2>${t}${body}`;
 }
 
@@ -1884,7 +2200,7 @@ ACT.rejpay = el => guarded(() => Store.updatePayout(el.dataset.id, { status: 're
 /* ---------- события ---------- */
 document.addEventListener('click', e => {
   Snd.unlock();
-  if (S.music && !Snd.on) Snd.startMusic();
+  if (S.music && !Snd.on && !S.quiet) Snd.startMusic();
   const el = e.target.closest('[data-act]');
   if (el && ACT[el.dataset.act]) ACT[el.dataset.act](el, e);
 });
@@ -1912,6 +2228,754 @@ window.addEventListener('DOMContentLoaded', () => {
   boot();
 });
 window.__app = { S, tick, clock, render, Logic };
+
+
+/* ===== parenting.js: «Мама и малыш» — живые игры по возрасту, игры руками, вопрос-ответ, советы ===== */
+const KIDS = (() => {
+  const G = (id, age, icon, min, ru, uz) => ({ id, age, icon, min, t: { ru: ru[0], uz: uz[0] }, need: { ru: ru[1], uz: uz[1] }, how: { ru: ru[2], uz: uz[2] }, learn: { ru: ru[3], uz: uz[3] } });
+
+  // Живые игры вместе, без телефона
+  const TOGETHER = [
+    // 2 года
+    G('hide_toy', 2, '🧸', 10,
+      ['Где мишка?', 'Мягкая игрушка, платок', 'Спрячьте мишку под платок так, чтобы торчало ушко. Спросите: «Где мишка?» Когда найдёт — радуйтесь вместе. Потом прячьте целиком, а затем пусть прячет она.', 'Память, внимание, понимание, что предмет не исчезает, когда его не видно'],
+      ["Ayiqcha qani?", "Yumshoq o'yinchoq, ro'mol", "Ayiqchani ro'mol ostiga yashiring, qulog'i ko'rinib tursin. «Ayiqcha qani?» deb so'rang. Topganda birga quvoning. Keyin to'liq yashiring, so'ng bola o'zi yashirsin.", "Xotira, diqqat, ko'rinmagan narsa yo'qolmasligini tushunish"]),
+    G('animal_sounds', 2, '🐮', 10,
+      ['Кто как говорит', 'Игрушечные животные или картинки', 'Показывайте животное и говорите звук: «Корова — му-у». Потом спрашивайте: «А как говорит корова?» Изображайте походку: прыгаем как зайчик, ползём как змейка.', 'Речь, звукоподражание, движение, смех вместе'],
+      ["Kim qanday gapiradi", "O'yinchoq hayvonlar yoki rasmlar", "Hayvonni ko'rsatib, ovozini ayting: «Sigir — muu». Keyin so'rang: «Sigir qanday deydi?» Yurishini ham ko'rsating: quyonday sakraymiz, iloncha emaklaymiz.", "Nutq, tovushlarga taqlid, harakat, birga kulish"]),
+    G('bubbles', 2, '🫧', 10,
+      ['Мыльные пузыри', 'Баночка мыльных пузырей', 'Мама пускает пузыри, ребёнок ловит и лопает ладошками. Считайте вслух: «Раз, два, три!» Потом дайте ребёнку попробовать подуть самой.', 'Координация, дыхание (полезно для речи), счёт'],
+      ["Sovun pufakchalari", "Sovun pufakchasi idishi", "Ona pufakcha uchiradi, bola ushlaydi va kaftlari bilan yoradi. Ovoz chiqarib sanang: «Bir, ikki, uch!» Keyin bola o'zi puflab ko'rsin.", "Muvofiqlik, nafas (nutq uchun foydali), sanash"]),
+    G('tower', 2, '🧱', 10,
+      ['Башня и бум!', 'Кубики, коробки или пластиковые стаканчики', 'Стройте башню по очереди: кубик мама, кубик ребёнок. Считайте этажи. Когда башня готова — разрешите разрушить с громким «Бу-ум!».', 'Мелкая моторика, очерёдность, счёт, понимание «выше — ниже»'],
+      ["Minora va bum!", "Kubiklar, qutilar yoki plastik stakanlar", "Navbat bilan minora quring: bir kubikni ona, birini bola qo'yadi. Qavatlarni sanang. Tayyor bo'lgach, baland «Bu-um!» bilan buzishga ruxsat bering.", "Mayda motorika, navbat kutish, sanash, «baland — past»ni tushunish"]),
+    G('freeze_dance', 2, '💃', 10,
+      ['Танцуем — замри!', 'Весёлая музыка', 'Включите музыку и танцуйте вместе. Когда музыка выключается, все замирают как статуи. Кто пошевелился — смеёмся и танцуем дальше.', 'Самоконтроль, слушание, движение, радость'],
+      ["Raqs — to'xta!", "Quvnoq musiqa", "Musiqani qo'yib, birga raqsga tushing. Musiqa to'xtaganda hamma haykalday qotib qoladi. Kim qimirlasa — kulamiz va davom etamiz.", "O'zini boshqarish, tinglash, harakat, quvonch"]),
+    G('helper_socks', 2, '🧦', 10,
+      ['Маленький помощник', 'Чистые носки, корзина для игрушек', 'Дайте ребёнку найти пару носкам или сложить игрушки в корзину. Хвалите конкретно: «Ты нашла два одинаковых носка!»', 'Сравнение, порядок, чувство «я помогаю маме»'],
+      ["Kichkina yordamchi", "Toza paypoqlar, o'yinchoq savati", "Bolaga paypoqlarning juftini topish yoki o'yinchoqlarni savatga yig'ishni bering. Aniq maqtang: «Sen ikkita bir xil paypoqni topding!»", "Taqqoslash, tartib, «onamga yordam beryapman» hissi"]),
+    // 3 года
+    G('colors_sort', 3, '🎨', 15,
+      ['Разложи по цветам', 'Цветные крышки, помпоны или кубики, 3–4 миски', 'Поставьте миски и положите в каждую по одному предмету нужного цвета. Ребёнок раскладывает остальное. Называйте цвета вслух.', 'Цвета, сортировка, внимание, мелкая моторика'],
+      ["Ranglarga ajrat", "Rangli qopqoqlar yoki kubiklar, 3–4 ta idish", "Idishlarni qo'yib, har biriga bittadan kerakli rangdagi narsa soling. Bola qolganini ajratadi. Ranglarni ovoz chiqarib ayting.", "Ranglar, saralash, diqqat, mayda motorika"]),
+    G('shop', 3, '🛒', 15,
+      ['Магазин', 'Фрукты или игрушки, сумка, «деньги» из бумаги', 'Ребёнок — продавец, мама — покупатель, потом меняетесь. «Дайте, пожалуйста, два яблока». Считайте, говорите «спасибо» и «пожалуйста».', 'Счёт до 3–5, вежливые слова, ролевая игра, речь'],
+      ["Do'kon", "Mevalar yoki o'yinchoqlar, sumka, qog'oz «pul»", "Bola — sotuvchi, ona — xaridor, keyin almashing. «Iltimos, ikkita olma bering». Sanang, «rahmat» va «iltimos» deng.", "5 gacha sanash, xushmuomala so'zlar, rolli o'yin, nutq"]),
+    G('find_same', 3, '🔍', 10,
+      ['Найди такое же', 'Ничего, только комната', 'Покажите красную вещь: «Найди в комнате что-то такого же цвета». Потом — что-то круглое, мягкое, большое.', 'Цвета, формы, слова-признаки, наблюдательность'],
+      ["Xuddi shunday narsani top", "Hech narsa, faqat xona", "Qizil narsani ko'rsating: «Xonadan shunday rangdagi narsa top». Keyin — dumaloq, yumshoq, katta narsa.", "Ranglar, shakllar, belgi so'zlari, kuzatuvchanlik"]),
+    G('little_cook', 3, '🥕', 15,
+      ['Поварёнок', 'Овощи, миска, вода', 'Пусть ребёнок моет овощи, кладёт их в миску, рвёт листья салата. Называйте овощи и цвета. Нож и плиту — только мама.', 'Самостоятельность, новые слова, интерес к еде'],
+      ["Kichkina oshpaz", "Sabzavotlar, idish, suv", "Bola sabzavotlarni yuvsin, idishga solsin, salat bargini yulsin. Sabzavot nomlari va ranglarini ayting. Pichoq va plita — faqat onada.", "Mustaqillik, yangi so'zlar, ovqatga qiziqish"]),
+    G('sock_puppet', 3, '🧦', 15,
+      ['Театр из носка', 'Носок, пуговицы или фломастер для глаз', 'Сделайте куклу из носка. Кукла здоровается, задаёт вопросы, рассказывает короткую сказку. Дайте ребёнку отвечать за свою куклу.', 'Речь, фантазия, умение говорить о чувствах'],
+      ["Paypoq teatri", "Paypoq, ko'z uchun tugma yoki flomaster", "Paypoqdan qo'g'irchoq yasang. Qo'g'irchoq salomlashadi, savol beradi, qisqa ertak aytadi. Bola o'z qo'g'irchog'i uchun javob bersin.", "Nutq, xayol, his-tuyg'ular haqida gapirish"]),
+    G('obstacle', 3, '🛋️', 15,
+      ['Полоса препятствий', 'Подушки, стулья, одеяло', 'Сделайте дорожку: перешагнуть подушку, проползти под стулом, пройти по «мостику» из одеяла. Объясняйте словами: «над», «под», «через».', 'Ловкость, баланс, понимание слов направления'],
+      ["To'siqli yo'lak", "Yostiqlar, stullar, adyol", "Yo'lak yasang: yostiqdan hatlab o'tish, stul ostidan emaklash, adyol «ko'prigi»dan yurish. So'z bilan tushuntiring: «ustidan», «ostidan», «orqali».", "Chaqqonlik, muvozanat, yo'nalish so'zlarini tushunish"]),
+    // 4 года
+    G('whats_missing', 4, '🎩', 10,
+      ['Чего не стало?', '4–6 мелких игрушек', 'Положите игрушки в ряд, пусть ребёнок их назовёт. Попросите закрыть глаза, уберите одну. «Чего не стало?» Потом меняйтесь ролями.', 'Память, внимание, сосредоточенность'],
+      ["Nima yo'qoldi?", "4–6 ta kichik o'yinchoq", "O'yinchoqlarni qatorga terib, bola nomini aytsin. Ko'zini yumishini so'rang, bittasini oling. «Nima yo'qoldi?» Keyin rollarni almashing.", "Xotira, diqqat, e'tiborni jamlash"]),
+    G('guess_it', 4, '🤔', 10,
+      ['Угадай, что я загадала', 'Ничего', 'Опишите предмет, не называя: «Он жёлтый, длинный, его едят обезьяны». Ребёнок угадывает. Потом пусть загадывает сам.', 'Словарь, логика, умение описывать'],
+      ["Topchi, nimani o'yladim", "Hech narsa", "Narsani nomini aytmay tasvirlang: «U sariq, uzun, uni maymunlar yeydi». Bola topadi. Keyin o'zi topishmoq aytsin.", "So'z boyligi, mantiq, tasvirlash"]),
+    G('count_walk', 4, '🚗', 15,
+      ['Считаем на прогулке', 'Прогулка', 'Договоритесь, что считаете: красные машины, собак, птиц. Кто первым увидит — тот считает вслух.', 'Счёт до 10 и дальше, внимание, общение'],
+      ["Sayrda sanaymiz", "Sayr", "Nimani sanashni kelishing: qizil mashinalar, itlar, qushlar. Kim birinchi ko'rsa — ovoz chiqarib sanaydi.", "10 gacha va undan ko'p sanash, diqqat, muloqot"]),
+    G('finish_drawing', 4, '✏️', 15,
+      ['Дорисуй', 'Бумага, карандаши', 'Мама рисует круг или линию, ребёнок дорисовывает, во что это превратится: солнце, мяч, лицо. Потом наоборот.', 'Воображение, рисунок, держать карандаш'],
+      ["Chizib tugat", "Qog'oz, qalamlar", "Ona doira yoki chiziq chizadi, bola uni nimagadir aylantiradi: quyosh, to'p, yuz. Keyin aksincha.", "Xayol, rasm, qalamni to'g'ri ushlash"]),
+    G('story_turns', 4, '📚', 10,
+      ['Сказка по очереди', 'Ничего', 'Мама начинает: «Жил-был котёнок…» Ребёнок продолжает одним предложением, потом снова мама. Получается общая сказка.', 'Связная речь, фантазия, умение слушать'],
+      ["Navbatma-navbat ertak", "Hech narsa", "Ona boshlaydi: «Bir bor ekan, bir mushukcha…» Bola bitta gap bilan davom ettiradi, keyin yana ona. Umumiy ertak chiqadi.", "Bog'langan nutq, xayol, tinglash"]),
+    G('hop_colors', 4, '🦘', 10,
+      ['Прыжки по цветам', 'Цветная бумага на полу', 'Разложите листы на полу. «Прыгни на синий! На одной ноге на жёлтый!»', 'Цвета, баланс, энергия выходит в игру'],
+      ["Ranglar bo'ylab sakrash", "Polda rangli qog'ozlar", "Varaqlarni polga tering. «Ko'kka sakra! Bir oyoqda sariqqa!»", "Ranglar, muvozanat, energiya o'yinda chiqadi"]),
+    // 5 лет
+    G('back_letters', 5, '✍️', 10,
+      ['Буква на спине', 'Ничего', 'Нарисуйте пальцем на спине ребёнка букву или цифру. Пусть угадает. Потом пусть рисует вам.', 'Буквы и цифры, тактильное внимание, близость'],
+      ["Orqadagi harf", "Hech narsa", "Barmog'ingiz bilan bolaning orqasiga harf yoki raqam chizing. Topsin. Keyin u sizga chizsin.", "Harf va raqamlar, sezgi, yaqinlik"]),
+    G('board_game', 5, '🎲', 20,
+      ['Самодельная ходилка', 'Лист бумаги, кубик, 2 фишки', 'Нарисуйте вместе дорожку из 20 клеток с ловушками и бонусами. Бросайте кубик и ходите. Учитесь проигрывать спокойно.', 'Счёт, правила, умение проигрывать и ждать'],
+      ["Uyda yasalgan o'yin", "Qog'oz, kubik, 2 ta tosh", "Birga 20 katakli yo'l chizing, tuzoq va bonuslar bilan. Kubik tashlab yuring. Xotirjam yutqazishni o'rganing.", "Sanash, qoidalar, yutqazish va kutishni bilish"]),
+    G('sink_float', 5, '🛁', 15,
+      ['Тонет или плавает?', 'Таз с водой, разные предметы', 'Перед каждым броском пусть ребёнок угадает: утонет или поплывёт? Проверяйте. Всё время рядом с водой — мама.', 'Наука, гипотеза и проверка, новые слова'],
+      ["Cho'kadimi yoki suzadimi?", "Suvli tog'ora, turli narsalar", "Har gal tashlashdan oldin bola taxmin qilsin: cho'kadimi yoki suzadimi? Tekshiring. Suv yonida doim ona bo'lsin.", "Fan, taxmin va tekshirish, yangi so'zlar"]),
+    G('recipe_together', 5, '🥣', 20,
+      ['Готовим по рецепту', 'Простой рецепт: салат, бутерброды, тесто', 'Пусть ребёнок отмеряет ложками, считает, перемешивает. Читайте рецепт вслух по шагам.', 'Счёт, последовательность, гордость за результат'],
+      ["Retsept bo'yicha pishiramiz", "Oddiy retsept: salat, buterbrod, xamir", "Bola qoshiq bilan o'lchasin, sanasin, aralashtirsin. Retseptni bosqichma-bosqich o'qing.", "Sanash, ketma-ketlik, natijadan faxrlanish"]),
+    G('who_am_i', 5, '👩‍⚕️', 10,
+      ['Угадай профессию', 'Ничего', 'Покажите жестами профессию: врач, повар, водитель. Ребёнок угадывает и рассказывает, что этот человек делает.', 'Знания о мире, речь, мимика'],
+      ["Kasbni top", "Hech narsa", "Kasbni imo-ishora bilan ko'rsating: shifokor, oshpaz, haydovchi. Bola topadi va u odam nima qilishini aytadi.", "Dunyo haqida bilim, nutq, mimika"]),
+    G('kind_jar', 5, '💛', 10,
+      ['Баночка добрых дел', 'Банка, бумажки', 'Каждый вечер вспоминайте одно доброе дело за день и кладите записку в банку. В конце недели читайте все вместе.', 'Доброта, благодарность, тёплые отношения'],
+      ["Yaxshi ishlar idishi", "Idish, qog'ozchalar", "Har kecha kunning bitta yaxshi ishini eslab, qog'ozga yozib idishga soling. Hafta oxirida hammasini birga o'qing.", "Mehribonlik, minnatdorlik, iliq munosabat"])
+  ];
+
+  // Игры руками (мелкая моторика, ощущения)
+  const HANDS = [
+    G('sensory_box', 2, '🫘', 15,
+      ['Сенсорная коробка', 'Коробка, рис или крупная фасоль, ложки, стаканчики, игрушки', 'Насыпьте крупу в коробку и спрячьте игрушки. Ребёнок ищет их руками, пересыпает ложкой. Только под присмотром: мелкое не в рот и не в нос.', 'Мелкая моторика, ощущения, спокойствие и сосредоточенность'],
+      ["Sezgi qutisi", "Quti, guruch yoki yirik loviya, qoshiqlar, stakanchalar, o'yinchoqlar", "Qutiga yorma solib, o'yinchoqlarni yashiring. Bola qo'li bilan qidiradi, qoshiq bilan ag'daradi. Faqat nazorat ostida: mayda narsa og'izga va burunga solinmasin.", "Mayda motorika, sezgi, xotirjamlik va diqqat"]),
+    G('salt_dough', 3, '🍪', 20,
+      ['Солёное тесто', '2 стакана муки, 1 стакан соли, вода', 'Замесите тесто вместе. Лепите шарики, колбаски, печенье, отпечатки ладошек. Следите, чтобы ребёнок не ел тесто — в нём много соли.', 'Сила пальцев, фантазия, совместное творчество'],
+      ["Tuzli xamir", "2 stakan un, 1 stakan tuz, suv", "Xamirni birga qoring. Sharcha, kolbasa, pechenye, kaft izlarini yasang. Bola xamirni yemasin — unda tuz ko'p.", "Barmoq kuchi, xayol, birgalikda ijod"]),
+    G('finger_paint', 2, '🖐️', 15,
+      ['Рисуем пальцами', 'Пальчиковые краски или манка на подносе', 'Рисуйте пальцами солнце, дождик, дорожки. На манке можно рисовать и «стирать» встряхиванием подноса.', 'Ощущения, творчество, подготовка руки к письму'],
+      ["Barmoq bilan chizamiz", "Barmoq bo'yoqlari yoki patnisdagi manka", "Barmoqlar bilan quyosh, yomg'ir, yo'llar chizing. Mankada chizib, patnisni silkitib «o'chirish» mumkin.", "Sezgi, ijod, qo'lni yozuvga tayyorlash"]),
+    G('pasta_beads', 3, '📿', 15,
+      ['Бусы из макарон', 'Крупные макароны-трубочки, шнурок с твёрдым кончиком', 'Нанизывайте макароны на шнурок, делайте бусы для мамы. Можно заранее покрасить макароны.', 'Координация рук и глаз, терпение, подарок своими руками'],
+      ["Makaron munchoq", "Yirik naycha makaron, uchi qattiq ip", "Makaronlarni ipga tering, onaga munchoq yasang. Makaronlarni oldindan bo'yash mumkin.", "Qo'l va ko'z muvofiqligi, sabr, o'z qo'li bilan sovg'a"]),
+    G('clothespins', 3, '☀️', 10,
+      ['Солнышко из прищепок', 'Жёлтый круг из картона, прищепки', 'Прикрепляйте прищепки-лучики к кругу. Считайте лучики. Можно сделать ёжика или тучку с дождиком.', 'Сила пальцев (нужна для письма), счёт'],
+      ["Qisqichli quyosh", "Kartondan sariq doira, kir qisqichlari", "Qisqich-nurlarni doiraga taqing. Nurlarni sanang. Tipratikan yoki yomg'irli bulut ham yasash mumkin.", "Barmoq kuchi (yozuv uchun kerak), sanash"]),
+    G('water_transfer', 2, '🥄', 10,
+      ['Переливаем воду', 'Две миски, ложка, губка, полотенце', 'Переносите воду ложкой из миски в миску, выжимайте губку. Постелите полотенце, будьте рядом.', 'Точность движений, спокойствие, понятия «полный — пустой»'],
+      ["Suv quyamiz", "Ikki idish, qoshiq, gubka, sochiq", "Suvni qoshiq bilan idishdan idishga o'tkazing, gubkani siqing. Sochiq to'shang, yonida bo'ling.", "Harakat aniqligi, xotirjamlik, «to'la — bo'sh» tushunchasi"]),
+    G('finger_rhymes', 2, '👏', 5,
+      ['Пальчиковые игры', 'Ничего', 'Ладушки, «Сорока-белобока», «Этот пальчик — дедушка». Проговаривайте стишок и загибайте пальчики ребёнка.', 'Речь (связана с движением пальцев), ритм, близость'],
+      ["Barmoq o'yinlari", "Hech narsa", "«Chapak-chapak», barmoq sanash she'rlari. She'rni aytib, bolaning barmoqlarini bukib boring.", "Nutq (barmoq harakati bilan bog'liq), ritm, yaqinlik"]),
+    G('magic_bag', 3, '👜', 10,
+      ['Волшебный мешочек', 'Мешочек, 5–6 знакомых предметов', 'Ребёнок опускает руку в мешочек и на ощупь угадывает: ложка, мячик, расчёска. Можно и маме загадать.', 'Осязание, словарь, воображение'],
+      ["Sehrli xaltacha", "Xaltacha, 5–6 ta tanish narsa", "Bola qo'lini xaltaga solib, ushlab topadi: qoshiq, to'p, taroq. Onaga ham topishmoq qilish mumkin.", "Sezish, so'z boyligi, tasavvur"]),
+    G('ice_rescue', 3, '🧊', 15,
+      ['Спаси игрушку изо льда', 'Маленькие игрушки, заморозить в контейнере с водой', 'Дайте ледяной кубик с игрушкой, тёплую воду в бутылочке, ложку. Ребёнок «спасает» игрушку. Говорите: холодный, тает, тёплый.', 'Опыт и наука, терпение, ощущения'],
+      ["O'yinchoqni muzdan qutqar", "Kichik o'yinchoqlar, suvda muzlatilgan", "O'yinchoqli muzni, iliq suvli shishacha va qoshiq bering. Bola o'yinchoqni «qutqaradi». Ayting: sovuq, eriyapti, iliq.", "Tajriba va fan, sabr, sezgi"]),
+    G('hand_trace', 2, '✋', 10,
+      ['Обведи ладошку', 'Бумага, карандаши', 'Обведите ладошку ребёнка, а потом свою рядом. Превратите в петушка или ёлку. Сравните: у кого больше?', 'Знакомство с телом, рисунок, «большой — маленький»'],
+      ["Kaftni chiz", "Qog'oz, qalamlar", "Bolaning kaftini, yoniga o'zingiznikini chizing. Xo'roz yoki archaga aylantiring. Taqqoslang: kimniki katta?", "Tanani bilish, rasm, «katta — kichik»"])
+  ];
+
+  // Вопрос — ответ: мама читает, ребёнок отвечает голосом
+  const Q = (age, ru, uz) => ({ age, q: { ru: ru[0], uz: uz[0] }, a: { ru: ru[1], uz: uz[1] } });
+  const QA = [
+    Q(2, ['Как говорит собачка?', 'Гав-гав'], ["Kuchuk qanday deydi?", "Vov-vov"]),
+    Q(2, ['Покажи, где у тебя носик?', 'Показывает нос'], ["Burning qani, ko'rsat?", "Burnini ko'rsatadi"]),
+    Q(2, ['Какого цвета банан?', 'Жёлтый'], ["Banan qanday rangda?", "Sariq"]),
+    Q(2, ['Чем мы едим суп?', 'Ложкой'], ["Shorvani nima bilan ichamiz?", "Qoshiq bilan"]),
+    Q(2, ['Кто говорит «мяу»?', 'Кошка'], ["Kim «miyov» deydi?", "Mushuk"]),
+    Q(2, ['Что надевают на ножки?', 'Носки, обувь'], ["Oyoqqa nima kiyiladi?", "Paypoq, oyoq kiyim"]),
+    Q(3, ['Сколько у тебя рук?', 'Две'], ["Nechta qo'ling bor?", "Ikkita"]),
+    Q(3, ['Где живёт рыбка?', 'В воде'], ["Baliq qayerda yashaydi?", "Suvda"]),
+    Q(3, ['Что делают, когда хотят спать?', 'Ложатся в кроватку'], ["Uyqu kelganda nima qilinadi?", "Yotoqqa yotiladi"]),
+    Q(3, ['Что бывает холодным?', 'Лёд, снег, мороженое'], ["Nima sovuq bo'ladi?", "Muz, qor, muzqaymoq"]),
+    Q(3, ['Что мы говорим, когда нам что-то дали?', 'Спасибо'], ["Bizga nimadir berishsa, nima deymiz?", "Rahmat"]),
+    Q(3, ['Кто тебя любит?', 'Мама, папа… (обнимитесь!)'], ["Seni kim yaxshi ko'radi?", "Onam, dadam… (quchoqlashing!)"]),
+    Q(3, ['Что лишнее: яблоко, груша, машинка?', 'Машинка — её не едят'], ["Qaysi biri ortiqcha: olma, nok, mashina?", "Mashina — uni yeyishmaydi"]),
+    Q(4, ['Сколько лап у кошки?', 'Четыре'], ["Mushukning nechta oyog'i bor?", "To'rtta"]),
+    Q(4, ['Что бывает зимой?', 'Снег, холод, Новый год'], ["Qishda nima bo'ladi?", "Qor, sovuq, Yangi yil"]),
+    Q(4, ['Назови три красные вещи.', 'Помидор, клубника, яблоко…'], ["Uchta qizil narsani ayt.", "Pomidor, qulupnay, olma…"]),
+    Q(4, ['Почему моют руки перед едой?', 'Чтобы микробы не попали в рот'], ["Ovqatdan oldin nega qo'l yuviladi?", "Mikroblar og'izga tushmasligi uchun"]),
+    Q(4, ['Что ты сделаешь, если друг упал?', 'Помогу встать, пожалею'], ["Do'sting yiqilsa, nima qilasan?", "Turishga yordam beraman, yupataman"]),
+    Q(4, ['Кто живёт в лесу?', 'Заяц, лиса, волк, медведь'], ["O'rmonda kim yashaydi?", "Quyon, tulki, bo'ri, ayiq"]),
+    Q(4, ['Чем день отличается от ночи?', 'Днём светло и солнце, ночью темно и луна'], ["Kunduz kechadan nimasi bilan farq qiladi?", "Kunduzi yorug' va quyosh, kechasi qorong'i va oy"]),
+    Q(5, ['Какое число идёт после семи?', 'Восемь'], ["Yettidan keyin qaysi son keladi?", "Sakkiz"]),
+    Q(5, ['На какую букву начинается твоё имя?', 'Д — Дильноза'], ["Isming qaysi harf bilan boshlanadi?", "D — Dilnoza"]),
+    Q(5, ['Что нужно растению, чтобы расти?', 'Вода, свет, земля'], ["O'simlik o'sishi uchun nima kerak?", "Suv, yorug'lik, tuproq"]),
+    Q(5, ['Как можно помочь маме дома?', 'Убрать игрушки, накрыть на стол…'], ["Uyda onaga qanday yordam berish mumkin?", "O'yinchoqlarni yig'ish, dasturxon yozish…"]),
+    Q(5, ['Что ты чувствуешь, когда тебя обнимают?', 'Радость, тепло — поговорите о чувствах'], ["Seni quchoqlashganda nimani his qilasan?", "Quvonch, iliqlik — his-tuyg'ular haqida gaplashing"]),
+    Q(5, ['Если светофор красный, что делаем?', 'Стоим и ждём'], ["Svetofor qizil bo'lsa, nima qilamiz?", "To'xtab kutamiz"])
+  ];
+
+  // Советы маме: что делать, чего не делать, когда к врачу
+  const A = (id, icon, ru, uz) => ({ id, icon, t: { ru: ru[0], uz: uz[0] }, why: { ru: ru[1], uz: uz[1] }, doo: { ru: ru[2], uz: uz[2] }, dont: { ru: ru[3], uz: uz[3] }, doc: { ru: ru[4], uz: uz[4] } });
+  const ADVICE = [
+    A('nervous', '😣',
+      ['Стал нервным, истерики',
+        'В 1–4 года истерики — нормальная часть развития: ребёнок чувствует сильнее, чем умеет объяснить. Чаще всего их усиливают усталость, голод, недосып, перемены и много экрана.',
+        ['Сохраняйте спокойный голос: ваше спокойствие — его «тормоз».', 'Назовите чувство: «Ты злишься, потому что хотела ещё мультик».', 'Будьте рядом, обнимите, если ребёнок даёт. Говорите меньше слов.', 'Предупреждайте о переходах: «Через 5 минут идём купаться».', 'Следите за сном и едой: многие истерики — от усталости и голода.', 'Давайте выбор из двух: «Синяя или красная чашка?»'],
+        ['Не кричите и не бейте — это учит, что злость решают силой.', 'Не уступайте после крика тому, что запретили до него: истерика станет способом.', 'Не стыдите и не высмеивайте чувства.'],
+        'Обратитесь к педиатру или детскому психологу, если истерики очень частые (несколько раз каждый день), длятся дольше 20–25 минут, ребёнок бьёт себя, задерживает дыхание до посинения, или пропали навыки, которые уже были (речь, горшок).'],
+      ["Asabiy bo'lib qoldi, injiqlik",
+        "1–4 yoshda injiqlik — rivojlanishning odatiy qismi: bola tushuntira oladiganidan kuchliroq his qiladi. Ko'pincha charchoq, ochlik, kam uxlash, o'zgarishlar va ko'p ekran kuchaytiradi.",
+        ["Ovozingiz xotirjam bo'lsin: sizning xotirjamligingiz — uning «tormozi».", "Hisni ayting: «Sen jahling chiqyapti, chunki yana multfilm xohlading».", "Yonida bo'ling, ruxsat bersa quchoqlang. Kam gapiring.", "O'tishlardan oldin ogohlantiring: «5 daqiqadan keyin cho'milamiz».", "Uyqu va ovqatni kuzating: ko'p injiqlik charchoq va ochlikdan.", "Ikkitadan tanlov bering: «Ko'k yoki qizil piyola?»"],
+        ["Baqirmang va urmang — bu jahlni kuch bilan hal qilishni o'rgatadi.", "Baqiriqdan keyin oldin taqiqlangan narsaga ko'nmang: injiqlik usulga aylanadi.", "Hislar uchun uyaltirmang va kulmang."],
+        "Pediatr yoki bolalar psixologiga murojaat qiling: injiqlik juda tez-tez (har kuni bir necha marta), 20–25 daqiqadan uzoq bo'lsa, bola o'zini ursa, ko'karib ketguncha nafasini to'xtatsa yoki oldin bor ko'nikmalar yo'qolsa (nutq, tuvak)."]),
+    A('sleep_late', '🌙',
+      ['Не засыпает вовремя',
+        'Детям 3–5 лет нужно 10–13 часов сна в сутки (вместе с дневным), детям 1–2 лет — 11–14 часов. Мешают засыпать экран перед сном, поздний или слишком долгий дневной сон, возбуждение вечером.',
+        ['Один и тот же ритуал каждый вечер: ванна → пижама → зубы → книжка → свет выключен.', 'Ложиться в одно и то же время, даже в выходные.', 'Экран выключать за 1 час до сна.', 'Вечером спокойные игры, приглушённый свет.', 'Если дневной сон затягивается, будите после 1–1,5 часа или сдвигайте его раньше.', 'Утром — солнечный свет и прогулка: это настраивает внутренние часы.'],
+        ['Не давайте телефон, чтобы уснула.', 'Не пугайте («придёт бабай»): страх мешает уснуть.', 'Не начинайте активные игры за час до сна.'],
+        'Покажите ребёнка педиатру, если он громко храпит, во сне останавливается дыхание, очень беспокойно спит, часто просыпается с криком или днём очень сонный.'],
+      ["Vaqtida uxlamaydi",
+        "3–5 yoshli bolalarga sutkada 10–13 soat uyqu kerak (kunduzgisi bilan), 1–2 yoshlilarga 11–14 soat. Uxlashga uyqudan oldin ekran, kech yoki juda uzoq kunduzgi uyqu, kechki hayajon xalaqit beradi.",
+        ["Har kecha bir xil marosim: vanna → pijama → tish → kitob → chiroq o'chadi.", "Har kuni bir vaqtda yotish, dam olish kunlari ham.", "Uyqudan 1 soat oldin ekranni o'chiring.", "Kechqurun tinch o'yinlar, xira yorug'lik.", "Kunduzgi uyqu cho'zilsa, 1–1,5 soatdan keyin uyg'oting yoki uni ertaroqqa suring.", "Ertalab quyosh nuri va sayr: bu ichki soatni sozlaydi."],
+        ["Uxlashi uchun telefon bermang.", "Qo'rqitmang («bobo ayiq keladi»): qo'rquv uxlashga xalaqit beradi.", "Uyqudan bir soat oldin faol o'yin boshlamang."],
+        "Bolani pediatrga ko'rsating: qattiq xurrak otsa, uyquda nafasi to'xtasa, juda notinch uxlasa, tez-tez qichqirib uyg'onsa yoki kunduzi juda uyquchan bo'lsa."]),
+    A('wake_hard', '⏰',
+      ['Трудно просыпается утром',
+        'Обычно это значит, что сна не хватает или он сдвинут на позднее время.',
+        ['Сдвигайте отбой на 15 минут раньше каждые 2–3 дня, пока утро не станет лёгким.', 'Будите мягко: откройте шторы, включите свет, тихую музыку, погладьте.', 'Утро без спешки: одежда приготовлена с вечера.', 'Что-то приятное утром: любимый завтрак, «утренняя песенка», стикер за быстрый подъём.'],
+        ['Не будите криком и резким светом.', 'Не позволяйте отсыпаться до обеда в выходные: сбивается режим.'],
+        'К педиатру — если ребёнок спит достаточно (10–13 часов), но всё равно вялый, бледный, часто храпит или днём засыпает в неподходящих местах.'],
+      ["Ertalab qiyin uyg'onadi",
+        "Odatda bu uyqu yetishmayotgani yoki kech vaqtga surilganini bildiradi.",
+        ["Ertalab oson bo'lguncha har 2–3 kunda yotish vaqtini 15 daqiqa erta qiling.", "Yumshoq uyg'oting: pardani oching, chiroq yoqing, sokin musiqa, silang.", "Shoshilmasdan tong: kiyim kechqurundan tayyor.", "Ertalab yoqimli narsa: sevimli nonushta, «tong qo'shig'i», tez turgani uchun stiker."],
+        ["Baqirib va keskin yorug'lik bilan uyg'otmang.", "Dam olish kunlari tushgacha uxlatmang: tartib buziladi."],
+        "Pediatrga — agar bola yetarli uxlasa (10–13 soat), lekin baribir holsiz, rangi oqargan, tez-tez xurrak otsa yoki kunduzi noqulay joyda uxlab qolsa."]),
+    A('dressing', '👕',
+      ['Не хочет одеваться, ходит голышом',
+        'В 2–4 года это очень частое и нормальное поведение. Ребёнок проверяет «я сам решаю», а ещё одежда может колоться, жать или мешать: швы, бирки, тугие резинки.',
+        ['Давайте выбор из двух вещей: «Это платье или это?»', 'Проверьте одежду: мягкая ткань, без колючих бирок, удобные резинки.', 'Превратите в игру: «Кто быстрее наденет носок — ты или мишка?»', 'Договоритесь о простом правиле: дома можно в маечке и трусиках, на улицу и к гостям — одетыми.', 'Хвалите за каждую надетую вещь.'],
+        ['Не стыдите тело ребёнка и не смейтесь над ним.', 'Не боритесь силой каждый раз: выберите, что действительно важно (тепло, улица).'],
+        'Посоветуйтесь с педиатром, если ребёнок очень бурно реагирует на многие ощущения сразу (одежда, звуки, еда, прикосновения) и это мешает обычной жизни.'],
+      ["Kiyinishni xohlamaydi, uyda yalang'och yuradi",
+        "2–4 yoshda bu juda ko'p uchraydigan va odatiy xatti-harakat. Bola «o'zim hal qilaman»ni sinaydi, kiyim esa sanchishi, siqishi mumkin: chok, yorliq, tor rezina.",
+        ["Ikkita narsadan tanlov bering: «Bu ko'ylakmi yoki bumi?»", "Kiyimni tekshiring: yumshoq mato, sanchadigan yorliqsiz, qulay rezina.", "O'yinga aylantiring: «Kim tezroq paypoq kiyadi — senmi yoki ayiqcha?»", "Oddiy qoida kelishing: uyda mayka va ishtonda bo'lish mumkin, ko'chaga va mehmonga — kiyinib.", "Har bir kiyilgan narsa uchun maqtang."],
+        ["Bolaning tanasi uchun uyaltirmang va kulmang.", "Har safar kuch bilan kurashmang: haqiqatan muhimini tanlang (issiqlik, ko'cha)."],
+        "Agar bola ko'p sezgilarga birdaniga juda keskin javob bersa (kiyim, tovush, ovqat, teginish) va bu oddiy hayotga xalaqit bersa, pediatr bilan maslahatlashing."]),
+    A('appetite', '🍽️',
+      ['Пропал аппетит',
+        'После года ребёнок растёт медленнее, чем младенец, поэтому ест меньше и неровно: один день много, другой почти ничего. Аппетит часто «съедают» перекусы, сок, сладкое и много молока.',
+        ['3 основных приёма пищи и 2 перекуса в одно время; между ними — только вода.', 'Мама решает, что и когда подать; ребёнок решает, сколько съесть.', 'Маленькие порции на тарелке, добавку — по просьбе.', 'Ешьте вместе за столом, без телефона и мультиков.', 'Новый продукт предлагайте рядом с любимым много раз — иногда нужно 10–15 попыток.', 'Сок и сладкие напитки ограничьте; молока детям 2–5 лет обычно хватает около 2 стаканов в день.'],
+        ['Не заставляйте доедать и не кормите «за маму, за папу» под мультик.', 'Не награждайте сладким за суп — так сладкое становится ещё желаннее.'],
+        'Срочно к врачу, если вместе с отказом от еды есть температура, рвота или понос дольше суток, ребёнок мало пьёт и редко писает, вялый, или жалуется на боль в горле или животе. Плановый визит — если ребёнок худеет или перестал набирать вес.'],
+      ["Ishtahasi yo'qoldi",
+        "Bir yoshdan keyin bola chaqaloqqa qaraganda sekinroq o'sadi, shuning uchun kam va notekis yeydi: bir kun ko'p, boshqa kuni deyarli hech narsa. Ishtahani ko'pincha gazaklar, sharbat, shirinlik va ko'p sut «yeb qo'yadi».",
+        ["Bir vaqtda 3 asosiy ovqat va 2 gazak; oralig'ida — faqat suv.", "Nima va qachon berishni ona hal qiladi; qancha yeyishni — bola.", "Likopchada kichik porsiyalar, qo'shimchasi — so'rasa.", "Telefon va multfilmsiz, birga dasturxonda ovqatlaning.", "Yangi mahsulotni sevimlisi yonida ko'p marta taklif qiling — ba'zan 10–15 urinish kerak.", "Sharbat va shirin ichimliklarni cheklang; 2–5 yoshli bolaga odatda kuniga 2 stakanga yaqin sut yetadi."],
+        ["Majburlab yedirmang va multfilm qo'yib «onam uchun, dadam uchun» deb yedirmang.", "Sho'rva uchun shirinlik bilan mukofotlamang — shirinlik yanada orzuga aylanadi."],
+        "Shoshilinch shifokorga: ovqatdan bosh tortish bilan birga isitma, bir kundan ortiq qusish yoki ich ketishi bo'lsa, bola kam suv ichib, kam siysa, holsiz bo'lsa yoki tomoq yoki qorin og'rig'idan shikoyat qilsa. Rejali ko'rik — bola ozsa yoki vazn olishdan to'xtasa."]),
+    A('teeth', '🪥',
+      ['Не даёт чистить зубы',
+        'Многим детям неприятно, когда в рот залезают. Но чистить нужно 2 раза в день, а затем родитель дочищает сам.',
+        ['Пасты с фтором до 3 лет — с рисовое зёрнышко, с 3 до 6 лет — с горошину.', 'Пусть сначала «чистит» зубы игрушке, потом себе, потом мама дочищает.', 'Песенка или песочные часы на 2 минуты.', 'Чистите зубы вместе, рядом у зеркала.', 'Хвалите за открытый рот: «Покажи льва! Р-р-р!»'],
+        ['Не пропускайте вечернюю чистку из-за протеста.', 'Не давайте сладкое и сок на ночь после чистки.'],
+        'К стоматологу — для осмотра раз в полгода, и срочно — если есть боль, тёмные пятна на зубах, отёк десны.'],
+      ["Tish yuvdirmaydi",
+        "Ko'p bolalarga og'ziga nimadir tiqilishi yoqmaydi. Lekin kuniga 2 marta tozalash kerak, keyin ota-ona o'zi oxirigacha tozalaydi.",
+        ["Ftorli pasta 3 yoshgacha — guruch donasicha, 3–6 yoshda — no'xatdek.", "Avval o'yinchoqning tishini «tozalasin», keyin o'zinikini, keyin ona tugatadi.", "2 daqiqalik qo'shiq yoki qum soat.", "Oyna yonida birga tish yuving.", "Og'zini ochgani uchun maqtang: «Sherni ko'rsat! R-r-r!»"],
+        ["Norozilik tufayli kechki tozalashni o'tkazib yubormang.", "Tozalashdan keyin kechasi shirinlik va sharbat bermang."],
+        "Stomatologga — har yarim yilda ko'rik uchun, og'riq, tishda qora dog'lar, milk shishi bo'lsa — shoshilinch."]),
+    A('screens', '📱',
+      ['Много просит мультики и телефон',
+        'Для детей 2–5 лет рекомендуют не больше 1 часа экрана в день, лучше меньше и вместе со взрослым. Экран вместо живого общения тормозит речь и сон.',
+        ['Договоритесь заранее: «Две серии — и выключаем». Таймер помогает.', 'Смотрите вместе и обсуждайте: «А что почувствовал зайчик?»', 'Уберите экран из еды и из часа перед сном.', 'Предлагайте замену: игры из этого раздела, прогулка, помощь по дому.', 'Сами при ребёнке меньше сидите в телефоне — дети копируют.'],
+        ['Не используйте телефон как главный способ успокоить.', 'Не выключайте резко без предупреждения — будет взрыв.'],
+        'Посоветуйтесь с педиатром, если ребёнок почти не говорит для своего возраста, не откликается на имя или без экрана совсем не может играть.'],
+      ["Multfilm va telefonni ko'p so'raydi",
+        "2–5 yoshli bolalarga kuniga 1 soatdan ko'p bo'lmagan ekran tavsiya qilinadi, yaxshisi kamroq va kattalar bilan birga. Jonli muloqot o'rniga ekran nutq va uyquni sekinlashtiradi.",
+        ["Oldindan kelishing: «Ikki qism — va o'chiramiz». Taymer yordam beradi.", "Birga ko'ring va muhokama qiling: «Quyoncha nimani his qildi?»", "Ovqat paytida va uyqudan oldingi soatda ekran bo'lmasin.", "O'rniga taklif qiling: shu bo'limdagi o'yinlar, sayr, uy ishlarida yordam.", "Bola oldida o'zingiz ham telefonda kamroq o'tiring — bolalar takrorlaydi."],
+        ["Telefonni tinchlantirishning asosiy usuli qilmang.", "Ogohlantirmasdan keskin o'chirmang — portlash bo'ladi."],
+        "Bola yoshiga nisbatan deyarli gapirmasa, ismiga javob bermasa yoki ekransiz umuman o'ynay olmasa, pediatr bilan maslahatlashing."]),
+    A('no_listen', '🙅',
+      ['Не слушается, на всё «нет»',
+        'С 2 лет ребёнок учится быть отдельным человеком, и «нет» — его способ это проверить. Это нормально и проходит, если взрослый спокоен и последователен.',
+        ['Говорите, что делать, а не что нельзя: «Иди рядом» вместо «Не беги».', 'Подходите близко, смотрите в глаза, одна короткая просьба.', 'Давайте выбор там, где можно: «Сначала зубы или пижама?»', 'Хвалите сразу и конкретно, когда слушается.', 'Правила одинаковые у мамы, папы и бабушки.', 'Последствие спокойное и понятное: «Бросаешь кубики — убираем кубики».'],
+        ['Не бейте и не угрожайте тем, что не выполните.', 'Не задавайте вопрос, если ответ «нет» не подходит: не «Пойдём купаться?», а «Пора купаться».'],
+        'Обратитесь к детскому психологу, если поведение мешает садику и семье несколько месяцев подряд или ребёнок часто бывает агрессивным.'],
+      ["Gap qaytarmaydi, hammasiga «yo'q»",
+        "2 yoshdan bola alohida inson bo'lishni o'rganadi, «yo'q» — buni sinash usuli. Bu odatiy va kattalar xotirjam va izchil bo'lsa, o'tib ketadi.",
+        ["Nima mumkin emasligini emas, nima qilishni ayting: «Yugurma» o'rniga «Yonimda yur».", "Yaqin keling, ko'ziga qarang, bitta qisqa iltimos.", "Mumkin joyda tanlov bering: «Avval tishmi yoki pijamami?»", "Gapga kirganda darhol va aniq maqtang.", "Qoidalar onada, dadada va buvida bir xil bo'lsin.", "Oqibat xotirjam va tushunarli: «Kubiklarni otsang — kubiklarni yig'ib qo'yamiz»."],
+        ["Urmang va bajarmaydigan narsangiz bilan qo'rqitmang.", "«Yo'q» javobi to'g'ri kelmasa, savol bermang: «Cho'milamizmi?» emas, «Cho'milish vaqti»."],
+        "Bir necha oy davomida xatti-harakat bog'cha va oilaga xalaqit bersa yoki bola tez-tez tajovuzkor bo'lsa, bolalar psixologiga murojaat qiling."]),
+    A('fears', '👻',
+      ['Боится темноты и спать одна',
+        'Страхи в 3–5 лет — нормальная часть развития: фантазия растёт быстрее, чем понимание, что реально.',
+        ['Выслушайте серьёзно, не смейтесь: «Тебе страшно. Я рядом».', 'Ночник с тёплым светом, любимая игрушка-охранник.', 'Проверьте вместе шкаф и под кроватью — один раз, спокойно.', 'Читайте добрые книги о том, как герой победил страх.', 'Хвалите за смелость, даже маленькую.'],
+        ['Не пугайте ради послушания.', 'Не показывайте страшные мультики и новости.'],
+        'К специалисту — если страхи мешают спать каждую ночь несколько недель, появились резко после события (испуг, переезд) или ребёнок боится всего вокруг.'],
+      ["Qorong'idan va yolg'iz uxlashdan qo'rqadi",
+        "3–5 yoshdagi qo'rquvlar — odatiy rivojlanish qismi: xayol haqiqiy narsani tushunishdan tezroq o'sadi.",
+        ["Jiddiy tinglang, kulmang: «Senga qo'rqinchli. Men yoningdaman».", "Iliq nurli tungi chiroq, sevimli o'yinchoq-qo'riqchi.", "Shkaf va karavot ostini birga bir marta, xotirjam tekshiring.", "Qahramon qo'rquvni yenggani haqida mehribon kitoblar o'qing.", "Jasorat uchun, hatto kichik bo'lsa ham, maqtang."],
+        ["Gapga kirishi uchun qo'rqitmang.", "Qo'rqinchli multfilm va yangiliklarni ko'rsatmang."],
+        "Mutaxassisga — qo'rquv bir necha hafta har kecha uxlashga xalaqit bersa, biror voqeadan (qo'rqish, ko'chish) keyin keskin paydo bo'lsa yoki bola hamma narsadan qo'rqsa."])
+  ];
+  return { TOGETHER, HANDS, QA, ADVICE };
+})();
+
+
+/* ===== fun.js: праздники, кухня (видео-рецепты), детский уголок (сказки и игры) ===== */
+const RCATS = [['first', '🍲'], ['second', '🍛'], ['salad', '🥗'], ['dessert', '🍰'], ['cocktail', '🍹']];
+const VCATS = RCATS.concat([['tales', '📖'], ['mom', '👩‍👧']]);
+// Стартовый набор видео (проверенные каналы); админ может удалить и добавить свои
+const YT = (id, cat, url, title) => ({ id, cat, url, title });
+const DEFAULT_VIDEOS = [
+  YT('d_first1', 'first', 'https://www.youtube.com/playlist?list=PLf74hASH_FjQT9y0KJW9rD9Egl1zI1_CV', 'Супы — Вкусная минутка'),
+  YT('d_first2', 'first', 'https://www.youtube.com/playlist?list=PLK6aPt82OI_pvg8QfN0LTW5hQyYGWg9BY', 'Первые блюда — Наталья Калнина'),
+  YT('d_second1', 'second', 'https://www.youtube.com/playlist?list=PLK6aPt82OI_r0E6BMNr8e4toXjE9gr2U1', 'Вторые блюда — Наталья Калнина'),
+  YT('d_second2', 'second', 'https://www.youtube.com/playlist?list=PLHwpLeJFjJ13-Z6aEaHPC4qq-ACAu6tpr', 'Простые блюда на каждый день — LudaEasyCook'),
+  YT('d_salad1', 'salad', 'https://www.youtube.com/playlist?list=PLtl_gGHV94ilj1K9U7Ffs8cnFYya0p9s5', 'Домашние салаты — Ольга Матвей'),
+  YT('d_salad2', 'salad', 'https://www.youtube.com/playlist?list=PLUOj9r7HLx2Nak4MOOsG8gyb03Km4BYa3', 'Салаты — Кухня наизнанку'),
+  YT('d_dessert1', 'dessert', 'https://www.youtube.com/playlist?list=PLv-iYL3hcRGhBhuEs-c1i9tlVwv1yLGwP', 'Десерты без выпечки — Кулинарим с Таней'),
+  YT('d_dessert2', 'dessert', 'https://www.youtube.com/playlist?list=PL8Jo7jcoC1ZmsXoRFia_D1asfmre7Ck74', 'Торты — Оксана Пашко'),
+  YT('d_cock1', 'cocktail', 'https://www.youtube.com/playlist?list=PLY1xNh8F7RzOBC_s7gP3DBocrdqjP_TMT', 'Безалкогольные коктейли — Едим ТВ'),
+  YT('d_cock2', 'cocktail', 'https://www.youtube.com/playlist?list=PLafCkGhC45HiKFxL6W4pjRttB1KmH7fsG', 'Домашние напитки, компоты, смузи'),
+  YT('d_tale1', 'tales', 'https://www.youtube.com/playlist?list=PLsgKEOla-HpOGNhDOLVym_4efofGs6CNf', "Audio ertaklar — Aqlvoy (o'zbekcha)"),
+  YT('d_tale2', 'tales', 'https://www.youtube.com/playlist?list=PLVsscZIActCuWTCtdoAyXK0-0H3EAa5c8', "O'zbek xalq ertaklari (audio)"),
+  YT('d_tale3', 'tales', 'https://www.youtube.com/playlist?list=PLH1UMma0xK6XDp3CmbCgYYn11GUZcTGX4', 'Сказкотерапия — Сундучок историй'),
+  YT('d_mom1', 'mom', 'https://youtu.be/yqwdt2R49ck', 'Как отучить от истерик — Доктор Комаровский'),
+  YT('d_mom2', 'mom', 'https://youtu.be/eq4MY7N6hTU', 'Правила детского сна — Доктор Комаровский'),
+  YT('d_mom3', 'mom', 'https://youtu.be/Mf86C7d632Q', 'Почему дети просыпаются ночью — Доктор Комаровский'),
+  YT('d_mom4', 'mom', 'https://youtu.be/6335VECWnTY', 'Ребёнок не хочет есть — Доктор Комаровский'),
+  YT('d_mom5', 'mom', 'https://youtu.be/p2wra7SBoMs', 'Неуправляемые дети: советы психолога'),
+  YT('d_mom6', 'mom', 'https://youtu.be/QK5VmtV6umQ', 'Нервная мама — Доктор Комаровский'),
+  YT('d_mom7', 'mom', 'https://www.youtube.com/playlist?list=PL0jRSmh4cDD7ZsFdiPfpP2VydFsCbQm5j', 'Farzand tarbiyasi — Zebiniso Ahmedova, psixiatr'),
+  YT('d_mom8', 'mom', 'https://www.youtube.com/playlist?list=PLsgKEOla-HpM8GMerDWpuTE_vSIa0LcHR', "Bola tarbiyasi — Aqlvoy")
+];
+const mediaOf = () => ((S.settings && Array.isArray(S.settings.videos)) ? S.settings.videos : DEFAULT_VIDEOS);
+const eventsNow = () => Logic.eventsOf(S.settings);
+
+/* ---------- YouTube ---------- */
+function ytParse(url) {
+  const u = String(url || '').trim();
+  if (!/youtu\.?be/.test(u)) return null;
+  const list = (u.match(/[?&]list=([\w-]+)/) || [])[1] || '';
+  const m = u.match(/(?:youtu\.be\/|[?&]v=|\/shorts\/|\/embed\/|\/live\/)([\w-]{11})/);
+  const vid = m ? m[1] : '';
+  return vid || list ? { vid, list } : null;
+}
+function ytEmbed(p) {
+  const q = 'autoplay=1&rel=0&playsinline=1';
+  return p.vid ? `https://www.youtube-nocookie.com/embed/${p.vid}?${q}${p.list ? '&list=' + p.list : ''}`
+    : `https://www.youtube-nocookie.com/embed/videoseries?list=${p.list}&${q}`;
+}
+function videoTile(v) {
+  const p = ytParse(v.url); if (!p) return '';
+  const thumb = p.vid ? `<img src="https://i.ytimg.com/vi/${p.vid}/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<div class="plthumb">📃</div>`;
+  return `<button class="vtile" data-act="vplay" data-id="${esc(v.id)}">${thumb}<span class="vplay">▶</span>`
+    + `<span class="vt">${p.list ? '📃 ' : ''}${esc(v.title || (p.list ? T('playlist') : 'YouTube'))}</span></button>`;
+}
+// Видео открывается в отдельном окне: обновление экрана его не перезапускает
+ACT.vplay = el => {
+  const v = mediaOf().find(x => x.id === el.dataset.id) || DEFAULT_VIDEOS.find(x => x.id === el.dataset.id); if (!v) return;
+  const p = ytParse(v.url); if (!p) return;
+  S.quiet = true; Snd.stopMusic();
+  modal(`<h3>${esc(v.title || 'YouTube')}</h3><div class="vwrap"><iframe src="${ytEmbed(p)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`
+    + `<div class="btnrow"><a class="btn" href="${esc(v.url)}" target="_blank" rel="noopener">YouTube ↗</a><button class="btn" data-act="close">${T('close')}</button></div>`);
+};
+
+/* ---------- праздники ---------- */
+function eventsCard(now) {
+  const up = Logic.upcomingEvents(eventsNow(), now.date, 14);
+  if (!up.length) return '';
+  return `<div class="card evcard"><h3>🎉 ${T('ev_soon')}</h3>` + up.map(e => {
+    const when = e.left === 0 ? `<b class="evtoday">${T('ev_today')}</b>` : e.left === 1 ? T('ev_tomorrow') : T('ev_in', { n: e.left });
+    return `<div class="evrow"><span class="evi">${esc(e.icon || '🎉')}</span><div><b>${esc(loc(e.title))}</b><div class="mut">${esc(e.on)}</div></div><span class="evwhen">${when}</span></div>`;
+  }).join('') + `</div>`;
+}
+// В день события: поздравление и конфетти один раз за запуск
+function celebrate(now) {
+  S.celebrated = S.celebrated || {};
+  Logic.upcomingEvents(eventsNow(), now.date, 0).forEach(e => {
+    const k = e.id + '_' + now.date;
+    if (S.celebrated[k]) return;
+    S.celebrated[k] = 1;
+    setTimeout(() => { confetti(); play('fanfare'); banner('good', `${e.icon || '🎉'} ${loc(e.title)}`, T('ev_today'), 6000); }, 600);
+  });
+}
+function confetti() {
+  const box = document.createElement('div'); box.className = 'confetti';
+  const em = ['🎉', '🎊', '✨', '⭐', '🎈', '💛', '💚'];
+  for (let i = 0; i < 36; i++) {
+    const s = document.createElement('span');
+    s.textContent = em[i % em.length];
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.animationDelay = (Math.random() * 0.9) + 's';
+    s.style.animationDuration = (2.2 + Math.random() * 1.6) + 's';
+    s.style.fontSize = (18 + Math.random() * 18) + 'px';
+    box.appendChild(s);
+  }
+  document.body.appendChild(box);
+  setTimeout(() => box.remove(), 4500);
+}
+
+/* ---------- вкладка «Досуг» ---------- */
+function viewFun() {
+  const sub = [['kids', '👩‍👧', T('fun_kids')], ['kitchen', '🍳', T('fun_kitchen')], ['events', '🎉', T('fun_events')], ['cards', '💌', T('fun_cards')], ['contacts', '📞', T('fun_contacts')]];
+  const ft = S.ftab || 'kids';
+  const head = `<div class="tabs">${sub.map(([k, i, n]) => `<button class="chipbtn ${ft === k ? 'on' : ''}" data-act="ftab" data-id="${k}">${i} ${n}</button>`).join('')}</div>`;
+  return head + ({ kids: viewKids, events: viewEvents, cards: viewCards, contacts: viewContacts }[ft] || viewKitchen)();
+}
+ACT.ftab = el => { S.ftab = el.dataset.id; render(); };
+ACT.rcat = el => { S.rcat = el.dataset.id; render(); };
+
+function viewKitchen() {
+  const cat = S.rcat || 'first', all = mediaOf();
+  const chips = RCATS.map(([k, i]) => {
+    const n = all.filter(v => v.cat === k).length;
+    return `<button class="chipbtn ${cat === k ? 'on' : ''}" data-act="rcat" data-id="${k}">${i} ${T('rc_' + k)}${n ? ` <small>${n}</small>` : ''}</button>`;
+  }).join('');
+  const vids = all.filter(v => v.cat === cat);
+  return `<div class="card"><h2>🍳 ${T('fun_kitchen')}</h2><div class="mut">${T('kitchen_hint')}</div><div class="tabs" style="margin-top:8px">${chips}</div></div>`
+    + (vids.length ? `<div class="vgrid">${vids.map(videoTile).join('')}</div>` : `<div class="card center mut">${T(isAdmin() ? 'videos_empty_admin' : 'videos_empty')}</div>`);
+}
+
+function viewEvents() {
+  const now = clock(), up = Logic.upcomingEvents(eventsNow(), now.date, 400);
+  return `<div class="card"><h2>🎉 ${T('fun_events')}</h2><div class="mut">${T('events_hint')}</div></div>`
+    + (up.length ? up.map(e => `<div class="card evrow big"><span class="evi">${esc(e.icon || '🎉')}</span><div><b>${esc(loc(e.title))}</b><div class="mut">${esc(e.on)}${e.yearly ? ' · ' + T('ev_yearly') : ''}</div></div>`
+      + `<span class="evwhen">${e.left === 0 ? `<b class="evtoday">${T('ev_today')}</b>` : e.left === 1 ? T('ev_tomorrow') : T('ev_in', { n: e.left })}</span></div>`).join('')
+      : `<div class="card center mut">${T('events_empty')}</div>`);
+}
+
+/* ---------- детский уголок ---------- */
+const ANIMALS = [
+  ['🐶', 'Kuchuk', 'Собачка', 'Dog', 'Vov-vov!', 'Гав-гав!', 'Woof!'],
+  ['🐱', 'Mushuk', 'Кошечка', 'Cat', 'Miyov!', 'Мяу!', 'Meow!'],
+  ['🐮', 'Sigir', 'Коровка', 'Cow', 'Muu!', 'Му-у!', 'Moo!'],
+  ['🐑', "Qo'y", 'Овечка', 'Sheep', 'Mee!', 'Бе-е!', 'Baa!'],
+  ['🐔', 'Tovuq', 'Курочка', 'Hen', "Qo'-qo'!", 'Ко-ко-ко!', 'Cluck!'],
+  ['🐸', 'Qurbaqa', 'Лягушка', 'Frog', 'Qur-qur!', 'Ква-ква!', 'Ribbit!'],
+  ['🦆', "O'rdak", 'Уточка', 'Duck', "G'aq-g'aq!", 'Кря-кря!', 'Quack!'],
+  ['🐴', 'Ot', 'Лошадка', 'Horse', 'I-go-go!', 'И-го-го!', 'Neigh!'],
+  ['🦁', 'Sher', 'Лев', 'Lion', 'Rrr!', 'Р-р-р!', 'Roar!']
+];
+/* «Мама и малыш»: живые игры, игры руками, вопрос-ответ, советы, игры на экране, видео */
+const lsJ = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) || d; } catch (e) { return d; } };
+const lsS = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* ignore */ } };
+const playedToday = () => (lsJ('fp_played', {})[clock().date] || []);
+function viewKids() {
+  const kt = S.ktab || 'together';
+  const sub = [['together', '🎲'], ['hands', '✋'], ['qa', '❓'], ['advice', '💡'], ['screen', '📱'], ['video', '📺']];
+  const head = `<div class="card kidhead"><h2>👩‍👧 ${T('fun_kids')}</h2><div class="mut">${T('kids_hint2')}</div>`
+    + `<div class="ksub">${sub.map(([k, i]) => `<button class="${kt === k ? 'on' : ''}" data-act="ktab" data-id="${k}"><span>${i}</span>${T('k_' + k)}</button>`).join('')}</div></div>`;
+  const body = { together: kidsTogether, hands: kidsHands, qa: kidsQA, advice: kidsAdvice, screen: kidsScreen, video: kidsVideo }[kt]();
+  return head + body;
+}
+ACT.ktab = el => { S.ktab = el.dataset.id; S.kopen = ''; render(); };
+ACT.kage = el => { S.kage = +el.dataset.id; S.kopen = ''; S.qaIdx = 0; S.qaShow = false; render(); };
+ACT.kopen = el => { S.kopen = S.kopen === el.dataset.id ? '' : el.dataset.id; render(); };
+ACT.kplayed = el => {
+  const all = lsJ('fp_played', {}), d = clock().date, id = el.dataset.id;
+  const list = all[d] || [];
+  all[d] = list.includes(id) ? list.filter(x => x !== id) : list.concat([id]);
+  Object.keys(all).forEach(k => { if (k < Logic.addDays(d, -30)) delete all[k]; });
+  lsS('fp_played', all);
+  if (!list.includes(id)) { Snd.coin(); banner('good', '💛 ' + T('k_played_ok'), '', 2200); }
+  render();
+};
+const ageChips = () => `<div class="agechips">${[2, 3, 4, 5].map(a => `<button class="${(S.kage || 3) === a ? 'on' : ''}" data-act="kage" data-id="${a}">${T('k_age', { n: a })}</button>`).join('')}</div>`;
+function actCard(g) {
+  const open = S.kopen === g.id, done = playedToday().includes(g.id);
+  return `<div class="card act ${open ? 'open' : ''} ${done ? 'done' : ''}"><button class="acthead" data-act="kopen" data-id="${esc(g.id)}">`
+    + `<span class="acti">${g.icon}</span><span class="actt"><b>${esc(loc(g.t))}</b><small>⏱ ${g.min} ${T('hm_m')} · ${esc(loc(g.learn).split(',')[0])}</small></span><span class="actc">${done ? '✅' : open ? '▲' : '▼'}</span></button>`
+    + (open ? `<div class="actbody"><div class="lbl">🧺 ${T('k_need')}</div><p>${esc(loc(g.need))}</p><div class="lbl">▶️ ${T('k_how')}</div><p>${esc(loc(g.how))}</p>`
+      + `<div class="lbl">🌱 ${T('k_learn')}</div><p>${esc(loc(g.learn))}</p>`
+      + `<button class="big ${done ? '' : 'green'}" data-act="kplayed" data-id="${esc(g.id)}">${done ? '↩ ' + T('k_unplay') : '✓ ' + T('k_played')}</button></div>` : '')
+    + `</div>`;
+}
+function kidsTogether() {
+  const age = S.kage || 3, list = KIDS.TOGETHER.filter(g => g.age === age);
+  const n = playedToday().length;
+  return `<div class="card"><h3>🎲 ${T('k_together')}</h3><div class="mut">${T('k_together_hint')}</div>${ageChips()}`
+    + (n ? `<div class="kplayedn">💛 ${T('k_played_n', { n })}</div>` : '') + `</div>` + list.map(actCard).join('');
+}
+function kidsHands() {
+  const age = S.kage || 3, list = KIDS.HANDS.filter(g => g.age <= age);
+  return `<div class="card"><h3>✋ ${T('k_hands')}</h3><div class="mut">${T('k_hands_hint')}</div>${ageChips()}<div class="safe">⚠️ ${T('k_safety')}</div></div>` + list.map(actCard).join('');
+}
+function kidsQA() {
+  const age = S.kage || 3, list = KIDS.QA.filter(q => q.age <= age && q.age >= age - 1);
+  const i = (S.qaIdx || 0) % list.length, q = list[i], stars = lsJ('fp_qa_stars', 0);
+  return `<div class="card"><h3>❓ ${T('k_qa')}</h3><div class="mut">${T('k_qa_hint')}</div>${ageChips()}</div>`
+    + `<div class="qacard"><div class="qan">${i + 1} / ${list.length} · ⭐ ${stars}</div><div class="qaq">${esc(loc(q.q))}</div>`
+    + (S.qaShow ? `<div class="qaa">💡 ${esc(loc(q.a))}</div>` : `<button class="btn" data-act="qashow">👀 ${T('k_qa_show')}</button>`)
+    + `<div class="qabtns"><button class="big green" data-act="qaok">⭐ ${T('k_qa_ok')}</button><button class="big gold" data-act="qanext">➡ ${T('k_qa_next')}</button></div>`
+    + `<button class="btn sm" data-act="qaspeak">🔊 ${T('k_qa_read')}</button></div>`;
+}
+const qaList = () => { const age = S.kage || 3; return KIDS.QA.filter(q => q.age <= age && q.age >= age - 1); };
+ACT.qashow = () => { S.qaShow = true; render(); };
+ACT.qanext = () => { S.qaIdx = ((S.qaIdx || 0) + 1) % qaList().length; S.qaShow = false; render(); };
+ACT.qaok = () => {
+  lsS('fp_qa_stars', lsJ('fp_qa_stars', 0) + 1); Snd.coin(); sparkle();
+  S.qaIdx = ((S.qaIdx || 0) + 1) % qaList().length; S.qaShow = false; render();
+};
+ACT.qaspeak = () => { const l = qaList(); const q = l[(S.qaIdx || 0) % l.length]; speak(loc(q.q)); };
+const ADVICE_VID = { nervous: 'd_mom1', sleep_late: 'd_mom2', wake_hard: 'd_mom3', appetite: 'd_mom4', no_listen: 'd_mom5' };
+function kidsAdvice() {
+  return `<div class="card"><h3>💡 ${T('k_advice')}</h3><div class="mut">${T('k_advice_hint')}</div></div>`
+    + KIDS.ADVICE.map(a => {
+      const open = S.kopen === a.id;
+      return `<div class="card act ${open ? 'open' : ''}"><button class="acthead" data-act="kopen" data-id="${esc(a.id)}"><span class="acti">${a.icon}</span><span class="actt"><b>${esc(loc(a.t))}</b></span><span class="actc">${open ? '▲' : '▼'}</span></button>`
+        + (open ? `<div class="actbody"><p>${esc(loc(a.why))}</p><div class="lbl ok">✅ ${T('k_do')}</div><ul>${(a.doo[S.lang] || a.doo.ru).map(x => `<li>${esc(x)}</li>`).join('')}</ul>`
+          + `<div class="lbl bad">⛔ ${T('k_dont')}</div><ul>${(a.dont[S.lang] || a.dont.ru).map(x => `<li>${esc(x)}</li>`).join('')}</ul>`
+          + `<div class="docbox">🩺 <b>${T('k_doc')}</b><br>${esc(loc(a.doc))}</div>`
+          + (ADVICE_VID[a.id] ? `<button class="btn gold" data-act="vplay" data-id="${ADVICE_VID[a.id]}">▶ ${T('k_video_lesson')}</button>` : `<button class="btn sm" data-act="ktab" data-id="video">📺 ${T('k_video')}</button>`) + `</div>` : '')
+        + `</div>`;
+    }).join('') + `<div class="mut center" style="margin:6px 0 12px">${T('k_not_med')}</div>`;
+}
+function kidsScreen() {
+  const games = [['g_balloons', '🎈'], ['g_memory', '🃏'], ['g_animals', '🐶']];
+  return `<div class="card"><h3>📱 ${T('k_screen')}</h3><div class="mut">${T('k_screen_hint')}</div></div>`
+    + `<div class="kgames">${games.map(([k, i]) => `<button class="kgame" data-act="game" data-id="${k}"><span>${i}</span>${T(k)}</button>`).join('')}</div>`;
+}
+function kidsVideo() {
+  const tales = mediaOf().filter(v => v.cat === 'tales'), mom = mediaOf().filter(v => v.cat === 'mom');
+  const emp = k => `<div class="mut">${T(isAdmin() ? k + '_admin' : k)}</div>`;
+  return `<div class="card"><h3>👩‍👧 ${T('rc_mom')}</h3>${mom.length ? '' : emp('mom_empty')}</div>` + (mom.length ? `<div class="vgrid">${mom.map(videoTile).join('')}</div>` : '')
+    + `<div class="card"><h3>📖 ${T('tales')}</h3>${tales.length ? '' : emp('tales_empty')}</div>` + (tales.length ? `<div class="vgrid">${tales.map(videoTile).join('')}</div>` : '');
+}
+// Искры у счёта монет
+function sparkle() {
+  const to = document.getElementById('coinTarget'); if (!to) return;
+  const r = to.getBoundingClientRect();
+  for (let i = 0; i < 10; i++) {
+    const s = document.createElement('span'); s.className = 'spark'; s.textContent = i % 2 ? '✦' : '✧';
+    s.style.left = (r.left + r.width / 2) + 'px'; s.style.top = (r.top + r.height / 2) + 'px';
+    const a = (i / 10) * Math.PI * 2, d = 40 + Math.random() * 30;
+    s.animate([{ transform: 'translate(-50%,-50%) scale(.4)', opacity: 1 }, { transform: `translate(calc(-50% + ${Math.cos(a) * d}px),calc(-50% + ${Math.sin(a) * d}px)) scale(1.2)`, opacity: 0 }], { duration: 700, easing: 'cubic-bezier(.2,.8,.2,1)' }).onfinish = () => s.remove();
+    document.body.appendChild(s);
+  }
+}
+function speak(text) {
+  try {
+    if (!window.speechSynthesis) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = { uz: 'uz-UZ', ru: 'ru-RU', en: 'en-US' }[S.lang];
+    const vs = speechSynthesis.getVoices();
+    if (!vs.some(v => v.lang && v.lang.toLowerCase().startsWith(S.lang))) u.lang = S.lang === 'uz' ? 'ru-RU' : u.lang;
+    u.rate = 0.9; u.pitch = 1.2;
+    speechSynthesis.speak(u);
+  } catch (e) { /* без голоса */ }
+}
+ACT.game = el => {
+  S.quiet = true; Snd.stopMusic();
+  const g = el.dataset.id;
+  if (g === 'g_balloons') gameBalloons();
+  else if (g === 'g_memory') gameMemory();
+  else gameAnimals();
+};
+function gameShell(title, inner) {
+  const m = modal(`<div class="ghead"><b>${title}</b><span id="gscore"></span><button class="btn sm" data-act="close">✕</button></div>${inner}`);
+  m.classList.add('game');
+  return m;
+}
+// Шарики: лопай шарики, пока они летят вверх
+function gameBalloons() {
+  const m = gameShell('🎈 ' + T('g_balloons'), `<div class="garea" id="garea"></div>`);
+  let score = 0;
+  const area = m.querySelector('#garea'), sc2 = m.querySelector('#gscore');
+  const show = () => { sc2.textContent = '⭐ ' + score; };
+  show();
+  const spawn = () => {
+    if (!area.isConnected) return;
+    const b = document.createElement('button');
+    b.className = 'balloon'; b.textContent = Math.random() < 0.12 ? '⭐' : '🎈';
+    b.style.left = (5 + Math.random() * 78) + '%';
+    b.style.filter = `hue-rotate(${Math.floor(Math.random() * 360)}deg)`;
+    b.style.animationDuration = (5 + Math.random() * 3) + 's';
+    b.onclick = e => {
+      e.stopPropagation(); score += b.textContent === '⭐' ? 3 : 1; show();
+      Snd.coin(); b.textContent = '💥'; b.classList.add('pop'); b.onclick = null;
+      setTimeout(() => b.remove(), 300);
+      if (score && score % 10 === 0) confetti();
+    };
+    b.addEventListener('animationend', () => b.remove());
+    area.appendChild(b);
+  };
+  spawn();
+  const iv = setInterval(spawn, 900);
+  m._stop = () => clearInterval(iv);
+}
+// Найди пару
+function gameMemory() {
+  const icons = ['🐶', '🐱', '🐰', '🐻', '🐸', '🦁'];
+  const deck = icons.concat(icons).map((e, i) => ({ e, k: Math.random() + i * 0 })).sort((a, b) => a.k - b.k).map(x => x.e);
+  const m = gameShell('🃏 ' + T('g_memory'), `<div class="mgrid">${deck.map((e, i) => `<button class="mcard" data-i="${i}"><span>${e}</span></button>`).join('')}</div>`);
+  let open = [], found = 0, moves = 0, lock = false;
+  const sc2 = m.querySelector('#gscore');
+  m.querySelectorAll('.mcard').forEach(c => {
+    c.onclick = e => {
+      e.stopPropagation();
+      if (lock || c.classList.contains('up')) return;
+      c.classList.add('up'); open.push(c);
+      if (open.length < 2) return;
+      moves++; sc2.textContent = '👆 ' + moves;
+      const [a, b] = open;
+      if (a.textContent === b.textContent) {
+        open = []; found++; Snd.coin();
+        a.classList.add('ok'); b.classList.add('ok');
+        if (found === icons.length) { setTimeout(() => { confetti(); play('fanfare'); speak(T('g_win')); }, 300); }
+      } else {
+        lock = true;
+        setTimeout(() => { a.classList.remove('up'); b.classList.remove('up'); open = []; lock = false; }, 800);
+      }
+    };
+  });
+}
+// Животные: нажми — услышишь, кто это и как он говорит
+function gameAnimals() {
+  const li = { uz: 0, ru: 1, en: 2 }[S.lang];
+  const m = gameShell('🐶 ' + T('g_animals'), `<div class="abig" id="abig">👆</div><div class="agrid">${ANIMALS.map((a, i) => `<button class="acard" data-i="${i}">${a[0]}</button>`).join('')}</div>`);
+  const big = m.querySelector('#abig');
+  m.querySelectorAll('.acard').forEach(c => {
+    c.onclick = e => {
+      e.stopPropagation();
+      const a = ANIMALS[+c.dataset.i], name = a[1 + li], say = a[4 + li];
+      big.innerHTML = `<span>${a[0]}</span><b>${esc(name)}</b><i>${esc(say)}</i>`;
+      big.classList.remove('bounce'); void big.offsetWidth; big.classList.add('bounce');
+      speak(name + '. ' + say);
+    };
+  });
+}
+
+/* ---------- админ: «Досуг» ---------- */
+function admFun() {
+  const evs = eventsNow().slice().sort((a, b) => String(a.date).slice(5).localeCompare(String(b.date).slice(5)));
+  const evRows = evs.map(e => `<div class="hrow"><span>${esc(e.icon || '🎉')} <b>${esc(loc(e.title))}</b></span><span class="mut">${esc(e.yearly ? e.date.slice(5) + ' · ' + T('ev_yearly') : e.date)}</span><button class="btn red sm" data-act="evdel" data-id="${esc(e.id)}">✕</button></div>`).join('');
+  const vids = mediaOf();
+  const vRows = VCATS.map(([k, i]) => {
+    const vs = vids.filter(v => v.cat === k);
+    return vs.length ? `<div class="mut" style="margin-top:8px">${i} ${T('rc_' + k)}</div>` + vs.map(v => `<div class="hrow"><span>${esc(v.title || v.url)}</span><a class="mut" href="${esc(v.url)}" target="_blank" rel="noopener">↗</a><button class="btn red sm" data-act="viddel" data-id="${esc(v.id)}">✕</button></div>`).join('') : '';
+  }).join('');
+  return `<div class="card"><h2>🎉 ${T('fun_events')}</h2><div class="mut">${T('adm_events_hint')}</div>${evRows || `<div class="mut">${T('events_empty')}</div>`}`
+    + `<div class="grid2"><label class="f">${T('ev_date')}<input id="evDate" type="date"></label><label class="f">${T('icon')}<input id="evIcon" value="🎂"></label></div>`
+    + `<label class="f">${T('ev_title')}<input id="evTitle" placeholder="${esc(T('ev_title_ph'))}"></label>`
+    + `<label class="chk"><input id="evYearly" type="checkbox" checked> ${T('ev_yearly_chk')}</label>`
+    + `<div id="evErr" class="mut" style="color:#ff8a80"></div><div class="btnrow"><button class="btn gold" data-act="evadd">${T('add_btn')}</button></div></div>`
+    + admContacts() + admWeather()
+    + `<div class="card"><h2>🎬 ${T('adm_videos')}</h2><div class="mut">${T('adm_videos_hint')}</div>`
+    + `<label class="f">${T('vid_cat')}<select id="vCat">${VCATS.map(([k, i]) => `<option value="${k}">${i} ${T('rc_' + k)}</option>`).join('')}</select></label>`
+    + `<label class="f">${T('vid_url')}<input id="vUrl" type="url" placeholder="https://youtu.be/… / https://youtube.com/playlist?list=…"></label>`
+    + `<label class="f">${T('vid_title')}<input id="vTitle"></label>`
+    + `<div id="vErr" class="mut" style="color:#ff8a80"></div><div class="btnrow"><button class="btn gold" data-act="vidadd">${T('add_btn')}</button></div>${vRows}</div>`;
+}
+const saveEvents = evs => Store.saveSettings(Object.assign({}, S.settings, { events: evs }));
+const saveVideos = vs => Store.saveSettings(Object.assign({}, S.settings, { videos: vs }));
+ACT.evadd = () => guarded(async () => {
+  const date = $('#evDate').value, title = ($('#evTitle').value || '').trim(), err = $('#evErr');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) { err.textContent = T('ev_need_date'); return; }
+  if (!title) { err.textContent = T('ev_need_title'); return; }
+  const ev = { id: 'ev_' + Date.now().toString(36), date, yearly: $('#evYearly').checked, icon: ($('#evIcon').value || '🎉').trim(), title: { uz: title, ru: title, en: title } };
+  await saveEvents(eventsNow().concat([ev]));
+});
+ACT.evdel = el => ask(T('confirm_remove'), () => saveEvents(eventsNow().filter(e => e.id !== el.dataset.id)));
+ACT.vidadd = () => guarded(async () => {
+  const url = ($('#vUrl').value || '').trim(), err = $('#vErr');
+  if (!ytParse(url)) { err.textContent = T('vid_bad'); return; }
+  const v = { id: 'v_' + Date.now().toString(36), cat: $('#vCat').value, url, title: ($('#vTitle').value || '').trim() };
+  await saveVideos(mediaOf().concat([v]));
+});
+ACT.viddel = el => ask(T('confirm_remove'), () => saveVideos(mediaOf().filter(v => v.id !== el.dataset.id)));
+
+
+/* ---------- контакты семьи ---------- */
+const contactsOf = () => ((S.settings && Array.isArray(S.settings.contacts)) ? S.settings.contacts : []);
+const digits = p => String(p || '').replace(/[^\d+]/g, '');
+function viewContacts() {
+  const cs = contactsOf();
+  return `<div class="card"><h2>📞 ${T('fun_contacts')}</h2><div class="mut">${T('contacts_hint')}</div></div>`
+    + (cs.length ? cs.map(c => {
+      const ph = digits(c.phone), wa = ph.replace(/^\+/, ''), tg = String(c.tg || '').replace(/^@/, '').trim();
+      return `<div class="card ccard"><div class="crow"><span class="cico">${esc(c.icon || '👤')}</span><div><b>${esc(c.name)}</b><div class="mut">${esc(c.phone || '')}</div></div></div><div class="cbtns">`
+        + (ph ? `<a class="cbtn call" href="tel:${esc(ph)}">📞 ${T('c_call')}</a><a class="cbtn wa" href="https://wa.me/${esc(wa)}" target="_blank" rel="noopener">💬 WhatsApp</a>` : '')
+        + (tg ? `<a class="cbtn tg" href="https://t.me/${esc(tg)}" target="_blank" rel="noopener">✈️ Telegram</a>` : (ph ? `<a class="cbtn tg" href="https://t.me/${esc(ph)}" target="_blank" rel="noopener">✈️ Telegram</a>` : ''))
+        + `</div></div>`;
+    }).join('') : `<div class="card center mut">${T(isAdmin() ? 'contacts_empty_admin' : 'contacts_empty')}</div>`);
+}
+function admContacts() {
+  const rows = contactsOf().map(c => `<div class="hrow"><span>${esc(c.icon || '👤')} <b>${esc(c.name)}</b></span><span class="mut">${esc(c.phone || '')}${c.tg ? ' · @' + esc(String(c.tg).replace(/^@/, '')) : ''}</span><button class="btn red sm" data-act="cdel" data-id="${esc(c.id)}">✕</button></div>`).join('');
+  return `<div class="card"><h2>📞 ${T('fun_contacts')}</h2>${rows || `<div class="mut">${T('contacts_empty')}</div>`}`
+    + `<div class="grid2"><label class="f">${T('c_name')}<input id="cName" placeholder="${esc(T('c_name_ph'))}"></label><label class="f">${T('icon')}<input id="cIcon" value="👤"></label></div>`
+    + `<label class="f">${T('c_phone')}<input id="cPhone" type="tel" placeholder="+998 90 123 45 67"></label>`
+    + `<label class="f">${T('c_tg')}<input id="cTg" placeholder="@username"></label>`
+    + `<div id="cErr" class="mut" style="color:#ff8a80"></div><div class="btnrow"><button class="btn gold" data-act="cadd">${T('add_btn')}</button></div></div>`;
+}
+ACT.cadd = () => guarded(async () => {
+  const name = ($('#cName').value || '').trim(), phone = ($('#cPhone').value || '').trim(), tg = ($('#cTg').value || '').trim();
+  if (!name || (!digits(phone) && !tg)) { $('#cErr').textContent = T('c_need'); return; }
+  const c = { id: 'c_' + Date.now().toString(36), name, phone, tg, icon: ($('#cIcon').value || '👤').trim() };
+  await Store.saveSettings(Object.assign({}, S.settings, { contacts: contactsOf().concat([c]) }));
+});
+ACT.cdel = el => ask(T('confirm_remove'), () => Store.saveSettings(Object.assign({}, S.settings, { contacts: contactsOf().filter(c => c.id !== el.dataset.id) })));
+
+/* ---------- погода (Open-Meteo, без ключа) ---------- */
+const DEFAULT_CITY = { name: 'Navoiy', lat: 40.0844, lon: 65.3792 };
+const cityOf = () => (S.settings && S.settings.weatherCity && S.settings.weatherCity.lat ? S.settings.weatherCity : DEFAULT_CITY);
+const WMO = c => (c === 0 ? ['☀️', 'w_clear'] : c <= 2 ? ['🌤️', 'w_partly'] : c === 3 ? ['☁️', 'w_cloudy'] : c <= 48 ? ['🌫️', 'w_fog'] : c <= 57 ? ['🌦️', 'w_drizzle'] : c <= 67 ? ['🌧️', 'w_rain'] : c <= 77 ? ['❄️', 'w_snow'] : c <= 82 ? ['🌧️', 'w_rain'] : c <= 86 ? ['🌨️', 'w_snow'] : ['⛈️', 'w_storm']);
+function loadWeather() {
+  const c = cityOf(), key = c.lat + ',' + c.lon;
+  if (S.wx && S.wx.key === key && Date.now() - S.wx.t < 30 * 60000) return;
+  if (S.wxBusy) return;
+  S.wxBusy = true;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=2`;
+  fetch(url).then(r => r.json()).then(d => {
+    if (d && d.current) { S.wx = { key, t: Date.now(), now: d.current, daily: d.daily }; render(); }
+  }).catch(() => { /* без погоды */ }).finally(() => { S.wxBusy = false; });
+}
+function weatherLine() {
+  loadWeather();
+  const w = S.wx; if (!w || !w.now) return '';
+  const [ic, k] = WMO(w.now.weather_code), d = w.daily || {};
+  const tm = d.temperature_2m_max && d.temperature_2m_max[1] !== undefined ? ` · ${T('w_tomorrow')} ${Math.round(d.temperature_2m_min[1])}…${Math.round(d.temperature_2m_max[1])}° ${WMO(d.weather_code[1])[0]}` : '';
+  return `<div class="wx"><span class="wxi">${ic}</span><b>${Math.round(w.now.temperature_2m)}°</b><span>${esc(cityOf().name)} · ${T(k)}${tm}</span></div>`;
+}
+function admWeather() {
+  return `<div class="card"><h2>🌤️ ${T('w_title')}</h2><div class="mut">${T('w_now_city')}: <b>${esc(cityOf().name)}</b></div>`
+    + `<label class="f">${T('w_city')}<input id="wxCity" placeholder="Samarqand / Toshkent / Navoiy"></label>`
+    + `<div id="wxErr" class="mut" style="color:#ff8a80"></div><div class="btnrow"><button class="btn gold" data-act="wxset">${T('save')}</button></div></div>`;
+}
+ACT.wxset = () => guarded(async () => {
+  const q = ($('#wxCity').value || '').trim(), err = $('#wxErr'); if (!q) return;
+  let r = null;
+  try { r = await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=1&language=${S.lang}`)).json(); } catch (e) { /* сеть */ }
+  const g = r && r.results && r.results[0];
+  if (!g) { err.textContent = T('w_notfound'); return; }
+  S.wx = null;
+  await Store.saveSettings(Object.assign({}, S.settings, { weatherCity: { name: g.name, lat: g.latitude, lon: g.longitude } }));
+});
+
+/* ---------- открытки ---------- */
+const CARD_THEMES = [['emerald', '#0f4a36', '#030d09', '#ffd23f'], ['rose', '#7a1f4d', '#1d0612', '#ffd1e8'], ['night', '#1e2a78', '#05081f', '#ffe08a']];
+const CARD_PRESETS = [['🎂', 'cp_bday'], ['💍', 'cp_wedding'], ['🎄', 'cp_newyear'], ['🌙', 'cp_eid'], ['💐', 'cp_women'], ['❤️', 'cp_love'], ['🙏', 'cp_thanks']];
+function viewCards() {
+  const c = S.card || (S.card = { p: 0, th: 0, to: '', from: S.me ? firstName(S.me.name) : '' });
+  const [icon, key] = CARD_PRESETS[c.p];
+  return `<div class="card"><h2>💌 ${T('fun_cards')}</h2><div class="mut">${T('cards_hint')}</div>`
+    + `<div class="cpres">${CARD_PRESETS.map(([i, k], n) => `<button class="${c.p === n ? 'on' : ''}" data-act="cpick" data-id="${n}">${i}</button>`).join('')}</div>`
+    + `<div class="cthemes">${CARD_THEMES.map((t, n) => `<button class="${c.th === n ? 'on' : ''}" style="background:linear-gradient(160deg,${t[1]},${t[2]});border-color:${t[3]}" data-act="ctheme" data-id="${n}"></button>`).join('')}</div>`
+    + `<label class="f">${T('card_to')}<input id="cardTo" value="${esc(c.to)}" placeholder="${esc(T('card_to_ph'))}"></label>`
+    + `<label class="f">${T('card_from')}<input id="cardFrom" value="${esc(c.from)}"></label>`
+    + `<div class="btnrow"><button class="btn gold" data-act="cmake">✨ ${T('card_make')}</button></div></div>`
+    + `<div class="card center mut">${icon} ${T(key)}</div>`;
+}
+ACT.cpick = el => { S.card.p = +el.dataset.id; keepCardInputs(); render(); };
+ACT.ctheme = el => { S.card.th = +el.dataset.id; keepCardInputs(); render(); };
+const keepCardInputs = () => { const a = $('#cardTo'), b = $('#cardFrom'); if (a) S.card.to = a.value; if (b) S.card.from = b.value; };
+function wrapLines(ctx, text, maxW) {
+  const words = String(text).split(/\s+/), lines = []; let cur = '';
+  words.forEach(w => { const t = cur ? cur + ' ' + w : w; if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t; });
+  if (cur) lines.push(cur); return lines;
+}
+function drawCard() {
+  const c = S.card, [icon, key] = CARD_PRESETS[c.p], th = CARD_THEMES[c.th];
+  const W = 1080, H = 1350, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const x = cv.getContext('2d');
+  const g = x.createRadialGradient(W / 2, H * 0.25, 50, W / 2, H / 2, H * 0.8); g.addColorStop(0, th[1]); g.addColorStop(1, th[2]);
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  for (let i = 0; i < 140; i++) { x.fillStyle = `rgba(255,220,120,${Math.random() * 0.6})`; x.beginPath(); x.arc(Math.random() * W, Math.random() * H, Math.random() * 2.6, 0, 7); x.fill(); }
+  x.strokeStyle = th[3]; x.lineWidth = 6; x.globalAlpha = 0.85; x.beginPath(); x.roundRect ? x.roundRect(48, 48, W - 96, H - 96, 48) : x.rect(48, 48, W - 96, H - 96); x.stroke(); x.globalAlpha = 1;
+  x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.font = '260px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; x.fillText(icon, W / 2, 360);
+  const gold = x.createLinearGradient(0, 520, 0, 760); gold.addColorStop(0, '#fff6c2'); gold.addColorStop(0.5, th[3]); gold.addColorStop(1, '#e0951a');
+  x.fillStyle = gold; x.shadowColor = 'rgba(255,210,63,.55)'; x.shadowBlur = 30;
+  x.font = '900 92px Nunito, "Arial Rounded MT Bold", Arial, sans-serif';
+  const greet = T(key), title = c.to && c.to.trim() ? c.to.trim() + ', ' + greet.charAt(0).toLocaleLowerCase() + greet.slice(1) : greet;
+  const lines = wrapLines(x, title, W - 200);
+  lines.forEach((l, i) => x.fillText(l, W / 2, 620 + i * 108 - (lines.length - 1) * 54));
+  x.shadowBlur = 0; x.fillStyle = '#ffffff'; x.font = '700 50px Nunito, Arial, sans-serif';
+  wrapLines(x, T(key + '_wish'), W - 220).forEach((l, i) => x.fillText(l, W / 2, 900 + i * 66));
+  if (c.from) { x.fillStyle = th[3]; x.font = '800 54px Nunito, Arial, sans-serif'; x.fillText('— ' + c.from.trim(), W / 2, 1150); }
+  x.fillStyle = 'rgba(255,255,255,.45)'; x.font = '700 30px Nunito, Arial, sans-serif'; x.fillText('NEW DAY ✦', W / 2, H - 92);
+  return cv;
+}
+ACT.cmake = () => {
+  keepCardInputs();
+  const cv = drawCard(), url = cv.toDataURL('image/png');
+  S.cardUrl = url;
+  modal(`<h3>💌 ${T('fun_cards')}</h3><img class="cardimg" src="${url}" alt=""><div class="btnrow"><button class="btn gold" data-act="cshare">📤 ${T('card_share')}</button><a class="btn" href="${url}" download="new-day-card.png">⬇ ${T('card_save')}</a><button class="btn" data-act="close">${T('close')}</button></div>`);
+  confetti();
+};
+ACT.cshare = async () => {
+  try {
+    const blob = await (await fetch(S.cardUrl)).blob(), f = new File([blob], 'new-day-card.png', { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [f] })) await navigator.share({ files: [f], title: 'NEW DAY' });
+    else banner('warn', T('card_noshare'), '', 3500);
+  } catch (e) { /* пользователь отменил */ }
+};
 
 </script>
 </body>
