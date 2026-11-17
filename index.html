@@ -1,0 +1,1293 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#06241a">
+<title>NEW DAY — Yangi kun — Новый день</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--em1:#0f4a36;--em2:#06241a;--em3:#030d09;--gold:#ffd23f;--gold2:#e0951a;--mint:#2ee88f;--green:#15803d;--red:#b91c1c;--card:rgba(6,36,26,.85);--line:rgba(46,232,143,.32);--mut:#9fc7b6}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{min-height:100vh;background:radial-gradient(ellipse at top,var(--em1) 0%,var(--em2) 55%,var(--em3) 100%) fixed;color:#fff;font-family:Nunito,Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.35}
+#app{max-width:560px;margin:0 auto;padding:12px 14px 80px}
+button,select,input,textarea{font:inherit;color:inherit}
+h1,h2,h3{margin:0 0 10px}
+h1{font-size:28px;font-weight:900;color:var(--gold)}
+h2{font-size:21px;font-weight:900;color:var(--gold)}
+h3{font-size:17px;font-weight:800}
+.mut{color:var(--mut);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;margin:12px 0;box-shadow:0 0 30px rgba(46,232,143,.07)}
+.center{text-align:center}
+.hide{display:none!important}
+
+/* шапка */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 2px;background:linear-gradient(#06241af2,#06241ad0 80%,transparent)}
+.who{display:flex;align-items:center;gap:10px;min-width:0}
+.whot{min-width:0}.nm{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:34vw}
+.lv{font-size:13px;color:var(--gold);font-weight:800}
+.avatar{width:42px;height:42px;border-radius:50%;background:#12614a;border:2px solid var(--gold);object-fit:cover;display:grid;place-items:center;font-weight:900;flex:none}
+.coinpill{display:flex;align-items:center;gap:8px;padding:6px 14px 6px 8px;border-radius:999px;border:2px solid var(--gold);background:rgba(0,0,0,.35);box-shadow:0 0 18px rgba(255,210,63,.35);flex:none}
+.coinpill b{font-size:23px;font-weight:900;color:var(--gold);font-variant-numeric:tabular-nums;min-width:3ch;text-align:right}
+.coinpill b.neg{color:#ff8a80}
+.coin{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:17px;color:#8a5200;background:radial-gradient(circle at 35% 30%,#fff2a8,#ffd23f 60%,var(--gold2));border:2px solid #b86f0a;box-shadow:inset 0 0 0 3px rgba(184,111,10,.25);flex:none}
+.coin.sm{width:20px;height:20px;font-size:12px;border-width:1.5px}
+.lvbar{height:6px;border-radius:6px;background:rgba(255,255,255,.12);overflow:hidden;margin:2px 0 8px}
+.lvbar i{display:block;height:100%;background:linear-gradient(90deg,var(--mint),var(--gold));border-radius:6px;transition:width .6s}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 4px}
+.chipbtn,.bar select{background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:14px;padding:8px 12px;cursor:pointer;font-size:15px}
+.bar select{appearance:auto;color:#fff}.bar select option{color:#000}
+.chipbtn.on{border-color:var(--gold);color:var(--gold)}
+
+/* большие кнопки */
+.big{display:block;width:100%;min-height:68px;border:0;border-radius:20px;color:#fff;font-weight:900;font-size:24px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;margin-top:10px;padding:0 14px;box-shadow:0 6px 0 rgba(0,0,0,.35);transition:transform .08s}
+.big:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.35)}
+.big.green{background:var(--green)}.big.red{background:var(--red)}
+.btn{border:1px solid var(--line);background:rgba(255,255,255,.1);border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer}
+.btn.gold{background:var(--gold);color:#2a1b00;border-color:var(--gold)}
+.btn.green{background:var(--green);border-color:var(--green)}
+.btn.red{background:var(--red);border-color:var(--red)}
+.btn.sm{padding:7px 10px;font-size:14px}
+.gbtn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:60px;background:#fff;color:#222;border:0;border-radius:18px;font-weight:900;font-size:20px;cursor:pointer;box-shadow:0 6px 0 rgba(0,0,0,.3)}
+.gbtn svg{width:26px;height:26px}
+
+/* задания */
+.nowcard{border-color:var(--gold);box-shadow:0 0 34px rgba(255,210,63,.18)}
+.nowtag{display:inline-block;background:var(--gold);color:#2a1b00;border-radius:999px;padding:2px 12px;font-weight:900;font-size:13px;margin-bottom:6px}
+.task{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:20px;padding:12px 14px;margin:10px 0}
+.task.st-active{border-color:var(--gold);background:rgba(255,210,63,.08)}
+.task.st-done{border-color:#2ee88f;background:rgba(46,232,143,.1)}
+.task.st-missed,.task.st-failed,.task.st-expired{border-color:#ff5a5a;background:rgba(185,28,28,.14)}
+.task.st-locked,.task.st-future{opacity:.62}
+.trow{display:flex;align-items:center;gap:12px}
+.ticon{font-size:30px;flex:none}
+.ttime{font-weight:900;color:var(--gold);font-size:15px}
+.ttitle{font-weight:800;font-size:19px}
+.tbadge{margin-left:auto;font-weight:900;white-space:nowrap;font-size:16px}
+.tbadge.ok{color:var(--mint)}.tbadge.bad{color:#ff8a80}
+.pbar{height:12px;border-radius:12px;background:rgba(255,255,255,.12);overflow:hidden;margin:8px 0}
+.pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--mint),var(--gold));border-radius:12px;transition:width .6s}
+
+/* календарь месяца */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:8px}
+.cal .d{aspect-ratio:1;border-radius:10px;display:grid;place-items:center;font-size:13px;font-weight:800;background:rgba(255,255,255,.07)}
+.cal .d.g{background:#15803d}.cal .d.y{background:#a16207}.cal .d.r{background:#b91c1c}.cal .d.t{outline:2px solid var(--gold)}
+.cal .h{font-size:11px;color:var(--mut);text-align:center}
+.prize{display:flex;align-items:center;gap:12px;padding:10px;border-radius:16px;background:rgba(255,210,63,.12);border:1px solid var(--gold);margin:8px 0}
+.prize .pi{font-size:34px}
+
+/* админка */
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px}
+.tabs .chipbtn{white-space:nowrap}
+.badge{background:#e11d48;border-radius:999px;padding:0 7px;margin-left:5px;font-size:12px;font-weight:900}
+.u .urow{display:flex;align-items:center;gap:10px}
+.chip{margin-left:auto;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:900}
+.chip.pending{background:#a16207}.chip.approved{background:var(--green)}.chip.blocked{background:var(--red)}
+.u.pending{border-color:var(--gold)}
+label.f{display:block;margin:8px 0;font-size:14px;color:var(--mut)}
+label.f input,label.f select,label.f textarea{display:block;width:100%;margin-top:4px;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.35);border:1px solid var(--line);color:#fff;font-size:16px}
+label.f select option{color:#000}
+.chk{display:flex;align-items:center;gap:8px;margin:8px 0;font-weight:800}
+.chk input{width:22px;height:22px;accent-color:var(--mint)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+details.tk{border:1px solid var(--line);border-radius:16px;padding:10px 12px;margin:8px 0;background:rgba(255,255,255,.04)}
+details.tk summary{cursor:pointer;font-weight:800}
+.relgrid{display:flex;flex-wrap:wrap;gap:6px 14px}
+
+/* всплывающие окна и эффекты */
+.modal{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.7);display:grid;place-items:center;padding:16px}
+.modal>div{width:min(94vw,480px);max-height:88vh;overflow:auto;background:#06241a;border:1px solid var(--gold);border-radius:22px;padding:18px}
+#ovl{position:fixed;inset:0;z-index:80;pointer-events:none;display:grid;place-items:center}
+.banner{pointer-events:auto;width:min(92vw,440px);border-radius:24px;padding:20px;text-align:center;font-weight:900;font-size:22px;animation:pop .35s}
+.banner.warn{background:#b91c1c;border:3px solid #fff;box-shadow:0 0 60px #ff1f1f}
+.banner.burn{background:#450a0a;border:3px solid #ff5a5a;box-shadow:0 0 80px #ff0000}
+.banner.good{background:linear-gradient(#ffd23f,#e0951a);color:#2a1b00;border:3px solid #fff2a8}
+.banner small{display:block;font-weight:700;font-size:15px;margin-top:6px}
+.redflash{position:fixed;inset:0;z-index:70;pointer-events:none;background:radial-gradient(circle,transparent 30%,rgba(255,0,0,.55));animation:flash .9s 3}
+.flycoin{position:fixed;z-index:90;pointer-events:none;width:30px;height:30px}
+body.shake #app{animation:shake .5s}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes flash{0%,100%{opacity:0}50%{opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+.demo{background:#a16207;color:#fff;border-radius:12px;padding:6px 10px;font-size:13px;font-weight:800;text-align:center;margin-bottom:8px}
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ============================================================
+   НАСТРОЙКИ — заполняются один раз (см. SETUP.md)
+   ============================================================ */
+const APP_CONFIG = {
+  // Ваша Google-почта. Этот аккаунт автоматически станет главным администратором.
+  OWNER_EMAIL: "3307999@gmail.com",
+
+  // Данные из Firebase Console (Project settings -> Your apps -> Web app).
+  // Пока apiKey пустой, приложение работает в ДЕМО-режиме (данные только в этом браузере).
+  FIREBASE: { apiKey: "", authDomain: "", projectId: "", appId: "" },
+
+  // Часовой пояс по умолчанию (Самарканд/Ташкент).
+  DEFAULT_TZ: "Asia/Tashkent"
+};
+
+
+/* ===== i18n.js: тексты. Порядок в массиве: [uz, ru, en]. Язык по умолчанию — узбекский ===== */
+const D = {
+  app_name: ["Yangi kun", "Новый день", "New Day"],
+  login_title: ["Kirish", "Вход", "Sign in"],
+  login_sub: ["Davom etish uchun Google akkauntingiz bilan kiring", "Войдите через свой Google-аккаунт, чтобы продолжить", "Sign in with your Google account to continue"],
+  login_google: ["Google orqali kirish", "Войти через Google", "Sign in with Google"],
+  demo: ["DEMO rejim: ma'lumotlar faqat shu brauzerda saqlanadi", "ДЕМО-режим: данные хранятся только в этом браузере", "DEMO mode: data is stored only in this browser"],
+  demo_email: ["Pochta (masalan, ona@gmail.com)", "Почта (например, mama@gmail.com)", "Email (e.g. mom@gmail.com)"],
+  demo_name: ["Ism", "Имя", "Name"],
+  login_fail: ["Kirishda xatolik. Qayta urinib ko'ring.", "Не удалось войти. Попробуйте ещё раз.", "Sign-in failed. Please try again."],
+  load_fail: ["Ulanishda xatolik. Internetni tekshiring va sahifani yangilang.", "Ошибка подключения. Проверьте интернет и обновите страницу.", "Connection error. Check your internet and reload."],
+  pending_title: ["Tasdiqlash kutilmoqda", "Ожидание подтверждения", "Waiting for approval"],
+  pending_text: ["So'rovingiz yuborildi. Administrator tasdiqlagach, shaxsiy sahifangiz ochiladi.", "Запрос отправлен. Ваша личная страница откроется после подтверждения администратором.", "Your request has been sent. Your personal page opens once the admin approves you."],
+  blocked_title: ["Kirish yopilgan", "Доступ закрыт", "Access blocked"],
+  blocked_text: ["Administrator sizning kirishingizni yopgan.", "Администратор закрыл вам доступ.", "The admin has blocked your access."],
+  logout: ["Chiqish", "Выйти", "Sign out"],
+  today: ["Bugun", "Сегодня", "Today"],
+  now: ["Hozir", "Сейчас", "Now"],
+  next_task: ["Keyingi vazifa", "Следующее задание", "Next task"],
+  all_done_today: ["Bugungi vazifalar tugadi. Barakalla!", "Задания на сегодня закончились. Молодец!", "That's all for today. Well done!"],
+  in_t: ["{t} dan keyin", "через {t}", "in {t}"],
+  hm_h: ["s", "ч", "h"],
+  hm_m: ["daq", "мин", "min"],
+  done_btn: ["Bajarildi ✓", "Выполнено ✓", "Done ✓"],
+  fail_btn: ["Bajarilmadi ✗", "Не выполнено ✗", "Not done ✗"],
+  opens_at: ["{t} da ochiladi", "Откроется в {t}", "Opens at {t}"],
+  st_done: ["Bajarildi", "Выполнено", "Done"],
+  st_missed: ["O'tkazib yuborildi", "Пропущено", "Missed"],
+  st_failed: ["Bajarilmadi", "Не выполнено", "Not done"],
+  st_expired: ["Vaqt o'tdi", "Время вышло", "Time is up"],
+  no_tasks: ["Hozircha sizga vazifalar berilmagan.", "Пока вам не назначены задания.", "No tasks assigned to you yet."],
+  day_progress: ["Bugun: {d} / {n} bajarildi", "Сегодня: {d} из {n}", "Today: {d} of {n} done"],
+  level: ["Daraja", "Уровень", "Level"],
+  to_next: ["Keyingi darajagacha: {c}", "До следующего уровня: {c}", "To next level: {c}"],
+  levelup: ["Yangi daraja: {n}!", "Новый уровень: {n}!", "Level up: {n}!"],
+  coins: ["tanga", "монет", "coins"],
+  confirm_fail: ["Haqiqatan ham bajarilmadimi? Jarima: {c}", "Точно не выполнено? Штраф: {c}", "Really not done? Penalty: {c}"],
+  yes: ["Ha", "Да", "Yes"], no: ["Yo'q", "Нет", "No"], cancel: ["Bekor qilish", "Отмена", "Cancel"],
+  warn_n: ["Ogohlantirish {n}/{m}: vazifa bajarilmadi!", "Предупреждение {n}/{m}: задание не выполнено!", "Warning {n}/{m}: task not done!"],
+  warn_pen: ["Jarima: {c}", "Штраф: {c}", "Penalty: {c}"],
+  burn_msg: ["Kunlik limitning {p}% kuyib ketdi!", "Сгорело {p}% дневного лимита!", "{p}% of the daily limit burned!"],
+  away_missed: ["Siz yo'qligingizda {n} ta vazifa o'tkazib yuborildi: {c}", "Пока вас не было, пропущено заданий: {n} ({c})", "While you were away, {n} tasks were missed ({c})"],
+  week: ["Hafta", "Неделя", "Week"],
+  prizes_title: ["Haftalik sovg'alar", "Подарки за неделю", "Weekly prizes"],
+  week_progress: ["Bu hafta: {p}% (maqsad {g}%)", "Эта неделя: {p}% (цель {g}%)", "This week: {p}% (goal {g}%)"],
+  no_prize_yet: ["Hali sovg'a yo'q. Haftani yaxshi yakunlang!", "Пока подарков нет. Хорошо завершите неделю!", "No prizes yet. Finish the week strong!"],
+  prize_won: ["Siz yutdingiz!", "Вы выиграли!", "You won!"],
+  prize_note: ["(virtual sovg'a, administrator tasdiqlaydi)", "(виртуальный подарок, подтверждает администратор)", "(virtual prize, confirmed by the admin)"],
+  month_plan: ["Oylik reja", "План на месяц", "Monthly plan"],
+  earned_month: ["Oy natijasi", "Итог месяца", "Month total"],
+  payout_title: ["Pulni olish", "Получение денег", "Cash out"],
+  rate_not_set: ["Kurs hali belgilanmagan", "Курс пока не задан", "Rate not set yet"],
+  request_payout: ["Pulni so'rash", "Запросить выплату", "Request payout"],
+  payout_wait: ["So'rov yuborildi, kutilmoqda", "Запрос отправлен, ожидает", "Requested, waiting"],
+  payout_paid: ["To'landi", "Выплачено", "Paid"],
+  payout_rejected: ["Rad etildi", "Отклонено", "Rejected"],
+  payout_hint: ["Oy tugagach, ijobiy natija dollarga almashtiriladi.", "После окончания месяца плюс конвертируется в доллары.", "After the month ends, a positive result converts to dollars."],
+  music: ["Musiqa", "Музыка", "Music"],
+  admin_panel: ["Admin panel", "Админ-панель", "Admin panel"],
+  back: ["Orqaga", "Назад", "Back"],
+  // админка
+  tab_users: ["Foydalanuvchilar", "Пользователи", "Users"],
+  tab_add: ["Akkaunt qo'shish", "Добавить аккаунт", "Add account"],
+  tab_tasks: ["Vazifalar", "Задания", "Tasks"],
+  tab_settings: ["Sozlamalar", "Настройки", "Settings"],
+  tab_payouts: ["To'lovlar", "Выплаты", "Payouts"],
+  st_pending: ["Kutilmoqda", "Ожидает", "Pending"],
+  st_approved: ["Tasdiqlangan", "Подтверждён", "Approved"],
+  st_blocked: ["Bloklangan", "Заблокирован", "Blocked"],
+  relation: ["Kim bo'ladi", "Кем приходится", "Relation"],
+  choose_rel: ["— tanlang —", "— выберите —", "— choose —"],
+  is_admin: ["Administrator", "Администратор", "Administrator"],
+  approve: ["Tasdiqlash", "Подтвердить", "Approve"],
+  block: ["Bloklash", "Заблокировать", "Block"],
+  unblock: ["Blokdan chiqarish", "Разблокировать", "Unblock"],
+  remove: ["O'chirish", "Удалить", "Delete"],
+  progress: ["Natijalar", "Результаты", "Progress"],
+  adjust: ["Tanga qo'shish/ayirish", "Начислить/списать", "Add/remove coins"],
+  confirm_remove: ["O'chirishni tasdiqlaysizmi?", "Точно удалить?", "Delete for sure?"],
+  confirm_admin: ["Administrator huquqini o'zgartirasizmi?", "Изменить права администратора?", "Change admin rights?"],
+  no_users: ["Hozircha foydalanuvchilar yo'q.", "Пока нет пользователей.", "No users yet."],
+  add_title: ["Google akkaunt qo'shish", "Добавить Google-аккаунт", "Add a Google account"],
+  add_hint: ["Bu akkaunt kirganda darhol tasdiqlanadi.", "Этот аккаунт при входе сразу получит доступ.", "This account gets access immediately on sign-in."],
+  email: ["Google pochta", "Google-почта", "Google email"],
+  add_btn: ["Qo'shish", "Добавить", "Add"],
+  added_list: ["Qo'shilgan akkauntlar", "Добавленные аккаунты", "Added accounts"],
+  bad_email: ["Pochta noto'g'ri", "Некорректная почта", "Invalid email"],
+  load_defaults: ["Standart vazifalarni yuklash", "Загрузить стандартные задания", "Load default tasks"],
+  add_task: ["+ Vazifa", "+ Задание", "+ Task"],
+  save: ["Saqlash", "Сохранить", "Save"],
+  saved: ["Saqlandi", "Сохранено", "Saved"],
+  time: ["Vaqt", "Время", "Time"],
+  icon: ["Belgi", "Значок", "Icon"],
+  title_uz: ["Nomi (o'zbekcha)", "Название (узбекский)", "Title (Uzbek)"],
+  title_ru: ["Nomi (ruscha)", "Название (русский)", "Title (Russian)"],
+  title_en: ["Nomi (inglizcha)", "Название (английский)", "Title (English)"],
+  reward: ["Mukofot (tanga)", "Награда (монет)", "Reward (coins)"],
+  grace: ["Muddat (daqiqa)", "Срок после времени (мин)", "Grace after time (min)"],
+  early: ["Oldindan (daqiqa)", "Открыть заранее (мин)", "Open early (min)"],
+  assigned_to: ["Kimlarga", "Кому назначено", "Assigned to"],
+  rel_all: ["Hammaga", "Всем", "Everyone"],
+  active: ["Faol", "Активно", "Active"],
+  set_tz: ["Vaqt mintaqasi", "Часовой пояс", "Time zone"],
+  set_penalty: ["Jarima (% mukofotdan)", "Штраф за пропуск (% от награды)", "Miss penalty (% of reward)"],
+  set_warnings: ["Ogohlantirishlar soni (kuniga)", "Предупреждений в день", "Warnings per day"],
+  set_burn: ["Keyingi o'tkazib yuborishda kuyadi (% kunlik limit)", "Сгорает при следующем пропуске (% дневного лимита)", "Burns on the next miss (% of daily limit)"],
+  set_weekly: ["Sovg'a uchun hafta maqsadi (%)", "Цель недели для подарка (%)", "Weekly goal for a prize (%)"],
+  set_rate: ["1 tanga = USD", "1 монета = USD", "1 coin = USD"],
+  prizes_edit: ["Sovg'alar ro'yxati", "Список подарков", "Prize list"],
+  add_prize: ["+ Sovg'a", "+ Подарок", "+ Prize"],
+  no_payouts: ["To'lov so'rovlari yo'q.", "Запросов на выплату нет.", "No payout requests."],
+  mark_paid: ["To'landi deb belgilash", "Отметить выплаченным", "Mark as paid"],
+  reject: ["Rad etish", "Отклонить", "Reject"],
+  amount: ["Miqdor (+/−)", "Сумма (+/−)", "Amount (+/−)"],
+  note: ["Izoh", "Комментарий", "Note"],
+  balance: ["Balans", "Баланс", "Balance"],
+  last_logs: ["So'nggi yozuvlar", "Последние записи", "Recent entries"],
+  close: ["Yopish", "Закрыть", "Close"],
+  rel_owner: ["Men (egasi)", "Я (владелец)", "Me (owner)"],
+  rel_wife: ["Rafiqa", "Жена", "Wife"],
+  rel_mother: ["Ona", "Мама", "Mother"],
+  rel_father: ["Ota", "Отец", "Father"],
+  rel_sister: ["Opa/singil", "Сестра", "Sister"],
+  rel_brother: ["Aka/uka", "Брат", "Brother"],
+  rel_son: ["O'g'il", "Сын", "Son"],
+  rel_daughter: ["Qiz", "Дочь", "Daughter"],
+  rel_nephew: ["Jiyan", "Племянник", "Nephew"],
+  rel_friend: ["Do'st", "Друг", "Friend"],
+  rel_acquaintance: ["Tanish", "Знакомый", "Acquaintance"],
+  rel_other: ["Boshqa", "Другое", "Other"],
+  kind_done: ["Bajarildi", "Выполнено", "Done"],
+  kind_missed: ["O'tkazib yuborildi", "Пропущено", "Missed"],
+  kind_failed: ["Bajarilmadi", "Не выполнено", "Not done"],
+  kind_adj: ["Tuzatish", "Корректировка", "Adjustment"],
+  kind_payout: ["To'lov", "Выплата", "Payout"]
+};
+
+
+/* ===== logic.js: время, монеты, штрафы, уровни, призы (без интерфейса) ===== */
+const Logic = (() => {
+  const pad = n => String(n).padStart(2, '0');
+
+  // Текущие дата и минуты в нужном часовом поясе
+  function tzNow(tz, ms) {
+    const o = {};
+    new Intl.DateTimeFormat('en-CA', {
+      timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+    }).formatToParts(new Date(ms)).forEach(p => { o[p.type] = p.value; });
+    return { date: `${o.year}-${o.month}-${o.day}`, min: (+o.hour) * 60 + (+o.minute), ms };
+  }
+  const toMin = s => { const [h, m] = String(s).split(':').map(Number); return h * 60 + (m || 0); };
+  const fmtMin = m => { m = ((m % 1440) + 1440) % 1440; return pad(Math.floor(m / 60)) + ':' + pad(m % 60); };
+  function addDays(date, n) {
+    const [y, m, d] = date.split('-').map(Number);
+    return new Date(Date.UTC(y, m - 1, d + n)).toISOString().slice(0, 10);
+  }
+  const weekday = date => { const [y, m, d] = date.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d)).getUTCDay(); };
+  const weekStart = date => addDays(date, -((weekday(date) + 6) % 7)); // понедельник
+  const monthOf = date => date.slice(0, 7);
+  const daysInMonth = ym => { const [y, m] = ym.split('-').map(Number); return new Date(Date.UTC(y, m, 0)).getUTCDate(); };
+  const maxStr = (...a) => a.reduce((x, y) => (x > y ? x : y), '');
+
+  const DEFAULTS = {
+    missPenaltyPct: 50,   // штраф за пропуск, % от награды задания
+    warnings: 2,          // сколько пропусков за день только предупреждают
+    burnPct: 70,          // на следующем пропуске сгорает % дневного лимита
+    weeklyGoalPct: 80,    // % выполнения за неделю для подарка
+    usdPerCoin: 0,        // курс монеты к доллару (0 = не задан)
+    backfillDays: 7,      // сколько дней назад дописывать пропуски
+    tz: 'Asia/Tashkent',
+    prizes: [
+      { icon: '🍢', uz: "Restoranda shashlik bilan kechki ovqat", ru: 'Ужин с шашлыками в ресторане', en: 'Barbecue dinner at a restaurant' },
+      { icon: '🐟', uz: "Baliq restoranida kechki ovqat", ru: 'Ужин в рыбном ресторане', en: 'Dinner at a fish restaurant' },
+      { icon: '🍽️', uz: "Restoranda tushlik", ru: 'Обед в ресторане', en: 'Lunch at a restaurant' },
+      { icon: '🍰', uz: "Kafeda shirinlik va qahva", ru: 'Десерты и кофе в кафе', en: 'Desserts and coffee at a café' },
+      { icon: '🎬', uz: "Oilaviy kino", ru: 'Семейный поход в кино', en: 'Family movie night' },
+      { icon: '🛍️', uz: "Sovg'a tanlash uchun xarid", ru: 'Шопинг: выбрать себе подарок', en: 'Shopping trip to pick a gift' }
+    ]
+  };
+  const cfg = s => Object.assign({}, DEFAULTS, s || {});
+
+  const T0 = (id, time, icon, uz, ru, en, grace) => ({
+    id, time, icon, title: { uz, ru, en }, reward: 100, graceMin: grace, earlyMin: 15,
+    relations: ['wife'], uids: [], active: true, since: ''
+  });
+  const DEFAULT_TASKS = [
+    T0('wake', '06:00', '⏰', "Uyg'onish", 'Подъём', 'Wake up', 30),
+    T0('teeth_am', '07:30', '🪥', "Dilnozaning tishlarini tozalash", 'Почистить зубки Дильнозе', "Brush Dilnoza's teeth", 60),
+    T0('breakfast', '08:00', '🍳', 'Nonushta tayyor', 'Завтрак готов', 'Breakfast is ready', 60),
+    T0('lunch', '12:00', '🍲', 'Tushlik tayyor', 'Обед готов', 'Lunch is ready', 60),
+    T0('nap', '13:00', '😴', "Kunduzgi uyqu (13:00–14:00)", 'Дневной сон (13:00–14:00)', 'Nap time (1–2 pm)', 30),
+    T0('snack', '16:00', '🍪', 'Yengil tamaddi tayyor', 'Полдник готов', 'Afternoon snack is ready', 60),
+    T0('dinner', '18:00', '🍽️', 'Kechki ovqat tayyor', 'Ужин готов', 'Dinner is ready', 60),
+    T0('teeth_pm', '21:00', '🪥', "Dilnozaning tishlarini tozalash (kechqurun)", 'Почистить зубки Дильнозе (вечером)', "Brush Dilnoza's teeth (evening)", 60),
+    T0('medicine', '21:00', '💊', "Dilnozaga dori (kalsiy) berish", 'Дать Дильнозе препарат (кальций)', 'Give Dilnoza her medicine (calcium)', 60),
+    T0('sleep', '22:00', '🌙', 'Uxlash vaqti', 'Отбой', 'Bedtime', 30)
+  ];
+
+  // Кому назначено задание в этот день
+  function assigned(t, u, date) {
+    if (!t || t.active === false) return false;
+    const r = t.relations || [];
+    const ok = r.includes('*') || (u.relation && r.includes(u.relation)) || (t.uids || []).includes(u.uid);
+    if (!ok) return false;
+    return !date || date >= maxStr(t.since || '', u.approvedDate || '');
+  }
+  const sortTasks = ts => ts.slice().sort((a, b) => toMin(a.time) - toMin(b.time) || String(a.id).localeCompare(String(b.id)));
+  const logIndex = logs => new Map(logs.map(l => [l.id, l]));
+  const logId = (uid, date, taskId) => `${uid}_${date}_${taskId}`;
+  const isMiss = l => l && (l.kind === 'missed' || l.kind === 'failed');
+
+  // Состояние задания: locked / active / expired / future или вид записи (done/missed/failed)
+  function taskState(t, date, now, log) {
+    if (log) return log.kind;
+    if (date > now.date) return 'future';
+    if (date < now.date) return 'expired';
+    const base = toMin(t.time);
+    const from = base - (t.earlyMin ?? 15), deadline = base + (t.graceMin ?? 60);
+    if (now.min < from) return 'locked';
+    if (now.min <= deadline) return 'active';
+    return 'expired';
+  }
+
+  const dayLimit = ts => ts.reduce((s, t) => s + (t.reward || 0), 0);
+
+  // Запись о пропуске: штраф + (при N-м пропуске за день) сгорание части дневного лимита
+  function makeMiss(u, t, date, kind, strike, limit, c) {
+    const penalty = Math.ceil((t.reward || 0) * c.missPenaltyPct / 100);
+    const burn = strike === c.warnings + 1 ? Math.ceil(limit * c.burnPct / 100) : 0;
+    return {
+      id: logId(u.uid, date, t.id), uid: u.uid, date, taskId: t.id, kind, strike,
+      penalty, burn, warn: strike <= c.warnings, delta: -(penalty + burn)
+    };
+  }
+  const missesOn = (logs, date) => logs.filter(l => l.date === date && isMiss(l)).length;
+
+  // Какие пропуски надо дописать (задание просрочено, записи нет)
+  function pendingMisses(tasks, logs, u, now, settings) {
+    const c = cfg(settings);
+    const idx = logIndex(logs);
+    const start = maxStr(addDays(now.date, -c.backfillDays), u.approvedDate || '');
+    const out = [];
+    for (let d = start; d <= now.date && d; d = addDays(d, 1)) {
+      const dayTasks = sortTasks(tasks.filter(t => assigned(t, u, d)));
+      const limit = dayLimit(dayTasks);
+      let count = missesOn(logs, d);
+      for (const t of dayTasks) {
+        if (idx.has(logId(u.uid, d, t.id))) continue;
+        if (taskState(t, d, now, null) !== 'expired') continue;
+        count += 1;
+        out.push(makeMiss(u, t, d, 'missed', count, limit, c));
+      }
+    }
+    return out;
+  }
+  // Пропуск, нажатый вручную красной кнопкой
+  function failLog(tasks, logs, u, t, now, settings) {
+    const c = cfg(settings);
+    const dayTasks = tasks.filter(x => assigned(x, u, now.date));
+    return makeMiss(u, t, now.date, 'failed', missesOn(logs, now.date) + 1, dayLimit(dayTasks), c);
+  }
+  const doneLog = (u, t, now) => ({
+    id: logId(u.uid, now.date, t.id), uid: u.uid, date: now.date, taskId: t.id, kind: 'done', delta: t.reward || 0
+  });
+
+  const sum = (a, f) => a.reduce((s, x) => s + f(x), 0);
+  const balance = logs => sum(logs, l => l.delta || 0);
+  const earned = logs => sum(logs.filter(l => l.kind === 'done'), l => l.delta || 0);
+  function level(earnedCents) {
+    const c = earnedCents / 100;
+    let L = 1;
+    while (25 * (L + 1) * L <= c) L++;
+    const cur = 25 * L * (L - 1), nxt = 25 * (L + 1) * L;
+    return { level: L, pct: Math.max(0, Math.min(1, (c - cur) / (nxt - cur))), toNext: Math.max(0, nxt - c) * 100 };
+  }
+
+  function dayStats(tasks, logs, u, date, now) {
+    const idx = logIndex(logs);
+    const ts = tasks.filter(t => assigned(t, u, date));
+    let done = 0, missed = 0, open = 0;
+    ts.forEach(t => {
+      const s = taskState(t, date, now, idx.get(logId(u.uid, date, t.id)));
+      if (s === 'done') done++;
+      else if (s === 'missed' || s === 'failed' || s === 'expired') missed++;
+      else open++;
+    });
+    const net = sum(logs.filter(l => l.date === date), l => l.delta || 0);
+    return { date, total: ts.length, done, missed, open, net };
+  }
+
+  const hashStr = s => { let h = 0; for (const ch of s) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; };
+  function weekReport(tasks, logs, u, wStart, now, settings) {
+    const c = cfg(settings);
+    let done = 0, missed = 0, total = 0;
+    for (let i = 0; i < 7; i++) {
+      const d = addDays(wStart, i);
+      if (d > now.date) break;
+      const s = dayStats(tasks, logs, u, d, now);
+      done += s.done; missed += s.missed; total += s.total;
+    }
+    const counted = done + missed;
+    const rate = counted ? done / counted : 0;
+    const ended = addDays(wStart, 6) < now.date;
+    const won = ended && counted > 0 && rate * 100 >= c.weeklyGoalPct;
+    const prize = won && c.prizes.length ? c.prizes[hashStr(wStart) % c.prizes.length] : null;
+    return { start: wStart, done, missed, total, rate, ended, won, prize };
+  }
+
+  function monthReport(tasks, logs, u, ym, now) {
+    const days = [];
+    for (let i = 1; i <= daysInMonth(ym); i++) {
+      const date = `${ym}-${pad(i)}`;
+      const s = dayStats(tasks, logs, u, date, now);
+      const counted = s.done + s.missed;
+      days.push(Object.assign(s, { rate: counted ? s.done / counted : null, future: date > now.date, today: date === now.date }));
+    }
+    const monthLogs = logs.filter(l => (l.date || '').startsWith(ym));
+    return {
+      ym, days,
+      net: balance(monthLogs),
+      done: sum(days, d => d.done),
+      missed: sum(days, d => d.missed),
+      ended: addDays(`${ym}-${pad(daysInMonth(ym))}`, 1) <= now.date
+    };
+  }
+
+  const toUsd = (cents, rate) => (cents / 100) * (rate || 0);
+  const money = c => (c / 100).toFixed(2);
+
+  const api = {
+    tzNow, toMin, fmtMin, addDays, weekday, weekStart, monthOf, daysInMonth, DEFAULTS, cfg, DEFAULT_TASKS,
+    assigned, sortTasks, logIndex, logId, isMiss, taskState, dayLimit, makeMiss, pendingMisses, failLog, doneLog,
+    balance, earned, level, dayStats, weekReport, monthReport, toUsd, money, hashStr
+  };
+  if (typeof module !== 'undefined') module.exports = api;
+  return api;
+})();
+
+
+/* ===== sound.js: звуки и фоновая музыка синтезируются в браузере (файлы не нужны) ===== */
+const Snd = (() => {
+  let ctx = null, master = null, musicGain = null, timer = null, step = 0, nextT = 0, musicOn = false;
+  const chords = [[261.63, 329.63, 392.0], [220.0, 261.63, 329.63], [174.61, 220.0, 261.63], [196.0, 246.94, 293.66]];
+
+  function ensure() {
+    if (!ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return false;
+      ctx = new AC();
+      master = ctx.createGain(); master.gain.value = 0.9; master.connect(ctx.destination);
+      musicGain = ctx.createGain(); musicGain.gain.value = 0.5; musicGain.connect(master);
+    }
+    if (ctx.state === 'suspended') ctx.resume();
+    return true;
+  }
+  function tone(f, t, dur, type, vol, dest, slideTo) {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type; o.frequency.setValueAtTime(f, t);
+    if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t + dur);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(dest || master);
+    o.start(t); o.stop(t + dur + 0.05);
+  }
+  function noise(t, dur, vol) {
+    const n = Math.floor(ctx.sampleRate * dur), buf = ctx.createBuffer(1, n, ctx.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    const s = ctx.createBufferSource(), g = ctx.createGain(), f = ctx.createBiquadFilter();
+    f.type = 'highpass'; f.frequency.value = 3000; g.gain.value = vol;
+    s.buffer = buf; s.connect(f); f.connect(g); g.connect(master); s.start(t);
+  }
+
+  // Звон золотых монет, как выигрыш в автомате
+  function coin() {
+    if (!ensure()) return; const t = ctx.currentTime;
+    tone(1318.5, t, 0.10, 'square', 0.10); tone(1760, t + 0.08, 0.45, 'square', 0.10); tone(2637, t + 0.08, 0.40, 'sine', 0.08);
+    for (let i = 0; i < 7; i++) tone(1800 + Math.random() * 1800, t + 0.18 + i * 0.055, 0.14, 'triangle', 0.05);
+    noise(t + 0.15, 0.25, 0.05);
+  }
+  // Раздражающий сигнал ошибки
+  function wrong() {
+    if (!ensure()) return; const t = ctx.currentTime;
+    tone(180, t, 0.30, 'sawtooth', 0.22, null, 120); tone(130, t + 0.32, 0.45, 'sawtooth', 0.22, null, 80);
+    tone(92, t, 0.75, 'square', 0.12);
+  }
+  // Сирена предупреждения
+  function warn() {
+    if (!ensure()) return; const t = ctx.currentTime;
+    for (let i = 0; i < 6; i++) tone(i % 2 ? 620 : 880, t + i * 0.16, 0.16, 'square', 0.14);
+  }
+  // Сгорание: падающий звук
+  function burn() {
+    if (!ensure()) return; const t = ctx.currentTime;
+    tone(900, t, 1.0, 'sawtooth', 0.18, null, 70); noise(t, 0.9, 0.12);
+  }
+  function fanfare() {
+    if (!ensure()) return; const t = ctx.currentTime;
+    [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, i) => tone(f, t + i * 0.11, 0.35, 'triangle', 0.16));
+    tone(1046.5, t + 0.6, 0.9, 'sine', 0.14);
+  }
+  function tick() { if (ensure()) tone(1200, ctx.currentTime, 0.05, 'sine', 0.05); }
+
+  // Фоновая музыка: спокойный перебор аккордов
+  function schedule() {
+    while (nextT < ctx.currentTime + 0.5) {
+      const bar = Math.floor(step / 8) % chords.length, ch = chords[bar], i = step % 8;
+      const f = ch[[0, 1, 2, 1, 0, 1, 2, 1][i]] * (i >= 6 ? 2 : 1);
+      tone(f, nextT, 1.1, 'sine', 0.05, musicGain);
+      if (i === 0) tone(ch[0] / 2, nextT, 2.4, 'triangle', 0.06, musicGain);
+      step++; nextT += 0.42;
+    }
+  }
+  function startMusic() {
+    musicOn = true;
+    if (!ensure() || timer) return;
+    nextT = ctx.currentTime + 0.1; schedule(); timer = setInterval(schedule, 200);
+  }
+  function stopMusic() { musicOn = false; if (timer) { clearInterval(timer); timer = null; } }
+  function unlock() { if (ensure() && musicOn && !timer) startMusic(); }
+
+  return { coin, wrong, warn, burn, fanfare, tick, startMusic, stopMusic, unlock, get on() { return musicOn; } };
+})();
+
+
+/* ===== store_demo.js: демо-хранилище в localStorage (без интернета и Firebase) ===== */
+const DemoStore = (() => {
+  const KEY = 'fp_demo_v1', AUTH = 'fp_demo_auth';
+  const fresh = () => ({ users: {}, whitelist: {}, tasks: {}, settings: {}, logs: {}, payouts: {} });
+  let st = fresh(), subs = new Set(), authCb = null;
+  const load = () => { try { st = Object.assign(fresh(), JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) { st = fresh(); } };
+  const save = () => { localStorage.setItem(KEY, JSON.stringify(st)); subs.forEach(f => f()); };
+  const watch = fn => { subs.add(fn); fn(); return () => subs.delete(fn); };
+  const uidOf = e => 'u_' + e.toLowerCase().replace(/[^a-z0-9]/g, '_');
+  const clone = o => JSON.parse(JSON.stringify(o));
+  const list = o => Object.values(o).map(clone);
+
+  async function init() { load(); window.addEventListener('storage', () => { load(); subs.forEach(f => f()); }); }
+  function curAuth() { try { return JSON.parse(localStorage.getItem(AUTH)); } catch (e) { return null; } }
+  function onAuth(cb) { authCb = cb; cb(curAuth()); }
+  async function signIn(o) {
+    const email = String(o.email || '').trim().toLowerCase();
+    if (!email.includes('@')) throw new Error('email');
+    localStorage.setItem(AUTH, JSON.stringify({ uid: uidOf(email), email, name: o.name || email.split('@')[0], photo: '' }));
+    authCb && authCb(curAuth());
+  }
+  async function signOut() { localStorage.removeItem(AUTH); authCb && authCb(null); }
+
+  const getUser = async uid => (st.users[uid] ? clone(st.users[uid]) : null);
+  const watchUser = (uid, cb) => watch(() => cb(st.users[uid] ? clone(st.users[uid]) : null));
+  const createUser = async (uid, d) => { st.users[uid] = clone(d); save(); };
+  const updateUser = async (uid, p) => { if (st.users[uid]) Object.assign(st.users[uid], clone(p)); save(); };
+  const deleteUser = async uid => { delete st.users[uid]; save(); };
+  const watchUsers = cb => watch(() => cb(list(st.users)));
+
+  const getWhitelist = async em => (st.whitelist[em] ? clone(st.whitelist[em]) : null);
+  const watchWhitelist = cb => watch(() => cb(Object.entries(st.whitelist).map(([email, v]) => Object.assign({ email }, clone(v)))));
+  const addWhitelist = async (em, d) => { st.whitelist[em] = clone(d); save(); };
+  const delWhitelist = async em => { delete st.whitelist[em]; save(); };
+
+  const watchTasks = cb => watch(() => cb(list(st.tasks)));
+  const saveTask = async t => { st.tasks[t.id] = clone(t); save(); };
+  const delTask = async id => { delete st.tasks[id]; save(); };
+  const watchSettings = cb => watch(() => cb(clone(st.settings.main || {})));
+  const saveSettings = async o => { st.settings.main = clone(o); save(); };
+
+  const watchLogs = (uid, cb) => watch(() => cb(list(st.logs).filter(l => l.uid === uid)));
+  const addLog = async l => {
+    if (st.logs[l.id] && !String(l.id).startsWith('adj_')) throw new Error('exists');
+    st.logs[l.id] = Object.assign(clone(l), { at: Date.now() }); save();
+  };
+  const delLog = async id => { delete st.logs[id]; save(); };
+
+  const watchPayouts = cb => watch(() => cb(list(st.payouts)));
+  const watchMyPayouts = (uid, cb) => watch(() => cb(list(st.payouts).filter(p => p.uid === uid)));
+  const addPayout = async p => { st.payouts[p.id] = clone(p); save(); };
+  const updatePayout = async (id, p) => { if (st.payouts[id]) Object.assign(st.payouts[id], clone(p)); save(); };
+
+  return { demo: true, init, onAuth, signIn, signOut, getUser, watchUser, createUser, updateUser, deleteUser, watchUsers,
+    getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
+    watchLogs, addLog, delLog, watchPayouts, watchMyPayouts, addPayout, updatePayout };
+})();
+
+
+/* ===== store_firebase.js: реальное хранилище (Firebase Auth + Firestore) ===== */
+const FirebaseStore = (() => {
+  let A, F, auth, db, onErr = () => {};
+  const col = n => F.collection(db, n);
+  const ref = (n, id) => F.doc(db, n, id);
+  const ms = v => (v && v.toMillis ? v.toMillis() : v);
+  const errCb = e => { console.error(e); onErr(e); };
+  const listen = (q, map, cb) => F.onSnapshot(q, s => cb(s.docs.map(d => map(d.id, d.data()))), errCb);
+
+  async function init(cfg, errHandler) {
+    onErr = errHandler || onErr;
+    const base = 'https://www.gstatic.com/firebasejs/10.12.2/';
+    const [appM, authM, fsM] = await Promise.all([
+      import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-firestore.js')
+    ]);
+    const app = appM.initializeApp(cfg);
+    A = authM; F = fsM; auth = A.getAuth(app); db = F.getFirestore(app);
+  }
+  function onAuth(cb) {
+    A.onAuthStateChanged(auth, u => cb(u ? { uid: u.uid, email: (u.email || '').toLowerCase(), name: u.displayName || u.email, photo: u.photoURL || '' } : null));
+  }
+  async function signIn() {
+    const p = new A.GoogleAuthProvider();
+    p.setCustomParameters({ prompt: 'select_account' });
+    try { await A.signInWithPopup(auth, p); }
+    catch (e) {
+      if (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment') await A.signInWithRedirect(auth, p);
+      else if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') throw e;
+    }
+  }
+  const signOut = () => A.signOut(auth);
+
+  const getUser = async uid => { const s = await F.getDoc(ref('users', uid)); return s.exists() ? s.data() : null; };
+  const watchUser = (uid, cb) => F.onSnapshot(ref('users', uid), s => cb(s.exists() ? s.data() : null), errCb);
+  const createUser = (uid, d) => F.setDoc(ref('users', uid), d);
+  const updateUser = (uid, p) => F.updateDoc(ref('users', uid), p);
+  const deleteUser = uid => F.deleteDoc(ref('users', uid));
+  const watchUsers = cb => listen(col('users'), (id, d) => d, cb);
+
+  const getWhitelist = async em => { const s = await F.getDoc(ref('whitelist', em)); return s.exists() ? s.data() : null; };
+  const watchWhitelist = cb => listen(col('whitelist'), (id, d) => Object.assign({ email: id }, d), cb);
+  const addWhitelist = (em, d) => F.setDoc(ref('whitelist', em), d);
+  const delWhitelist = em => F.deleteDoc(ref('whitelist', em));
+
+  const watchTasks = cb => listen(col('tasks'), (id, d) => Object.assign({}, d, { id }), cb);
+  const saveTask = t => F.setDoc(ref('tasks', t.id), t);
+  const delTask = id => F.deleteDoc(ref('tasks', id));
+  const watchSettings = cb => F.onSnapshot(ref('settings', 'main'), s => cb(s.exists() ? s.data() : {}), errCb);
+  const saveSettings = o => F.setDoc(ref('settings', 'main'), o);
+
+  const watchLogs = (uid, cb) => listen(F.query(col('logs'), F.where('uid', '==', uid)),
+    (id, d) => Object.assign({}, d, { id, at: ms(d.at) }), cb);
+  const addLog = l => F.setDoc(ref('logs', l.id), Object.assign({}, l, { at: F.serverTimestamp() }));
+  const delLog = id => F.deleteDoc(ref('logs', id));
+
+  const watchPayouts = cb => listen(col('payouts'), (id, d) => Object.assign({}, d, { id }), cb);
+  const watchMyPayouts = (uid, cb) => listen(F.query(col('payouts'), F.where('uid', '==', uid)), (id, d) => Object.assign({}, d, { id }), cb);
+  const addPayout = p => F.setDoc(ref('payouts', p.id), p);
+  const updatePayout = (id, p) => F.updateDoc(ref('payouts', id), p);
+
+  return { demo: false, init, onAuth, signIn, signOut, getUser, watchUser, createUser, updateUser, deleteUser, watchUsers,
+    getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
+    watchLogs, addLog, delLog, watchPayouts, watchMyPayouts, addPayout, updatePayout };
+})();
+
+
+/* ===== app.js: интерфейс ===== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const REL = ['owner', 'wife', 'mother', 'father', 'sister', 'brother', 'son', 'daughter', 'nephew', 'friend', 'acquaintance', 'other'];
+const LANGS = [['uz', "O'zbekcha"], ['ru', 'Русский'], ['en', 'English']];
+const GLOGO = '<svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>';
+
+let Store = null;
+const safeGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+const safeSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } };
+
+const S = {
+  lang: ['uz', 'ru', 'en'].includes(safeGet('fp_lang')) ? safeGet('fp_lang') : 'uz',
+  au: null, me: null, tasks: [], settings: {}, logs: [], myPayouts: [],
+  users: [], wl: [], payouts: [],
+  view: 'boot', tab: 'users', adminOpen: false, error: '',
+  tasksLoaded: false, logsLoaded: false, shown: 0, lvl: 1, sel: {}, openTask: '', dirty: false,
+  music: safeGet('fp_music') !== '0', amBusy: false, amTried: {}, unsubs: [], userUnsub: null
+};
+
+/* ---------- помощники ---------- */
+function T(k, v) {
+  const i = { uz: 0, ru: 1, en: 2 }[S.lang];
+  let s = (D[k] || [k, k, k])[i];
+  if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]);
+  return s;
+}
+const loc = o => (o && (o[S.lang] || o.ru || o.uz || o.en)) || '';
+const M = c => Logic.money(c);
+const sgn = c => (c < 0 ? '−' : '+') + Logic.money(Math.abs(c));
+const cfgS = () => Logic.cfg(S.settings);
+const tz = () => cfgS().tz || APP_CONFIG.DEFAULT_TZ;
+const clock = () => Logic.tzNow(tz(), window.__fakeNow || Date.now());
+const OWNER = () => (APP_CONFIG.OWNER_EMAIL || (Store && Store.demo ? 'owner@demo.uz' : '')).toLowerCase();
+const taskById = id => S.tasks.find(t => t.id === id);
+const myTasks = date => Logic.sortTasks(S.tasks.filter(t => Logic.assigned(t, S.me, date)));
+const isAdmin = () => !!(S.me && S.me.status === 'approved' && S.me.isAdmin);
+const avatar = u => u && u.photo ? `<img class="avatar" src="${esc(u.photo)}" alt="" referrerpolicy="no-referrer">` : `<div class="avatar">${esc(((u && u.name) || '?').trim().charAt(0).toUpperCase())}</div>`;
+const relLabel = r => (r && D['rel_' + r]) ? T('rel_' + r) : '';
+const relOptions = sel => `<option value="">${T('choose_rel')}</option>` + REL.map(r => `<option value="${r}" ${sel === r ? 'selected' : ''}>${T('rel_' + r)}</option>`).join('');
+function fmtDur(min) {
+  const h = Math.floor(min / 60), m = min % 60;
+  return (h ? h + ' ' + T('hm_h') + ' ' : '') + m + ' ' + T('hm_m');
+}
+const WD = {
+  uz: ['yakshanba', 'dushanba', 'seshanba', 'chorshanba', 'payshanba', 'juma', 'shanba'],
+  ru: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+  en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+};
+const MN = {
+  uz: ['yanvar', 'fevral', 'mart', 'aprel', 'may', 'iyun', 'iyul', 'avgust', 'sentabr', 'oktabr', 'noyabr', 'dekabr'],
+  ru: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'],
+  en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+};
+const CALH = { uz: ['D', 'S', 'Ch', 'P', 'J', 'Sh', 'Y'], ru: ['П', 'В', 'С', 'Ч', 'П', 'С', 'В'], en: ['M', 'T', 'W', 'T', 'F', 'S', 'S'] };
+function fmtDate(now) {
+  const [, m, d] = now.date.split('-').map(Number), w = WD[S.lang][Logic.weekday(now.date)], mo = MN[S.lang][m - 1];
+  return S.lang === 'uz' ? `${d}-${mo}, ${w}` : `${w}, ${d} ${mo}`;
+}
+
+/* ---------- запуск и вход ---------- */
+async function boot() {
+  Store = APP_CONFIG.FIREBASE.apiKey ? FirebaseStore : DemoStore;
+  document.documentElement.lang = S.lang;
+  render();
+  try { await Store.init(APP_CONFIG.FIREBASE, e => { S.error = String(e && e.code || e); }); }
+  catch (e) { console.error(e); S.view = 'error'; S.error = String(e && e.message || e); render(); return; }
+  Store.onAuth(onAuth);
+  setInterval(tick, 15000);
+}
+
+function stopData() {
+  S.unsubs.forEach(u => { try { u(); } catch (e) { /* ignore */ } });
+  S.unsubs = [];
+  if (S.userUnsub) { try { S.userUnsub(); } catch (e) { /* ignore */ } S.userUnsub = null; }
+  Object.assign(S, { me: null, tasks: [], settings: {}, logs: [], myPayouts: [], users: [], wl: [], payouts: [], tasksLoaded: false, logsLoaded: false, adminOpen: false, tab: 'users', sel: {}, amTried: {} });
+}
+
+async function onAuth(au) {
+  stopData();
+  S.au = au;
+  if (!au) { S.view = 'login'; render(); return; }
+  S.view = 'boot'; render();
+  try {
+    let me = await Store.getUser(au.uid);
+    if (!me) me = await createMe(au);
+    S.me = me;
+    S.userUnsub = Store.watchUser(au.uid, u => {
+      if (!u) { return; }
+      const was = S.me && S.me.status, wasAdmin = S.me && S.me.isAdmin;
+      S.me = u;
+      if (u.status === 'approved' && (was !== 'approved' || wasAdmin !== u.isAdmin || !S.unsubs.length)) startData();
+      route(); render();
+    });
+    route(); render();
+  } catch (e) { console.error(e); S.view = 'error'; S.error = String(e && e.message || e); render(); }
+}
+
+async function createMe(au) {
+  const email = au.email.toLowerCase(), now = clock();
+  const base = { uid: au.uid, email, name: au.name || email, photo: au.photo || '', status: 'pending', relation: '', isAdmin: false, lang: S.lang, createdAt: Date.now(), approvedDate: '' };
+  let data = base;
+  if (email === OWNER()) data = Object.assign({}, base, { status: 'approved', isAdmin: true, relation: 'owner', approvedDate: now.date });
+  else {
+    let w = null;
+    try { w = await Store.getWhitelist(email); } catch (e) { /* нет доступа = не в списке */ }
+    if (w) data = Object.assign({}, base, { status: 'approved', isAdmin: !!w.isAdmin, relation: w.relation || 'other', approvedDate: now.date });
+  }
+  await Store.createUser(au.uid, data);
+  return data;
+}
+
+function startData() {
+  S.unsubs.forEach(u => { try { u(); } catch (e) { /* ignore */ } });
+  S.unsubs = [];
+  const uid = S.me.uid;
+  S.unsubs.push(Store.watchTasks(ts => { S.tasks = ts; S.tasksLoaded = true; render(); runAutoMiss(); }));
+  S.unsubs.push(Store.watchSettings(s => { S.settings = s || {}; render(); }));
+  S.unsubs.push(Store.watchLogs(uid, onLogs));
+  S.unsubs.push(Store.watchMyPayouts(uid, p => { S.myPayouts = p; render(); }));
+  if (S.me.isAdmin) {
+    S.unsubs.push(Store.watchUsers(u => { S.users = u; render(); }));
+    S.unsubs.push(Store.watchWhitelist(w => { S.wl = w; render(); }));
+    S.unsubs.push(Store.watchPayouts(p => { S.payouts = p; render(); }));
+  }
+}
+
+function onLogs(logs) {
+  S.logs = logs;
+  const bal = Logic.balance(logs), lvl = Logic.level(Logic.earned(logs)).level;
+  if (!S.logsLoaded) { S.shown = bal; S.lvl = lvl; }
+  else { animateBalance(bal); if (lvl > S.lvl) levelUp(lvl); S.lvl = lvl; }
+  S.logsLoaded = true;
+  render(); runAutoMiss();
+}
+
+function route() {
+  if (!S.au) S.view = 'login';
+  else if (!S.me) S.view = 'boot';
+  else if (S.me.status === 'pending') S.view = 'pending';
+  else if (S.me.status === 'blocked') S.view = 'blocked';
+  else S.view = S.adminOpen && isAdmin() ? 'admin' : 'home';
+}
+
+/* ---------- время: проверка пропусков ---------- */
+async function runAutoMiss() {
+  if (S.amBusy || !S.me || S.me.status !== 'approved' || !S.logsLoaded || !S.tasksLoaded) return;
+  const now = clock();
+  const miss = Logic.pendingMisses(S.tasks, S.logs, S.me, now, S.settings).filter(m => (S.amTried[m.id] || 0) < 3);
+  if (!miss.length) return;
+  S.amBusy = true;
+  const written = [];
+  for (const m of miss) {
+    S.amTried[m.id] = (S.amTried[m.id] || 0) + 1;
+    try { await Store.addLog(m); written.push(m); } catch (e) { console.warn('пропуск не записан', m.id, e && e.message); }
+  }
+  S.amBusy = false;
+  if (written.length) feedbackMiss(written, true);
+}
+
+function tick() {
+  if (S.view === 'home') render();
+  runAutoMiss();
+}
+
+/* ---------- обратная связь: звуки, баннеры, вибрация ---------- */
+function banner(kind, text, sub, ms) {
+  const o = $('#ovl'); if (!o) return;
+  const b = document.createElement('div');
+  b.className = 'banner ' + kind;
+  b.innerHTML = esc(text) + (sub ? `<small>${esc(sub)}</small>` : '');
+  o.appendChild(b);
+  const rm = () => b.remove();
+  b.addEventListener('click', rm);
+  setTimeout(rm, ms || 4200);
+}
+function redFlash() {
+  const f = document.createElement('div'); f.className = 'redflash'; document.body.appendChild(f);
+  document.body.classList.add('shake');
+  setTimeout(() => { f.remove(); document.body.classList.remove('shake'); }, 2800);
+}
+function feedbackMiss(logs, auto) {
+  const c = cfgS(), now = clock();
+  const todays = logs.filter(m => m.date === now.date);
+  const worst = logs.find(m => m.burn > 0) || todays[todays.length - 1] || logs[logs.length - 1];
+  const total = logs.reduce((s, m) => s + m.delta, 0);
+  if (navigator.vibrate) navigator.vibrate([250, 120, 250, 120, 500]);
+  redFlash();
+  if (worst.burn > 0) { Snd.burn(); banner('burn', T('burn_msg', { p: c.burnPct }), T('warn_pen', { c: M(-total) }), 5200); }
+  else if (worst.warn) { Snd.warn(); banner('warn', T('warn_n', { n: worst.strike, m: c.warnings }), T('warn_pen', { c: M(-total) }), 5200); }
+  else { Snd.wrong(); banner('warn', T('st_failed'), T('warn_pen', { c: M(-total) }), 4200); }
+  if (auto && logs.length > 1) setTimeout(() => banner('warn', T('away_missed', { n: logs.length, c: sgn(total) }), '', 4200), 600);
+}
+function levelUp(n) { Snd.fanfare(); banner('good', '🏆 ' + T('levelup', { n }), '', 3800); }
+
+function animateBalance(target) {
+  const from = S.shown, t0 = performance.now(), dur = 900;
+  const step = now => {
+    const k = Math.min(1, (now - t0) / dur), v = Math.round(from + (target - from) * (1 - Math.pow(1 - k, 3)));
+    S.shown = v;
+    const el = document.getElementById('coinAmt');
+    if (el) { el.textContent = M(v); el.className = v < 0 ? 'neg' : ''; }
+    if (k < 1) requestAnimationFrame(step); else S.shown = target;
+  };
+  requestAnimationFrame(step);
+}
+function flyCoin(fromEl) {
+  const to = document.getElementById('coinTarget'); if (!fromEl || !to) return;
+  const a = fromEl.getBoundingClientRect(), b = to.getBoundingClientRect();
+  for (let i = 0; i < 8; i++) {
+    const c = document.createElement('div'); c.className = 'coin flycoin'; c.textContent = '1';
+    c.style.left = (a.left + a.width / 2 - 15 + (Math.random() - .5) * 80) + 'px'; c.style.top = (a.top + a.height / 2 - 15) + 'px';
+    document.body.appendChild(c);
+    const dx = b.left + 10 - parseFloat(c.style.left), dy = b.top + 5 - parseFloat(c.style.top);
+    const an = c.animate([{ transform: 'translate(0,0) scale(1)', opacity: 1 }, { transform: `translate(${dx}px,${dy}px) scale(.5)`, opacity: .9 }],
+      { duration: 650 + i * 70, delay: i * 55, easing: 'cubic-bezier(.3,.7,.3,1)', fill: 'both' });
+    an.onfinish = () => c.remove();
+  }
+}
+
+/* ---------- окна ---------- */
+function modal(html) {
+  closeModal();
+  const m = document.createElement('div'); m.className = 'modal'; m.id = 'modal';
+  m.innerHTML = `<div>${html}</div>`; document.body.appendChild(m);
+  return m;
+}
+function closeModal() { const m = $('#modal'); if (m) m.remove(); }
+function ask(text, onYes) {
+  const m = modal(`<h3>${esc(text)}</h3><div class="btnrow"><button class="btn red" data-act="askyes">${T('yes')}</button><button class="btn" data-act="close">${T('no')}</button></div>`);
+  m._yes = onYes;
+}
+
+/* ---------- отрисовка ---------- */
+function typing() {
+  const a = document.activeElement;
+  return !!(a && $('#app') && $('#app').contains(a) && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && a.type !== 'checkbox');
+}
+function render() {
+  const app = $('#app'); if (!app) return;
+  if (typing()) { S.dirty = true; return; }
+  S.dirty = false;
+  const v = S.view;
+  let html = '';
+  if (v === 'boot') html = `<div class="card center"><h2>${T('app_name')}</h2><div class="mut">…</div></div>`;
+  else if (v === 'error') html = viewError();
+  else if (v === 'login') html = viewLogin();
+  else if (v === 'pending') html = shell(`<div class="card center"><h1>⏳</h1><h2>${T('pending_title')}</h2><p>${T('pending_text')}</p></div>`, false);
+  else if (v === 'blocked') html = shell(`<div class="card center"><h1>⛔</h1><h2>${T('blocked_title')}</h2><p>${T('blocked_text')}</p></div>`, false);
+  else if (v === 'admin') html = shell(viewAdmin(), true);
+  else html = shell(viewHome(), true);
+  app.innerHTML = html;
+  document.documentElement.lang = S.lang;
+}
+function langSel() {
+  return `<select data-act-change="lang">${LANGS.map(([k, n]) => `<option value="${k}" ${S.lang === k ? 'selected' : ''}>${n}</option>`).join('')}</select>`;
+}
+function shell(body, full) {
+  const me = S.me;
+  const head = full ? header() : '';
+  const bar = `<div class="bar">${langSel()}<button class="chipbtn ${S.music ? 'on' : ''}" data-act="music">🎵 ${T('music')}</button>`
+    + (isAdmin() ? `<button class="chipbtn ${S.view === 'admin' ? 'on' : ''}" data-act="${S.view === 'admin' ? 'back' : 'admin'}">${S.view === 'admin' ? '← ' + T('back') : '⚙ ' + T('admin_panel')}${S.view !== 'admin' && pendingCount() ? `<span class="badge">${pendingCount()}</span>` : ''}</button>` : '')
+    + `<button class="chipbtn" data-act="logout">${T('logout')}</button></div>`;
+  return (Store && Store.demo ? `<div class="demo">${T('demo')}</div>` : '') + head + bar + body;
+}
+function header() {
+  const me = S.me, L = Logic.level(Logic.earned(S.logs));
+  return `<header class="top"><div class="who">${avatar(me)}<div class="whot"><div class="nm">${esc(me.name)}</div><div class="lv">${T('level')} ${L.level}${me.relation ? ' · ' + esc(relLabel(me.relation)) : ''}</div></div></div>`
+    + `<div class="coinpill" id="coinTarget"><span class="coin">1</span><b id="coinAmt" class="${S.shown < 0 ? 'neg' : ''}">${M(S.shown)}</b></div></header>`
+    + `<div class="lvbar"><i style="width:${Math.round(L.pct * 100)}%"></i></div>`;
+}
+const pendingCount = () => S.users.filter(u => u.status === 'pending').length;
+
+function viewError() {
+  return `<div class="card center"><h2>⚠️</h2><p>${T('load_fail')}</p><div class="mut">${esc(S.error)}</div><div class="btnrow"><button class="btn gold" onclick="location.reload()">OK</button></div></div>`;
+}
+function viewLogin() {
+  const demo = Store && Store.demo;
+  return (demo ? `<div class="demo">${T('demo')}</div>` : '')
+    + `<div class="bar" style="justify-content:flex-end">${langSel()}</div>`
+    + `<div class="card center" style="margin-top:8vh"><h1>${T('app_name')}</h1><p class="mut">${T('login_sub')}</p>`
+    + (demo
+      ? `<label class="f">${T('demo_email')}<input id="demoEmail" type="email" autocomplete="off" placeholder="${esc(OWNER())}"></label><label class="f">${T('demo_name')}<input id="demoName" type="text"></label>`
+      : '')
+    + `<button class="gbtn" data-act="login">${GLOGO}<span>${T('login_google')}</span></button><div id="loginErr" class="mut" style="margin-top:10px;color:#ff8a80"></div></div>`;
+}
+
+/* ---------- страница пользователя ---------- */
+function viewHome() {
+  const c = cfgS(), now = clock(), me = S.me, idx = Logic.logIndex(S.logs);
+  const ts = myTasks(now.date);
+  const states = ts.map(t => ({ t, log: idx.get(Logic.logId(me.uid, now.date, t.id)), st: Logic.taskState(t, now.date, now, idx.get(Logic.logId(me.uid, now.date, t.id))) }));
+  const ds = Logic.dayStats(S.tasks, S.logs, me, now.date, now);
+  let out = `<div class="card"><div class="mut">${esc(fmtDate(now))} · ${Logic.fmtMin(now.min)}</div>`;
+  if (ts.length) out += `<h3>${T('day_progress', { d: ds.done, n: ds.total })}</h3><div class="pbar"><i style="width:${ds.total ? Math.round(ds.done / ds.total * 100) : 0}%"></i></div>`;
+  const L = Logic.level(Logic.earned(S.logs));
+  out += `<div class="mut">${T('level')} ${L.level} · ${T('to_next', { c: M(L.toNext) + ' ' + T('coins') })}</div></div>`;
+
+  if (!ts.length) return out + `<div class="card center">${T('no_tasks')}</div>`;
+
+  const active = states.find(s => s.st === 'active');
+  const next = states.find(s => s.st === 'locked');
+  if (active) out += `<div class="mut" style="margin-top:6px"><span class="nowtag">${T('now')}</span></div>`;
+  else if (next) out += `<div class="card nowcard"><span class="nowtag">${T('next_task')}</span><div class="ttitle">${esc(next.t.icon || '')} ${esc(next.t.time)} — ${esc(loc(next.t.title))}</div><div class="mut">${T('in_t', { t: fmtDur(Math.max(0, Logic.toMin(next.t.time) - (next.t.earlyMin ?? 15) - now.min)) })}</div></div>`;
+  else out += `<div class="card nowcard center"><h3>🎉 ${T('all_done_today')}</h3></div>`;
+
+  out += states.map(({ t, log, st }) => {
+    const badge = st === 'done' ? `<span class="tbadge ok">✓ ${sgn(log.delta)}</span>`
+      : (st === 'missed' || st === 'failed') ? `<span class="tbadge bad">✗ ${sgn(log.delta)}</span>`
+      : st === 'expired' ? `<span class="tbadge bad">${T('st_expired')}</span>`
+      : st === 'locked' ? `<span class="tbadge mut">🔒 ${T('opens_at', { t: Logic.fmtMin(Logic.toMin(t.time) - (t.earlyMin ?? 15)) })}</span>`
+      : `<span class="tbadge ok">+${M(t.reward)}</span>`;
+    return `<div class="task st-${st}"><div class="trow"><span class="ticon">${esc(t.icon || '•')}</span><div><div class="ttime">${esc(t.time)}</div><div class="ttitle">${esc(loc(t.title))}</div></div>${badge}</div>`
+      + (st === 'active' ? `<button class="big green" data-act="done" data-id="${esc(t.id)}">${T('done_btn')}</button><button class="big red" data-act="fail" data-id="${esc(t.id)}">${T('fail_btn')}</button>` : '')
+      + `</div>`;
+  }).join('');
+
+  out += weekCard(now, c) + monthCard(now, c);
+  return out;
+}
+
+function weekCard(now, c) {
+  const me = S.me, ws = Logic.weekStart(now.date);
+  const cur = Logic.weekReport(S.tasks, S.logs, me, ws, now, S.settings);
+  let won = '';
+  for (let k = 1; k <= 6; k++) {
+    const start = Logic.addDays(ws, -7 * k);
+    if (Logic.addDays(start, 6) < (me.approvedDate || '')) break;
+    const r = Logic.weekReport(S.tasks, S.logs, me, start, now, S.settings);
+    if (r.won && r.prize) won += `<div class="prize"><span class="pi">${esc(r.prize.icon)}</span><div><b>${T('prize_won')}</b><div>${esc(loc(r.prize))}</div><div class="mut">${esc(start)} · ${T('prize_note')}</div></div></div>`;
+  }
+  return `<div class="card"><h2>🎁 ${T('prizes_title')}</h2><div class="mut">${T('week_progress', { p: Math.round(cur.rate * 100), g: c.weeklyGoalPct })}</div><div class="pbar"><i style="width:${Math.round(cur.rate * 100)}%"></i></div>${won || `<div class="mut">${T('no_prize_yet')}</div>`}</div>`;
+}
+
+function monthCard(now, c) {
+  const me = S.me, ym = Logic.monthOf(now.date);
+  const mr = Logic.monthReport(S.tasks, S.logs, me, ym, now);
+  const lead = (Logic.weekday(`${ym}-01`) + 6) % 7;
+  const cells = CALH[S.lang].map(h => `<div class="h">${h}</div>`).join('')
+    + '<div></div>'.repeat(lead)
+    + mr.days.map((d, i) => {
+      const cls = d.future || d.rate === null ? '' : d.rate >= .8 ? 'g' : d.rate >= .5 ? 'y' : 'r';
+      return `<div class="d ${cls} ${d.today ? 't' : ''}">${i + 1}</div>`;
+    }).join('');
+  let pay = '';
+  const rate = c.usdPerCoin;
+  for (let k = 1; k <= 3; k++) {
+    const [yy, mm] = ym.split('-').map(Number);
+    const pm = new Date(Date.UTC(yy, mm - 1 - k, 1)).toISOString().slice(0, 7);
+    const r = Logic.monthReport(S.tasks, S.logs, me, pm, now);
+    if (!r.ended || r.net <= 0) continue;
+    const rq = S.myPayouts.find(p => p.month === pm);
+    const usd = Logic.toUsd(r.net, rate).toFixed(2);
+    pay += `<div class="prize" data-m="${pm}"><span class="pi">💵</span><div style="flex:1"><b>${pm}</b>: ${M(r.net)} ${T('coins')}${rate > 0 ? ` ≈ $${usd}` : ''}`
+      + (rq ? `<div class="mut">${rq.status === 'paid' ? '✅ ' + T('payout_paid') : rq.status === 'rejected' ? T('payout_rejected') : '⏳ ' + T('payout_wait')}</div>`
+        : rate > 0 ? `<div class="btnrow"><button class="btn gold sm" data-act="payout" data-m="${pm}" data-c="${r.net}">${T('request_payout')}</button></div>` : `<div class="mut">${T('rate_not_set')}</div>`)
+      + `</div></div>`;
+  }
+  const curUsd = rate > 0 ? ` ≈ $${Logic.toUsd(Math.max(0, mr.net), rate).toFixed(2)}` : '';
+  return `<div class="card"><h2>📅 ${T('month_plan')}</h2><div class="cal">${cells}</div>`
+    + `<div style="margin-top:10px"><b>${T('earned_month')}:</b> <span style="color:var(--gold);font-weight:900">${sgn(mr.net)}</span> ${T('coins')}${curUsd}</div>`
+    + `<h3 style="margin-top:12px">💵 ${T('payout_title')}</h3><div class="mut">${T('payout_hint')}</div>${pay}</div>`;
+}
+
+/* ---------- админ-панель ---------- */
+function viewAdmin() {
+  const tabs = [['users', T('tab_users') + (pendingCount() ? `<span class="badge">${pendingCount()}</span>` : '')], ['add', T('tab_add')], ['tasks', T('tab_tasks')], ['settings', T('tab_settings')], ['payouts', T('tab_payouts') + (S.payouts.filter(p => p.status === 'requested').length ? `<span class="badge">${S.payouts.filter(p => p.status === 'requested').length}</span>` : '')]];
+  const t = `<div class="tabs">${tabs.map(([k, n]) => `<button class="chipbtn ${S.tab === k ? 'on' : ''}" data-act="tab" data-id="${k}">${n}</button>`).join('')}</div>`;
+  const body = { users: admUsers, add: admAdd, tasks: admTasks, settings: admSettings, payouts: admPayouts }[S.tab]();
+  return `<h2>⚙ ${T('admin_panel')}</h2>${t}${body}`;
+}
+
+function admUsers() {
+  if (!S.users.length) return `<div class="card center">${T('no_users')}</div>`;
+  const users = S.users.slice().sort((a, b) => ((a.status === 'pending' ? 0 : 1) - (b.status === 'pending' ? 0 : 1)) || String(a.name).localeCompare(String(b.name)));
+  return users.map(u => {
+    const self = u.uid === S.me.uid, sel = S.sel[u.uid] || {};
+    const rel = sel.relation !== undefined ? sel.relation : u.relation;
+    const adm = sel.isAdmin !== undefined ? sel.isAdmin : u.isAdmin;
+    return `<div class="card u ${u.status}"><div class="urow">${avatar(u)}<div style="min-width:0"><b>${esc(u.name)}</b><div class="mut" style="overflow:hidden;text-overflow:ellipsis">${esc(u.email)}</div></div><span class="chip ${u.status}">${T('st_' + u.status)}</span></div>`
+      + `<label class="f">${T('relation')}<select data-uf="relation" data-uid="${esc(u.uid)}">${relOptions(rel)}</select></label>`
+      + `<label class="chk"><input type="checkbox" data-uf="isAdmin" data-uid="${esc(u.uid)}" ${adm ? 'checked' : ''} ${self ? 'disabled' : ''}> ${T('is_admin')}</label>`
+      + `<div class="btnrow">`
+      + (u.status !== 'approved' ? `<button class="btn green" data-act="approve" data-uid="${esc(u.uid)}">${T('approve')}</button>` : '')
+      + (u.status === 'approved' ? `<button class="btn" data-act="uprog" data-uid="${esc(u.uid)}">${T('progress')}</button><button class="btn" data-act="uadj" data-uid="${esc(u.uid)}">${T('adjust')}</button>` : '')
+      + (!self && u.status !== 'blocked' ? `<button class="btn" data-act="ublock" data-uid="${esc(u.uid)}">${T('block')}</button>` : '')
+      + (!self && u.status === 'blocked' ? `<button class="btn" data-act="approve" data-uid="${esc(u.uid)}">${T('unblock')}</button>` : '')
+      + (!self ? `<button class="btn red" data-act="udel" data-uid="${esc(u.uid)}">${T('remove')}</button>` : '')
+      + `</div></div>`;
+  }).join('');
+}
+
+function admAdd() {
+  const rows = S.wl.map(w => `<div class="card u"><div class="urow"><div style="min-width:0"><b>${esc(w.email)}</b><div class="mut">${esc(relLabel(w.relation))}${w.isAdmin ? ' · ' + T('is_admin') : ''}${S.users.some(u => u.email === w.email) ? ' · ✓' : ''}</div></div><button class="btn red sm" style="margin-left:auto" data-act="wldel" data-id="${esc(w.email)}">${T('remove')}</button></div></div>`).join('');
+  return `<div class="card"><h2>${T('add_title')}</h2><div class="mut">${T('add_hint')}</div>`
+    + `<label class="f">${T('email')}<input id="wlEmail" type="email" placeholder="name@gmail.com" autocomplete="off"></label>`
+    + `<label class="f">${T('relation')}<select id="wlRel">${relOptions('')}</select></label>`
+    + `<label class="chk"><input id="wlAdmin" type="checkbox"> ${T('is_admin')}</label>`
+    + `<div id="wlErr" class="mut" style="color:#ff8a80"></div><div class="btnrow"><button class="btn gold" data-act="wladd">${T('add_btn')}</button></div></div>`
+    + (S.wl.length ? `<h3>${T('added_list')}</h3>${rows}` : '');
+}
+
+function taskForm(t) {
+  const rels = ['*'].concat(REL.filter(r => r !== 'owner'));
+  return `<details class="tk" data-tid="${esc(t.id)}" ${S.openTask === t.id ? 'open' : ''}><summary>${esc(t.icon || '')} ${esc(t.time)} — ${esc(loc(t.title))}${t.active === false ? ' ⏸' : ''}</summary>`
+    + `<div class="grid2"><label class="f">${T('time')}<input data-tf="time" type="time" value="${esc(t.time)}"></label><label class="f">${T('icon')}<input data-tf="icon" value="${esc(t.icon || '')}"></label></div>`
+    + ['uz', 'ru', 'en'].map(l => `<label class="f">${T('title_' + l)}<input data-tf="title_${l}" value="${esc((t.title || {})[l] || '')}"></label>`).join('')
+    + `<div class="grid2"><label class="f">${T('reward')}<input data-tf="reward" type="number" step="0.01" min="0" value="${(t.reward / 100).toFixed(2)}"></label>`
+    + `<label class="f">${T('grace')}<input data-tf="grace" type="number" min="0" value="${t.graceMin ?? 60}"></label></div>`
+    + `<label class="f">${T('early')}<input data-tf="early" type="number" min="0" value="${t.earlyMin ?? 15}"></label>`
+    + `<div class="mut">${T('assigned_to')}</div><div class="relgrid">${rels.map(r => `<label class="chk"><input type="checkbox" data-tr="${r}" ${(t.relations || []).includes(r) ? 'checked' : ''}> ${r === '*' ? T('rel_all') : T('rel_' + r)}</label>`).join('')}</div>`
+    + `<label class="chk"><input type="checkbox" data-tf="active" ${t.active !== false ? 'checked' : ''}> ${T('active')}</label>`
+    + `<div class="btnrow"><button class="btn gold" data-act="savetask" data-id="${esc(t.id)}">${T('save')}</button><button class="btn red" data-act="deltask" data-id="${esc(t.id)}">${T('remove')}</button></div></details>`;
+}
+function admTasks() {
+  const ts = Logic.sortTasks(S.tasks);
+  return `<div class="btnrow" style="margin:0 0 8px">${ts.length ? '' : `<button class="btn gold" data-act="seed">${T('load_defaults')}</button>`}<button class="btn" data-act="newtask">${T('add_task')}</button></div>` + ts.map(taskForm).join('');
+}
+
+function admSettings() {
+  const c = cfgS();
+  const prizeText = c.prizes.map(p => [p.icon, p.uz, p.ru, p.en].join(' | ')).join('\n');
+  const f = (k, label, v, extra) => `<label class="f">${label}<input data-sf="${k}" value="${esc(v)}" ${extra || ''}></label>`;
+  return `<div class="card"><h2>${T('tab_settings')}</h2>`
+    + f('tz', T('set_tz'), c.tz)
+    + f('missPenaltyPct', T('set_penalty'), c.missPenaltyPct, 'type="number" min="0"')
+    + f('warnings', T('set_warnings'), c.warnings, 'type="number" min="0"')
+    + f('burnPct', T('set_burn'), c.burnPct, 'type="number" min="0" max="100"')
+    + f('weeklyGoalPct', T('set_weekly'), c.weeklyGoalPct, 'type="number" min="0" max="100"')
+    + f('usdPerCoin', T('set_rate'), c.usdPerCoin, 'type="number" step="0.01" min="0"')
+    + `<label class="f">${T('prizes_edit')} (icon | uz | ru | en)<textarea data-sf="prizes" rows="7">${esc(prizeText)}</textarea></label>`
+    + `<div class="btnrow"><button class="btn gold" data-act="savesettings">${T('save')}</button></div><div id="setOk" class="mut"></div></div>`;
+}
+
+function admPayouts() {
+  if (!S.payouts.length) return `<div class="card center">${T('no_payouts')}</div>`;
+  const list = S.payouts.slice().sort((a, b) => ((a.status === 'requested' ? 0 : 1) - (b.status === 'requested' ? 0 : 1)) || String(b.month).localeCompare(String(a.month)));
+  return list.map(p => `<div class="card"><b>${esc(p.name || p.uid)}</b> · ${esc(p.month)}<div>${M(p.coins)} ${T('coins')} ≈ $${Number(p.usd || 0).toFixed(2)}</div>`
+    + (p.status === 'requested' ? `<div class="btnrow"><button class="btn green" data-act="paid" data-id="${esc(p.id)}">${T('mark_paid')}</button><button class="btn red" data-act="rejpay" data-id="${esc(p.id)}">${T('reject')}</button></div>`
+      : `<div class="mut">${p.status === 'paid' ? '✅ ' + T('payout_paid') : T('payout_rejected')}</div>`) + `</div>`).join('');
+}
+
+/* ---------- действия ---------- */
+const ACT = {};
+async function guarded(fn) { try { await fn(); } catch (e) { console.error(e); banner('warn', T('login_fail'), String(e && e.code || e && e.message || ''), 4200); } }
+
+ACT.login = el => guarded(async () => {
+  Snd.unlock();
+  const err = $('#loginErr'); if (err) err.textContent = '';
+  try {
+    if (Store.demo) await Store.signIn({ email: ($('#demoEmail').value || OWNER()), name: $('#demoName').value });
+    else await Store.signIn();
+  } catch (e) { if (err) err.textContent = T('login_fail') + ' ' + (e.code || ''); }
+});
+ACT.logout = () => Store.signOut();
+ACT.music = () => {
+  S.music = !S.music; safeSet('fp_music', S.music ? '1' : '0');
+  if (S.music) Snd.startMusic(); else Snd.stopMusic();
+  render();
+};
+ACT.admin = () => { S.adminOpen = true; route(); render(); };
+ACT.back = () => { S.adminOpen = false; route(); render(); };
+ACT.tab = el => { S.tab = el.dataset.id; render(); };
+ACT.close = () => closeModal();
+ACT.askyes = () => { const m = $('#modal'); const f = m && m._yes; closeModal(); if (f) guarded(f); };
+
+ACT.done = el => guarded(async () => {
+  const t = taskById(el.dataset.id), now = clock(); if (!t) return;
+  const idx = Logic.logIndex(S.logs);
+  if (Logic.taskState(t, now.date, now, idx.get(Logic.logId(S.me.uid, now.date, t.id))) !== 'active') return;
+  document.querySelectorAll('.big').forEach(b => { b.disabled = true; });
+  flyCoin(el); Snd.coin();
+  await Store.addLog(Logic.doneLog(S.me, t, now));
+});
+ACT.fail = el => {
+  const t = taskById(el.dataset.id), now = clock(); if (!t) return;
+  const m = Logic.failLog(S.tasks, S.logs, S.me, t, now, S.settings);
+  ask(T('confirm_fail', { c: '−' + M(-m.delta) }), async () => {
+    const idx = Logic.logIndex(S.logs);
+    if (Logic.taskState(t, now.date, now, idx.get(m.id)) === 'done') return;
+    await Store.addLog(m); feedbackMiss([m], false);
+  });
+};
+ACT.payout = el => guarded(async () => {
+  const pm = el.dataset.m, coins = +el.dataset.c, rate = cfgS().usdPerCoin;
+  await Store.addPayout({ id: `${S.me.uid}_${pm}`, uid: S.me.uid, name: S.me.name, month: pm, coins, usd: Logic.toUsd(coins, rate), rate, status: 'requested', at: Date.now() });
+});
+
+// админ: пользователи
+ACT.approve = el => guarded(async () => {
+  const uid = el.dataset.uid, u = S.users.find(x => x.uid === uid), sel = S.sel[uid] || {};
+  const relation = sel.relation !== undefined ? sel.relation : u.relation;
+  if (!relation) { banner('warn', T('choose_rel'), '', 2500); return; }
+  const patch = { status: 'approved', relation, isAdmin: sel.isAdmin !== undefined ? sel.isAdmin : !!u.isAdmin };
+  if (!u.approvedDate) patch.approvedDate = clock().date;
+  await Store.updateUser(uid, patch); delete S.sel[uid];
+});
+ACT.ublock = el => guarded(() => Store.updateUser(el.dataset.uid, { status: 'blocked' }));
+ACT.udel = el => ask(T('confirm_remove'), () => Store.deleteUser(el.dataset.uid));
+ACT.uprog = el => {
+  const uid = el.dataset.uid, u = S.users.find(x => x.uid === uid); let un = null, got = false;
+  un = Store.watchLogs(uid, logs => {
+    if (got) return; got = true; setTimeout(() => un && un(), 0);
+    const L = Logic.level(Logic.earned(logs)), rows = logs.slice().sort((a, b) => (b.date + (b.at || 0)).toString().localeCompare((a.date + (a.at || 0)).toString())).slice(0, 14)
+      .map(l => `<div class="mut">${esc(l.date)} · ${esc(l.kind === 'done' || l.kind === 'missed' || l.kind === 'failed' ? loc((taskById(l.taskId) || {}).title) || l.taskId : T('kind_' + l.kind))} · ${T('kind_' + l.kind)} · <b>${sgn(l.delta)}</b>${l.note ? ' · ' + esc(l.note) : ''}</div>`).join('');
+    modal(`<h2>${esc(u.name)}</h2><div>${T('balance')}: <b>${M(Logic.balance(logs))}</b> ${T('coins')} · ${T('level')} ${L.level}</div><h3 style="margin-top:12px">${T('last_logs')}</h3>${rows || '—'}<div class="btnrow"><button class="btn" data-act="close">${T('close')}</button></div>`);
+  });
+};
+ACT.uadj = el => {
+  modal(`<h2>${T('adjust')}</h2><label class="f">${T('amount')}<input id="adjAmt" type="number" step="0.01" placeholder="+5.00 / -2.50"></label><label class="f">${T('note')}<input id="adjNote"></label>`
+    + `<div class="btnrow"><button class="btn gold" data-act="adjgo" data-uid="${esc(el.dataset.uid)}">${T('save')}</button><button class="btn" data-act="close">${T('cancel')}</button></div>`);
+};
+ACT.adjgo = el => guarded(async () => {
+  const v = Math.round(parseFloat($('#adjAmt').value) * 100); if (!v) return;
+  const uid = el.dataset.uid, now = clock();
+  await Store.addLog({ id: `adj_${uid}_${Date.now()}`, uid, date: now.date, taskId: 'adj', kind: 'adj', delta: v, note: $('#adjNote').value || '' });
+  closeModal();
+});
+
+// админ: whitelist
+ACT.wladd = () => guarded(async () => {
+  const email = ($('#wlEmail').value || '').trim().toLowerCase(), rel = $('#wlRel').value;
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { $('#wlErr').textContent = T('bad_email'); return; }
+  if (!rel) { $('#wlErr').textContent = T('choose_rel'); return; }
+  await Store.addWhitelist(email, { relation: rel, isAdmin: $('#wlAdmin').checked, addedAt: Date.now() });
+});
+ACT.wldel = el => guarded(() => Store.delWhitelist(el.dataset.id));
+
+// админ: задания
+ACT.seed = () => guarded(async () => {
+  for (const t of Logic.DEFAULT_TASKS) await Store.saveTask(Object.assign({}, t, { since: clock().date }));
+  if (!S.settings || !S.settings.missPenaltyPct) {
+    const d = Logic.DEFAULTS; await Store.saveSettings({ tz: d.tz, missPenaltyPct: d.missPenaltyPct, warnings: d.warnings, burnPct: d.burnPct, weeklyGoalPct: d.weeklyGoalPct, usdPerCoin: d.usdPerCoin, prizes: d.prizes });
+  }
+});
+ACT.newtask = () => guarded(async () => {
+  const id = 't_' + Date.now().toString(36); S.openTask = id;
+  await Store.saveTask({ id, time: '09:00', icon: '⭐', title: { uz: 'Yangi vazifa', ru: 'Новое задание', en: 'New task' }, reward: 100, graceMin: 60, earlyMin: 15, relations: ['wife'], uids: [], active: true, since: clock().date });
+});
+ACT.savetask = el => guarded(async () => {
+  const d = document.querySelector(`details[data-tid="${CSS.escape(el.dataset.id)}"]`), g = k => d.querySelector(`[data-tf="${k}"]`);
+  const old = taskById(el.dataset.id);
+  const t = Object.assign({}, old, {
+    time: g('time').value || old.time, icon: g('icon').value,
+    title: { uz: g('title_uz').value, ru: g('title_ru').value, en: g('title_en').value },
+    reward: Math.max(0, Math.round(parseFloat(g('reward').value || '0') * 100)),
+    graceMin: Math.max(0, parseInt(g('grace').value || '0', 10)), earlyMin: Math.max(0, parseInt(g('early').value || '0', 10)),
+    active: g('active').checked, relations: [...d.querySelectorAll('[data-tr]')].filter(i => i.checked).map(i => i.dataset.tr)
+  });
+  S.openTask = t.id; await Store.saveTask(t);
+});
+ACT.deltask = el => ask(T('confirm_remove'), () => Store.delTask(el.dataset.id));
+
+// админ: настройки и выплаты
+ACT.savesettings = () => guarded(async () => {
+  const g = k => document.querySelector(`[data-sf="${k}"]`).value, n = (k, d) => { const v = parseFloat(g(k)); return isNaN(v) ? d : v; };
+  const prizes = g('prizes').split('\n').map(l => l.split('|').map(s => s.trim())).filter(a => a.length >= 3 && a[1])
+    .map(a => ({ icon: a[0] || '🎁', uz: a[1], ru: a[2] || a[1], en: a[3] || a[2] || a[1] }));
+  const d = Logic.DEFAULTS;
+  await Store.saveSettings({ tz: g('tz') || d.tz, missPenaltyPct: n('missPenaltyPct', d.missPenaltyPct), warnings: Math.round(n('warnings', d.warnings)), burnPct: n('burnPct', d.burnPct), weeklyGoalPct: n('weeklyGoalPct', d.weeklyGoalPct), usdPerCoin: n('usdPerCoin', 0), prizes: prizes.length ? prizes : d.prizes });
+  const ok = $('#setOk'); if (ok) ok.textContent = '✓ ' + T('saved');
+});
+ACT.paid = el => guarded(async () => {
+  const p = S.payouts.find(x => x.id === el.dataset.id); if (!p) return;
+  await Store.addLog({ id: `adj_pay_${p.id}`, uid: p.uid, date: clock().date, taskId: 'payout', kind: 'payout', delta: -Math.abs(p.coins), note: p.month });
+  await Store.updatePayout(p.id, { status: 'paid' });
+});
+ACT.rejpay = el => guarded(() => Store.updatePayout(el.dataset.id, { status: 'rejected' }));
+
+/* ---------- события ---------- */
+document.addEventListener('click', e => {
+  Snd.unlock();
+  if (S.music && !Snd.on) Snd.startMusic();
+  const el = e.target.closest('[data-act]');
+  if (el && ACT[el.dataset.act]) ACT[el.dataset.act](el, e);
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.actChange === 'lang') {
+    S.lang = t.value; safeSet('fp_lang', S.lang);
+    if (S.me) Store.updateUser(S.me.uid, { lang: S.lang }).catch(() => {});
+    render(); return;
+  }
+  if (t.dataset.uf) {
+    const uid = t.dataset.uid, u = S.users.find(x => x.uid === uid); if (!u) return;
+    const val = t.type === 'checkbox' ? t.checked : t.value;
+    if (u.status === 'approved') {
+      if (t.dataset.uf === 'isAdmin') ask(T('confirm_admin'), () => Store.updateUser(uid, { isAdmin: val }));
+      else Store.updateUser(uid, { relation: val }).catch(console.error);
+      if (t.dataset.uf === 'isAdmin') setTimeout(render, 0);
+    } else { S.sel[uid] = Object.assign(S.sel[uid] || {}, { [t.dataset.uf]: val }); }
+  }
+});
+document.addEventListener('focusout', () => { setTimeout(() => { if (S.dirty && !typing()) render(); }, 50); });
+
+window.addEventListener('DOMContentLoaded', () => {
+  const o = document.createElement('div'); o.id = 'ovl'; document.body.appendChild(o);
+  boot();
+});
+window.__app = { S, tick, clock, render, Logic };
+
+</script>
+</body>
+</html>
