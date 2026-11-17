@@ -978,7 +978,12 @@ Object.assign(D, {
   msg_from: ["{n} dan xabar", "Сообщение от {n}", "Message from {n}"],
   msg_new: ["Yangi suhbat", "Новый разговор", "New conversation"],
   msgs_hint: ["Oila a'zolarining xatlari. Yangi xat kelganda uzun signal, tebranish va banner.", "Письма от семьи. При новом письме — длинный сигнал, вибрация и баннер.", "Messages from family. A new one plays a long tone, vibrates and shows a banner."],
-  ev_msg: ["Yangi xabar", "Новое сообщение", "New message"]
+  ev_msg: ["Yangi xabar", "Новое сообщение", "New message"],
+  snd_bad: ["Bu havola ovoz fayli emas", "По этой ссылке нет звукового файла", "This link is not a sound file"],
+  snd_bad_hint: ["To'g'ridan-to'g'ri .mp3 havola kerak (u brauzerda darhol o'ynashi kerak). YouTube va sayt sahifalari ishlamaydi. Hozircha standart ovoz qoldi.", "Нужна прямая ссылка на файл .mp3 (открыв её в браузере, звук сразу играет). Ссылки на YouTube и страницы сайтов не подходят. Пока оставлен стандартный звук.", "Needs a direct .mp3 link (opening it in a browser plays the sound straight away). YouTube and web pages won't work. The standard sound is kept for now."],
+  snd_saved_bad: ["Saqlandi, lekin ba'zi havolalar ishlamadi", "Сохранено, но эти ссылки не работают", "Saved, but these links don't work"],
+  snd_checking: ["Havolalar tekshirilmoqda…", "Проверяю ссылки…", "Checking links…"],
+  g_copy_fail: ["Nusxa olinmadi — matnni bosib turib nusxalang", "Не удалось скопировать — выделите текст пальцем", "Could not copy — select the text manually"]
 });
 
 
@@ -1468,12 +1473,33 @@ const Snd = (() => {
   const PRESET_NAMES = ['cash', 'coin', 'ding', 'sms', 'bell', 'wrong', 'warn', 'burn', 'fanfare', 'off'];
 
   // Звук события: если админ задал свою ссылку — играет файл, иначе пресет
-  function play(event, sc) {
+  // Один постоянный проигрыватель: на iPhone он «разблокируется» первым касанием и потом играет и без касания
+  function fileEl() { if (!fileAudio) { fileAudio = new Audio(); fileAudio.preload = 'auto'; } return fileAudio; }
+  function play(event, sc, onFail) {
     const s = sc || {};
+    const preset = () => (presets[s.p] || presets[event] || presets.coin)();
     if (s.u) {
-      try { if (fileAudio) fileAudio.pause(); fileAudio = new Audio(s.u); fileAudio.play().catch(() => {}); return; } catch (e) { /* пресет ниже */ }
+      try {
+        const a = fileEl(); let done = false;
+        const fail = () => { if (done) return; done = true; preset(); if (onFail) onFail(); };
+        a.onerror = fail; a.pause(); a.src = s.u; a.currentTime = 0;
+        const pr = a.play(); if (pr && pr.then) pr.then(() => { done = true; }).catch(fail);
+        return;
+      } catch (e) { /* пресет ниже */ }
     }
-    (presets[s.p] || presets[event] || presets.coin)();
+    preset();
+  }
+  // Проверка ссылки: это настоящий звуковой файл?
+  function checkUrl(u) {
+    return new Promise(res => {
+      if (/youtu\.?be|youtube\.com|music\.apple|spotify|soundcloud\.com\/(?!.*\.mp3)/i.test(u)) { res('page'); return; }
+      const a = new Audio(); let t = null;
+      const end = r => { clearTimeout(t); a.removeAttribute('src'); try { a.load(); } catch (e) { /* ignore */ } res(r); };
+      a.onloadedmetadata = () => end(a.duration > 0 || a.duration === Infinity ? 'ok' : 'bad');
+      a.onerror = () => end('bad');
+      t = setTimeout(() => end('slow'), 8000);
+      a.preload = 'metadata'; a.src = u;
+    });
   }
   const coin = () => presets.coin(), wrong = () => presets.wrong(), warn = () => presets.warn(),
     burn = () => presets.burn(), fanfare = () => presets.fanfare(), tick = () => presets.tick();
@@ -1517,9 +1543,14 @@ const Snd = (() => {
     musicAudio = null;
     if (wasOn) startMusic();
   }
-  function unlock() { if (ensure() && musicOn && !timer && !musicAudio) startMusic(); }
+  function unlock() {
+    if (!unlocked) { unlocked = true; try { const a = fileEl(); a.muted = true; if (!a.src) a.src = SILENT; const p = a.play(); if (p && p.catch) p.then(() => { a.pause(); a.muted = false; }).catch(() => { a.muted = false; }); else a.muted = false; } catch (e) { /* ignore */ } }
+    if (ensure() && musicOn && !timer && !musicAudio) startMusic();
+  }
+  let unlocked = false;
+  const SILENT = 'data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YSADAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==';
 
-  return { coin, wrong, warn, burn, fanfare, tick, play, PRESET_NAMES, startMusic, stopMusic, setMusic, unlock, get on() { return musicOn; } };
+  return { coin, wrong, warn, burn, fanfare, tick, play, checkUrl, PRESET_NAMES, startMusic, stopMusic, setMusic, unlock, get on() { return musicOn; } };
 })();
 
 
@@ -2100,6 +2131,11 @@ function compress(src, cb) {
 }
 
 /* ---------- отрисовка ---------- */
+// Пока палец на экране, страницу не перерисовываем — иначе нажатие «теряется»
+const PTR = { down: false, up: 0, t: null, act: false };
+document.addEventListener('pointerdown', () => { PTR.down = true; }, true);
+['pointerup', 'pointercancel'].forEach(k => document.addEventListener(k, () => { PTR.down = false; PTR.up = Date.now(); }, true));
+document.addEventListener('scroll', () => { if (PTR.down) PTR.down = false; }, { passive: true, capture: true });
 function typing() {
   const a = document.activeElement;
   return !!(a && $('#app') && $('#app').contains(a) && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && a.type !== 'checkbox');
@@ -2107,6 +2143,8 @@ function typing() {
 function render() {
   const app = $('#app'); if (!app) return;
   if (typing()) { S.dirty = true; return; }
+  if (!PTR.act && (PTR.down || Date.now() - PTR.up < 80)) { S.dirty = true; clearTimeout(PTR.t); PTR.t = setTimeout(() => { if (S.dirty) render(); }, PTR.down ? 120 : 90); return; }
+  const openD = new Set([...app.querySelectorAll('details[open] > summary')].map(x => x.textContent.trim()));
   if (CAM) return; // пока открыта камера, не перерисовываем
   S.dirty = false;
   const v = S.view;
@@ -2119,6 +2157,7 @@ function render() {
   else if (v === 'admin') html = shell(viewAdmin(), true);
   else html = shell(viewHome(), true);
   app.innerHTML = html;
+  app.querySelectorAll('details > summary').forEach(x => { if (openD.has(x.textContent.trim()) && !x.dataset.act) x.parentNode.open = true; });
   document.documentElement.lang = S.lang;
   if (typeof applyFx === 'function') applyFx();
   if (v === 'home' && !S.started && typeof showStart === 'function') showStart();
@@ -2516,8 +2555,14 @@ function applyMusic() {
 }
 ACT.admin = () => { S.adminOpen = true; route(); render(); };
 ACT.back = () => { S.adminOpen = false; route(); render(); };
-ACT.tab = el => { S.tab = el.dataset.id; render(); };
-ACT.htab = el => { S.htab = el.dataset.id; render(); };
+ACT.tab = el => { S.tab = el.dataset.id; render(); window.scrollTo(0, 0); };
+ACT.htab = el => {
+  const id = el.dataset.id;
+  S.htab = id; S.adminOpen = false; route();
+  if (id === 'menu') { S.menu = ''; S.kopen = ''; S.ktab = ''; S.ftab = ''; }
+  if (id === 'rewards') S.howOpen = false;
+  closeModal(); render(); window.scrollTo(0, 0);
+};
 ACT.close = () => closeModal();
 ACT.askyes = () => { const m = $('#modal'); const f = m && m._yes; closeModal(); if (f) guarded(f); };
 
@@ -2677,7 +2722,7 @@ ACT.sndprev = el => {
   const k = el.dataset.id;
   const p = document.querySelector(`[data-snd="${k}"][data-part="p"]`).value;
   const u = (document.querySelector(`[data-snd="${k}"][data-part="u"]`) || { value: '' }).value.trim();
-  Snd.play(k, { p, u });
+  Snd.play(k, { p, u }, () => banner('warn', '🔇 ' + T('snd_bad'), T('snd_bad_hint'), 5000));
 };
 ACT.sndreset = el => {
   const k = el.dataset.id, p = document.querySelector(`[data-snd="${k}"][data-part="p"]`), u = document.querySelector(`[data-snd="${k}"][data-part="u"]`);
@@ -2716,8 +2761,18 @@ ACT.sndsave = () => guarded(async () => {
   };
   EV_SOUNDS.forEach(([k]) => { sounds[k] = read(k); });
   sounds.music = read('music');
+  const btn = document.querySelector('[data-act=sndsave]'); if (btn) { btn.disabled = true; btn.textContent = '⏳ ' + T('snd_checking'); }
+  const bad = [];
+  for (const k of Object.keys(sounds)) {
+    if (!sounds[k].u) continue;
+    const r = await Snd.checkUrl(sounds[k].u);
+    if (r === 'page' || r === 'bad') { bad.push(k === 'music' ? T('ev_music') : T((EV_SOUNDS.find(x => x[0] === k) || [])[1])); sounds[k].u = ''; }
+  }
   await Store.saveSettings(Object.assign({}, S.settings, { sounds }));
-  const ok = $('#sndOk'); if (ok) ok.textContent = '✓ ' + T('saved_ok');
+  S.mk = ''; applyMusic();
+  if (bad.length) banner('warn', '⚠️ ' + T('snd_saved_bad'), bad.join(', ') + ' — ' + T('snd_bad_hint'), 9000);
+  else banner('good', '💾 ' + T('saved_ok'), '', 2500);
+  if (btn) { btn.disabled = false; btn.textContent = '💾 ' + T('save'); }
 });
 ACT.paid = el => guarded(async () => {
   const p = S.payouts.find(x => x.id === el.dataset.id); if (!p) return;
@@ -2731,13 +2786,13 @@ document.addEventListener('click', e => {
   Snd.unlock();
   if (S.music && !Snd.on && !S.quiet) Snd.startMusic();
   const el = e.target.closest('[data-act]');
-  if (el && ACT[el.dataset.act]) ACT[el.dataset.act](el, e);
+  if (el && ACT[el.dataset.act]) { PTR.act = true; try { ACT[el.dataset.act](el, e); } finally { PTR.act = false; } }
 });
 document.addEventListener('change', e => {
   const t = e.target;
   if (t.dataset.actChange === 'lang') {
-    S.lang = t.value; safeSet('fp_lang', S.lang);
-    if (S.me) Store.updateUser(S.me.uid, { lang: S.lang }).catch(() => {});
+    S.lang = t.value; safeSet('fp_lang', S.lang); try { t.blur(); } catch (er) { /* ignore */ }
+    if (S.me && !S.viewAs) Store.updateUser(S.me.uid, { lang: S.lang }).catch(() => {});
     render(); return;
   }
   if (t.dataset.uf) {
@@ -3390,7 +3445,7 @@ function kidsQA() {
     + `<button class="btn sm" data-act="qaspeak">🔊 ${T('k_qa_read')}</button></div>`;
 }
 const qaList = () => { const age = S.kage || 3; return KIDS.QA.filter(q => q.age <= age && q.age >= age - 1); };
-ACT.qashow = () => { S.qaShow = true; render(); };
+ACT.qashow = () => { S.qaShow = !S.qaShow; render(); };
 ACT.qanext = () => { S.qaIdx = ((S.qaIdx || 0) + 1) % qaList().length; S.qaShow = false; render(); };
 ACT.qaok = () => {
   lsS('fp_qa_stars', lsJ('fp_qa_stars', 0) + 1); Snd.coin(); sparkle();
@@ -3792,7 +3847,13 @@ function studioOpen() {
 const gText = () => { const t = $('#gText'); if (t) S.studio.text = t.value; return S.studio.text; };
 ACT.gpick = el => { const texts = studioTexts(S.studio.e); S.studio.text = texts[+el.dataset.id]; studioOpen(); };
 ACT.gfav = () => { const f = lsJ('fp_greet_fav', []); f.unshift({ tone: TONE_OF(S.studio.e), text: gText() }); lsS('fp_greet_fav', f.slice(0, 30)); banner('good', '⭐ ' + T('saved_ok'), '', 1800); };
-ACT.gcopy = () => { try { navigator.clipboard.writeText(gText()); banner('good', '📋 ' + T('g_copied'), '', 1800); } catch (e) { /* нет доступа */ } };
+ACT.gcopy = () => copyText(gText());
+// Копирование с запасным способом (на старых телефонах и без разрешения)
+function copyText(t) {
+  const ok = () => banner('good', '📋 ' + T('g_copied'), '', 1800);
+  const old = () => { try { const x = document.createElement('textarea'); x.value = t; x.setAttribute('readonly', ''); x.style.cssText = 'position:fixed;top:0;opacity:0'; document.body.appendChild(x); x.select(); x.setSelectionRange(0, t.length); document.execCommand('copy'); x.remove(); ok(); } catch (e) { banner('warn', T('g_copy_fail'), '', 2500); } };
+  try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok).catch(old); else old(); } catch (e) { old(); }
+}
 const gPhone = () => String(S.studio.e.phone || '').replace(/[^\d+]/g, '');
 const isIOS = () => /iPhone|iPad|iPod/.test(navigator.userAgent);
 ACT.gsms = () => { location.href = `sms:${gPhone()}${isIOS() ? '&' : '?'}body=${encodeURIComponent(gText())}`; };
