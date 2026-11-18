@@ -682,7 +682,7 @@ body.hasradio .tlist{padding-bottom:84px}
 /* ============================================================
    НАСТРОЙКИ — заполняются один раз (см. SETUP.md)
    ============================================================ */
-const APP_VERSION = '2026.11.18-12';
+const APP_VERSION = '2026.11.18-13';
 const APP_CONFIG = {
   // Ваша Google-почта. Этот аккаунт автоматически станет главным администратором.
   OWNER_EMAIL: "3307999@gmail.com",
@@ -2196,7 +2196,7 @@ function stopData() {
   S.unsubs.forEach(u => { try { u(); } catch (e) { /* ignore */ } });
   S.unsubs = [];
   if (S.userUnsub) { try { S.userUnsub(); } catch (e) { /* ignore */ } S.userUnsub = null; }
-  Object.assign(S, { me: null, tasks: [], settings: {}, logs: [], myPayouts: [], photos: [], users: [], wl: [], payouts: [], tasksLoaded: false, logsLoaded: false, adminOpen: false, tab: 'users', htab: 'today', sel: {}, amTried: {}, scores: [], scoresLoaded: false, lastPub: '', seenLast: {}, claims: [], myClaims: [], recipes: [], shared: {} });
+  Object.assign(S, { me: null, tasks: [], settings: {}, logs: [], myPayouts: [], photos: [], users: [], wl: [], payouts: [], tasksLoaded: false, logsLoaded: false, adminOpen: false, tab: 'users', htab: window.__msgStart ? 'msgs' : 'today', sel: {}, amTried: {}, scores: [], scoresLoaded: false, lastPub: '', seenLast: {}, claims: [], myClaims: [], recipes: [], shared: {} });
 }
 
 async function onAuth(au) {

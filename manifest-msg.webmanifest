@@ -1,0 +1,29 @@
+{
+ "name": "DilshodGram",
+ "short_name": "DilshodGram",
+ "start_url": "./messenger.html",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#06241a",
+ "theme_color": "#06241a",
+ "lang": "ru",
+ "icons": [
+  {
+   "src": "icon-msg-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-msg-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-msg-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
