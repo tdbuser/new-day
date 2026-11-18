@@ -682,7 +682,7 @@ body.hasradio .tlist{padding-bottom:84px}
 /* ============================================================
    НАСТРОЙКИ — заполняются один раз (см. SETUP.md)
    ============================================================ */
-const APP_VERSION = '2026.11.18-11';
+const APP_VERSION = '2026.11.18-12';
 const APP_CONFIG = {
   // Ваша Google-почта. Этот аккаунт автоматически станет главным администратором.
   OWNER_EMAIL: "3307999@gmail.com",
@@ -2530,7 +2530,7 @@ function render() {
   else if (v === 'login') html = viewLogin();
   else if (v === 'pending') html = shell(`<div class="card center"><h1>⏳</h1><h2>${T('pending_title')}</h2><p>${T('pending_text')}</p></div>`, false);
   else if (v === 'blocked') html = shell(`<div class="card center"><h1>⛔</h1><h2>${T('blocked_title')}</h2><p>${T('blocked_text')}</p></div>`, false);
-  else if (v === 'admin') html = shell(viewAdmin(), true);
+  else if (v === 'admin') html = shell(viewAdmin(), true) + tabNav(true);
   else html = shell(viewHome(), true);
   app.innerHTML = html;
   document.body.classList.toggle('incrumbs', S.view === 'home' && S.htab === 'menu' && !!S.menu);
@@ -2598,16 +2598,21 @@ function viewHome() {
   else if (S.htab === 'me') body = viewMe();
   else if (S.htab === 'msgs') body = viewMessages();
   else body = modeButtons() + viewToday();
+  return body + tabNav(false);
+}
+// Нижняя панель. В админке тоже остаётся на месте, но ни одна вкладка раздела не выделена, выделена только шестерёнка
+function tabNav(inAdmin) {
+  const cur = inAdmin ? '' : S.htab;
   const tabs = [['today', '✅', T('nav_tasks')], ['menu', '📂', T('nav_menu')]];
   const unread = unreadFor(S.me.uid);
-  const tab = ([k, i, n]) => `<button class="${S.htab === k ? 'on' : ''}" data-act="htab" data-id="${k}"><span>${i}</span>${n}</button>`;
+  const tab = ([k, i, n]) => `<button class="${cur === k ? 'on' : ''}" data-act="htab" data-id="${k}"><span>${i}</span>${n}</button>`;
   // Центр панели — зелёная кнопка «Локация» (поделиться геопозицией), сразу видна
   const locTab = `<button class="loctab" data-act="geoShare"><span class="locpin">📍${S.geoOn ? '<i class="locdot"></i>' : ''}</span>${T('nav_loc')}</button>`;
-  const navMsg = `<button class="msgtab ${S.htab === 'msgs' ? 'on' : ''}" data-act="htab" data-id="msgs"><span>✉️</span>${T('nav_msgs')}${unread ? `<em>${unread > 99 ? '99+' : unread}</em>` : ''}</button>`;
+  const navMsg = `<button class="msgtab ${cur === 'msgs' ? 'on' : ''}" data-act="htab" data-id="msgs"><span>✉️</span>${T('nav_msgs')}${unread ? `<em>${unread > 99 ? '99+' : unread}</em>` : ''}</button>`;
   // Шестерёнка «Админка» — только у админа, на месте бывшего «Профиля». У остальных здесь ничего нет (4 кнопки).
   const ap = adminPend();
   const navAdmin = isAdmin() ? `<button class="admtab ${S.view === 'admin' ? 'on' : ''}" data-act="${S.view === 'admin' ? 'home' : 'admin'}"><span>⚙️</span>${T('nav_admin')}${ap ? `<em>${ap > 99 ? '99+' : ap}</em>` : ''}</button>` : '';
-  return body + `<nav class="tabbar">${tab(tabs[0])}${tab(tabs[1])}${locTab}${navAdmin}${navMsg}</nav>`;
+  return `<nav class="tabbar">${tab(tabs[0])}${tab(tabs[1])}${locTab}${navAdmin}${navMsg}</nav>`;
 }
 // «Меню»: разделы как папки; внутри раздела — путь «Меню › Раздел»
 const MENU = [
@@ -2948,6 +2953,7 @@ function admSettings() {
     + f('burnPct', T('set_burn'), c.burnPct, 'type="number" min="0" max="100"')
     + f('weeklyGoalPct', T('set_weekly'), c.weeklyGoalPct, 'type="number" min="0" max="100"')
     + `<label class="f">${T('prizes_edit')} (icon | uz | ru | en)<textarea data-sf="prizes" rows="7">${esc(prizeText)}</textarea></label>`
+    + `<label class="chk"><input type="checkbox" data-sf="radioOn" ${S.settings && S.settings.radioOn ? 'checked' : ''}> 📻 Рация на главном экране (пока выключена)</label>`
     + `<div class="btnrow"><button class="btn gold" data-act="savesettings">${T('save')}</button></div><div id="setOk" class="mut"></div></div>`
     + (typeof admBackup === 'function' ? admBackup() : '');
 }
@@ -3201,7 +3207,8 @@ ACT.savesettings = () => guarded(async () => {
     tz: g('tz') || d.tz, budgetUsd: Math.max(0, n('budgetUsd', 0)), rateCoins: d.rateCoins,
     missPenaltyPct: n('missPenaltyPct', d.missPenaltyPct), warnings: Math.round(n('warnings', d.warnings)),
     burnPct: n('burnPct', d.burnPct), weeklyGoalPct: n('weeklyGoalPct', d.weeklyGoalPct),
-    prizes: prizes.length ? prizes : d.prizes, sounds: S.settings.sounds || {}
+    prizes: prizes.length ? prizes : d.prizes, sounds: S.settings.sounds || {},
+    radioOn: !!(document.querySelector('[data-sf="radioOn"]') || {}).checked
   }));
   const ok = $('#setOk'); if (ok) ok.textContent = '✓ ' + T('saved');
 });
@@ -5547,7 +5554,8 @@ function radioEl() {
 }
 // Показ/скрытие: только на главном экране (вкладка «Задания»), вошедшим и одобренным
 function radioSync() {
-  const show = !!(S.me && S.view === 'home' && S.htab === 'today' && !S.viewAs && (S.me.status === 'approved' || isAdmin()));
+  // Рация выключена по умолчанию; включается в админке → Настройки → «Рация на главном экране»
+  const show = !!(S.settings && S.settings.radioOn && S.me && S.view === 'home' && S.htab === 'today' && !S.viewAs && (S.me.status === 'approved' || isAdmin()));
   const w = show ? radioEl() : document.getElementById('radiow');
   document.body.classList.toggle('hasradio', show);
   if (!w) return;
