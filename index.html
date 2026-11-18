@@ -544,6 +544,12 @@ details.langs{margin:4px 0}details.langs summary{color:var(--mut);font-size:13px
 /* ---- вкладка «Письма» ---- */
 .chatpanel{display:flex;flex-direction:column}
 .chatlist.tabchat{max-height:none;min-height:40vh}
+/* ---- iOS: безопасная зона сверху (Dynamic Island / строка состояния) ---- */
+#app > .top:first-child,
+#app > .viewas:first-child,
+#app > .geobar:first-child,
+#app > .demo:first-child{padding-top:calc(10px + env(safe-area-inset-top))}
+.startov{padding-top:calc(20px + env(safe-area-inset-top))}
 
 </style>
 </head>
@@ -553,7 +559,7 @@ details.langs{margin:4px 0}details.langs summary{color:var(--mut);font-size:13px
 /* ============================================================
    НАСТРОЙКИ — заполняются один раз (см. SETUP.md)
    ============================================================ */
-const APP_VERSION = '2026.11.18-2';
+const APP_VERSION = '2026.11.18-3';
 const APP_CONFIG = {
   // Ваша Google-почта. Этот аккаунт автоматически станет главным администратором.
   OWNER_EMAIL: "3307999@gmail.com",
