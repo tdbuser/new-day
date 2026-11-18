@@ -1,0 +1,91 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function email() { return request.auth.token.email.lower(); }
+    function isOwner() { return signedIn() && request.auth.token.email_verified == true && email() == '3307999@gmail.com'; }
+    function hasUser(uid) { return exists(/databases/$(database)/documents/users/$(uid)); }
+    function userDoc(uid) { return get(/databases/$(database)/documents/users/$(uid)).data; }
+    function isAdmin() { return isOwner() || (signedIn() && hasUser(request.auth.uid) && userDoc(request.auth.uid).isAdmin == true && userDoc(request.auth.uid).status == 'approved'); }
+    function isApproved() { return signedIn() && hasUser(request.auth.uid) && userDoc(request.auth.uid).status == 'approved'; }
+    function wl() { return get(/databases/$(database)/documents/whitelist/$(email())).data; }
+    function hasWl() { return exists(/databases/$(database)/documents/whitelist/$(email())); }
+    function taskData(taskId) { return get(/databases/$(database)/documents/tasks/$(taskId)).data; }
+    function penaltyPct() {
+      return (exists(/databases/$(database)/documents/settings/main) && ('missPenaltyPct' in get(/databases/$(database)/documents/settings/main).data))
+        ? get(/databases/$(database)/documents/settings/main).data.missPenaltyPct : 50;
+    }
+    function smallPhoto() { return !('photo' in request.resource.data) || request.resource.data.photo.size() < 400000; }
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow create: if signedIn() && request.auth.uid == uid && request.resource.data.uid == uid && request.resource.data.email == email()
+        && ((isOwner() && request.resource.data.status == 'approved')
+          || (request.resource.data.status == 'pending' && request.resource.data.isAdmin == false)
+          || (hasWl() && request.resource.data.status == 'approved' && request.resource.data.isAdmin == wl().isAdmin && request.resource.data.relation == wl().relation));
+      allow update: if isAdmin() || (signedIn() && request.auth.uid == uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lang', 'name', 'photo']));
+      allow delete: if isAdmin();
+    }
+    match /whitelist/{em} {
+      allow get: if signedIn() && (em == email() || isAdmin());
+      allow list: if isAdmin();
+      allow write: if isAdmin();
+    }
+    match /tasks/{id} { allow read: if isApproved() || isAdmin(); allow write: if isAdmin(); }
+    match /settings/{id} { allow read: if isApproved() || isAdmin(); allow write: if isAdmin(); }
+    match /logs/{id} {
+      allow read: if signedIn() && (resource.data.uid == request.auth.uid || isAdmin());
+      allow create: if isAdmin() || (isApproved() && request.resource.data.uid == request.auth.uid && request.resource.data.at == request.time
+        && ((request.resource.data.kind == 'bonus' && id.split('_')[0] == request.auth.uid && id.split('_')[1] == 'bonus'
+              && request.resource.data.delta > 0 && request.resource.data.delta <= 50000)
+          || (id == request.auth.uid + '_' + request.resource.data.date + '_' + request.resource.data.taskId
+            && exists(/databases/$(database)/documents/tasks/$(request.resource.data.taskId))
+            && ((request.resource.data.kind == 'done' && request.resource.data.delta == taskData(request.resource.data.taskId).reward
+                && (taskData(request.resource.data.taskId).get('photo', 'opt') != 'req' || request.resource.data.hasPhoto == true)
+                && request.resource.data.hasPhoto is bool
+                && smallPhoto()
+                && (!('review' in request.resource.data) || request.resource.data.review == 'pending'))
+              || ((request.resource.data.kind == 'missed' || request.resource.data.kind == 'failed')
+                && request.resource.data.delta <= -(taskData(request.resource.data.taskId).reward * penaltyPct() / 100))))));
+      allow update, delete: if isAdmin();
+    }
+    match /scores/{uid} {
+      allow read: if isApproved() || isAdmin();
+      allow write: if signedIn() && request.auth.uid == uid && (isApproved() || isAdmin()) && request.resource.data.uid == uid;
+    }
+    match /claims/{id} {
+      allow read: if signedIn() && (resource.data.uid == request.auth.uid || isAdmin());
+      allow create: if isAdmin() || (isApproved() && request.resource.data.uid == request.auth.uid && id.split('_')[0] == request.auth.uid
+        && request.resource.data.status == 'pending' && request.resource.data.price > 0);
+      allow update: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid && resource.data.status == 'pending'
+        && request.resource.data.status == 'canceled' && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']));
+      allow delete: if isAdmin();
+    }
+    match /recipes/{id} {
+      allow read: if isApproved() || isAdmin();
+      allow create: if (isApproved() || isAdmin()) && request.resource.data.by == request.auth.uid && smallPhoto();
+      allow update: if isAdmin() || (isApproved() && resource.data.by == request.auth.uid && request.resource.data.by == request.auth.uid && smallPhoto());
+      allow delete: if isAdmin() || (isApproved() && resource.data.by == request.auth.uid);
+    }
+    match /messages/{id} {
+      allow read: if signedIn() && (resource.data.uid == request.auth.uid || isAdmin());
+      allow create: if isAdmin() || (isApproved() && request.resource.data.uid == request.auth.uid && request.resource.data.from == request.auth.uid
+        && request.resource.data.text is string && request.resource.data.text.size() < 2000 && smallPhoto());
+      allow update: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']));
+      allow delete: if isAdmin();
+    }
+    match /locations/{uid} {
+      allow read: if signedIn() && (uid == request.auth.uid || isAdmin());
+      allow write: if signedIn() && uid == request.auth.uid && (isApproved() || isAdmin())
+        && request.resource.data.uid == uid;
+    }
+    match /shared/{id} {
+      allow read, write: if isApproved() || isAdmin();
+    }
+    match /payouts/{id} {
+      allow read: if signedIn() && (resource.data.uid == request.auth.uid || isAdmin());
+      allow create: if isAdmin() || (isApproved() && request.resource.data.uid == request.auth.uid
+        && request.resource.data.status == 'requested' && id == request.auth.uid + '_' + request.resource.data.month);
+      allow update, delete: if isAdmin();
+    }
+  }
+}
