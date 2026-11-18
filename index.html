@@ -649,7 +649,7 @@ body.focuson{overflow:hidden}
 /* ============================================================
    НАСТРОЙКИ — заполняются один раз (см. SETUP.md)
    ============================================================ */
-const APP_VERSION = '2026.11.18-6';
+const APP_VERSION = '2026.11.18-7';
 const APP_CONFIG = {
   // Ваша Google-почта. Этот аккаунт автоматически станет главным администратором.
   OWNER_EMAIL: "3307999@gmail.com",
@@ -1209,7 +1209,7 @@ Object.assign(D, {
   map_empty: ["Hali hech kim joylashuvini ulashmagan.", "Пока никто не поделился геопозицией.", "Nobody is sharing their location yet."],
   me_more: ["Boshqa", "Ещё", "More"],
   msgs_hint_user: ["Bu yerdan to'g'ridan-to'g'ri administratorga yozing. U javob bersa, shu yerda ko'rinadi.", "Пишите прямо отсюда администратору. Его ответ появится здесь же.", "Write to the admin right here. Their reply shows up here too."],
-  at_pay: ["To'lovlar", "Платежи", "Payments"],
+  at_bills: ["To'lovlar", "Платежи", "Payments"],
   pay_hint: ["To'lovlar va muhim eslatmalar. Muddati kelganda bosh ekranda katta eslatma chiqadi va o'chmaydi, toki «To'landi» bosmaguningizcha.", "Платежи и важные напоминания. Когда подходит срок — на главном экране появляется большое напоминание и не исчезает, пока не нажмёте «Оплатил».", "Payments and important reminders. When due, a big reminder stays on the home screen until you mark it paid."],
   pay_add: ["To'lov qo'shish", "Добавить платёж", "Add payment"],
   pay_empty: ["Hali to'lov yo'q", "Пока нет платежей", "No payments yet"],
@@ -1280,7 +1280,9 @@ Object.assign(D, {
   foc_work_now: ["Ishga! {m} daqiqa", "За работу! {m} минут", "Work! {m} min"],
   foc_break_now: ["Dam oling! {m} daqiqa", "Перерыв! {m} минут", "Break! {m} min"],
   foc_pomo_done: ["Bajarilgan pomodoro: {n}", "Сделано помодоро: {n}", "Pomodoros done: {n}"],
-  foc_label_ph: ["Nima qilyapsiz? (ixtiyoriy)", "Что делаете? (необязательно)", "What are you doing? (optional)"]
+  foc_label_ph: ["Nima qilyapsiz? (ixtiyoriy)", "Что делаете? (необязательно)", "What are you doing? (optional)"],
+  tasks_none_who: ["Bu odamda hali vazifa yo'q. «Hammasi»ни bosing yoki «＋ Vazifa» qo'shing.", "У этого человека пока нет заданий. Нажмите «Все» или добавьте «＋ Задание».", "This person has no tasks yet. Tap “All” or add one with “＋ Task”."],
+  tasks_none_all: ["Hali vazifa yo'q. «Standartlarni yuklash» yoki «＋ Vazifa».", "Пока нет заданий. Нажмите «Загрузить стандартные» или «＋ Задание».", "No tasks yet. Tap “Load defaults” or “＋ Task”."]
 });
 
 
@@ -2730,7 +2732,7 @@ function viewAdmin() {
   const tabs = [
     ['users', '👥', T('at_users'), pendingCount()], ['tasks', '📋', T('at_tasks'), 0], ['add', '➕', T('at_add'), 0],
     ['photos', '📷', T('at_photos'), S.photos.length], ['claims', '🛍️', T('at_claims'), cl], ['payouts', '💵', T('at_pay'), req],
-    ['msgs', '💬', T('at_msgs'), unreadFor(S.me.uid)], ['pay', '💳', T('at_pay'), payDueN()], ['tube', '📺', T('at_tube'), 0], ['map', '📍', T('at_map'), 0],
+    ['msgs', '💬', T('at_msgs'), unreadFor(S.me.uid)], ['pay', '💳', T('at_bills'), payDueN()], ['tube', '📺', T('at_tube'), 0], ['map', '📍', T('at_map'), 0],
     ['sounds', '🔊', T('at_sounds'), 0], ['fun', '🎈', T('at_fun'), 0], ['settings', '⚙️', T('at_set'), 0]
   ];
   const t = `<div class="admtabs">${tabs.map(([k, i, n, b]) => `<button class="${S.tab === k ? 'on' : ''}" data-act="tab" data-id="${k}"><span>${i}</span>${n}${b ? `<em>${b}</em>` : ''}</button>`).join('')}</div>`;
@@ -2818,7 +2820,8 @@ function admTasks() {
   const forWho = t => people.filter(u => Logic.assigned(t, u, null)).map(u => firstName(u.name)).join(', ') || '—';
   return `<div class="card"><h3>📋 ${T('tab_tasks')}</h3><div class="mut">${T('adm_tasks_hint')}</div>${chips}`
     + `<div class="btnrow">${ts.length ? '' : `<button class="btn gold" data-act="seed">${T('load_defaults')}</button>`}<button class="btn gold" data-act="newtask">${T('add_task')}</button></div></div>`
-    + `<div class="tklist">` + list.map(t => taskForm(t).replace('%META%', `👤 ${esc(forWho(t))} · 🔁 ${esc(schedTxt(t))} · +${M(t.reward)}`)).join('') + `</div>`;
+    + (list.length ? `<div class="tklist">` + list.map(t => taskForm(t).replace('%META%', `👤 ${esc(forWho(t))} · 🔁 ${esc(schedTxt(t))} · +${M(t.reward)}`)).join('') + `</div>`
+      : `<div class="card center mut">${ts.length ? T('tasks_none_who') : T('tasks_none_all')}</div>`);
 }
 
 function admPhotos() {
@@ -3060,7 +3063,9 @@ ACT.seed = () => guarded(async () => {
 ACT.newtask = () => guarded(async () => {
   const id = 't_' + Date.now().toString(36); S.openTask = id; S.tkTab = 'main';
   setTimeout(() => { const b = document.querySelector(`.tk[data-tid="${id}"]`); if (b) b.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 300);
-  await Store.saveTask({ id, time: '09:00', icon: '⭐', title: { uz: 'Yangi vazifa', ru: 'Новое задание', en: 'New task' }, reward: 1000, graceMin: 60, earlyMin: 15, relations: ['wife'], uids: [], active: true, since: clock().date, photo: 'opt' });
+  const u = (S.tfor && S.tfor !== 'all') ? S.users.find(x => x.uid === S.tfor) : null;
+  const rel = u && u.relation ? [u.relation] : ['*'];
+  await Store.saveTask({ id, time: '09:00', icon: '⭐', title: { uz: 'Yangi vazifa', ru: 'Новое задание', en: 'New task' }, reward: 1000, graceMin: 60, earlyMin: 15, relations: rel, uids: [], active: true, since: clock().date, photo: 'opt' });
 });
 ACT.savetask = el => guarded(async () => {
   const d = document.querySelector(`.tk[data-tid="${CSS.escape(el.dataset.id)}"]`), g = k => d.querySelector(`[data-tf="${k}"]`);
@@ -5195,7 +5200,7 @@ ACT.paypaid = el => {
 function admPay() {
   const list = pays().slice().sort((a, b) => (a.priority || 2) - (b.priority || 2));
   const today = clock().date;
-  return `<div class="card"><h2>💳 ${T('at_pay')}</h2><div class="mut">${T('pay_hint')}</div>`
+  return `<div class="card"><h2>💳 ${T('at_bills')}</h2><div class="mut">${T('pay_hint')}</div>`
     + `<div class="btnrow"><button class="btn gold" data-act="paynew">＋ ${T('pay_add')}</button></div></div>`
     + `<div class="card prio-help"><b>${T('pay_prio_help')}</b>${PRIOS.map(([n, ic]) => `<div><span>${ic}</span> ${n}. ${T('pay_prio' + n)} — ${T('pay_prio' + n + '_d')}</div>`).join('')}</div>`
     + (list.length ? list.map(p => payForm(p, today)).join('') : `<div class="card center mut">${T('pay_empty')}</div>`);
