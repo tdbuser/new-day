@@ -497,6 +497,7 @@ body.tubeon{overflow:hidden}
 .row3{display:grid;grid-template-columns:1.25fr .7fr 1fr;gap:6px;align-items:end}
 .row3 label.f,.tkpane label.f{margin:4px 0;font-size:13px}
 .row3 .ic input{text-align:center;font-size:22px;padding:6px}
+.draftmark{font-style:normal;font-size:11px;font-weight:800;color:#2a1b00;background:#ffd23f;border-radius:999px;padding:1px 7px;vertical-align:middle}
 .fhint{display:block;margin-top:3px;color:var(--mut);font-size:11px;line-height:1.2}
 .tkpane input[type=time]{min-width:0;-webkit-appearance:none;appearance:none}
 .tk[data-sched=daily] .only-days,.tk[data-sched=daily] .only-once,.tk[data-sched=days] .only-once,.tk[data-sched=once] .only-days{display:none}
@@ -520,8 +521,8 @@ details.langs{margin:4px 0}details.langs summary{color:var(--mut);font-size:13px
 .chatin textarea{background:#fff;color:#111;border:1px solid #ccc}
 .chatin textarea::placeholder{color:#777}
 /* ---- 5-я кнопка «Письма» в нижнем меню с бейджем ---- */
-.tabbar .msgtab{position:relative}
-.tabbar .msgtab em{position:absolute;top:2px;left:50%;margin-left:4px;transform:translateX(0);font-style:normal;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#e5342b;color:#fff;font-size:11px;font-weight:900;display:grid;place-items:center;box-shadow:0 0 0 2px #06241a}
+.tabbar .msgtab,.tabbar .admtab{position:relative}
+.tabbar .msgtab em,.tabbar .admtab em{position:absolute;top:2px;left:50%;margin-left:4px;transform:translateX(0);font-style:normal;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#e5342b;color:#fff;font-size:11px;font-weight:900;display:grid;place-items:center;box-shadow:0 0 0 2px #06241a}
 /* ---- вложения в переписке ---- */
 .chatin .attbtn{flex:none;width:44px;border:0;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-size:20px;cursor:pointer}
 .chatin .sendbtn{flex:none}
@@ -660,7 +661,7 @@ body.focuson{overflow:hidden}
 /* ============================================================
    НАСТРОЙКИ — заполняются один раз (см. SETUP.md)
    ============================================================ */
-const APP_VERSION = '2026.11.18-9';
+const APP_VERSION = '2026.11.18-10';
 const APP_CONFIG = {
   // Ваша Google-почта. Этот аккаунт автоматически станет главным администратором.
   OWNER_EMAIL: "3307999@gmail.com",
@@ -1181,6 +1182,9 @@ Object.assign(D, {
   hq_viewas: ["Ilovani shu odam ko'rgandek ochadi — boshidan. Hech narsa saqlanmaydi. Chiqish — tepadagi binafsha chiziqda.", "Открывает приложение так, как его видит этот человек, с самого начала. Ничего не сохраняется. Выход — на фиолетовой полосе сверху.", "Opens the app the way this person sees it, from the start. Nothing is saved. Exit via the purple bar on top."],
   hq_tubekey: ["Kalitsiz alohida videolar va pleylistlar ishlaydi. Kalit bilan — kanallarning yangi videolari va qidiruv.", "Без ключа работают отдельные видео и плейлисты. С ключом — новые видео каналов и поиск.", "Without a key, single videos and playlists work. With it — new channel videos and search."],
   nav_msgs: ["Xatlar", "Письма", "Messages"],
+  nav_admin: ["Admin", "Админка", "Admin"],
+  tk_draft: ["qoralama", "черновик", "draft"],
+  tk_starts_next: ["Bugungi vaqt o'tib ketgan — bugun hisoblanmaydi, keyingi safar boshlanadi.", "Время на сегодня уже прошло — сегодня не считается, начнётся со следующего раза.", "Today's time has passed — not counted today, starts next time."],
   msg_photo: ["Rasm", "Фото", "Photo"],
   attach_wait: ["Rasm tayyorlanmoqda…", "Готовлю фото…", "Preparing photo…"],
   att_title: ["Nima biriktiramiz?", "Что прикрепить?", "What to attach?"],
@@ -1397,6 +1401,8 @@ const Logic = (() => {
     if (!ok) return false;
     if (!date) return true;
     if (date < maxStr(t.since || '', u.approvedDate || '')) return false;
+    // сохранили/поменяли время, когда сегодняшнее окно уже прошло — в этот день не считаем
+    if (t.skipDate && date === t.skipDate) return false;
     // расписание: разовое (once = дата) или по дням недели (days = [0..6], 0 = воскресенье)
     if (t.once) return date === t.once;
     if (Array.isArray(t.days) && t.days.length && t.days.length < 7) return t.days.includes(weekday(date));
@@ -2504,13 +2510,16 @@ function shell(body, full) {
   const head = full ? header() : '';
   return (Store && Store.demo ? `<div class="demo">${T('demo')}</div>` : '') + (typeof viewAsBar === 'function' ? viewAsBar() : '') + (typeof geoBar === 'function' ? geoBar() : '') + head + body;
 }
+// Счётчик «ждёт внимания админа» — используется и в шапке, и на кнопке «Админка» внизу
+function adminPend() {
+  return isAdmin() ? (typeof payDueN === 'function' ? payDueN() : 0) + unreadFor(S.me.uid) + pendingCount() + S.photos.length + (S.claims || []).filter(c => c.status === 'pending').length + S.payouts.filter(p => p.status === 'requested').length : 0;
+}
 function header() {
   const me = S.me, L = Logic.level(Logic.earned(S.logs));
   const onHome = S.view === 'home' && S.htab === 'today';
-  const pend = isAdmin() ? (typeof payDueN === 'function' ? payDueN() : 0) + unreadFor(S.me.uid) + pendingCount() + S.photos.length + (S.claims || []).filter(c => c.status === 'pending').length + S.payouts.filter(p => p.status === 'requested').length : 0;
   return `<header class="top"><button class="homebtn ${onHome ? 'on' : ''}" data-act="home" aria-label="home">🏠</button>`
     + `<div class="whot"><div class="nm">${esc(firstName(me.name))}</div><div class="lv">${esc(loc(L.name))}</div></div>`
-    + (isAdmin() ? `<button class="admbtn ${S.view === 'admin' ? 'on' : ''}" data-act="${S.view === 'admin' ? 'home' : 'admin'}" aria-label="admin">⚙️${pend ? `<span class="badge">${pend}</span>` : ''}</button>` : '')
+    + `<button class="admbtn ${S.htab === 'me' ? 'on' : ''}" data-act="htab" data-id="me" aria-label="profile">👤</button>`
     + `<button class="giftbtn" data-act="htab" data-id="rewards" aria-label="rewards">🎁</button>`    + `<div class="coinpill" id="coinTarget" data-act="htab" data-id="rewards">${COINSTACK}<b id="coinAmt" class="${S.shown < 0 ? 'neg' : ''}">${M(S.shown)}</b></div>${typeof clockBar === 'function' ? clockBar() : ''}</header>`
     + `<div class="lvbar"><i style="width:${Math.round(L.pct * 100)}%"></i></div>`;
 }
@@ -2556,7 +2565,10 @@ function viewHome() {
   // Центр панели — зелёная кнопка «Локация» (поделиться геопозицией), сразу видна
   const locTab = `<button class="loctab" data-act="geoShare"><span class="locpin">📍${S.geoOn ? '<i class="locdot"></i>' : ''}</span>${T('nav_loc')}</button>`;
   const navMsg = `<button class="msgtab ${S.htab === 'msgs' ? 'on' : ''}" data-act="htab" data-id="msgs"><span>✉️</span>${T('nav_msgs')}${unread ? `<em>${unread > 99 ? '99+' : unread}</em>` : ''}</button>`;
-  return body + `<nav class="tabbar">${tab(tabs[0])}${tab(tabs[1])}${locTab}${tab(['me', '👤', T('nav_me')])}${navMsg}</nav>`;
+  // Шестерёнка «Админка» — только у админа, на месте бывшего «Профиля». У остальных здесь ничего нет (4 кнопки).
+  const ap = adminPend();
+  const navAdmin = isAdmin() ? `<button class="admtab ${S.view === 'admin' ? 'on' : ''}" data-act="${S.view === 'admin' ? 'home' : 'admin'}"><span>⚙️</span>${T('nav_admin')}${ap ? `<em>${ap > 99 ? '99+' : ap}</em>` : ''}</button>` : '';
+  return body + `<nav class="tabbar">${tab(tabs[0])}${tab(tabs[1])}${locTab}${navAdmin}${navMsg}</nav>`;
 }
 // «Меню»: разделы как папки; внутри раздела — путь «Меню › Раздел»
 const MENU = [
@@ -2801,7 +2813,7 @@ function taskForm(t) {
   const L = S.lang, others = ['uz', 'ru', 'en'].filter(l => l !== L);
   const tabs = [['main', '✏️', T('tk_main')], ['when', '🔁', T('tk_when')], ['who', '👤', T('tk_who')], ['more', '⚙️', T('tk_more')]];
   const head = `<button class="tkhead" data-act="tkopen" data-id="${esc(t.id)}"><span class="ttime">${esc(t.time || '—')}</span><span class="ticon">${esc(t.icon || '•')}</span>`
-    + `<span class="tmain"><b>${esc(loc(t.title))}${t.active === false ? ' ⏸' : ''}</b><small>${'%META%'}</small></span><span class="tkarrow">${open ? '▴' : '▾'}</span></button>`;
+    + `<span class="tmain"><b>${esc(loc(t.title))}${t.active === false ? ' ⏸' : ''}${t.draft ? ` <i class="draftmark">${T('tk_draft')}</i>` : ''}</b><small>${'%META%'}</small></span><span class="tkarrow">${open ? '▴' : '▾'}</span></button>`;
   if (!open) return `<div class="tk" data-tid="${esc(t.id)}">${head}</div>`;
   return `<div class="tk open" data-tid="${esc(t.id)}" data-sched="${sched}">${head}<div class="tkbody">`
     + `<div class="tktabs">${tabs.map(([k, i, n]) => `<button class="${tab === k ? 'on' : ''}" data-act="tktab" data-id="${k}">${i} ${n}</button>`).join('')}</div>`
@@ -2833,7 +2845,7 @@ function admTasks() {
   const who = S.tfor || 'all';
   const chips = `<div class="whochips"><button class="${who === 'all' ? 'on' : ''}" data-act="tfor" data-id="all">📋 ${T('all_tasks')} <small>${ts.length}</small></button>`
     + people.map(u => `<button class="${who === u.uid ? 'on' : ''}" data-act="tfor" data-id="${esc(u.uid)}">${esc(firstName(u.name))} <small>${ts.filter(t => Logic.assigned(t, u, null)).length}</small></button>`).join('') + `</div>`;
-  const list = who === 'all' ? ts : ts.filter(t => { const u = people.find(x => x.uid === who); return u && Logic.assigned(t, u, null); });
+  const list = (S.draft ? [S.draft] : []).concat(who === 'all' ? ts : ts.filter(t => { const u = people.find(x => x.uid === who); return u && Logic.assigned(t, u, null); }));
   const forWho = t => people.filter(u => Logic.assigned(t, u, null)).map(u => firstName(u.name)).join(', ') || '—';
   return `<div class="card"><h3>📋 ${T('tab_tasks')}</h3><div class="mut">${T('adm_tasks_hint')}</div>${chips}`
     + `<div class="btnrow">${ts.length ? '' : `<button class="btn gold" data-act="seed">${T('load_defaults')}</button>`}<button class="btn gold" data-act="newtask">${T('add_task')}</button></div></div>`
@@ -3077,16 +3089,21 @@ ACT.seed = () => guarded(async () => {
     await Store.saveSettings(Object.assign({}, S.settings, { tz: d.tz, missPenaltyPct: d.missPenaltyPct, warnings: d.warnings, burnPct: d.burnPct, weeklyGoalPct: d.weeklyGoalPct, budgetUsd: 0, rateCoins: d.rateCoins, prizes: d.prizes, sounds: S.settings.sounds || {} }));
   }
 });
-ACT.newtask = () => guarded(async () => {
+// «+ Задание» создаёт только ЧЕРНОВИК на экране. В базу он попадает, считается и влияет на монеты
+// только после «Сохранить». «Закрыть» или 🗑 у черновика — просто убирают его, ничего не списывается.
+ACT.newtask = () => {
   const id = 't_' + Date.now().toString(36); S.openTask = id; S.tkTab = 'main';
-  setTimeout(() => { const b = document.querySelector(`.tk[data-tid="${id}"]`); if (b) b.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 300);
   const u = (S.tfor && S.tfor !== 'all') ? S.users.find(x => x.uid === S.tfor) : null;
   const rel = u && u.relation ? [u.relation] : ['*'];
-  await Store.saveTask({ id, time: '', icon: '⭐', title: { uz: 'Yangi vazifa', ru: 'Новое задание', en: 'New task' }, reward: 1000, graceMin: 60, earlyMin: 15, relations: rel, uids: [], active: true, since: clock().date, photo: 'opt' });
-});
+  S.draft = { id, draft: true, time: '', icon: '⭐', title: { uz: 'Yangi vazifa', ru: 'Новое задание', en: 'New task' }, reward: 1000, graceMin: 60, earlyMin: 15, relations: rel, uids: [], active: true, since: clock().date, photo: 'opt' };
+  render();
+  setTimeout(() => { const b = document.querySelector(`.tk[data-tid="${id}"]`); if (b) b.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 120);
+};
+const isDraft = id => !!(S.draft && S.draft.id === id);
 ACT.savetask = el => guarded(async () => {
   const d = document.querySelector(`.tk[data-tid="${CSS.escape(el.dataset.id)}"]`), g = k => d.querySelector(`[data-tf="${k}"]`);
-  const old = taskById(el.dataset.id);
+  const old = taskById(el.dataset.id) || (isDraft(el.dataset.id) ? S.draft : null);
+  if (!old) return;
   const t = Object.assign({}, old, {
     time: g('time').value, icon: g('icon').value,
     title: { uz: g('title_uz').value, ru: g('title_ru').value, en: g('title_en').value },
@@ -3101,8 +3118,18 @@ ACT.savetask = el => guarded(async () => {
   const days = [...d.querySelectorAll('[data-td]')].filter(i => i.checked).map(i => +i.dataset.td).sort();
   t.days = sched === 'days' ? days : [];
   t.once = sched === 'once' ? (g('once').value || clock().date) : '';
+  delete t.draft;
+  // Время на сегодня уже прошло в момент сохранения (новое задание или изменили время) —
+  // сегодня его не считаем и не штрафуем, оно начнётся со следующего раза.
+  const now = clock(), changed = !old || old.draft || old.time !== t.time;
+  let late = false;
+  if (changed) {
+    if (t.time && Logic.toMin(t.time) + (t.graceMin ?? 60) < now.min) { t.skipDate = now.date; late = true; }
+    else if (t.skipDate === now.date) delete t.skipDate;
+  }
   S.openTask = null; S.tkTab = 'main'; await Store.saveTask(t);
-  banner('good', '💾 ' + T('saved_ok'), `${t.time ? t.time + ' ' : ''}${loc(t.title)}`, 2000);
+  if (isDraft(t.id)) S.draft = null;
+  banner('good', '💾 ' + T('saved_ok'), `${t.time ? t.time + ' ' : ''}${loc(t.title)}${late ? '\n' + T('tk_starts_next') : ''}`, late ? 3600 : 2000);
 });
 ACT.trow = (el, e) => { if (e && e.target.closest('button') && e.target.closest('button') !== el) return; S.trOpen = S.trOpen === el.dataset.id ? null : el.dataset.id; render(); };
 // Кружок «?» рядом с настройкой: касание показывает объяснение, повторное — прячет
@@ -3116,11 +3143,14 @@ ACT.hq = (el, e) => {
   b.addEventListener('click', () => { b.remove(); el.classList.remove('on'); });
   host.after(b); el.classList.add('on');
 };
-ACT.tkopen = el => { const id = el.dataset.id; S.openTask = S.openTask === id ? null : id; S.tkTab = 'main'; render(); };
+ACT.tkopen = el => { const id = el.dataset.id; if (S.openTask === id && isDraft(id)) S.draft = null; S.openTask = S.openTask === id ? null : id; S.tkTab = 'main'; render(); };
 // Вкладки внутри задания переключаются без перерисовки, чтобы не терять набранное
 ACT.tktab = el => { const box = el.closest('.tk'); box.querySelectorAll('.tktabs button').forEach(b => b.classList.toggle('on', b === el)); box.querySelectorAll('.tkpane').forEach(p => p.classList.toggle('on', p.dataset.pane === el.dataset.id)); S.tkTab = el.dataset.id; };
 document.addEventListener('change', e => { if (e.target.dataset && e.target.dataset.tf === 'sched') { const b = e.target.closest('.tk'); if (b) b.dataset.sched = e.target.value; } });
-ACT.deltask = el => ask(T('confirm_remove'), () => Store.delTask(el.dataset.id));
+ACT.deltask = el => {
+  if (isDraft(el.dataset.id)) { S.draft = null; S.openTask = null; render(); return; } // черновик ещё не сохранён — просто убираем
+  ask(T('confirm_remove'), () => Store.delTask(el.dataset.id));
+};
 
 // админ: настройки, звуки, выплаты
 ACT.savesettings = () => guarded(async () => {
@@ -4659,9 +4689,16 @@ function haptic() {
     if (isIOS()) HAPT.click(); // iOS 18+: переключатель даёт лёгкий тактильный отклик
   } catch (e) { /* нет поддержки */ }
 }
+// Поле ввода (текст, число, время, дата, список) — тактильный отклик НЕ даём:
+// на iPhone он нажимает скрытый переключатель и отнимает фокус у поля (клавиатура/выбор времени закрываются).
+const isField = n => n && /^(INPUT|TEXTAREA|SELECT)$/.test(n.tagName) && n.type !== 'checkbox' && n.type !== 'radio';
 document.addEventListener('click', e => {
-  if (e.target.closest && e.target.closest('#hapt')) return;
-  if (e.target.closest && e.target.closest('button,a,[data-act],select,label')) haptic();
+  const t = e.target;
+  if (!t || !t.closest || t.closest('#hapt')) return;
+  if (isField(t) || isField(document.activeElement)) return;
+  const lab = t.closest('label');
+  if (lab && isField(lab.querySelector('input,textarea,select'))) return;
+  if (t.closest('button,a,[data-act],label')) haptic();
 }, true);
 
 
