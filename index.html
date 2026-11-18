@@ -541,6 +541,9 @@ details.langs{margin:4px 0}details.langs summary{color:var(--mut);font-size:13px
 .geomapinfo{margin-bottom:8px}
 .geomap .leaflet-container{height:100%;width:100%;background:#0a2a1f}
 .verline{margin-top:14px;font-size:12px;opacity:.6}
+/* ---- вкладка «Письма» ---- */
+.chatpanel{display:flex;flex-direction:column}
+.chatlist.tabchat{max-height:none;min-height:40vh}
 
 </style>
 </head>
@@ -550,7 +553,7 @@ details.langs{margin:4px 0}details.langs summary{color:var(--mut);font-size:13px
 /* ============================================================
    НАСТРОЙКИ — заполняются один раз (см. SETUP.md)
    ============================================================ */
-const APP_VERSION = '2026.11.18-1';
+const APP_VERSION = '2026.11.18-2';
 const APP_CONFIG = {
   // Ваша Google-почта. Этот аккаунт автоматически станет главным администратором.
   OWNER_EMAIL: "3307999@gmail.com",
@@ -1108,7 +1111,8 @@ Object.assign(D, {
   geo_nodata: ["Hali joylashuv ma'lumoti yo'q", "Пока нет данных о местоположении", "No location data yet"],
   map_hint: ["Faqat «Ulashish»ni yoqqan oila a'zolari ko'rinadi. Har birida — xaritada joyi va yurgan yo'li.", "Здесь те, кто сам включил «Поделиться». У каждого — место на карте и путь, которым шёл.", "Only family who turned sharing on appear here. Each has their place on the map and the route taken."],
   map_empty: ["Hali hech kim joylashuvini ulashmagan.", "Пока никто не поделился геопозицией.", "Nobody is sharing their location yet."],
-  me_more: ["Boshqa", "Ещё", "More"]
+  me_more: ["Boshqa", "Ещё", "More"],
+  msgs_hint_user: ["Bu yerdan to'g'ridan-to'g'ri administratorga yozing. U javob bersa, shu yerda ko'rinadi.", "Пишите прямо отсюда администратору. Его ответ появится здесь же.", "Write to the admin right here. Their reply shows up here too."]
 });
 
 
@@ -2357,10 +2361,12 @@ function viewHome() {
   if (S.htab === 'rewards') body = viewRewards();
   else if (S.htab === 'menu') body = viewMenu();
   else if (S.htab === 'me') body = viewMe();
+  else if (S.htab === 'msgs') body = viewMessages();
   else body = modeButtons() + viewToday();
   const tabs = [['today', '✅', T('nav_tasks')], ['rewards', '🎁', T('nav_rewards')], ['menu', '📂', T('nav_menu')], ['me', '👤', T('nav_me')]];
   const unread = unreadFor(S.me.uid);
-  const navMsg = `<button class="msgtab" data-act="navMsgs"><span>✉️</span>${T('nav_msgs')}${unread ? `<em>${unread > 99 ? '99+' : unread}</em>` : ''}</button>`;
+  // «Письма» — обычная вкладка (работает как «Профиль»), иконка-конверт, с числом непрочитанных
+  const navMsg = `<button class="msgtab ${S.htab === 'msgs' ? 'on' : ''}" data-act="htab" data-id="msgs"><span>✉️</span>${T('nav_msgs')}${unread ? `<em>${unread > 99 ? '99+' : unread}</em>` : ''}</button>`;
   return body + `<nav class="tabbar">${tabs.map(([k, i, n]) => `<button class="${S.htab === k ? 'on' : ''}" data-act="htab" data-id="${k}"><span>${i}</span>${n}</button>`).join('')}${navMsg}</nav>`;
 }
 // «Меню»: разделы как папки; внутри раздела — путь «Меню › Раздел»
@@ -4727,6 +4733,20 @@ function admMsgs() {
     + threads.map(t => { const u = S.users.find(x => x.uid === t.uid) || { name: t.last.name };
       return `<button class="card thread ${t.unread ? 'unread' : ''}" data-act="openThread" data-uid="${esc(t.uid)}"><div class="urow">${avatar(u)}<div style="min-width:0;flex:1"><b>${esc(u.name || '')}</b><div class="mut" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.last.from === meId ? '↩ ' : ''}${esc(t.last.text || (t.last.photo ? '📷 ' + T('msg_photo') : ''))}</div></div>${t.unread ? `<span class="badge">${t.unread}</span>` : ''}</div></button>`; }).join('')
     + (others.length ? `<div class="card"><h3>${T('msg_new')}</h3>${others.map(u => `<button class="btn" data-act="openThread" data-uid="${esc(u.uid)}">✉️ ${esc(firstName(u.name))}</button>`).join(' ')}</div>` : '');
+}
+
+/* ---------- вкладка «Письма» (работает как обычная вкладка, не модалка) ---------- */
+function viewMessages() {
+  // Админ видит список переписок; нажатие на переписку открывает её
+  if (isAdmin() && !S.viewAs) return admMsgs();
+  // Обычный пользователь (жена/ребёнок): переписка с админом прямо на экране
+  S.chatUid = S.me.uid;
+  setTimeout(() => drawChat(), 0);
+  return `<div class="card"><h2>✉️ ${T('write_admin')}</h2><div class="mut">${T('msgs_hint_user')}</div></div>`
+    + `<div class="chatpanel"><div class="chatlist tabchat" id="chatList"></div>`
+    + `<div class="chatin"><button class="attbtn" data-act="attMenu" aria-label="attach">📎</button>`
+    + `<textarea id="chatText" rows="1" placeholder="${esc(T('msg_ph'))}"></textarea>`
+    + `<button class="btn gold sendbtn" data-act="chatSend">➤</button></div></div>`;
 }
 
 
