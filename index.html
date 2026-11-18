@@ -605,6 +605,41 @@ body.incrumbs #app{padding-bottom:150px}
 .tabbar .loctab{background:linear-gradient(180deg,#34d975,#15803d);color:#fff;border-radius:16px;box-shadow:0 0 16px rgba(46,232,143,.4),inset 0 1px 0 rgba(255,255,255,.3);margin-top:-10px}
 .tabbar .loctab span{filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
 .tabbar .loctab.on{background:linear-gradient(180deg,#2ee88f,#0b7a38);animation:pulseg 1.6s ease-in-out infinite}
+/* ---- Фокус: таймер / секундомер / помодоро ---- */
+.focusfolder{background:linear-gradient(160deg,rgba(255,210,63,.14),rgba(255,255,255,.05));border-color:rgba(255,210,63,.5)}
+body.focuson{overflow:hidden}
+.focusov{position:fixed;inset:0;z-index:95;display:flex;flex-direction:column;background:radial-gradient(circle at 50% 25%,#14634a,#06241a 60%,#020a07);color:#fff;padding-top:env(safe-area-inset-top)}
+.fbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;font-size:18px}
+.fx{width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:20px;cursor:pointer}
+.ftabs{display:flex;gap:6px;padding:0 14px 8px}
+.ftabs button{flex:1;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.06);color:var(--mut);font:inherit;font-weight:800;padding:12px 4px;cursor:pointer}
+.ftabs button.on{background:var(--gold);color:#2a1b00;border-color:var(--gold)}
+.fbody{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;gap:14px;padding:18px 16px calc(24px + env(safe-area-inset-bottom))}
+.fface{font-size:76px;font-weight:900;letter-spacing:2px;font-variant-numeric:tabular-nums;color:#ffd23f;text-shadow:0 6px 24px rgba(255,210,63,.35);margin-top:10px}
+.flabel{font-size:18px;font-weight:800;color:#e6fff3}
+.fpresets{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.fpresets button{border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.06);color:#fff;font:inherit;font-weight:800;padding:10px 16px;cursor:pointer}
+.fpresets button.on{background:rgba(255,210,63,.2);border-color:var(--gold);color:#fff}
+.fadj{display:flex;align-items:center;gap:10px;font-weight:800}
+.fadj button{border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.08);color:#fff;font:inherit;font-weight:900;padding:8px 14px;cursor:pointer}
+.fadj span{min-width:70px;color:var(--mut)}.fadj b{min-width:34px;text-align:center;font-size:18px}
+.flabelin{width:100%;max-width:360px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.3);color:#fff;padding:12px;font:inherit;font-size:16px}
+.fctl{display:flex;gap:10px;width:100%;max-width:360px}.fctl .big{min-height:60px;font-size:20px;margin:0}
+.flaps{width:100%;max-width:360px;display:flex;flex-direction:column;gap:4px}
+.flaps div{display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--line)}
+.flaps span{color:var(--mut)}.flaps b{font-variant-numeric:tabular-nums}
+.fphase{font-size:22px;font-weight:900;padding:8px 18px;border-radius:999px}
+.fphase.work{background:rgba(46,232,143,.18);color:#2ee88f}.fphase.brk{background:rgba(47,143,224,.2);color:#7ab7f0}
+.focusring{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;background:radial-gradient(circle at 50% 40%,#1b7a53,#06241a 70%)}
+.focusring .rbell{font-size:120px;animation:pulseb 1s ease-in-out infinite}
+.focusring h1{font-size:30px}.focusring .big{max-width:320px;width:100%}
+/* ---- люди: аккордеон (свёрнуты, разворачивается один) ---- */
+.card.u{padding:0;overflow:hidden}
+.uhead{display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.card.u.open{padding:0 14px 14px}
+.card.u.open .uhead{padding:12px 0 8px}
+.uhead .chip{margin-left:auto}
+.uhead .tkarrow{flex:none}
 
 </style>
 </head>
@@ -614,7 +649,7 @@ body.incrumbs #app{padding-bottom:150px}
 /* ============================================================
    НАСТРОЙКИ — заполняются один раз (см. SETUP.md)
    ============================================================ */
-const APP_VERSION = '2026.11.18-5';
+const APP_VERSION = '2026.11.18-6';
 const APP_CONFIG = {
   // Ваша Google-почта. Этот аккаунт автоматически станет главным администратором.
   OWNER_EMAIL: "3307999@gmail.com",
@@ -1227,7 +1262,25 @@ Object.assign(D, {
   hq_pay_sched: ["Qanchalik tez-tez to'lov takrorlanadi.", "Как часто повторяется платёж.", "How often the payment repeats."],
   hq_pay_lead: ["Muddatdan necha kun oldin eslatma chiqa boshlaydi (masalan, 3 kun oldin).", "За сколько дней до срока начинает показываться напоминание (например, за 3 дня).", "How many days before the due date the reminder starts (e.g. 3 days)."],
   hq_pay_shift: ["To'lov kuni shanba yoki yakshanbaga to'g'ri kelsa, muddat jumaga suriladi (bank ishlamasligi mumkin).", "Если день оплаты выпадает на субботу/воскресенье, срок сдвигается на пятницу (банк может не работать).", "If the due day lands on Sat/Sun, it shifts to Friday (the bank may be closed)."],
-  nav_loc: ["Joylashuv", "Локация", "Location"]
+  nav_loc: ["Joylashuv", "Локация", "Location"],
+  foc_title: ["Fokus", "Фокус", "Focus"],
+  foc_menu_sub: ["Taymer · Sekundomer · Pomodoro", "Таймер · Секундомер · Помодоро", "Timer · Stopwatch · Pomodoro"],
+  foc_timer: ["Taymer", "Таймер", "Timer"],
+  foc_stopw: ["Sekundomer", "Секундомер", "Stopwatch"],
+  foc_pomo: ["Pomodoro", "Помодоро", "Pomodoro"],
+  foc_min: ["daq", "мин", "min"],
+  foc_start: ["Boshlash", "Старт", "Start"],
+  foc_pause: ["Pauza", "Пауза", "Pause"],
+  foc_reset: ["Qayta", "Сброс", "Reset"],
+  foc_lap: ["Krug", "Круг", "Lap"],
+  foc_stop: ["To'xtatish", "Стоп", "Stop"],
+  foc_timer_done: ["Vaqt tugadi!", "Время вышло!", "Time is up!"],
+  foc_work: ["Ish", "Работа", "Work"],
+  foc_break: ["Dam olish", "Перерыв", "Break"],
+  foc_work_now: ["Ishga! {m} daqiqa", "За работу! {m} минут", "Work! {m} min"],
+  foc_break_now: ["Dam oling! {m} daqiqa", "Перерыв! {m} минут", "Break! {m} min"],
+  foc_pomo_done: ["Bajarilgan pomodoro: {n}", "Сделано помодоро: {n}", "Pomodoros done: {n}"],
+  foc_label_ph: ["Nima qilyapsiz? (ixtiyoriy)", "Что делаете? (необязательно)", "What are you doing? (optional)"]
 });
 
 
@@ -2398,7 +2451,7 @@ document.addEventListener('pointerdown', () => { PTR.down = true; clearTimeout(P
 document.addEventListener('scroll', ptrUp, { passive: true, capture: true });
 function typing() {
   const a = document.activeElement;
-  return !!(a && $('#app') && $('#app').contains(a) && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && a.type !== 'checkbox');
+  return !!(a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && a.type !== 'checkbox');
 }
 function render() {
   const app = $('#app'); if (!app) return;
@@ -2498,7 +2551,8 @@ function viewMenu() {
     const soon = Logic.upcomingEvents(eventsNow(), clock().date, 7)[0];
     return writeAdminBtn() + `<div class="card"><h2>📂 ${T('nav_menu')}</h2><div class="mut">${T('menu_hint')}</div></div><div class="folders">`
       + MENU.map(([k, i, t, sub]) => `<button class="folder" data-act="menu" data-id="${k}"><span class="fi">${i}</span><b>${T(t)}</b><small>${T(sub)}</small>`
-        + (k === 'events' && soon ? `<em>${esc(soon.icon || '🎉')} ${soon.left === 0 ? T('ev_today') : T('ev_in', { n: soon.left })}</em>` : '') + `</button>`).join('') + `</div>`;
+        + (k === 'events' && soon ? `<em>${esc(soon.icon || '🎉')} ${soon.left === 0 ? T('ev_today') : T('ev_in', { n: soon.left })}</em>` : '') + `</button>`).join('')
+      + `<button class="folder focusfolder" data-act="focus"><span class="fi">⏱</span><b>${T('foc_title')}</b><small>${T('foc_menu_sub')}</small></button></div>`;
   }
   const body = { kids: viewKids, kitchen: viewKitchen, events: viewEvents, family: viewFamily, cards: viewCards, contacts: viewContacts }[m[0]]();
   return body + `<div class="crumbsbar"><button data-act="menu" data-id="">📂 ${T('nav_menu')}</button><span>›</span><b>${m[1]} ${T(m[2])}</b></div>`;
@@ -2553,7 +2607,7 @@ function viewToday() {
       return `<div class="trow2 st-${st} ${op ? 'open' : ''}" data-act="trow" data-id="${esc(t.id)}"><span class="ttime">${esc(t.time)}</span><span class="ticon">${esc(t.icon || '•')}</span><div class="tmain"><b>${esc(loc(t.title))}</b></div>${badge}<span class="tkarrow">${op ? '▴' : '▾'}</span></div>${info}`;
     }).join('') + `</div>`;
   }
-  out += eventsCard(now);
+  // События вынесены в Меню → События, чтобы не отвлекать от заданий
   celebrate(now);
   return out;
 }
@@ -2691,7 +2745,10 @@ function admUsers() {
     const self = u.uid === S.me.uid, sel = S.sel[u.uid] || {};
     const rel = sel.relation !== undefined ? sel.relation : u.relation;
     const adm = sel.isAdmin !== undefined ? sel.isAdmin : u.isAdmin;
-    return `<div class="card u ${u.status}"><div class="urow">${avatar(u)}<div style="min-width:0"><b>${esc(u.name)}</b><div class="mut" style="overflow:hidden;text-overflow:ellipsis">${esc(u.email)}</div></div><span class="chip ${u.status}">${T('st_' + u.status)}</span></div>`
+    const open = S.uopen === u.uid;
+    const head = `<button class="urow uhead" data-act="uopen" data-uid="${esc(u.uid)}">${avatar(u)}<div style="min-width:0;flex:1"><b>${esc(u.name)}</b><div class="mut" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(u.email)}</div></div><span class="chip ${u.status}">${T('st_' + u.status)}</span><span class="tkarrow">${open ? '▴' : '▾'}</span></button>`;
+    if (!open) return `<div class="card u ${u.status}">${head}</div>`;
+    return `<div class="card u ${u.status} open">${head}`
       + `<label class="f">${T('relation')}<select data-uf="relation" data-uid="${esc(u.uid)}">${relOptions(rel)}</select></label>`
       + `<label class="chk"><input type="checkbox" data-uf="isAdmin" data-uid="${esc(u.uid)}" ${adm ? 'checked' : ''} ${self ? 'disabled' : ''}> ${T('is_admin')}</label>`
       + `<label class="chk"><input type="checkbox" data-mode2="relax" data-uid="${esc(u.uid)}" ${(u.modes || {}).relax ? 'checked' : ''}> 👩 ${T('mode_relax')} ${hq('modes')}</label>`
@@ -2884,6 +2941,29 @@ async function completeTask(t, now, photo, el) {
   flyCoin(el);
   play('coin');
   await Store.addLog(Logic.doneLog(S.me, t, now, photo));
+  celebrateDone(t, now);
+}
+const MOTIVATE = [
+  ["Zo'r! Davom et! \ud83d\udcaa", "Отлично! Так держать! \ud83d\udcaa", "Great! Keep going!"],
+  ["Ajoyib! Yana bittasi \ud83d\udd25", "Супер! Ещё одно — и ты молодец \ud83d\udd25", "Awesome! One more \ud83d\udd25"],
+  ["Bugun sen chempionsan! \ud83c\udfc6", "Сегодня ты чемпион! \ud83c\udfc6", "You're a champion today! \ud83c\udfc6"],
+  ["Pul ishlandi! \ud83d\udcb0", "Денежка заработана! \ud83d\udcb0", "Money earned! \ud83d\udcb0"],
+  ["Harakat — natija! Oldinga! \u26a1", "Действие — результат! Вперёд! \u26a1", "Action brings results! \u26a1"]
+];
+function celebrateDone(t, now) {
+  try { confetti(); } catch (e) { /* ignore */ }
+  play('fanfare');
+  if (navigator.vibrate) navigator.vibrate([130, 60, 130]);
+  const m = MOTIVATE[Math.floor(Math.random() * MOTIVATE.length)], nxt = nextTaskHint(now);
+  banner('good', '\ud83c\udf89 +' + M(t.reward), loc(m) + (nxt ? '\n\u2192 ' + nxt : ''), 4200);
+}
+function nextTaskHint(now) {
+  try {
+    const idx = Logic.logIndex(S.logs);
+    const up = S.tasks.filter(t => Logic.assigned(t, S.me, now.date) && Logic.taskState(t, now.date, now, idx.get(Logic.logId(S.me.uid, now.date, t.id))) === 'upcoming')
+      .sort((a, b) => a.time.localeCompare(b.time))[0];
+    return up ? `${up.time} ${loc(up.title)}` : '';
+  } catch (e) { return ''; }
 }
 ACT.done = el => guarded(async () => {
   const t = taskById(el.dataset.id), now = clock(); if (!t) return;
@@ -3051,6 +3131,7 @@ ACT.voiceToggle = () => { safeSet('fp_voice', safeGet('fp_voice') === '0' ? '1' 
 ACT.home = () => { S.adminOpen = false; S.htab = 'today'; S.menu = ''; route(); render(); window.scrollTo(0, 0); };
 ACT.menu = el => { S.menu = el.dataset.id; S.htab = 'menu'; render(); window.scrollTo(0, 0); };
 ACT.tfor = el => { S.tfor = el.dataset.id; render(); };
+ACT.uopen = el => { S.uopen = S.uopen === el.dataset.uid ? null : el.dataset.uid; render(); };
 ACT.howtoggle = (el, e) => { e.preventDefault(); S.howOpen = !S.howOpen; render(); };
 // Задания человека: что назначено и что сделано сегодня
 ACT.utasks = el => {
@@ -5197,6 +5278,129 @@ function payDueN() {
   const today = clock().date;
   return pays().reduce((n, p) => { const s = payState(p, today); return n + (s && (s.st === 'due' || s.st === 'overdue') ? 1 : 0); }, 0);
 }
+
+
+/* ===== timer.js: «Фокус» — таймер, секундомер, помодоро (звонят и дёргают вовремя).
+   Отдельный экран-оверлей со своим тиканьем, не зависит от общей перерисовки. ===== */
+
+const FS = {
+  tab: 'timer', ringing: false, ringLabel: '', ringAt: 0,
+  timer: { set: 25 * 60, left: 25 * 60, endAt: 0, running: false, label: '' },
+  sw: { base: 0, startAt: 0, running: false, laps: [] },
+  pomo: { work: 25, brk: 15, phase: 'work', endAt: 0, left: 25 * 60, running: false, done: 0, label: '' }
+};
+let focusIv = null;
+
+const fmtClock = s => {
+  s = Math.max(0, Math.round(s)); const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), x = s % 60;
+  const p = n => String(n).padStart(2, '0');
+  return h ? `${h}:${p(m)}:${p(x)}` : `${p(m)}:${p(x)}`;
+};
+const fmtSw = ms => { const s = Math.floor(ms / 1000), cs = Math.floor((ms % 1000) / 10); return `${fmtClock(s)}.${String(cs).padStart(2, '0')}`; };
+
+ACT.focus = () => openFocus();
+function openFocus(tab) {
+  if (document.getElementById('focusov')) { if (tab) { FS.tab = tab; drawFocus(); } return; }
+  FS.tab = tab || FS.tab;
+  const ov = document.createElement('div'); ov.id = 'focusov'; ov.className = 'focusov';
+  document.body.appendChild(ov); document.body.classList.add('focuson');
+  try { Snd.unlock(); } catch (e) { /* ignore */ }
+  drawFocus();
+  if (!focusIv) focusIv = setInterval(focusTick, 200);
+}
+function closeFocus() {
+  stopRing();
+  const ov = document.getElementById('focusov'); if (ov) ov.remove();
+  document.body.classList.remove('focuson');
+  if (focusIv && !FS.timer.running && !FS.sw.running && !FS.pomo.running) { clearInterval(focusIv); focusIv = null; }
+}
+ACT.focusClose = () => closeFocus();
+ACT.focusTab = el => { FS.tab = el.dataset.id; drawFocus(); };
+
+/* ---------- тиканье ---------- */
+function focusTick() {
+  const now = Date.now();
+  if (FS.ringing) { if (now - FS.ringAt > 900) { FS.ringAt = now; try { play('bell'); } catch (e) { /* ignore */ } if (navigator.vibrate) navigator.vibrate([500, 250, 500]); } return; }
+  // таймер
+  if (FS.timer.running) { FS.timer.left = Math.max(0, (FS.timer.endAt - now) / 1000); if (FS.timer.left <= 0) { FS.timer.running = false; ring(FS.timer.label || T('foc_timer_done')); } updateTimerFace(); }
+  // помодоро
+  if (FS.pomo.running) {
+    FS.pomo.left = Math.max(0, (FS.pomo.endAt - now) / 1000);
+    if (FS.pomo.left <= 0) {
+      if (FS.pomo.phase === 'work') { FS.pomo.done++; FS.pomo.phase = 'break'; FS.pomo.endAt = now + FS.pomo.brk * 60000; ring(T('foc_break_now', { m: FS.pomo.brk })); }
+      else { FS.pomo.phase = 'work'; FS.pomo.endAt = now + FS.pomo.work * 60000; ring(T('foc_work_now', { m: FS.pomo.work })); }
+    }
+    updatePomoFace();
+  }
+  if (FS.sw.running) updateSwFace();
+}
+function ring(label) {
+  FS.ringing = true; FS.ringLabel = label; FS.ringAt = 0;
+  try { play('fanfare'); } catch (e) { /* ignore */ }
+  drawFocus();
+}
+function stopRing() { if (!FS.ringing) return; FS.ringing = false; }
+ACT.focusStop = () => { stopRing(); drawFocus(); };
+
+/* ---------- отрисовка ---------- */
+function drawFocus() {
+  const ov = document.getElementById('focusov'); if (!ov) return;
+  if (FS.ringing) {
+    ov.innerHTML = `<div class="focusring"><div class="rbell">⏰</div><h1>${esc(FS.ringLabel)}</h1><button class="big gold pulse" data-act="focusStop">⏹ ${T('foc_stop')}</button></div>`;
+    return;
+  }
+  const tabs = [['timer', '⏱', T('foc_timer')], ['stop', '⏲', T('foc_stopw')], ['pomo', '🍅', T('foc_pomo')]];
+  ov.innerHTML = `<div class="fbar"><b>⏱ ${T('foc_title')}</b><button class="fx" data-act="focusClose" aria-label="close">✕</button></div>`
+    + `<div class="ftabs">${tabs.map(([k, i, n]) => `<button class="${FS.tab === k ? 'on' : ''}" data-act="focusTab" data-id="${k}">${i} ${n}</button>`).join('')}</div>`
+    + `<div class="fbody">${FS.tab === 'timer' ? timerUI() : FS.tab === 'stop' ? swUI() : pomoUI()}</div>`;
+}
+
+/* ---------- Таймер ---------- */
+function timerUI() {
+  const t = FS.timer, presets = [1, 3, 5, 10, 15, 25, 45, 60];
+  return `<div class="fface" id="tFace">${fmtClock(t.running ? t.left : t.set)}</div>`
+    + (t.label ? `<div class="flabel">${esc(t.label)}</div>` : '')
+    + (!t.running ? `<div class="fpresets">${presets.map(m => `<button class="${t.set === m * 60 ? 'on' : ''}" data-act="tset" data-m="${m}">${m}${T('foc_min')}</button>`).join('')}</div>`
+      + `<div class="fadj"><button data-act="tadj" data-d="-60">−1${T('foc_min')}</button><button data-act="tadj" data-d="60">+1${T('foc_min')}</button><button data-act="tadj" data-d="300">+5${T('foc_min')}</button></div>`
+      + `<input class="flabelin" id="tLabel" placeholder="${esc(T('foc_label_ph'))}" value="${esc(t.label)}">` : '')
+    + `<div class="fctl">${t.running ? `<button class="big warn" data-act="tpause">⏸ ${T('foc_pause')}</button>` : `<button class="big green" data-act="tstart">▶ ${T('foc_start')}</button>`}<button class="big" data-act="treset">↺ ${T('foc_reset')}</button></div>`;
+}
+const updateTimerFace = () => { const f = document.getElementById('tFace'); if (f) f.textContent = fmtClock(FS.timer.left); };
+ACT.tset = el => { FS.timer.set = +el.dataset.m * 60; FS.timer.left = FS.timer.set; drawFocus(); };
+ACT.tadj = el => { FS.timer.set = Math.max(60, FS.timer.set + +el.dataset.d); FS.timer.left = FS.timer.set; drawFocus(); };
+ACT.tstart = () => { const inp = document.getElementById('tLabel'); if (inp) FS.timer.label = inp.value.trim(); if (FS.timer.left <= 0) FS.timer.left = FS.timer.set; FS.timer.endAt = Date.now() + FS.timer.left * 1000; FS.timer.running = true; try { Snd.unlock(); } catch (e) { /* ignore */ } drawFocus(); };
+ACT.tpause = () => { FS.timer.running = false; FS.timer.left = Math.max(0, (FS.timer.endAt - Date.now()) / 1000); drawFocus(); };
+ACT.treset = () => { FS.timer.running = false; FS.timer.left = FS.timer.set; stopRing(); drawFocus(); };
+
+/* ---------- Секундомер ---------- */
+function swUI() {
+  const s = FS.sw, el = s.base + (s.running ? Date.now() - s.startAt : 0);
+  return `<div class="fface" id="swFace">${fmtSw(el)}</div>`
+    + `<div class="fctl">${s.running ? `<button class="big warn" data-act="swstop">⏸ ${T('foc_pause')}</button>` : `<button class="big green" data-act="swstart">▶ ${T('foc_start')}</button>`}`
+    + `<button class="big" data-act="swlap">${s.running ? '⚑ ' + T('foc_lap') : '↺ ' + T('foc_reset')}</button></div>`
+    + (s.laps.length ? `<div class="flaps">${s.laps.map((l, i) => `<div><span>${T('foc_lap')} ${s.laps.length - i}</span><b>${fmtSw(l)}</b></div>`).reverse().join('')}</div>` : '');
+}
+const updateSwFace = () => { const f = document.getElementById('swFace'); if (f) f.textContent = fmtSw(FS.sw.base + (Date.now() - FS.sw.startAt)); };
+ACT.swstart = () => { FS.sw.startAt = Date.now(); FS.sw.running = true; if (!focusIv) focusIv = setInterval(focusTick, 200); drawFocus(); };
+ACT.swstop = () => { FS.sw.base += Date.now() - FS.sw.startAt; FS.sw.running = false; drawFocus(); };
+ACT.swlap = () => { if (FS.sw.running) { FS.sw.laps.push(FS.sw.base + (Date.now() - FS.sw.startAt)); drawFocus(); } else { FS.sw.base = 0; FS.sw.laps = []; drawFocus(); } };
+
+/* ---------- Помодоро ---------- */
+function pomoUI() {
+  const p = FS.pomo, isW = p.phase === 'work';
+  return `<div class="fphase ${isW ? 'work' : 'brk'}">${isW ? '💪 ' + T('foc_work') : '☕ ' + T('foc_break')}</div>`
+    + `<div class="fface" id="pFace">${fmtClock(p.running ? p.left : (isW ? p.work * 60 : p.brk * 60))}</div>`
+    + `<div class="mut center">${T('foc_pomo_done', { n: p.done })}</div>`
+    + (!p.running ? `<div class="fadj"><span>${T('foc_work')}</span><button data-act="padj" data-k="work" data-d="-5">−5</button><b>${p.work}</b><button data-act="padj" data-k="work" data-d="5">+5</button></div>`
+      + `<div class="fadj"><span>${T('foc_break')}</span><button data-act="padj" data-k="brk" data-d="-5">−5</button><b>${p.brk}</b><button data-act="padj" data-k="brk" data-d="5">+5</button></div>`
+      + `<input class="flabelin" id="pLabel" placeholder="${esc(T('foc_label_ph'))}" value="${esc(p.label)}">` : (p.label ? `<div class="flabel">${esc(p.label)}</div>` : ''))
+    + `<div class="fctl">${p.running ? `<button class="big warn" data-act="ppause">⏸ ${T('foc_pause')}</button>` : `<button class="big green" data-act="pstart">▶ ${T('foc_start')}</button>`}<button class="big" data-act="preset2">↺ ${T('foc_reset')}</button></div>`;
+}
+const updatePomoFace = () => { const f = document.getElementById('pFace'); if (f) f.textContent = fmtClock(FS.pomo.left); };
+ACT.padj = el => { const k = el.dataset.k; FS.pomo[k] = Math.max(5, Math.min(120, FS.pomo[k] + +el.dataset.d)); drawFocus(); };
+ACT.pstart = () => { const inp = document.getElementById('pLabel'); if (inp) FS.pomo.label = inp.value.trim(); const mins = FS.pomo.phase === 'work' ? FS.pomo.work : FS.pomo.brk; if (FS.pomo.left <= 0 || !FS.pomo.left) FS.pomo.left = mins * 60; FS.pomo.endAt = Date.now() + FS.pomo.left * 1000; FS.pomo.running = true; try { Snd.unlock(); } catch (e) { /* ignore */ } drawFocus(); };
+ACT.ppause = () => { FS.pomo.running = false; FS.pomo.left = Math.max(0, (FS.pomo.endAt - Date.now()) / 1000); drawFocus(); };
+ACT.preset2 = () => { FS.pomo.running = false; FS.pomo.phase = 'work'; FS.pomo.left = FS.pomo.work * 60; FS.pomo.done = 0; stopRing(); drawFocus(); };
 
 </script>
 </body>
