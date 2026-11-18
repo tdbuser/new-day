@@ -567,6 +567,44 @@ body.incrumbs #app{padding-bottom:150px}
 /* ---- стартовый экран: кнопка/текст строго по центру, с учётом выреза ---- */
 .startov{grid-template-rows:1fr auto 1fr}
 .startov .intro{grid-row:2}
+/* ---- язык: сегментные кнопки (надёжно на iOS, вместо выпадающего списка) ---- */
+.langpick{display:flex;gap:6px;margin-top:4px}
+.langpick button{flex:1;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.06);color:var(--mut);font:inherit;font-weight:800;padding:11px 6px;cursor:pointer}
+.langpick button.on{background:linear-gradient(180deg,#ffd23f,#e0951a);color:#2a1b00;border-color:var(--gold)}
+/* ---- экраны загрузки/ошибки по центру ---- */
+.midscreen{min-height:78vh;display:grid;place-items:center}
+/* ---- платежи ---- */
+.paycard{border:1px solid rgba(255,90,90,.5);background:linear-gradient(180deg,rgba(185,28,28,.12),rgba(255,255,255,.04))}
+.paybadge{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:999px;background:#e5342b;color:#fff;font-size:13px;font-weight:900;vertical-align:middle}
+.payrow{border-left:4px solid var(--pc);border-radius:12px;background:rgba(0,0,0,.25);padding:10px 12px;margin:8px 0}
+.payrow.overdue{background:rgba(185,28,28,.18);border-color:#e5342b}
+.payhd{display:flex;align-items:center;gap:8px}
+.payhd .pinfo{flex:1;min-width:0}.payhd .pinfo b{font-size:16px}.payhd .pinfo small{display:block;color:var(--mut)}
+.payhd .pamt{font-weight:900;color:var(--gold);white-space:nowrap}
+.pcard{display:flex;align-items:center;gap:8px;margin:6px 0}
+.pcard code{font-size:18px;letter-spacing:1px;font-weight:800;background:rgba(0,0,0,.35);padding:6px 10px;border-radius:10px;flex:1}
+.icopy{border:0;border-radius:10px;background:var(--gold);color:#2a1b00;font-size:16px;padding:8px 12px;cursor:pointer;flex:none}
+.pnote{margin:2px 0}
+.payfoot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px}
+.payfoot .over{color:#ff8a80}.payfoot .today{color:#ffd23f}
+.prio-help{font-size:13.5px;line-height:1.7}.prio-help b{display:block;margin-bottom:4px}
+.tk.pay .pdot{font-size:18px}
+.sw2{align-items:center}
+/* видимость полей по типу расписания */
+.tk.pay .only-dom,.tk.pay .only-everyN,.tk.pay .only-everyNdays,.tk.pay .only-weekly,.tk.pay .only-date{display:none}
+.tk.pay[data-sched=monthly] .only-dom,
+.tk.pay[data-sched=everyN] .only-dom,.tk.pay[data-sched=everyN] .only-everyN,.tk.pay[data-sched=everyN] .only-date,
+.tk.pay[data-sched=everyNdays] .only-everyNdays,.tk.pay[data-sched=everyNdays] .only-date,
+.tk.pay[data-sched=weekly] .only-weekly,
+.tk.pay[data-sched=once] .only-date,
+.tk.pay[data-sched=yearly] .only-date{display:block}
+/* ---- подарки наверху возле монет ---- */
+.giftbtn{flex:none;width:44px;height:44px;border:1px solid rgba(255,210,63,.5);border-radius:14px;background:rgba(255,210,63,.1);font-size:22px;cursor:pointer;display:grid;place-items:center}
+.giftbtn:active{transform:scale(.95)}
+/* ---- кнопка «Локация» по центру нижней панели (зелёная, заметная) ---- */
+.tabbar .loctab{background:linear-gradient(180deg,#34d975,#15803d);color:#fff;border-radius:16px;box-shadow:0 0 16px rgba(46,232,143,.4),inset 0 1px 0 rgba(255,255,255,.3);margin-top:-10px}
+.tabbar .loctab span{filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
+.tabbar .loctab.on{background:linear-gradient(180deg,#2ee88f,#0b7a38);animation:pulseg 1.6s ease-in-out infinite}
 
 </style>
 </head>
@@ -576,7 +614,7 @@ body.incrumbs #app{padding-bottom:150px}
 /* ============================================================
    НАСТРОЙКИ — заполняются один раз (см. SETUP.md)
    ============================================================ */
-const APP_VERSION = '2026.11.18-4';
+const APP_VERSION = '2026.11.18-5';
 const APP_CONFIG = {
   // Ваша Google-почта. Этот аккаунт автоматически станет главным администратором.
   OWNER_EMAIL: "3307999@gmail.com",
@@ -1135,7 +1173,61 @@ Object.assign(D, {
   map_hint: ["Faqat «Ulashish»ni yoqqan oila a'zolari ko'rinadi. Har birida — xaritada joyi va yurgan yo'li.", "Здесь те, кто сам включил «Поделиться». У каждого — место на карте и путь, которым шёл.", "Only family who turned sharing on appear here. Each has their place on the map and the route taken."],
   map_empty: ["Hali hech kim joylashuvini ulashmagan.", "Пока никто не поделился геопозицией.", "Nobody is sharing their location yet."],
   me_more: ["Boshqa", "Ещё", "More"],
-  msgs_hint_user: ["Bu yerdan to'g'ridan-to'g'ri administratorga yozing. U javob bersa, shu yerda ko'rinadi.", "Пишите прямо отсюда администратору. Его ответ появится здесь же.", "Write to the admin right here. Their reply shows up here too."]
+  msgs_hint_user: ["Bu yerdan to'g'ridan-to'g'ri administratorga yozing. U javob bersa, shu yerda ko'rinadi.", "Пишите прямо отсюда администратору. Его ответ появится здесь же.", "Write to the admin right here. Their reply shows up here too."],
+  at_pay: ["To'lovlar", "Платежи", "Payments"],
+  pay_hint: ["To'lovlar va muhim eslatmalar. Muddati kelganda bosh ekranda katta eslatma chiqadi va o'chmaydi, toki «To'landi» bosmaguningizcha.", "Платежи и важные напоминания. Когда подходит срок — на главном экране появляется большое напоминание и не исчезает, пока не нажмёте «Оплатил».", "Payments and important reminders. When due, a big reminder stays on the home screen until you mark it paid."],
+  pay_add: ["To'lov qo'shish", "Добавить платёж", "Add payment"],
+  pay_empty: ["Hali to'lov yo'q", "Пока нет платежей", "No payments yet"],
+  pay_new_name: ["Yangi to'lov", "Новый платёж", "New payment"],
+  pay_name: ["Nomi (masalan: Buxgalterga)", "Название (напр.: Бухгалтеру)", "Name (e.g. Accountant)"],
+  pay_amount: ["Summa", "Сумма", "Amount"],
+  pay_cur: ["so'm", "сум", "so'm"],
+  pay_card: ["Karta raqami", "Номер карты", "Card number"],
+  pay_sched: ["Qachon / qanchalik tez-tez", "Когда / как часто", "When / how often"],
+  pay_dom: ["Oyning qaysi kunida (1–28)", "Какого числа месяца (1–28)", "Day of month (1–28)"],
+  pay_dom_short: ["har oy {d}-kuni", "{d}-го числа", "on the {d}th"],
+  pay_everyN_m: ["Har necha oyda", "Каждые сколько месяцев", "Every how many months"],
+  pay_everyN_d: ["Har necha kunda", "Каждые сколько дней", "Every how many days"],
+  pay_everyN_txt: ["har {n} oyda, {d}-kuni", "каждые {n} мес., {d}-го", "every {n} mo, {d}th"],
+  pay_everyNd_txt: ["har {n} kunda", "каждые {n} дн.", "every {n} days"],
+  pay_weekday: ["Hafta kuni", "День недели", "Weekday"],
+  pay_date: ["Sana (yoki boshlanish sanasi)", "Дата (или дата начала)", "Date (or start date)"],
+  pay_lead: ["Necha kun oldin eslatish", "За сколько дней напоминать", "Remind how many days before"],
+  pay_shift: ["Dam olish kuniga to'g'ri kelsa — oldinroq", "Если выпадает на выходной — раньше", "If it falls on a weekend — earlier"],
+  pay_note: ["Izoh", "Заметка", "Note"],
+  pay_prio: ["Muhimlik", "Приоритет", "Priority"],
+  pay_prio1: ["Shoshilinch va muhim", "Срочно и важно", "Urgent & important"],
+  pay_prio2: ["Muhim, shoshilinch emas", "Важно, не срочно", "Important, not urgent"],
+  pay_prio3: ["Shoshilinch, muhim emas", "Срочно, не важно", "Urgent, not important"],
+  pay_prio4: ["Muhim emas, shoshilinch emas", "Не важно, не срочно", "Not important, not urgent"],
+  pay_prio1_d: ["avval shuni qiling", "сделать в первую очередь", "do first"],
+  pay_prio2_d: ["rejalashtiring", "запланировать", "schedule"],
+  pay_prio3_d: ["kimgadir topshiring", "можно поручить", "delegate"],
+  pay_prio4_d: ["keyinroq / kerak bo'lmasa olib tashlang", "потом или убрать", "later or drop"],
+  pay_prio_help: ["Muhimlik darajalari (Eyzenxauer matritsasi):", "Уровни приоритета (матрица Эйзенхауэра):", "Priority levels (Eisenhower matrix):"],
+  pay_due_title: ["To'lov muddati keldi", "Пора оплатить", "Payments due"],
+  pay_overdue: ["{n} kun kechikdi", "просрочено на {n} дн.", "{n} days overdue"],
+  pay_today: ["Bugun to'lash kerak", "Оплатить сегодня", "Pay today"],
+  pay_in: ["{n} kundan keyin", "через {n} дн.", "in {n} days"],
+  pay_done: ["To'landi", "Оплатил", "Paid"],
+  pay_marked: ["Belgilandi: to'landi", "Отмечено: оплачено", "Marked as paid"],
+  pay_confirm_done: ["«{t}» to'landi deb belgilaymizmi?", "Отметить «{t}» как оплаченный?", "Mark \"{t}\" as paid?"],
+  psc_once: ["Bir marta", "Один раз", "Once"],
+  psc_daily: ["Har kuni", "Каждый день", "Daily"],
+  psc_weekdays: ["Ish kunlari (Du–Ju)", "По будням (Пн–Пт)", "Weekdays (Mon–Fri)"],
+  psc_weekend: ["Dam olish kunlari (Sh, Ya)", "Выходные (Сб, Вс)", "Weekend (Sat, Sun)"],
+  psc_weekly: ["Har hafta", "Каждую неделю", "Weekly"],
+  psc_monthly: ["Har oy", "Каждый месяц", "Monthly"],
+  psc_everyN: ["Har necha oyda", "Каждые N месяцев", "Every N months"],
+  psc_everyNdays: ["Har necha kunda", "Каждые N дней", "Every N days"],
+  psc_yearly: ["Har yili", "Каждый год", "Yearly"],
+  hq_pay_amount: ["To'lov summasi. Faqat raqam, bo'sh qoldirsa ham bo'ladi.", "Сумма платежа. Только цифры, можно оставить пустым.", "Payment amount. Digits only, can be left empty."],
+  hq_pay_prio: ["Eyzenxauer: 1 shoshilinch+muhim (avval), 2 muhim (rejaga), 3 shoshilinch (topshirish), 4 qolgani. Ro'yxat shunga qarab saralanadi.", "Эйзенхауэр: 1 срочно+важно (первым), 2 важно (в план), 3 срочно (поручить), 4 остальное. Список сортируется по этому.", "Eisenhower: 1 urgent+important (first), 2 important (plan), 3 urgent (delegate), 4 the rest. The list is sorted by this."],
+  hq_pay_card: ["Karta raqami 4 tadan bo'linib yoziladi. Yonidagi 📋 bilan bir bosishda nusxalab, to'lov ilovasiga qo'yasiz.", "Номер карты разбивается по 4. Кнопкой 📋 рядом копируете в один клик и вставляете в приложение оплаты.", "The card number is grouped by 4. The 📋 button copies it in one tap to paste into your payment app."],
+  hq_pay_sched: ["Qanchalik tez-tez to'lov takrorlanadi.", "Как часто повторяется платёж.", "How often the payment repeats."],
+  hq_pay_lead: ["Muddatdan necha kun oldin eslatma chiqa boshlaydi (masalan, 3 kun oldin).", "За сколько дней до срока начинает показываться напоминание (например, за 3 дня).", "How many days before the due date the reminder starts (e.g. 3 days)."],
+  hq_pay_shift: ["To'lov kuni shanba yoki yakshanbaga to'g'ri kelsa, muddat jumaga suriladi (bank ishlamasligi mumkin).", "Если день оплаты выпадает на субботу/воскресенье, срок сдвигается на пятницу (банк может не работать).", "If the due day lands on Sat/Sun, it shifts to Friday (the bank may be closed)."],
+  nav_loc: ["Joylashuv", "Локация", "Location"]
 });
 
 
@@ -2312,14 +2404,14 @@ function render() {
   const app = $('#app'); if (!app) return;
   if (typing()) { S.dirty = true; return; }
   if (!PTR.act && (PTR.down || Date.now() - PTR.up < 80)) { S.dirty = true; clearTimeout(PTR.t); PTR.t = setTimeout(() => { PTR.down = false; if (S.dirty) render(); }, 160); return; }
-  const keep = {}; app.querySelectorAll('.tk.open [data-tf],.tk.open [data-td],.tk.open [data-tr]').forEach(x => { const k = (x.closest('.tk').dataset.tid) + '|' + (x.dataset.tf || 'd' + (x.dataset.td ?? '') + 'r' + (x.dataset.tr ?? '')); keep[k] = x.type === 'checkbox' ? x.checked : x.value; });
+  const keep = {}; app.querySelectorAll('.tk.open [data-tf],.tk.open [data-td],.tk.open [data-tr],.tk.open [data-pf]').forEach(x => { const box = x.closest('.tk'); const k = (box.dataset.tid || box.dataset.pid) + '|' + (x.dataset.tf || x.dataset.pf || 'd' + (x.dataset.td ?? '') + 'r' + (x.dataset.tr ?? '')); keep[k] = x.type === 'checkbox' ? x.checked : x.value; });
   const openD = new Set([...app.querySelectorAll('details[open] > summary')].map(x => x.textContent.trim()));
   if (CAM) return; // пока открыта камера, не перерисовываем
   S.dirty = false;
   const v = S.view;
   let html = '';
-  if (v === 'boot') html = `<div class="card center"><h2>${T('app_name')}</h2><div class="mut">…</div></div>`;
-  else if (v === 'error') html = viewError();
+  if (v === 'boot') html = `<div class="midscreen"><div class="card center"><h2>${T('app_name')}</h2><div class="mut">…</div></div></div>`;
+  else if (v === 'error') html = `<div class="midscreen">${viewError()}</div>`;
   else if (v === 'login') html = viewLogin();
   else if (v === 'pending') html = shell(`<div class="card center"><h1>⏳</h1><h2>${T('pending_title')}</h2><p>${T('pending_text')}</p></div>`, false);
   else if (v === 'blocked') html = shell(`<div class="card center"><h1>⛔</h1><h2>${T('blocked_title')}</h2><p>${T('blocked_text')}</p></div>`, false);
@@ -2327,15 +2419,15 @@ function render() {
   else html = shell(viewHome(), true);
   app.innerHTML = html;
   document.body.classList.toggle('incrumbs', S.view === 'home' && S.htab === 'menu' && !!S.menu);
-  app.querySelectorAll('.tk.open [data-tf],.tk.open [data-td],.tk.open [data-tr]').forEach(x => { const k = (x.closest('.tk').dataset.tid) + '|' + (x.dataset.tf || 'd' + (x.dataset.td ?? '') + 'r' + (x.dataset.tr ?? '')); if (k in keep) { if (x.type === 'checkbox') x.checked = keep[k]; else x.value = keep[k]; } });
-  app.querySelectorAll('.tk.open').forEach(b => { const s2 = b.querySelector('[data-tf=sched]'); if (s2) b.dataset.sched = s2.value; });
+  app.querySelectorAll('.tk.open [data-tf],.tk.open [data-td],.tk.open [data-tr],.tk.open [data-pf]').forEach(x => { const box = x.closest('.tk'); const k = (box.dataset.tid || box.dataset.pid) + '|' + (x.dataset.tf || x.dataset.pf || 'd' + (x.dataset.td ?? '') + 'r' + (x.dataset.tr ?? '')); if (k in keep) { if (x.type === 'checkbox') x.checked = keep[k]; else x.value = keep[k]; } });
+  app.querySelectorAll('.tk.open').forEach(b => { const s2 = b.querySelector('[data-tf=sched],[data-pf=sched]'); if (s2) b.dataset.sched = s2.value; });
   app.querySelectorAll('details > summary').forEach(x => { if (openD.has(x.textContent.trim()) && !x.dataset.act) x.parentNode.open = true; });
   document.documentElement.lang = S.lang;
   if (typeof applyFx === 'function') applyFx();
   if (v === 'home' && !S.started && typeof showStart === 'function') showStart();
 }
 function langSel() {
-  return `<select data-act-change="lang">${LANGS.map(([k, n]) => `<option value="${k}" ${S.lang === k ? 'selected' : ''}>${n}</option>`).join('')}</select>`;
+  return `<div class="langpick">${LANGS.map(([k, n]) => `<button class="${S.lang === k ? 'on' : ''}" data-act="setlang" data-id="${k}">${n}</button>`).join('')}</div>`;
 }
 function shell(body, full) {
   const head = full ? header() : '';
@@ -2344,11 +2436,11 @@ function shell(body, full) {
 function header() {
   const me = S.me, L = Logic.level(Logic.earned(S.logs));
   const onHome = S.view === 'home' && S.htab === 'today';
-  const pend = isAdmin() ? unreadFor(S.me.uid) + pendingCount() + S.photos.length + (S.claims || []).filter(c => c.status === 'pending').length + S.payouts.filter(p => p.status === 'requested').length : 0;
+  const pend = isAdmin() ? (typeof payDueN === 'function' ? payDueN() : 0) + unreadFor(S.me.uid) + pendingCount() + S.photos.length + (S.claims || []).filter(c => c.status === 'pending').length + S.payouts.filter(p => p.status === 'requested').length : 0;
   return `<header class="top"><button class="homebtn ${onHome ? 'on' : ''}" data-act="home" aria-label="home">🏠</button>`
     + `<div class="whot"><div class="nm">${esc(firstName(me.name))}</div><div class="lv">${esc(loc(L.name))}</div></div>`
     + (isAdmin() ? `<button class="admbtn ${S.view === 'admin' ? 'on' : ''}" data-act="${S.view === 'admin' ? 'home' : 'admin'}" aria-label="admin">⚙️${pend ? `<span class="badge">${pend}</span>` : ''}</button>` : '')
-    + `<div class="coinpill" id="coinTarget" data-act="htab" data-id="rewards">${COINSTACK}<b id="coinAmt" class="${S.shown < 0 ? 'neg' : ''}">${M(S.shown)}</b></div>${typeof clockBar === 'function' ? clockBar() : ''}</header>`
+    + `<button class="giftbtn" data-act="htab" data-id="rewards" aria-label="rewards">🎁</button>`    + `<div class="coinpill" id="coinTarget" data-act="htab" data-id="rewards">${COINSTACK}<b id="coinAmt" class="${S.shown < 0 ? 'neg' : ''}">${M(S.shown)}</b></div>${typeof clockBar === 'function' ? clockBar() : ''}</header>`
     + `<div class="lvbar"><i style="width:${Math.round(L.pct * 100)}%"></i></div>`;
 }
 // Стопка из трёх золотых монет, как кэш в играх
@@ -2387,11 +2479,13 @@ function viewHome() {
   else if (S.htab === 'me') body = viewMe();
   else if (S.htab === 'msgs') body = viewMessages();
   else body = modeButtons() + viewToday();
-  const tabs = [['today', '✅', T('nav_tasks')], ['rewards', '🎁', T('nav_rewards')], ['menu', '📂', T('nav_menu')], ['me', '👤', T('nav_me')]];
+  const tabs = [['today', '✅', T('nav_tasks')], ['menu', '📂', T('nav_menu')]];
   const unread = unreadFor(S.me.uid);
-  // «Письма» — обычная вкладка (работает как «Профиль»), иконка-конверт, с числом непрочитанных
+  const tab = ([k, i, n]) => `<button class="${S.htab === k ? 'on' : ''}" data-act="htab" data-id="${k}"><span>${i}</span>${n}</button>`;
+  // Центр панели — зелёная кнопка «Локация» (поделиться геопозицией), сразу видна
+  const locTab = `<button class="loctab ${S.geoOn ? 'on' : ''}" data-act="geoShare"><span>📍</span>${T('nav_loc')}${S.geoOn ? ' ✓' : ''}</button>`;
   const navMsg = `<button class="msgtab ${S.htab === 'msgs' ? 'on' : ''}" data-act="htab" data-id="msgs"><span>✉️</span>${T('nav_msgs')}${unread ? `<em>${unread > 99 ? '99+' : unread}</em>` : ''}</button>`;
-  return body + `<nav class="tabbar">${tabs.map(([k, i, n]) => `<button class="${S.htab === k ? 'on' : ''}" data-act="htab" data-id="${k}"><span>${i}</span>${n}</button>`).join('')}${navMsg}</nav>`;
+  return body + `<nav class="tabbar">${tab(tabs[0])}${tab(tabs[1])}${locTab}${tab(['me', '👤', T('nav_me')])}${navMsg}</nav>`;
 }
 // «Меню»: разделы как папки; внутри раздела — путь «Меню › Раздел»
 const MENU = [
@@ -2423,7 +2517,7 @@ function viewToday() {
   const ds = Logic.dayStats(S.tasks, S.logs, me, now.date, now);
   const todayNet = S.logs.filter(l => l.date === now.date).reduce((a, l) => a + (l.delta || 0), 0);
   const actives = states.filter(s => s.st === 'active'), next = states.find(s => s.st === 'locked');
-  let out = '';
+  let out = (typeof payHomeCard === 'function' ? payHomeCard() : '');
   if (!ts.length) {
     out += `<div class="hero"><div class="heroi">🌅</div><h2>${T('no_tasks')}</h2>${isAdmin() ? `<div class="mut">${T('no_tasks_admin')}</div><div class="btnrow" style="justify-content:center"><button class="btn gold" data-act="admin">⚙️ ${T('admin_panel')}</button></div>` : ''}</div>`;
   } else if (actives.length) {
@@ -2582,11 +2676,11 @@ function viewAdmin() {
   const tabs = [
     ['users', '👥', T('at_users'), pendingCount()], ['tasks', '📋', T('at_tasks'), 0], ['add', '➕', T('at_add'), 0],
     ['photos', '📷', T('at_photos'), S.photos.length], ['claims', '🛍️', T('at_claims'), cl], ['payouts', '💵', T('at_pay'), req],
-    ['msgs', '💬', T('at_msgs'), unreadFor(S.me.uid)], ['tube', '📺', T('at_tube'), 0], ['map', '📍', T('at_map'), 0],
+    ['msgs', '💬', T('at_msgs'), unreadFor(S.me.uid)], ['pay', '💳', T('at_pay'), payDueN()], ['tube', '📺', T('at_tube'), 0], ['map', '📍', T('at_map'), 0],
     ['sounds', '🔊', T('at_sounds'), 0], ['fun', '🎈', T('at_fun'), 0], ['settings', '⚙️', T('at_set'), 0]
   ];
   const t = `<div class="admtabs">${tabs.map(([k, i, n, b]) => `<button class="${S.tab === k ? 'on' : ''}" data-act="tab" data-id="${k}"><span>${i}</span>${n}${b ? `<em>${b}</em>` : ''}</button>`).join('')}</div>`;
-  const body = { users: admUsers, add: admAdd, tasks: admTasks, photos: admPhotos, payouts: admPayouts, claims: admClaims, sounds: admSounds, fun: admFun, settings: admSettings, msgs: admMsgs, tube: admTube, map: admMap }[S.tab]();
+  const body = { users: admUsers, add: admAdd, tasks: admTasks, photos: admPhotos, payouts: admPayouts, claims: admClaims, sounds: admSounds, fun: admFun, settings: admSettings, msgs: admMsgs, tube: admTube, map: admMap, pay: admPay }[S.tab]();
   return `<h2>⚙️ ${T('admin_panel')}</h2>${t}${body}`;
 }
 
@@ -2732,6 +2826,7 @@ function admSettings() {
 
 /* ---------- действия ---------- */
 const ACT = {};
+ACT.setlang = el => { const k = el.dataset.id; if (k === S.lang) return; S.lang = k; safeSet('fp_lang', k); if (S.me && !S.viewAs) Store.updateUser(S.me.uid, { lang: k }).catch(() => {}); render(); };
 async function guarded(fn) { try { await fn(); } catch (e) { console.error(e); banner('warn', T('login_fail'), String(e && e.code || e && e.message || ''), 4200); } }
 
 ACT.login = el => guarded(async () => {
@@ -4902,6 +4997,205 @@ function admMap() {
         + `<div class="mut">${T('geo_points', { n: (l.trail || []).length })}</div>`
         + `<div class="btnrow"><button class="btn gold" data-act="geoMap" data-uid="${esc(l.uid)}">🗺 ${T('geo_openmap')}</button></div></div>`;
     }).join('') : `<div class="card center mut">${T('map_empty')}</div>`);
+}
+
+
+/* ===== pay.js: платежи и важные напоминания (с приоритетами, картой, копированием) ===== */
+
+/* Приоритеты — матрица Эйзенхауэра:
+   1 — срочно и важно (сделать сейчас)   2 — важно, не срочно (запланировать)
+   3 — срочно, не важно (поручить)        4 — не важно и не срочно (потом) */
+const PRIOS = [
+  [1, '🔴', '#e5342b'],
+  [2, '🟡', '#e0951a'],
+  [3, '🔵', '#2f8fe0'],
+  [4, '⚪', '#7a8a84']
+];
+const prioColor = p => (PRIOS.find(x => x[0] === p) || PRIOS[1])[2];
+const prioIcon = p => (PRIOS.find(x => x[0] === p) || PRIOS[1])[1];
+
+const pays = () => ((S.settings && Array.isArray(S.settings.pays)) ? S.settings.pays : []);
+const savePays = list => Store.saveSettings(Object.assign({}, S.settings, { pays: list }));
+
+/* ---------- даты ---------- */
+const pD = s => { const [y, m, d] = String(s).split('-').map(Number); return new Date(y, m - 1, d); };
+const pDs = dt => `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`;
+const pAdd = (s, n) => { const d = pD(s); d.setDate(d.getDate() + n); return pDs(d); };
+const pDow = s => pD(s).getDay(); // 0 вс … 6 сб
+const pDiffDays = (a, b) => Math.round((pD(b) - pD(a)) / 86400000);
+
+function payMatches(p, s) {
+  const d = pD(s), dow = d.getDay();
+  switch (p.sched) {
+    case 'once': return s === p.date;
+    case 'daily': return true;
+    case 'weekdays': return dow >= 1 && dow <= 5;
+    case 'weekend': return dow === 0 || dow === 6;
+    case 'weekly': return dow === (p.weekday || 0);
+    case 'monthly': return d.getDate() === Math.min(p.dom || 1, 28);
+    case 'everyN': {
+      if (d.getDate() !== Math.min(p.dom || 1, 28)) return false;
+      const a = pD(p.date || s);
+      const md = (d.getFullYear() - a.getFullYear()) * 12 + (d.getMonth() - a.getMonth());
+      return md >= 0 && md % Math.max(1, p.everyN || 2) === 0;
+    }
+    case 'yearly': return s.slice(5) === String(p.date || '').slice(5);
+    case 'everyNdays': { const k = pDiffDays(p.date || s, s); return k >= 0 && k % Math.max(1, p.everyN || 2) === 0; }
+    default: return false;
+  }
+}
+// Ближайшая дата платежа (с учётом «уже оплачено за этот период»)
+function payDue(p, today) {
+  if (p.sched === 'once') return p.lastPaid === p.date ? null : p.date;
+  let found = null;
+  for (let i = 0; i < 800; i++) {
+    const s = pAdd(today, i);
+    if (payMatches(p, s)) { if (p.lastPaid === s) continue; found = s; break; }
+  }
+  return found;
+}
+// Банк/сервис в выходной может не работать — двигаем дату оплаты на пятницу
+const payByOf = (due, p) => {
+  if (p.shiftWeekend === false) return due;
+  const w = pDow(due);
+  return w === 6 ? pAdd(due, -1) : w === 0 ? pAdd(due, -2) : due;
+};
+function payState(p, today) {
+  const due = payDue(p, today);
+  if (!due) return null;
+  const payBy = payByOf(due, p), lead = p.lead == null ? 3 : p.lead;
+  const remindFrom = pAdd(payBy, -lead);
+  let st = 'upcoming';
+  if (today > payBy) st = 'overdue';
+  else if (today >= remindFrom) st = 'due';
+  return { due, payBy, remindFrom, st, left: pDiffDays(today, payBy) };
+}
+
+/* ---------- карта: формат по 4 и копирование ---------- */
+const cardDigits = c => String(c || '').replace(/\D/g, '');
+const cardFmt = c => cardDigits(c).replace(/(.{4})/g, '$1 ').trim();
+
+/* ---------- карточка на главном экране ---------- */
+function payHomeCard() {
+  if (!isAdmin() && !(S.me && S.me.seePays)) return '';
+  const today = clock().date;
+  const act = pays().map(p => ({ p, s: payState(p, today) })).filter(x => x.s && (x.s.st === 'due' || x.s.st === 'overdue'));
+  if (!act.length) return '';
+  act.sort((a, b) => (a.p.priority || 2) - (b.p.priority || 2) || String(a.s.payBy).localeCompare(String(b.s.payBy)));
+  return `<div class="card paycard"><h2>💳 ${T('pay_due_title')} <span class="paybadge">${act.length}</span></h2>`
+    + act.map(({ p, s }) => payRow(p, s, true)).join('') + `</div>`;
+}
+function payRow(p, s, big) {
+  const col = prioColor(p.priority);
+  const when = s.st === 'overdue' ? `<b class="over">⚠️ ${T('pay_overdue', { n: -s.left })}</b>`
+    : s.left === 0 ? `<b class="today">${T('pay_today')}</b>` : `<b>${T('pay_in', { n: s.left })}</b>`;
+  return `<div class="payrow ${s.st}" style="--pc:${col}"><div class="payhd"><span class="pdot">${prioIcon(p.priority)}</span>`
+    + `<div class="pinfo"><b>${esc(p.title)}</b><small>${esc(payByFmt(s.payBy))} · ${T('pay_prio' + (p.priority || 2))}</small></div>`
+    + `<div class="pamt">${p.amount ? esc(fmtAmount(p.amount)) : ''}</div></div>`
+    + (p.card ? `<div class="pcard"><code>${esc(cardFmt(p.card))}</code><button class="icopy" data-act="paycopy" data-c="${esc(cardDigits(p.card))}" aria-label="copy">📋</button></div>` : '')
+    + (p.note ? `<div class="mut pnote">${esc(p.note)}</div>` : '')
+    + `<div class="payfoot">${when}<button class="btn green sm" data-act="paypaid" data-id="${esc(p.id)}">✅ ${T('pay_done')}</button></div></div>`;
+}
+const payByFmt = s => { const [, m, d] = s.split('-'); return `${+d} ${MN[S.lang][+m - 1].slice(0, 3)}`; };
+const fmtAmount = a => String(a).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ' + T('pay_cur');
+
+ACT.paycopy = el => copyText(el.dataset.c);
+ACT.paypaid = el => {
+  const p = pays().find(x => x.id === el.dataset.id); if (!p) return;
+  const today = clock().date, due = payDue(p, today);
+  ask(T('pay_confirm_done', { t: p.title }), () => {
+    const list = pays().map(x => x.id === p.id ? Object.assign({}, x, { lastPaid: due }) : x);
+    play('coin'); banner('good', '✅ ' + T('pay_marked'), p.title, 2500);
+    return savePays(list);
+  });
+};
+
+/* ---------- админ: список и редактор платежей ---------- */
+function admPay() {
+  const list = pays().slice().sort((a, b) => (a.priority || 2) - (b.priority || 2));
+  const today = clock().date;
+  return `<div class="card"><h2>💳 ${T('at_pay')}</h2><div class="mut">${T('pay_hint')}</div>`
+    + `<div class="btnrow"><button class="btn gold" data-act="paynew">＋ ${T('pay_add')}</button></div></div>`
+    + `<div class="card prio-help"><b>${T('pay_prio_help')}</b>${PRIOS.map(([n, ic]) => `<div><span>${ic}</span> ${n}. ${T('pay_prio' + n)} — ${T('pay_prio' + n + '_d')}</div>`).join('')}</div>`
+    + (list.length ? list.map(p => payForm(p, today)).join('') : `<div class="card center mut">${T('pay_empty')}</div>`);
+}
+function payForm(p, today) {
+  const open = S.payOpen === p.id;
+  const s = payState(p, today);
+  const head = `<button class="tkhead" data-act="payopen" data-id="${esc(p.id)}"><span class="pdot" style="color:${prioColor(p.priority)}">${prioIcon(p.priority)}</span>`
+    + `<span class="tmain"><b>${esc(p.title)}${p.amount ? ' · ' + esc(fmtAmount(p.amount)) : ''}</b><small>${esc(schedPayTxt(p))}${s ? ' · ' + (s.st === 'overdue' ? '⚠️ ' + T('pay_overdue', { n: -s.left }) : payByFmt(s.payBy)) : ''}</small></span><span class="tkarrow">${open ? '▴' : '▾'}</span></button>`;
+  if (!open) return `<div class="tk pay" data-pid="${esc(p.id)}">${head}</div>`;
+  const F = (k, v) => v;
+  return `<div class="tk pay open" data-pid="${esc(p.id)}" data-sched="${p.sched}"><div class="tkbody">${head.replace('<button class="tkhead"', '<button class="tkhead open"')}`
+    + `<label class="f">${T('pay_name')}<input data-pf="title" value="${esc(p.title || '')}"></label>`
+    + `<div class="grid2"><label class="f">${T('pay_amount')} ${hq('pay_amount')}<input data-pf="amount" inputmode="numeric" value="${esc(p.amount || '')}"></label>`
+    + `<label class="f">${T('pay_prio')} ${hq('pay_prio')}<select data-pf="priority">${PRIOS.map(([n, ic]) => `<option value="${n}" ${(p.priority || 2) === n ? 'selected' : ''}>${ic} ${n}. ${T('pay_prio' + n)}</option>`).join('')}</select></label></div>`
+    + `<label class="f">💳 ${T('pay_card')} ${hq('pay_card')}<input data-pf="card" inputmode="numeric" value="${esc(cardFmt(p.card))}" placeholder="8600 1234 5678 9012"></label>`
+    + `<label class="f">${T('pay_sched')} ${hq('pay_sched')}<select data-pf="sched">${['once', 'daily', 'weekdays', 'weekend', 'weekly', 'monthly', 'everyN', 'everyNdays', 'yearly'].map(k => `<option value="${k}" ${p.sched === k ? 'selected' : ''}>${T('psc_' + k)}</option>`).join('')}</select></label>`
+    + `<label class="f only-dom">${T('pay_dom')}<input data-pf="dom" type="number" min="1" max="28" value="${p.dom || 14}"></label>`
+    + `<label class="f only-everyN">${T('pay_everyN_m')}<input data-pf="everyN_m" type="number" min="1" max="24" value="${p.sched === 'everyN' ? (p.everyN || 2) : 2}"></label>`
+    + `<label class="f only-everyNdays">${T('pay_everyN_d')}<input data-pf="everyN_d" type="number" min="1" max="365" value="${p.sched === 'everyNdays' ? (p.everyN || 7) : 7}"></label>`
+    + `<label class="f only-weekly">${T('pay_weekday')}<select data-pf="weekday">${[1, 2, 3, 4, 5, 6, 0].map(d => `<option value="${d}" ${(p.weekday || 0) === d ? 'selected' : ''}>${WD[S.lang][d]}</option>`).join('')}</select></label>`
+    + `<label class="f only-date">${T('pay_date')}<input data-pf="date" type="date" value="${esc(p.date || '')}"></label>`
+    + `<div class="grid2"><label class="f">${T('pay_lead')} ${hq('pay_lead')}<input data-pf="lead" type="number" min="0" max="30" value="${p.lead == null ? 3 : p.lead}"></label>`
+    + `<label class="chk sw2"><input type="checkbox" data-pf="shiftWeekend" ${p.shiftWeekend !== false ? 'checked' : ''}> ${T('pay_shift')} ${hq('pay_shift')}</label></div>`
+    + `<label class="f">${T('pay_note')}<input data-pf="note" value="${esc(p.note || '')}"></label>`
+    + `<div class="btnrow tkbtns"><button class="btn gold" data-act="paysave" data-id="${esc(p.id)}">💾 ${T('save')}</button><button class="btn" data-act="payopen" data-id="${esc(p.id)}">✕ ${T('close')}</button><button class="btn red sm" data-act="paydel" data-id="${esc(p.id)}">🗑</button></div></div></div>`;
+}
+const schedPayTxt = p => {
+  if (p.sched === 'monthly') return T('psc_monthly') + ' · ' + T('pay_dom_short', { d: p.dom || 14 });
+  if (p.sched === 'everyN') return T('pay_everyN_txt', { n: p.everyN || 2, d: p.dom || 14 });
+  if (p.sched === 'everyNdays') return T('pay_everyNd_txt', { n: p.everyN || 7 });
+  if (p.sched === 'weekly') return T('psc_weekly') + ' · ' + WD[S.lang][p.weekday || 0];
+  if (p.sched === 'once') return T('psc_once') + (p.date ? ' · ' + p.date : '');
+  if (p.sched === 'yearly') return T('psc_yearly') + (p.date ? ' · ' + String(p.date).slice(5) : '');
+  return T('psc_' + p.sched);
+};
+ACT.paynew = () => guarded(async () => {
+  const id = 'p_' + Date.now().toString(36); S.payOpen = id;
+  await savePays(pays().concat([{ id, title: T('pay_new_name'), amount: '', card: '', sched: 'monthly', dom: 14, priority: 2, lead: 3, shiftWeekend: true, date: clock().date }]));
+  setTimeout(() => { const b = document.querySelector(`.tk.pay[data-pid="${id}"]`); if (b) b.scrollIntoView({ block: 'center', behavior: 'smooth' }); }, 300);
+});
+ACT.payopen = el => { S.payOpen = S.payOpen === el.dataset.id ? null : el.dataset.id; render(); };
+ACT.paysave = el => guarded(async () => {
+  const d = document.querySelector(`.tk.pay[data-pid="${CSS.escape(el.dataset.id)}"]`), g = k => d.querySelector(`[data-pf="${k}"]`);
+  const old = pays().find(x => x.id === el.dataset.id) || {};
+  const sched = g('sched').value;
+  const p = Object.assign({}, old, {
+    title: g('title').value.trim() || T('pay_new_name'),
+    amount: cardDigits(g('amount').value) || '',
+    card: cardDigits(g('card').value),
+    priority: +g('priority').value || 2,
+    sched, lead: Math.max(0, parseInt(g('lead').value || '3', 10)),
+    shiftWeekend: g('shiftWeekend').checked,
+    note: g('note').value.trim(),
+    dom: Math.min(28, Math.max(1, parseInt(g('dom').value || '14', 10))),
+    weekday: +g('weekday').value,
+    date: g('date').value || old.date || ''
+  });
+  p.everyN = sched === 'everyNdays' ? Math.max(1, parseInt(g('everyN_d').value || '7', 10)) : Math.max(1, parseInt(g('everyN_m').value || '2', 10));
+  if ((sched === 'once' || sched === 'yearly' || sched === 'everyN' || sched === 'everyNdays') && !p.date) p.date = clock().date;
+  S.payOpen = null;
+  banner('good', '💾 ' + T('saved_ok'), p.title, 2000);
+  await savePays(pays().map(x => x.id === p.id ? p : x));
+});
+ACT.paydel = el => ask(T('confirm_remove'), () => savePays(pays().filter(x => x.id !== el.dataset.id)));
+// Форматирование номера карты прямо при наборе
+document.addEventListener('input', e => {
+  if (e.target.dataset && e.target.dataset.pf === 'card') {
+    const el = e.target, v = cardFmt(el.value); el.value = v;
+  }
+});
+// Переключение видимости полей по типу расписания
+document.addEventListener('change', e => {
+  if (e.target.dataset && e.target.dataset.pf === 'sched') { const b = e.target.closest('.tk.pay'); if (b) b.dataset.sched = e.target.value; }
+});
+
+// Сколько платежей требуют внимания сейчас (для значков)
+function payDueN() {
+  if (!isAdmin()) return 0;
+  const today = clock().date;
+  return pays().reduce((n, p) => { const s = payState(p, today); return n + (s && (s.st === 'due' || s.st === 'overdue') ? 1 : 0); }, 0);
 }
 
 </script>
