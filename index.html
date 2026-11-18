@@ -477,6 +477,47 @@ body.tubeon{overflow:hidden}
 .thread{display:block;width:100%;text-align:left;color:inherit;font:inherit;cursor:pointer}
 .thread.unread{border-color:var(--gold);box-shadow:0 0 0 2px rgba(255,210,63,.35)}
 .thread .badge{margin-left:auto}
+/* ---- шапка не просвечивает ---- */
+.top{background:#06241a;box-shadow:0 8px 18px rgba(0,0,0,.45);margin:0 -14px;padding-left:14px;padding-right:14px}
+/* ---- компактные задания (админ) ---- */
+.tklist{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.tk{border:1px solid rgba(46,232,143,.22);border-radius:16px;background:rgba(255,255,255,.04);overflow:hidden}
+.tk.open{border-color:var(--gold);box-shadow:0 0 0 2px rgba(255,210,63,.18)}
+.tkhead{display:flex;align-items:center;gap:10px;width:100%;padding:9px 12px;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.tkhead .ttime,.trow2 .ttime{font-weight:900;color:var(--gold);font-size:14px;width:44px;flex:none}
+.tkhead .ticon{font-size:24px}
+.tkhead .tmain{flex:1;min-width:0;display:flex;flex-direction:column}.tkhead .tmain b{font-size:15px;line-height:1.25}
+.tkhead .tmain small{color:var(--mut);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tkarrow{color:var(--mut);font-size:14px;flex:none;margin-left:2px}
+.tkbody{padding:0 12px 12px}
+.tktabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:2px 0 8px;background:rgba(0,0,0,.25);border-radius:12px;padding:3px}
+.tktabs button{border:0;border-radius:9px;padding:8px 2px;background:none;color:var(--mut);font:inherit;font-size:12px;font-weight:800;white-space:nowrap}
+.tktabs button.on{background:var(--gold);color:#06241a}
+.tkpane{display:none}.tkpane.on{display:block}
+.row3{display:grid;grid-template-columns:1.25fr .7fr 1fr;gap:6px;align-items:end}
+.row3 label.f,.tkpane label.f{margin:4px 0;font-size:13px}
+.row3 .ic input{text-align:center;font-size:22px;padding:6px}
+.tkpane input[type=time]{min-width:0;-webkit-appearance:none;appearance:none}
+.tk[data-sched=daily] .only-days,.tk[data-sched=daily] .only-once,.tk[data-sched=days] .only-once,.tk[data-sched=once] .only-days{display:none}
+.wdays{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.wd input{position:absolute;opacity:0;pointer-events:none}
+.wd span{display:inline-block;padding:7px 11px;border-radius:999px;border:1px solid var(--line);font-size:14px;font-weight:700;color:var(--mut);cursor:pointer}
+.wd input:checked + span{background:rgba(46,232,143,.2);border-color:#2ee88f;color:#fff}
+.wd input:checked + span::before{content:'✓ '}
+details.langs{margin:4px 0}details.langs summary{color:var(--mut);font-size:13px;cursor:pointer;padding:4px 0}
+.tkbtns{margin-top:10px}
+/* ---- компактный список дня ---- */
+.trow2{cursor:pointer;padding:8px 12px}
+.trow2.open{border-bottom-left-radius:6px;border-bottom-right-radius:6px}
+.trinfo{margin:-2px 0 4px 0;padding:8px 12px 10px 66px;border:1px solid rgba(46,232,143,.2);border-top:0;border-radius:0 0 16px 16px;background:rgba(0,0,0,.2);font-size:14px;display:flex;flex-direction:column;gap:4px;color:#e6f5ee}
+.trinfo .btn{align-self:flex-start;margin-top:4px}
+/* ---- кружок «?» ---- */
+.hq{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:rgba(255,255,255,.75);font-size:12px;font-weight:900;padding:0;margin-left:4px;vertical-align:middle;cursor:pointer;line-height:1}
+.hq.on{background:var(--gold);color:#06241a;border-color:var(--gold)}
+.hqbub{margin:4px 0 8px;padding:9px 12px;border-radius:12px;background:rgba(255,210,63,.12);border:1px solid rgba(255,210,63,.45);font-size:13.5px;line-height:1.4;color:#fff6d0}
+/* ---- переписка: тёмный текст на белом ---- */
+.chatin textarea{background:#fff;color:#111;border:1px solid #ccc}
+.chatin textarea::placeholder{color:#777}
 
 </style>
 </head>
@@ -983,7 +1024,26 @@ Object.assign(D, {
   snd_bad_hint: ["To'g'ridan-to'g'ri .mp3 havola kerak (u brauzerda darhol o'ynashi kerak). YouTube va sayt sahifalari ishlamaydi. Hozircha standart ovoz qoldi.", "Нужна прямая ссылка на файл .mp3 (открыв её в браузере, звук сразу играет). Ссылки на YouTube и страницы сайтов не подходят. Пока оставлен стандартный звук.", "Needs a direct .mp3 link (opening it in a browser plays the sound straight away). YouTube and web pages won't work. The standard sound is kept for now."],
   snd_saved_bad: ["Saqlandi, lekin ba'zi havolalar ishlamadi", "Сохранено, но эти ссылки не работают", "Saved, but these links don't work"],
   snd_checking: ["Havolalar tekshirilmoqda…", "Проверяю ссылки…", "Checking links…"],
-  g_copy_fail: ["Nusxa olinmadi — matnni bosib turib nusxalang", "Не удалось скопировать — выделите текст пальцем", "Could not copy — select the text manually"]
+  g_copy_fail: ["Nusxa olinmadi — matnni bosib turib nusxalang", "Не удалось скопировать — выделите текст пальцем", "Could not copy — select the text manually"],
+  tk_main: ["Asosiy", "Основное", "Main"],
+  tk_when: ["Qachon", "Когда", "When"],
+  tk_who: ["Kimga", "Кому", "Who"],
+  tk_more: ["Yana", "Ещё", "More"],
+  tk_langs: ["Boshqa tillarda nomi", "Название на других языках", "Title in other languages"],
+  tr_window: ["Bajarish vaqti: {a} – {b}", "Можно выполнить: {a} – {b}", "Can be done: {a} – {b}"],
+  tr_reward: ["Mukofot +{c}", "Награда +{c}", "Reward +{c}"],
+  tr_penalty: ["o'tkazib yuborsa −{p}%", "пропуск −{p}%", "missed −{p}%"],
+  hq_reward: ["Vazifa o'z vaqtida bajarilsa shuncha tanga beriladi. O'tkazib yuborilsa, mukofotning bir qismi ayiriladi (sozlamalarda foiz).", "Столько монет начисляется, если задание выполнено вовремя. За пропуск снимается часть награды (процент — в настройках).", "Coins given when the task is done on time. Missing it takes away part of the reward (percentage in settings)."],
+  hq_sched: ["Har kuni — har kuni takrorlanadi. Hafta kunlari — faqat belgilangan kunlarda. Bir martalik — faqat bitta sanada.", "Каждый день — повторяется ежедневно. По дням недели — только в отмеченные дни. Один раз — только в выбранную дату.", "Daily repeats every day. Weekdays — only on the ticked days. Once — only on the chosen date."],
+  hq_early: ["Belgilangan vaqtdan necha daqiqa oldin «Bajardim» tugmasi ochiladi.", "За сколько минут до времени задания уже можно нажать «Выполнено».", "How many minutes before the task time the Done button opens."],
+  hq_grace: ["Belgilangan vaqtdan keyin necha daqiqa ichida bajarish mumkin. Undan keyin vazifa o'tkazib yuborilgan hisoblanadi.", "Сколько минут после времени задания ещё можно успеть. Потом задание считается пропущенным.", "How many minutes after the task time it can still be done. After that it counts as missed."],
+  hq_who: ["Vazifa kimga ko'rinadi: hammaga yoki faqat tanlangan qarindoshlarga (masalan, «Rafiqa»).", "Кому видно это задание: всем или только отмеченным (например, «Жена»).", "Who sees this task: everyone or only the ticked people (e.g. Wife)."],
+  hq_photo: ["O'chiq — rasm kerak emas. Ixtiyoriy — rasm qo'shish mumkin. Majburiy — rasmsiz bajarib bo'lmaydi, siz rasmni tekshirasiz.", "Выключено — фото не нужно. По желанию — можно приложить фото. Обязательно — без фото не засчитается, вы проверяете снимок.", "Off — no photo. Optional — a photo can be added. Required — can't be done without a photo, which you review."],
+  hq_active: ["Belgi olib tashlansa, vazifa vaqtincha to'xtaydi (o'chirilmaydi).", "Если снять галочку, задание временно остановится (но не удалится).", "Untick to pause the task without deleting it."],
+  hq_wl: ["Odamning Gmail manzilini kiriting. U shu Gmail bilan kirganda darhol tasdiqlanadi.", "Впишите Gmail человека. Когда он войдёт через этот Gmail, его сразу пустит в приложение.", "Enter the person's Gmail. When they sign in with it, they get in straight away."],
+  hq_modes: ["Bosh sahifada katta tugma paydo bo'ladi. Ichida faqat siz «📺 Video» bo'limida qo'shgan videolar.", "У человека на главной появится большая кнопка режима. Внутри — только видео, которые вы добавили во вкладке «📺 Видео».", "A big mode button appears on their home screen. Inside — only the videos you added in the Video tab."],
+  hq_viewas: ["Ilovani shu odam ko'rgandek ochadi — boshidan. Hech narsa saqlanmaydi. Chiqish — tepadagi binafsha chiziqda.", "Открывает приложение так, как его видит этот человек, с самого начала. Ничего не сохраняется. Выход — на фиолетовой полосе сверху.", "Opens the app the way this person sees it, from the start. Nothing is saved. Exit via the purple bar on top."],
+  hq_tubekey: ["Kalitsiz alohida videolar va pleylistlar ishlaydi. Kalit bilan — kanallarning yangi videolari va qidiruv.", "Без ключа работают отдельные видео и плейлисты. С ключом — новые видео каналов и поиск.", "Without a key, single videos and playlists work. With it — new channel videos and search."]
 });
 
 
@@ -2144,6 +2204,7 @@ function render() {
   const app = $('#app'); if (!app) return;
   if (typing()) { S.dirty = true; return; }
   if (!PTR.act && (PTR.down || Date.now() - PTR.up < 80)) { S.dirty = true; clearTimeout(PTR.t); PTR.t = setTimeout(() => { if (S.dirty) render(); }, PTR.down ? 120 : 90); return; }
+  const keep = {}; app.querySelectorAll('.tk.open [data-tf],.tk.open [data-td],.tk.open [data-tr]').forEach(x => { const k = (x.closest('.tk').dataset.tid) + '|' + (x.dataset.tf || 'd' + (x.dataset.td ?? '') + 'r' + (x.dataset.tr ?? '')); keep[k] = x.type === 'checkbox' ? x.checked : x.value; });
   const openD = new Set([...app.querySelectorAll('details[open] > summary')].map(x => x.textContent.trim()));
   if (CAM) return; // пока открыта камера, не перерисовываем
   S.dirty = false;
@@ -2157,6 +2218,8 @@ function render() {
   else if (v === 'admin') html = shell(viewAdmin(), true);
   else html = shell(viewHome(), true);
   app.innerHTML = html;
+  app.querySelectorAll('.tk.open [data-tf],.tk.open [data-td],.tk.open [data-tr]').forEach(x => { const k = (x.closest('.tk').dataset.tid) + '|' + (x.dataset.tf || 'd' + (x.dataset.td ?? '') + 'r' + (x.dataset.tr ?? '')); if (k in keep) { if (x.type === 'checkbox') x.checked = keep[k]; else x.value = keep[k]; } });
+  app.querySelectorAll('.tk.open').forEach(b => { const s2 = b.querySelector('[data-tf=sched]'); if (s2) b.dataset.sched = s2.value; });
   app.querySelectorAll('details > summary').forEach(x => { if (openD.has(x.textContent.trim()) && !x.dataset.act) x.parentNode.open = true; });
   document.documentElement.lang = S.lang;
   if (typeof applyFx === 'function') applyFx();
@@ -2269,13 +2332,18 @@ function viewToday() {
       + `<div class="pbar"><i style="width:${ds.total ? Math.round(ds.done / ds.total * 100) : 0}%"></i></div></div>`;
     out += `<div class="tlist">` + states.map(({ t, log, st }, i) => {
       const isHero = actives.length && actives[0].t.id === t.id;
-      const badge = st === 'done' ? (log.review === 'rejected' ? `<span class="tbadge bad">✗</span>` : `<span class="tbadge ok">✓ ${sgn(log.delta)}</span>`)
+      const badge = st === 'done' ? (log.review === 'rejected' ? `<span class="tbadge bad">✗</span>` : log.review === 'pending' ? `<span class="tbadge mut">📷 ${T('photo_pending')}</span>` : `<span class="tbadge ok">✓ ${sgn(log.delta)}</span>`)
         : (st === 'missed' || st === 'failed') ? `<span class="tbadge bad">✗ ${sgn(log.delta)}</span>`
         : st === 'expired' ? `<span class="tbadge bad">⌛</span>`
         : st === 'active' ? (isHero ? `<span class="tbadge now">⚡ ${T('now')}</span>` : `<button class="btn green sm" data-act="done" data-id="${esc(t.id)}">✅ +${M(t.reward)}</button>`)
         : `<span class="tbadge mut">+${M(t.reward)}</span>`;
       const photoNote = st === 'done' && log.review === 'pending' ? ` · 📷 ${T('photo_pending')}` : '';
-      return `<div class="trow2 st-${st}"><span class="ttime">${esc(t.time)}</span><span class="ticon">${esc(t.icon || '•')}</span><div class="tmain"><b>${esc(loc(t.title))}</b><small>🔁 ${esc(schedTxt(t))}${photoNote}</small></div>${howtoFor(t) ? `<button class="hbtn" data-act="howto" data-id="${esc(t.id)}" aria-label="how">ℹ️</button>` : ''}${badge}</div>`;
+      const op = S.trOpen === t.id, pm = Logic.photoMode(t);
+      const info = op ? `<div class="trinfo"><div>🕐 ${T('tr_window', { a: Logic.fmtMin(Math.max(0, Logic.toMin(t.time) - (t.earlyMin ?? 15))), b: Logic.fmtMin(Logic.toMin(t.time) + (t.graceMin ?? 60)) })}</div>`
+        + `<div>💰 ${T('tr_reward', { c: M(t.reward) })} · ${T('tr_penalty', { p: (S.settings && S.settings.missPenaltyPct != null) ? S.settings.missPenaltyPct : 50 })}</div><div>🔁 ${esc(schedTxt(t))}</div>`
+        + (pm !== 'off' ? `<div>📷 ${T('photo_' + pm)}</div>` : '') + (photoNote ? `<div>${photoNote.replace(/^ · /, '')}</div>` : '')
+        + (howtoFor(t) ? `<button class="btn sm" data-act="howto" data-id="${esc(t.id)}">ℹ️ ${T('howto_btn')}</button>` : '') + `</div>` : '';
+      return `<div class="trow2 st-${st} ${op ? 'open' : ''}" data-act="trow" data-id="${esc(t.id)}"><span class="ttime">${esc(t.time)}</span><span class="ticon">${esc(t.icon || '•')}</span><div class="tmain"><b>${esc(loc(t.title))}</b></div>${badge}<span class="tkarrow">${op ? '▴' : '▾'}</span></div>${info}`;
     }).join('') + `</div>`;
   }
   out += eventsCard(now);
@@ -2416,11 +2484,11 @@ function admUsers() {
     return `<div class="card u ${u.status}"><div class="urow">${avatar(u)}<div style="min-width:0"><b>${esc(u.name)}</b><div class="mut" style="overflow:hidden;text-overflow:ellipsis">${esc(u.email)}</div></div><span class="chip ${u.status}">${T('st_' + u.status)}</span></div>`
       + `<label class="f">${T('relation')}<select data-uf="relation" data-uid="${esc(u.uid)}">${relOptions(rel)}</select></label>`
       + `<label class="chk"><input type="checkbox" data-uf="isAdmin" data-uid="${esc(u.uid)}" ${adm ? 'checked' : ''} ${self ? 'disabled' : ''}> ${T('is_admin')}</label>`
-      + `<label class="chk"><input type="checkbox" data-mode2="relax" data-uid="${esc(u.uid)}" ${(u.modes || {}).relax ? 'checked' : ''}> 👩 ${T('mode_relax')}</label>`
+      + `<label class="chk"><input type="checkbox" data-mode2="relax" data-uid="${esc(u.uid)}" ${(u.modes || {}).relax ? 'checked' : ''}> 👩 ${T('mode_relax')} ${hq('modes')}</label>`
       + `<label class="chk"><input type="checkbox" data-mode2="kid" data-uid="${esc(u.uid)}" ${(u.modes || {}).kid ? 'checked' : ''}> 🧒 ${T('mode_kid')}</label>`
       + `<div class="btnrow">`
       + (u.status !== 'approved' ? `<button class="btn green" data-act="approve" data-uid="${esc(u.uid)}">${T('approve')}</button>` : '')
-      + (u.status === 'approved' && !self ? `<button class="btn" data-act="viewAs" data-uid="${esc(u.uid)}">👁 ${T('viewas_btn')}</button><button class="btn" data-act="openThread" data-uid="${esc(u.uid)}">✉️</button>` : '')
+      + (u.status === 'approved' && !self ? `<button class="btn" data-act="viewAs" data-uid="${esc(u.uid)}">👁 ${T('viewas_btn')}</button>${hq('viewas')}<button class="btn" data-act="openThread" data-uid="${esc(u.uid)}">✉️</button>` : '')
       + (u.status === 'approved' ? `<button class="btn gold" data-act="utasks" data-uid="${esc(u.uid)}">📋 ${T('tab_tasks')}</button><button class="btn" data-act="uprog" data-uid="${esc(u.uid)}">${T('progress')}</button><button class="btn" data-act="uadj" data-uid="${esc(u.uid)}">${T('adjust')}</button>` : '')
       + (!self && u.status !== 'blocked' ? `<button class="btn" data-act="ublock" data-uid="${esc(u.uid)}">${T('block')}</button>` : '')
       + (!self && u.status === 'blocked' ? `<button class="btn" data-act="approve" data-uid="${esc(u.uid)}">${T('unblock')}</button>` : '')
@@ -2431,7 +2499,7 @@ function admUsers() {
 
 function admAdd() {
   const rows = S.wl.map(w => `<div class="card u"><div class="urow"><div style="min-width:0"><b>${esc(w.email)}</b><div class="mut">${esc(relLabel(w.relation))}${w.isAdmin ? ' · ' + T('is_admin') : ''}${S.users.some(u => u.email === w.email) ? ' · ✓' : ''}</div></div><button class="btn red sm" style="margin-left:auto" data-act="wldel" data-id="${esc(w.email)}">${T('remove')}</button></div></div>`).join('');
-  return `<div class="card"><h2>${T('add_title')}</h2><div class="mut">${T('add_hint')}</div>`
+  return `<div class="card"><h2>${T('add_title')} ${hq('wl')}</h2><div class="mut">${T('add_hint')}</div>`
     + `<label class="f">${T('email')}<input id="wlEmail" type="email" placeholder="name@gmail.com" autocomplete="off"></label>`
     + `<label class="f">${T('relation')}<select id="wlRel">${relOptions('')}</select></label>`
     + `<label class="chk"><input id="wlAdmin" type="checkbox"> ${T('is_admin')}</label>`
@@ -2441,20 +2509,37 @@ function admAdd() {
 
 function taskForm(t) {
   const rels = ['*'].concat(REL);
-  const mode = Logic.photoMode(t);
-  return `<details class="tk" data-tid="${esc(t.id)}" ${S.openTask === t.id ? 'open' : ''}><summary>${esc(t.icon || '')} ${esc(t.time)} — ${esc(loc(t.title))}${t.active === false ? ' ⏸' : ''}</summary>`
-    + `<div class="grid2"><label class="f">${T('time')}<input data-tf="time" type="time" value="${esc(t.time)}"></label><label class="f">${T('icon')}<input data-tf="icon" value="${esc(t.icon || '')}"></label></div>`
-    + ['uz', 'ru', 'en'].map(l => `<label class="f">${T('title_' + l)}<input data-tf="title_${l}" value="${esc((t.title || {})[l] || '')}"></label>`).join('')
-    + `<div class="grid2"><label class="f">${T('reward')}<input data-tf="reward" type="number" step="0.01" min="0" value="${(t.reward / 100).toFixed(2)}"></label>`
-    + `<label class="f">${T('grace')}<input data-tf="grace" type="number" min="0" value="${t.graceMin ?? 60}"></label></div>`
-    + `<label class="f">${T('early')}<input data-tf="early" type="number" min="0" value="${t.earlyMin ?? 15}"></label>`
-    + `<label class="f">${T('sched')}<select data-tf="sched">${['daily', 'days', 'once'].map(k => `<option value="${k}" ${(t.once ? 'once' : (Array.isArray(t.days) && t.days.length && t.days.length < 7 ? 'days' : 'daily')) === k ? 'selected' : ''}>${T('sched_' + k)}</option>`).join('')}</select></label>`
-    + `<div class="relgrid">${[1, 2, 3, 4, 5, 6, 0].map(d => `<label class="chk"><input type="checkbox" data-td="${d}" ${(!Array.isArray(t.days) || !t.days.length || t.days.includes(d)) ? 'checked' : ''}> ${WDS[S.lang][d]}</label>`).join('')}</div>`
-    + `<label class="f">${T('sched_once_date')}<input data-tf="once" type="date" value="${esc(t.once || '')}"></label>`
-    + `<label class="f">${T('photo_mode')}<select data-tf="photo">${['off', 'opt', 'req'].map(m => `<option value="${m}" ${mode === m ? 'selected' : ''}>${T('photo_' + m)}</option>`).join('')}</select></label>`
-    + `<div class="mut">${T('assigned_to')}</div><div class="relgrid">${rels.map(r => `<label class="chk"><input type="checkbox" data-tr="${r}" ${(t.relations || []).includes(r) ? 'checked' : ''}> ${r === '*' ? T('rel_all') : T('rel_' + r)}</label>`).join('')}</div>`
-    + `<label class="chk"><input type="checkbox" data-tf="active" ${t.active !== false ? 'checked' : ''}> ${T('active')}</label>`
-    + `<div class="btnrow"><button class="btn gold" data-act="savetask" data-id="${esc(t.id)}">${T('save')}</button><button class="btn red" data-act="deltask" data-id="${esc(t.id)}">${T('remove')}</button></div></details>`;
+  const mode = Logic.photoMode(t), open = S.openTask === t.id;
+  const sched = t.once ? 'once' : (Array.isArray(t.days) && t.days.length && t.days.length < 7 ? 'days' : 'daily');
+  const tab = (open && S.tkTab) || 'main';
+  const L = S.lang, others = ['uz', 'ru', 'en'].filter(l => l !== L);
+  const tabs = [['main', '✏️', T('tk_main')], ['when', '🔁', T('tk_when')], ['who', '👤', T('tk_who')], ['more', '⚙️', T('tk_more')]];
+  const head = `<button class="tkhead" data-act="tkopen" data-id="${esc(t.id)}"><span class="ttime">${esc(t.time)}</span><span class="ticon">${esc(t.icon || '•')}</span>`
+    + `<span class="tmain"><b>${esc(loc(t.title))}${t.active === false ? ' ⏸' : ''}</b><small>${'%META%'}</small></span><span class="tkarrow">${open ? '▴' : '▾'}</span></button>`;
+  if (!open) return `<div class="tk" data-tid="${esc(t.id)}">${head}</div>`;
+  return `<div class="tk open" data-tid="${esc(t.id)}" data-sched="${sched}">${head}<div class="tkbody">`
+    + `<div class="tktabs">${tabs.map(([k, i, n]) => `<button class="${tab === k ? 'on' : ''}" data-act="tktab" data-id="${k}">${i} ${n}</button>`).join('')}</div>`
+    // основное
+    + `<div class="tkpane ${tab === 'main' ? 'on' : ''}" data-pane="main">`
+    + `<div class="row3"><label class="f">🕐 ${T('time')}<input data-tf="time" type="time" value="${esc(t.time)}"></label><label class="f ic">${T('icon')}<input data-tf="icon" value="${esc(t.icon || '')}" maxlength="4"></label>`
+    + `<label class="f">💰 ${hq('reward')}<input data-tf="reward" type="number" inputmode="decimal" step="0.01" min="0" value="${(t.reward / 100).toFixed(2)}"></label></div>`
+    + `<label class="f">${T('title_' + L)}<input data-tf="title_${L}" value="${esc((t.title || {})[L] || '')}"></label>`
+    + `<details class="langs"><summary>🌐 ${T('tk_langs')}</summary>${others.map(l => `<label class="f">${T('title_' + l)}<input data-tf="title_${l}" value="${esc((t.title || {})[l] || '')}"></label>`).join('')}</details></div>`
+    // когда
+    + `<div class="tkpane ${tab === 'when' ? 'on' : ''}" data-pane="when">`
+    + `<label class="f">${T('sched')} ${hq('sched')}<select data-tf="sched">${['daily', 'days', 'once'].map(k => `<option value="${k}" ${sched === k ? 'selected' : ''}>${T('sched_' + k)}</option>`).join('')}</select></label>`
+    + `<div class="wdays only-days">${[1, 2, 3, 4, 5, 6, 0].map(d => `<label class="wd"><input type="checkbox" data-td="${d}" ${(!Array.isArray(t.days) || !t.days.length || t.days.includes(d)) ? 'checked' : ''}><span>${WDS[S.lang][d]}</span></label>`).join('')}</div>`
+    + `<label class="f only-once">${T('sched_once_date')}<input data-tf="once" type="date" value="${esc(t.once || '')}"></label>`
+    + `<div class="grid2"><label class="f">${T('early')} ${hq('early')}<input data-tf="early" type="number" inputmode="numeric" min="0" value="${t.earlyMin ?? 15}"></label>`
+    + `<label class="f">${T('grace')} ${hq('grace')}<input data-tf="grace" type="number" inputmode="numeric" min="0" value="${t.graceMin ?? 60}"></label></div></div>`
+    // кому
+    + `<div class="tkpane ${tab === 'who' ? 'on' : ''}" data-pane="who"><div class="mut">${T('assigned_to')} ${hq('who')}</div>`
+    + `<div class="wdays">${rels.map(r => `<label class="wd"><input type="checkbox" data-tr="${r}" ${(t.relations || []).includes(r) ? 'checked' : ''}><span>${r === '*' ? T('rel_all') : T('rel_' + r)}</span></label>`).join('')}</div></div>`
+    // ещё
+    + `<div class="tkpane ${tab === 'more' ? 'on' : ''}" data-pane="more">`
+    + `<label class="f">${T('photo_mode')} ${hq('photo')}<select data-tf="photo">${['off', 'opt', 'req'].map(m => `<option value="${m}" ${mode === m ? 'selected' : ''}>${T('photo_' + m)}</option>`).join('')}</select></label>`
+    + `<label class="chk"><input type="checkbox" data-tf="active" ${t.active !== false ? 'checked' : ''}> ${T('active')} ${hq('active')}</label></div>`
+    + `<div class="btnrow tkbtns"><button class="btn gold" data-act="savetask" data-id="${esc(t.id)}">💾 ${T('save')}</button><button class="btn" data-act="tkopen" data-id="${esc(t.id)}">✕ ${T('close')}</button><button class="btn red sm" data-act="deltask" data-id="${esc(t.id)}">🗑</button></div></div></div>`;
 }
 function admTasks() {
   const ts = Logic.sortTasks(S.tasks);
@@ -2465,8 +2550,8 @@ function admTasks() {
   const list = who === 'all' ? ts : ts.filter(t => { const u = people.find(x => x.uid === who); return u && Logic.assigned(t, u, null); });
   const forWho = t => people.filter(u => Logic.assigned(t, u, null)).map(u => firstName(u.name)).join(', ') || '—';
   return `<div class="card"><h3>📋 ${T('tab_tasks')}</h3><div class="mut">${T('adm_tasks_hint')}</div>${chips}`
-    + `<div class="btnrow">${ts.length ? '' : `<button class="btn gold" data-act="seed">${T('load_defaults')}</button>`}<button class="btn gold" data-act="newtask">＋ ${T('add_task')}</button></div></div>`
-    + list.map(t => taskForm(t).replace('</summary>', `<div class="tkmeta">👤 ${esc(forWho(t))} · 🔁 ${esc(schedTxt(t))} · +${M(t.reward)}</div></summary>`)).join('');
+    + `<div class="btnrow">${ts.length ? '' : `<button class="btn gold" data-act="seed">${T('load_defaults')}</button>`}<button class="btn gold" data-act="newtask">${T('add_task')}</button></div></div>`
+    + `<div class="tklist">` + list.map(t => taskForm(t).replace('%META%', `👤 ${esc(forWho(t))} · 🔁 ${esc(schedTxt(t))} · +${M(t.reward)}`)).join('') + `</div>`;
 }
 
 function admPhotos() {
@@ -2682,26 +2767,46 @@ ACT.seed = () => guarded(async () => {
   }
 });
 ACT.newtask = () => guarded(async () => {
-  const id = 't_' + Date.now().toString(36); S.openTask = id;
+  const id = 't_' + Date.now().toString(36); S.openTask = id; S.tkTab = 'main';
+  setTimeout(() => { const b = document.querySelector(`.tk[data-tid="${id}"]`); if (b) b.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 300);
   await Store.saveTask({ id, time: '09:00', icon: '⭐', title: { uz: 'Yangi vazifa', ru: 'Новое задание', en: 'New task' }, reward: 1000, graceMin: 60, earlyMin: 15, relations: ['wife'], uids: [], active: true, since: clock().date, photo: 'opt' });
 });
 ACT.savetask = el => guarded(async () => {
-  const d = document.querySelector(`details[data-tid="${CSS.escape(el.dataset.id)}"]`), g = k => d.querySelector(`[data-tf="${k}"]`);
+  const d = document.querySelector(`.tk[data-tid="${CSS.escape(el.dataset.id)}"]`), g = k => d.querySelector(`[data-tf="${k}"]`);
   const old = taskById(el.dataset.id);
   const t = Object.assign({}, old, {
     time: g('time').value || old.time, icon: g('icon').value,
     title: { uz: g('title_uz').value, ru: g('title_ru').value, en: g('title_en').value },
+    // пустое название на другом языке берём из заполненного
     reward: Math.max(0, Math.round(parseFloat(g('reward').value || '0') * 100)),
     graceMin: Math.max(0, parseInt(g('grace').value || '0', 10)), earlyMin: Math.max(0, parseInt(g('early').value || '0', 10)),
     photo: ['off', 'opt', 'req'].includes(g('photo').value) ? g('photo').value : 'opt',
     active: g('active').checked, relations: [...d.querySelectorAll('[data-tr]')].filter(i => i.checked).map(i => i.dataset.tr)
   });
+  ['uz', 'ru', 'en'].forEach(l => { if (!t.title[l]) t.title[l] = t.title[S.lang] || t.title.ru || t.title.uz || t.title.en || ''; });
   const sched = g('sched') ? g('sched').value : 'daily';
   const days = [...d.querySelectorAll('[data-td]')].filter(i => i.checked).map(i => +i.dataset.td).sort();
   t.days = sched === 'days' ? days : [];
   t.once = sched === 'once' ? (g('once').value || clock().date) : '';
-  S.openTask = t.id; await Store.saveTask(t);
+  S.openTask = null; S.tkTab = 'main'; await Store.saveTask(t);
+  banner('good', '💾 ' + T('saved_ok'), `${t.time} ${loc(t.title)}`, 2000);
 });
+ACT.trow = (el, e) => { if (e && e.target.closest('button') && e.target.closest('button') !== el) return; S.trOpen = S.trOpen === el.dataset.id ? null : el.dataset.id; render(); };
+// Кружок «?» рядом с настройкой: касание показывает объяснение, повторное — прячет
+const hq = k => `<button type="button" class="hq" data-act="hq" data-k="${k}" aria-label="?">?</button>`;
+ACT.hq = (el, e) => {
+  if (e) { e.preventDefault(); e.stopPropagation(); }
+  const host = el.closest('.row3, .grid2, .admtabs') || el.closest('label, .mut, h2, h3, .swrow, div') || el.parentNode, nx = host.nextElementSibling;
+  if (nx && nx.classList.contains('hqbub') && nx.dataset.k === el.dataset.k) { nx.remove(); el.classList.remove('on'); return; }
+  document.querySelectorAll('.hqbub').forEach(b => b.remove()); document.querySelectorAll('.hq.on').forEach(b => b.classList.remove('on'));
+  const b = document.createElement('div'); b.className = 'hqbub'; b.dataset.k = el.dataset.k; b.textContent = T('hq_' + el.dataset.k);
+  b.addEventListener('click', () => { b.remove(); el.classList.remove('on'); });
+  host.after(b); el.classList.add('on');
+};
+ACT.tkopen = el => { const id = el.dataset.id; S.openTask = S.openTask === id ? null : id; S.tkTab = 'main'; render(); };
+// Вкладки внутри задания переключаются без перерисовки, чтобы не терять набранное
+ACT.tktab = el => { const box = el.closest('.tk'); box.querySelectorAll('.tktabs button').forEach(b => b.classList.toggle('on', b === el)); box.querySelectorAll('.tkpane').forEach(p => p.classList.toggle('on', p.dataset.pane === el.dataset.id)); S.tkTab = el.dataset.id; };
+document.addEventListener('change', e => { if (e.target.dataset && e.target.dataset.tf === 'sched') { const b = e.target.closest('.tk'); if (b) b.dataset.sched = e.target.value; } });
 ACT.deltask = el => ask(T('confirm_remove'), () => Store.delTask(el.dataset.id));
 
 // админ: настройки, звуки, выплаты
@@ -4398,7 +4503,7 @@ function admTube() {
   const cfg = tubeCfg();
   const rows = mode => (cfg[mode] || []).map(it => `<div class="hrow"><span>${it.type === 'video' ? '🎬' : it.type === 'playlist' ? '📃' : '📺'}</span><span>${esc(it.title || it.ref)}</span><button class="btn red sm" data-act="tdel" data-mode="${mode}" data-id="${esc(it.id)}">✕</button></div>`).join('') || `<div class="mut">—</div>`;
   return `<div class="card"><h2>📺 ${T('tube_admin')}</h2><div class="mut">${T('tube_admin_hint')}</div>`
-    + `<label class="f">🔑 ${T('tube_key')}<input id="tKey" value="${esc(cfg.key || '')}" placeholder="AIza…"></label><div class="mut">${T(cfg.key ? 'tube_key_ok' : 'tube_key_none')}</div>`
+    + `<label class="f">🔑 ${T('tube_key')} ${hq('tubekey')}<input id="tKey" value="${esc(cfg.key || '')}" placeholder="AIza…"></label><div class="mut">${T(cfg.key ? 'tube_key_ok' : 'tube_key_none')}</div>`
     + `<div class="btnrow"><button class="btn sm" data-act="tkeysave">💾 ${T('save')}</button></div>`
     + `<label class="f">${T('tube_link')}<input id="tUrl" placeholder="youtube.com/@channel · /channel/UC… · playlist?list=… · youtu.be/…"></label>`
     + `<div class="grid2"><label class="f">${T('tube_for')}<select id="tMode"><option value="relax">👩 ${T('mode_relax')}</option><option value="kid">🧒 ${T('mode_kid')}</option></select></label><label class="f">${T('vid_title')}<input id="tTitle"></label></div>`
