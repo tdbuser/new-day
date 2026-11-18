@@ -550,6 +550,23 @@ details.langs{margin:4px 0}details.langs summary{color:var(--mut);font-size:13px
 #app > .geobar:first-child,
 #app > .demo:first-child{padding-top:calc(10px + env(safe-area-inset-top))}
 .startov{padding-top:calc(20px + env(safe-area-inset-top))}
+/* ---- вкладки-иконки внутри разделов (как в браузере): активная раскрывает подпись ---- */
+.icontabs{display:flex;gap:6px;align-items:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:4px 0 2px;scrollbar-width:none}
+.icontabs::-webkit-scrollbar{display:none}
+.icontabs > button{flex:none;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:48px;padding:8px 9px;border:1px solid transparent;border-radius:14px;background:rgba(255,255,255,.05);color:var(--mut);font:inherit;cursor:pointer}
+.icontabs > button .ti{font-size:22px;line-height:1}
+.icontabs > button .tn{display:none;font-size:12px;font-weight:800;white-space:nowrap}
+.icontabs > button.on{background:rgba(255,210,63,.16);border-color:var(--gold);color:#fff;box-shadow:0 0 0 2px rgba(255,210,63,.18)}
+.icontabs > button.on .tn{display:block}
+/* ---- строка навигации «где я» — внизу, над основными кнопками ---- */
+.crumbsbar{position:fixed;left:0;right:0;bottom:calc(72px + env(safe-area-inset-bottom));z-index:38;display:flex;align-items:center;gap:8px;padding:8px 14px;background:linear-gradient(180deg,rgba(6,36,26,.75),rgba(6,36,26,.97));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid rgba(255,210,63,.3);font-size:15px}
+.crumbsbar button{border:1px solid var(--line);background:rgba(255,255,255,.1);border-radius:12px;padding:8px 12px;font-weight:800;color:#fff}
+.crumbsbar span{color:var(--mut)}
+.crumbsbar b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.incrumbs #app{padding-bottom:150px}
+/* ---- стартовый экран: кнопка/текст строго по центру, с учётом выреза ---- */
+.startov{grid-template-rows:1fr auto 1fr}
+.startov .intro{grid-row:2}
 
 </style>
 </head>
@@ -559,7 +576,7 @@ details.langs{margin:4px 0}details.langs summary{color:var(--mut);font-size:13px
 /* ============================================================
    НАСТРОЙКИ — заполняются один раз (см. SETUP.md)
    ============================================================ */
-const APP_VERSION = '2026.11.18-3';
+const APP_VERSION = '2026.11.18-4';
 const APP_CONFIG = {
   // Ваша Google-почта. Этот аккаунт автоматически станет главным администратором.
   OWNER_EMAIL: "3307999@gmail.com",
@@ -2309,6 +2326,7 @@ function render() {
   else if (v === 'admin') html = shell(viewAdmin(), true);
   else html = shell(viewHome(), true);
   app.innerHTML = html;
+  document.body.classList.toggle('incrumbs', S.view === 'home' && S.htab === 'menu' && !!S.menu);
   app.querySelectorAll('.tk.open [data-tf],.tk.open [data-td],.tk.open [data-tr]').forEach(x => { const k = (x.closest('.tk').dataset.tid) + '|' + (x.dataset.tf || 'd' + (x.dataset.td ?? '') + 'r' + (x.dataset.tr ?? '')); if (k in keep) { if (x.type === 'checkbox') x.checked = keep[k]; else x.value = keep[k]; } });
   app.querySelectorAll('.tk.open').forEach(b => { const s2 = b.querySelector('[data-tf=sched]'); if (s2) b.dataset.sched = s2.value; });
   app.querySelectorAll('details > summary').forEach(x => { if (openD.has(x.textContent.trim()) && !x.dataset.act) x.parentNode.open = true; });
@@ -2389,7 +2407,7 @@ function viewMenu() {
         + (k === 'events' && soon ? `<em>${esc(soon.icon || '🎉')} ${soon.left === 0 ? T('ev_today') : T('ev_in', { n: soon.left })}</em>` : '') + `</button>`).join('') + `</div>`;
   }
   const body = { kids: viewKids, kitchen: viewKitchen, events: viewEvents, family: viewFamily, cards: viewCards, contacts: viewContacts }[m[0]]();
-  return `<div class="crumbs"><button data-act="menu" data-id="">📂 ${T('nav_menu')}</button><span>›</span><b>${m[1]} ${T(m[2])}</b></div>` + body;
+  return body + `<div class="crumbsbar"><button data-act="menu" data-id="">📂 ${T('nav_menu')}</button><span>›</span><b>${m[1]} ${T(m[2])}</b></div>`;
 }
 // Подпись расписания задания
 function schedTxt(t) {
@@ -3563,7 +3581,7 @@ function confetti() {
 function viewFun() {
   const sub = [['kids', '👩‍👧', T('fun_kids')], ['kitchen', '🍳', T('fun_kitchen')], ['events', '🎉', T('fun_events')], ['cards', '💌', T('fun_cards')], ['contacts', '📞', T('fun_contacts')]];
   const ft = S.ftab || 'kids';
-  const head = `<div class="tabs">${sub.map(([k, i, n]) => `<button class="chipbtn ${ft === k ? 'on' : ''}" data-act="ftab" data-id="${k}">${i} ${n}</button>`).join('')}</div>`;
+  const head = `<div class="icontabs">${sub.map(([k, i, n]) => `<button class="${ft === k ? 'on' : ''}" data-act="ftab" data-id="${k}"><span class="ti">${i}</span><span class="tn">${n}</span></button>`).join('')}</div>`;
   return head + ({ kids: viewKids, events: viewEvents, cards: viewCards, contacts: viewContacts }[ft] || viewKitchen)();
 }
 ACT.ftab = el => { S.ftab = el.dataset.id; render(); };
@@ -3573,11 +3591,11 @@ function viewKitchen() {
   const cat = S.rcat || 'first', all = mediaOf();
   const chips = RCATS.map(([k, i]) => {
     const n = all.filter(v => v.cat === k).length;
-    return `<button class="chipbtn ${cat === k ? 'on' : ''}" data-act="rcat" data-id="${k}">${i} ${T('rc_' + k)}${n ? ` <small>${n}</small>` : ''}</button>`;
+    return `<button class="${cat === k ? 'on' : ''}" data-act="rcat" data-id="${k}"><span class="ti">${i}</span><span class="tn">${T('rc_' + k)}${n ? ` ${n}` : ''}</span></button>`;
   }).join('');
   const vids = all.filter(v => v.cat === cat);
-  const mine = `<button class="chipbtn ${cat === 'mine' ? 'on' : ''}" data-act="rcat" data-id="mine">📒 ${T('r_mine')}${(S.recipes || []).length ? ` <small>${S.recipes.length}</small>` : ''}</button>`;
-  const head = `<div class="card"><h2>🍳 ${T('fun_kitchen')}</h2><div class="mut">${T('kitchen_hint')}</div><div class="tabs" style="margin-top:8px">${mine}${chips}</div></div>`;
+  const mine = `<button class="${cat === 'mine' ? 'on' : ''}" data-act="rcat" data-id="mine"><span class="ti">📒</span><span class="tn">${T('r_mine')}${(S.recipes || []).length ? ` ${S.recipes.length}` : ''}</span></button>`;
+  const head = `<div class="card"><h2>🍳 ${T('fun_kitchen')}</h2><div class="mut">${T('kitchen_hint')}</div><div class="icontabs" style="margin-top:8px">${mine}${chips}</div></div>`;
   if (cat === 'mine') return head + viewRecipes();
   return head + (vids.length ? `<div class="vgrid">${vids.map(videoTile).join('')}</div>` : `<div class="card center mut">${T(isAdmin() ? 'videos_empty_admin' : 'videos_empty')}</div>`);
 }
@@ -3602,7 +3620,7 @@ function viewKids() {
   const kt = S.ktab || 'together';
   const sub = [['together', '🎲'], ['hands', '✋'], ['qa', '❓'], ['tales', '📖'], ['advice', '💡'], ['screen', '📱'], ['video', '📺']];
   const head = `<div class="card kidhead"><h2>👩‍👧 ${T('fun_kids')}</h2><div class="mut">${T('kids_hint2')}</div>`
-    + `<div class="ksub">${sub.map(([k, i]) => `<button class="${kt === k ? 'on' : ''}" data-act="ktab" data-id="${k}"><span>${i}</span>${T('k_' + k)}</button>`).join('')}</div></div>`;
+    + `<div class="icontabs">${sub.map(([k, i]) => `<button class="${kt === k ? 'on' : ''}" data-act="ktab" data-id="${k}"><span class="ti">${i}</span><span class="tn">${T('k_' + k)}</span></button>`).join('')}</div></div>`;
   const body = { together: kidsTogether, hands: kidsHands, qa: kidsQA, tales: kidsTales, advice: kidsAdvice, screen: kidsScreen, video: kidsVideo }[kt]();
   return head + body;
 }
