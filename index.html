@@ -518,6 +518,19 @@ details.langs{margin:4px 0}details.langs summary{color:var(--mut);font-size:13px
 /* ---- переписка: тёмный текст на белом ---- */
 .chatin textarea{background:#fff;color:#111;border:1px solid #ccc}
 .chatin textarea::placeholder{color:#777}
+/* ---- 5-я кнопка «Письма» в нижнем меню с бейджем ---- */
+.tabbar .msgtab{position:relative}
+.tabbar .msgtab em{position:absolute;top:2px;left:50%;margin-left:4px;transform:translateX(0);font-style:normal;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#e5342b;color:#fff;font-size:11px;font-weight:900;display:grid;place-items:center;box-shadow:0 0 0 2px #06241a}
+/* ---- вложения в переписке ---- */
+.chatin .attbtn{flex:none;width:44px;border:0;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-size:20px;cursor:pointer}
+.chatin .sendbtn{flex:none}
+.bubimg{display:block;max-width:200px;width:100%;border-radius:10px;margin-bottom:4px;cursor:pointer}
+.viewimg{display:block;max-width:100%;max-height:70vh;margin:0 auto;border-radius:12px}
+/* ---- меню прикрепления ---- */
+.attgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+.attopt{display:flex;flex-direction:column;align-items:center;gap:4px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.05);color:#fff;font:inherit;font-size:28px;padding:14px 4px;cursor:pointer}
+.attopt span{font-size:13px;font-weight:800;color:#cfe9dc}
+.attopt:active{background:rgba(255,210,63,.15)}
 
 </style>
 </head>
@@ -1043,7 +1056,18 @@ Object.assign(D, {
   hq_wl: ["Odamning Gmail manzilini kiriting. U shu Gmail bilan kirganda darhol tasdiqlanadi.", "Впишите Gmail человека. Когда он войдёт через этот Gmail, его сразу пустит в приложение.", "Enter the person's Gmail. When they sign in with it, they get in straight away."],
   hq_modes: ["Bosh sahifada katta tugma paydo bo'ladi. Ichida faqat siz «📺 Video» bo'limida qo'shgan videolar.", "У человека на главной появится большая кнопка режима. Внутри — только видео, которые вы добавили во вкладке «📺 Видео».", "A big mode button appears on their home screen. Inside — only the videos you added in the Video tab."],
   hq_viewas: ["Ilovani shu odam ko'rgandek ochadi — boshidan. Hech narsa saqlanmaydi. Chiqish — tepadagi binafsha chiziqda.", "Открывает приложение так, как его видит этот человек, с самого начала. Ничего не сохраняется. Выход — на фиолетовой полосе сверху.", "Opens the app the way this person sees it, from the start. Nothing is saved. Exit via the purple bar on top."],
-  hq_tubekey: ["Kalitsiz alohida videolar va pleylistlar ishlaydi. Kalit bilan — kanallarning yangi videolari va qidiruv.", "Без ключа работают отдельные видео и плейлисты. С ключом — новые видео каналов и поиск.", "Without a key, single videos and playlists work. With it — new channel videos and search."]
+  hq_tubekey: ["Kalitsiz alohida videolar va pleylistlar ishlaydi. Kalit bilan — kanallarning yangi videolari va qidiruv.", "Без ключа работают отдельные видео и плейлисты. С ключом — новые видео каналов и поиск.", "Without a key, single videos and playlists work. With it — new channel videos and search."],
+  nav_msgs: ["Xatlar", "Письма", "Messages"],
+  msg_photo: ["Rasm", "Фото", "Photo"],
+  attach_wait: ["Rasm tayyorlanmoqda…", "Готовлю фото…", "Preparing photo…"],
+  att_title: ["Nima biriktiramiz?", "Что прикрепить?", "What to attach?"],
+  att_cam: ["Suratga olish", "Снять фото", "Take photo"],
+  att_selfie: ["Selfi", "Селфи", "Selfie"],
+  att_lib: ["Galereyadan", "Из галереи", "From gallery"],
+  att_save: ["Telefonga saqlash", "Сохранить на телефон", "Save to phone"],
+  att_saved: ["Saqlandi", "Сохранено", "Saved"],
+  att_save_fail: ["Saqlab bo'lmadi", "Не удалось сохранить", "Could not save"],
+  att_note: ["Hozircha rasm yuborish mumkin. Video va boshqa fayllar uchun Firebase Storage kerak (keyin ulaymiz).", "Пока можно отправлять фото. Для видео и других файлов нужно хранилище Firebase Storage (подключим позже).", "Photos work now. Video and other files need Firebase Storage (we'll add it later)."]
 });
 
 
@@ -2278,7 +2302,9 @@ function viewHome() {
   else if (S.htab === 'me') body = viewMe();
   else body = modeButtons() + viewToday();
   const tabs = [['today', '✅', T('nav_tasks')], ['rewards', '🎁', T('nav_rewards')], ['menu', '📂', T('nav_menu')], ['me', '👤', T('nav_me')]];
-  return body + `<nav class="tabbar">${tabs.map(([k, i, n]) => `<button class="${S.htab === k ? 'on' : ''}" data-act="htab" data-id="${k}"><span>${i}</span>${n}</button>`).join('')}</nav>`;
+  const unread = unreadFor(S.me.uid);
+  const navMsg = `<button class="msgtab" data-act="navMsgs"><span>✉️</span>${T('nav_msgs')}${unread ? `<em>${unread > 99 ? '99+' : unread}</em>` : ''}</button>`;
+  return body + `<nav class="tabbar">${tabs.map(([k, i, n]) => `<button class="${S.htab === k ? 'on' : ''}" data-act="htab" data-id="${k}"><span>${i}</span>${n}</button>`).join('')}${navMsg}</nav>`;
 }
 // «Меню»: разделы как папки; внутри раздела — путь «Меню › Раздел»
 const MENU = [
@@ -4562,8 +4588,9 @@ function onMessages(list) {
   const fresh = list.filter(m => !known.has(m.id) && m.from !== meId && !m.read);
   if (S.msgsLoaded && fresh.length) {
     const m = fresh[fresh.length - 1];
+    const prev = m.text || (m.photo ? '📷 ' + T('msg_photo') : '');
     play('msg'); if (navigator.vibrate) navigator.vibrate([400, 150, 400, 150, 800]);
-    banner('good', '✉️ ' + T('msg_from', { n: m.name || '' }), String(m.text || '').slice(0, 90), 7000);
+    banner('good', '✉️ ' + T('msg_from', { n: m.name || '' }), String(prev).slice(0, 90), 7000);
   }
   S.msgKnown = new Set(list.map(m => m.id)); S.msgs = list; S.msgsLoaded = true;
   const box = document.getElementById('chatList'); if (box) drawChat();
@@ -4572,7 +4599,8 @@ function onMessages(list) {
 function openChat(uid) {
   S.chatUid = uid;
   const who = uid === S.me.uid ? T('admin_word') : ((S.users.find(u => u.uid === uid) || {}).name || '');
-  const m = modal(`<h3>✉️ ${esc(who)}</h3><div class="chatlist" id="chatList"></div><div class="chatin"><textarea id="chatText" rows="2" placeholder="${esc(T('msg_ph'))}"></textarea><button class="btn gold" data-act="chatSend">➤</button></div>`
+  const m = modal(`<h3>✉️ ${esc(who)}</h3><div class="chatlist" id="chatList"></div>`
+    + `<div class="chatin"><button class="attbtn" data-act="attMenu" aria-label="attach">📎</button><textarea id="chatText" rows="1" placeholder="${esc(T('msg_ph'))}"></textarea><button class="btn gold sendbtn" data-act="chatSend">➤</button></div>`
     + `<div class="btnrow"><button class="btn" data-act="close">${T('close')}</button></div>`);
   m._stop = () => { S.chatUid = null; };
   drawChat();
@@ -4580,17 +4608,52 @@ function openChat(uid) {
 function drawChat() {
   const box = document.getElementById('chatList'); if (!box || !S.chatUid) return;
   const meId = S.me.uid, th = threadOf(S.chatUid);
-  box.innerHTML = th.length ? th.map(m => `<div class="bub ${m.from === meId ? 'me' : 'them'}">${esc(m.text)}<small>${new Date(m.at || 0).toLocaleString(S.lang === 'en' ? 'en-GB' : 'ru-RU', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}${m.from === meId && m.read ? ' ✓✓' : ''}</small></div>`).join('') : `<div class="mut center">${T('msg_empty')}</div>`;
+  box.innerHTML = th.length ? th.map(m => `<div class="bub ${m.from === meId ? 'me' : 'them'}">${m.photo ? `<img class="bubimg" src="${m.photo}" data-act="imgview" data-src="${m.photo}" alt="">` : ''}${m.text ? `<span>${esc(m.text)}</span>` : ''}<small>${new Date(m.at || 0).toLocaleString(S.lang === 'en' ? 'en-GB' : 'ru-RU', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}${m.from === meId && m.read ? ' ✓✓' : ''}</small></div>`).join('') : `<div class="mut center">${T('msg_empty')}</div>`;
   box.scrollTop = box.scrollHeight;
   th.filter(m => m.from !== meId && !m.read).forEach(m => Store.updateMessage(m.id, { read: true }).catch(() => {}));
 }
-ACT.chatSend = () => guarded(async () => {
-  const t = ($('#chatText').value || '').trim(); if (!t || !S.chatUid) return;
-  const id = `${S.chatUid}_${Date.now()}`;
-  await Store.addMessage({ id, uid: S.chatUid, from: S.me.uid, name: S.me.name, text: t.slice(0, 1900), at: Date.now(), read: false });
-  $('#chatText').value = ''; Snd.tick && Snd.tick();
-});
+async function sendMsg(extra) {
+  const ta = $('#chatText'), t = ta ? (ta.value || '').trim() : '';
+  if ((!t && !(extra && extra.photo)) || !S.chatUid) return;
+  const id = `${S.chatUid}_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
+  await Store.addMessage(Object.assign({ id, uid: S.chatUid, from: S.me.uid, name: S.me.name, text: t.slice(0, 1900), at: Date.now(), read: false }, extra));
+  if (ta) ta.value = ''; Snd.tick && Snd.tick();
+}
+ACT.chatSend = () => guarded(() => sendMsg());
+// Прикрепить фото: камера (iPhone предложит «Снять фото» — можно переднюю или заднюю — или «Медиатека»)
+// Меню прикрепления: задняя камера, селфи, галерея (фото)
+ACT.attMenu = () => {
+  if (!S.chatUid) return;
+  modal(`<h3>📎 ${T('att_title')}</h3><div class="attgrid">`
+    + `<button class="attopt" data-act="attPick" data-src="environment">📷<span>${T('att_cam')}</span></button>`
+    + `<button class="attopt" data-act="attPick" data-src="user">🤳<span>${T('att_selfie')}</span></button>`
+    + `<button class="attopt" data-act="attPick" data-src="lib">🖼<span>${T('att_lib')}</span></button>`
+    + `</div><div class="mut" style="margin-top:8px">${T('att_note')}</div>`
+    + `<div class="btnrow"><button class="btn" data-act="close">${T('close')}</button></div>`);
+};
+function pickImage(cap) {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'image/*';
+  if (cap === 'environment' || cap === 'user') inp.capture = cap;
+  inp.onchange = () => {
+    const f = inp.files && inp.files[0]; if (!f) return;
+    banner('good', '📎 ' + T('attach_wait'), '', 1500);
+    const r = new FileReader();
+    r.onload = () => compress(r.result, data => guarded(() => sendMsg({ photo: data })));
+    r.readAsDataURL(f);
+  };
+  inp.click();
+}
+ACT.attPick = el => { closeModal(); setTimeout(() => pickImage(el.dataset.src), 60); };
+// Просмотр фото на весь экран + сохранение на телефон
+ACT.imgview = el => { S._img = el.dataset.src; modal(`<img class="viewimg" src="${el.dataset.src}" alt=""><div class="btnrow"><button class="btn gold" data-act="imgsave">💾 ${T('att_save')}</button><button class="btn" data-act="close">${T('close')}</button></div>`); };
+ACT.imgsave = () => {
+  try { const a = document.createElement('a'); a.href = S._img; a.download = 'new-day-' + Date.now() + '.jpg'; document.body.appendChild(a); a.click(); a.remove(); banner('good', '💾 ' + T('att_saved'), '', 1800); }
+  catch (e) { banner('warn', T('att_save_fail'), '', 2500); }
+};
 ACT.writeAdmin = () => openChat(S.me.uid);
+// Нижняя кнопка «Письма»: у пользователя — чат с админом, у админа — список переписок
+ACT.navMsgs = () => { if (isAdmin() && !S.viewAs) { S.adminOpen = true; S.tab = 'msgs'; closeModal(); render(); window.scrollTo(0, 0); } else openChat(S.me.uid); };
 ACT.openThread = el => openChat(el.dataset.uid);
 const writeAdminBtn = () => (isAdmin() || S.viewAs ? (S.viewAs ? `<button class="writebtn" data-act="writeAdmin">✉️ ${T('write_admin')}</button>` : '') : `<button class="writebtn" data-act="writeAdmin">✉️ ${T('write_admin')}${unreadFor(S.me.uid) ? `<em>${unreadFor(S.me.uid)}</em>` : ''}</button>`);
 function admMsgs() {
@@ -4602,7 +4665,7 @@ function admMsgs() {
   const others = S.users.filter(u => u.status === 'approved' && u.uid !== meId && !by[u.uid]);
   return `<div class="card"><h2>💬 ${T('at_msgs')}</h2><div class="mut">${T('msgs_hint')}</div></div>`
     + threads.map(t => { const u = S.users.find(x => x.uid === t.uid) || { name: t.last.name };
-      return `<button class="card thread ${t.unread ? 'unread' : ''}" data-act="openThread" data-uid="${esc(t.uid)}"><div class="urow">${avatar(u)}<div style="min-width:0;flex:1"><b>${esc(u.name || '')}</b><div class="mut" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.last.from === meId ? '↩ ' : ''}${esc(t.last.text)}</div></div>${t.unread ? `<span class="badge">${t.unread}</span>` : ''}</div></button>`; }).join('')
+      return `<button class="card thread ${t.unread ? 'unread' : ''}" data-act="openThread" data-uid="${esc(t.uid)}"><div class="urow">${avatar(u)}<div style="min-width:0;flex:1"><b>${esc(u.name || '')}</b><div class="mut" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.last.from === meId ? '↩ ' : ''}${esc(t.last.text || (t.last.photo ? '📷 ' + T('msg_photo') : ''))}</div></div>${t.unread ? `<span class="badge">${t.unread}</span>` : ''}</div></button>`; }).join('')
     + (others.length ? `<div class="card"><h3>${T('msg_new')}</h3>${others.map(u => `<button class="btn" data-act="openThread" data-uid="${esc(u.uid)}">✉️ ${esc(firstName(u.name))}</button>`).join(' ')}</div>` : '');
 }
 
