@@ -531,6 +531,15 @@ details.langs{margin:4px 0}details.langs summary{color:var(--mut);font-size:13px
 .attopt{display:flex;flex-direction:column;align-items:center;gap:4px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.05);color:#fff;font:inherit;font-size:28px;padding:14px 4px;cursor:pointer}
 .attopt span{font-size:13px;font-weight:800;color:#cfe9dc}
 .attopt:active{background:rgba(255,210,63,.15)}
+/* ---- геопозиция ---- */
+.geobar{position:sticky;top:0;z-index:55;display:flex;align-items:center;gap:8px;background:#15803d;color:#fff;font-weight:800;padding:8px 12px;border-radius:0 0 14px 14px;margin:-4px 0 8px}
+.geobar button{margin-left:auto;border:0;border-radius:10px;padding:6px 12px;font:inherit;font-weight:900;background:#fff;color:#0f5a2c}
+.georow .geostate{margin-left:auto;font-weight:800;font-size:13px}
+.georow .geostate.on{color:#2ee88f}
+.geomap{height:56vh;min-height:260px;border-radius:14px;overflow:hidden;background:#0a2a1f;margin:4px 0 8px}
+.geoload,.geofail{display:grid;place-items:center;height:100%;text-align:center;padding:16px;color:#cfe9dc;font-weight:700}
+.geomapinfo{margin-bottom:8px}
+.geomap .leaflet-container{height:100%;width:100%;background:#0a2a1f}
 
 </style>
 </head>
@@ -1067,7 +1076,37 @@ Object.assign(D, {
   att_save: ["Telefonga saqlash", "Сохранить на телефон", "Save to phone"],
   att_saved: ["Saqlandi", "Сохранено", "Saved"],
   att_save_fail: ["Saqlab bo'lmadi", "Не удалось сохранить", "Could not save"],
-  att_note: ["Hozircha rasm yuborish mumkin. Video va boshqa fayllar uchun Firebase Storage kerak (keyin ulaymiz).", "Пока можно отправлять фото. Для видео и других файлов нужно хранилище Firebase Storage (подключим позже).", "Photos work now. Video and other files need Firebase Storage (we'll add it later)."]
+  att_note: ["Hozircha rasm yuborish mumkin. Video va boshqa fayllar uchun Firebase Storage kerak (keyin ulaymiz).", "Пока можно отправлять фото. Для видео и других файлов нужно хранилище Firebase Storage (подключим позже).", "Photos work now. Video and other files need Firebase Storage (we'll add it later)."],
+  at_map: ["Qayerda", "Где семья", "Where"],
+  geo_card: ["Joylashuv (geolokatsiya)", "Геопозиция", "Location"],
+  geo_card_hint: ["«Ulashish»ni yoqsangiz, oilangiz sizning kartadagi joyingizni va yurgan yo'lingizni ko'radi. Istalgan payt o'chirasiz. Yoqilganda yuqorida eslatma turadi.", "Если включить «Поделиться», семья увидит вашу точку на карте и ваш путь. Выключить можно в любой момент. Пока включено — сверху видна напоминающая полоска.", "If you turn sharing on, your family sees your point on the map and your route. Turn it off anytime. While on, a reminder bar shows at the top."],
+  geo_share_btn: ["📍 Joylashuvni ulashish", "📍 Поделиться геопозицией", "📍 Share my location"],
+  geo_sharing_on: ["✓ Ulashyapsiz — to'xtatish", "✓ Вы делитесь — остановить", "✓ Sharing — stop"],
+  geo_mymap: ["Mening xaritam", "Моя карта", "My map"],
+  geo_consent: ["Joylashuvingizni oilaga ulashasizmi? Siz qayerdaligingiz va yurgan yo'lingiz ularga ko'rinadi. Istalgan payt o'chirishingiz mumkin.", "Поделиться своей геопозицией с семьёй? Им будет видно, где вы и каким путём шли. Выключить можно в любой момент.", "Share your location with your family? They will see where you are and the route you took. You can turn it off anytime."],
+  geo_on: ["Joylashuv ulashilyapti", "Геопозиция включена", "Location sharing is on"],
+  geo_on_hint: ["Ilova ochiq turganda joyingiz yangilanadi.", "Пока приложение открыто, ваше местоположение обновляется.", "While the app is open, your location keeps updating."],
+  geo_off: ["Ulashish to'xtatildi", "Поделиться выключено", "Sharing turned off"],
+  geo_sharing_now: ["Siz joylashuvingizni ulashyapsiz", "Вы делитесь геопозицией", "You are sharing your location"],
+  geo_stop: ["To'xtatish", "Остановить", "Stop"],
+  geo_denied: ["Joylashuvga ruxsat berilmadi", "Доступ к геопозиции не разрешён", "Location permission denied"],
+  geo_denied_hint: ["Telefon sozlamalarida brauzerga joylashuvga ruxsat bering.", "Разрешите браузеру доступ к геопозиции в настройках телефона.", "Allow the browser to use location in your phone settings."],
+  geo_no: ["Bu qurilmada joylashuv yo'q", "На этом устройстве нет геопозиции", "This device has no location"],
+  geo_now: ["hozir", "сейчас", "now"],
+  geo_min: ["{m} daqiqa oldin", "{m} мин назад", "{m} min ago"],
+  geo_hr: ["{h} soat oldin", "{h} ч назад", "{h} h ago"],
+  geo_stopped: ["o'chirilgan", "выключено", "off"],
+  geo_points: ["Yo'l nuqtalari: {n}", "Точек пути: {n}", "Route points: {n}"],
+  geo_openmap: ["Xaritani ochish", "Открыть карту", "Open map"],
+  geo_last: ["oxirgi marta", "последний раз", "last seen"],
+  geo_herenow: ["Hozir shu yerda", "Сейчас здесь", "Here now"],
+  geo_maploading: ["Xarita yuklanmoqda…", "Загружаю карту…", "Loading map…"],
+  geo_mapfail: ["Xaritani yuklab bo'lmadi (internet kerak). Quyidagi tugmalar bilan Google xarita yoki OSM'da oching.", "Карту не удалось загрузить (нужен интернет). Откройте в Google Картах или OSM кнопками ниже.", "Map couldn't load (needs internet). Open in Google Maps or OSM with the buttons below."],
+  geo_gmaps: ["Google xarita", "Google Карты", "Google Maps"],
+  geo_nodata: ["Hali joylashuv ma'lumoti yo'q", "Пока нет данных о местоположении", "No location data yet"],
+  map_hint: ["Faqat «Ulashish»ni yoqqan oila a'zolari ko'rinadi. Har birida — xaritada joyi va yurgan yo'li.", "Здесь те, кто сам включил «Поделиться». У каждого — место на карте и путь, которым шёл.", "Only family who turned sharing on appear here. Each has their place on the map and the route taken."],
+  map_empty: ["Hali hech kim joylashuvini ulashmagan.", "Пока никто не поделился геопозицией.", "Nobody is sharing their location yet."],
+  me_more: ["Boshqa", "Ещё", "More"]
 });
 
 
@@ -1641,7 +1680,7 @@ const Snd = (() => {
 /* ===== store_demo.js: демо-хранилище в localStorage (без интернета и Firebase) ===== */
 const DemoStore = (() => {
   const KEY = 'fp_demo_v1', AUTH = 'fp_demo_auth';
-  const fresh = () => ({ users: {}, whitelist: {}, tasks: {}, settings: {}, logs: {}, payouts: {}, scores: {}, claims: {}, recipes: {}, shared: {}, messages: {} });
+  const fresh = () => ({ users: {}, whitelist: {}, tasks: {}, settings: {}, logs: {}, payouts: {}, scores: {}, claims: {}, recipes: {}, shared: {}, messages: {}, locations: {} });
   let st = fresh(), subs = new Set(), authCb = null;
   const load = () => { try { st = Object.assign(fresh(), JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) { st = fresh(); } };
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) { /* переполнено: данные останутся в памяти */ } subs.forEach(f => f()); };
@@ -1707,6 +1746,10 @@ const DemoStore = (() => {
   const dumpCol = async n => Object.entries(st[n] || {}).map(([k, v]) => Object.assign({ _id: k }, clone(v)));
   const restoreDoc = async (n, id, d) => { st[n] = st[n] || {}; st[n][id] = clone(d); save(); };
 
+  // Геопозиция (по согласию)
+  const watchLocations = cb => watch(() => cb(list(st.locations || {})));
+  const watchMyLocation = (uid, cb) => watch(() => cb(st.locations && st.locations[uid] ? clone(st.locations[uid]) : null));
+  const setLocation = async l => { st.locations = st.locations || {}; st.locations[l.uid] = clone(l); save(); };
   const watchMyMessages = (uid, cb) => watch(() => cb(list(st.messages || {}).filter(m => m.uid === uid)));
   const watchAllMessages = cb => watch(() => cb(list(st.messages || {})));
   const addMessage = async m => { st.messages = st.messages || {}; st.messages[m.id] = clone(m); save(); };
@@ -1721,7 +1764,7 @@ const DemoStore = (() => {
     getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
     watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout, watchScores, saveScore,
     watchClaims, watchMyClaims, addClaim, updateClaim, watchRecipes, saveRecipe, delRecipe, watchShared, saveShared, dumpCol, restoreDoc,
-    watchMyMessages, watchAllMessages, addMessage, updateMessage };
+    watchMyMessages, watchAllMessages, addMessage, updateMessage, watchLocations, watchMyLocation, setLocation };
 })();
 
 
@@ -1806,6 +1849,10 @@ const FirebaseStore = (() => {
   const restoreDoc = (n, id, d) => F.setDoc(ref(n, id), d);
 
   // Сообщения админу и ответы
+  // Геопозиция (по согласию): документ на каждого пользователя, ключ = uid
+  const watchLocations = cb => listen(col('locations'), (id, d) => Object.assign({}, d, { uid: id }), cb);
+  const watchMyLocation = (uid, cb) => F.onSnapshot(ref('locations', uid), s => cb(s.exists() ? s.data() : null), errCb);
+  const setLocation = l => F.setDoc(ref('locations', l.uid), l);
   const watchMyMessages = (uid, cb) => listen(F.query(col('messages'), F.where('uid', '==', uid)), (id, d) => Object.assign({}, d, { id }), cb);
   const watchAllMessages = cb => listen(col('messages'), (id, d) => Object.assign({}, d, { id }), cb);
   const addMessage = m => F.setDoc(ref('messages', m.id), m);
@@ -1820,7 +1867,7 @@ const FirebaseStore = (() => {
     getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
     watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout, watchScores, saveScore,
     watchClaims, watchMyClaims, addClaim, updateClaim, watchRecipes, saveRecipe, delRecipe, watchShared, saveShared, dumpCol, restoreDoc,
-    watchMyMessages, watchAllMessages, addMessage, updateMessage };
+    watchMyMessages, watchAllMessages, addMessage, updateMessage, watchLocations, watchMyLocation, setLocation };
 })();
 
 
@@ -1963,6 +2010,10 @@ function startData() {
   S.unsubs.push(Store.watchMyClaims(uid, c => { if (S.viewAs) { S.viewAs.saved.myClaims = c; return; } S.myClaims = c; render(); }));
   S.msgsLoaded = false; S.msgs = [];
   S.unsubs.push(S.me.isAdmin ? Store.watchAllMessages(onMessages) : Store.watchMyMessages(uid, onMessages));
+  S.locs = [];
+  if (S.me.isAdmin && Store.watchLocations) S.unsubs.push(Store.watchLocations(ls => { S.locs = ls; render(); }));
+  if (Store.watchMyLocation) S.unsubs.push(Store.watchMyLocation(uid, d => { if (d) S.myLoc = d; }));
+  if (typeof geoResume === 'function') geoResume();
   S.unsubs.push(Store.watchRecipes(r => { S.recipes = r; render(); }));
   S.unsubs.push(Store.watchShared('family', d => { S.shared = d || {}; render(); }));
   if (S.me.isAdmin) {
@@ -2215,11 +2266,15 @@ function compress(src, cb) {
 }
 
 /* ---------- отрисовка ---------- */
-// Пока палец на экране, страницу не перерисовываем — иначе нажатие «теряется»
-const PTR = { down: false, up: 0, t: null, act: false };
-document.addEventListener('pointerdown', () => { PTR.down = true; }, true);
-['pointerup', 'pointercancel'].forEach(k => document.addEventListener(k, () => { PTR.down = false; PTR.up = Date.now(); }, true));
-document.addEventListener('scroll', () => { if (PTR.down) PTR.down = false; }, { passive: true, capture: true });
+// Пока палец на экране, страницу не перерисовываем — иначе нажатие «теряется».
+// ВАЖНО: флаг «палец нажат» никогда не должен застревать (на телефоне событие
+// «палец убран» теряется, когда открывается системный выбор времени/списка),
+// иначе кнопки перестают реагировать. Поэтому есть страховочный сброс.
+const PTR = { down: false, up: 0, t: null, act: false, reset: null };
+const ptrUp = () => { PTR.down = false; PTR.up = Date.now(); clearTimeout(PTR.reset); };
+document.addEventListener('pointerdown', () => { PTR.down = true; clearTimeout(PTR.reset); PTR.reset = setTimeout(() => { PTR.down = false; if (S.dirty) render(); }, 900); }, true);
+['pointerup', 'pointercancel', 'click'].forEach(k => document.addEventListener(k, ptrUp, true));
+document.addEventListener('scroll', ptrUp, { passive: true, capture: true });
 function typing() {
   const a = document.activeElement;
   return !!(a && $('#app') && $('#app').contains(a) && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && a.type !== 'checkbox');
@@ -2227,7 +2282,7 @@ function typing() {
 function render() {
   const app = $('#app'); if (!app) return;
   if (typing()) { S.dirty = true; return; }
-  if (!PTR.act && (PTR.down || Date.now() - PTR.up < 80)) { S.dirty = true; clearTimeout(PTR.t); PTR.t = setTimeout(() => { if (S.dirty) render(); }, PTR.down ? 120 : 90); return; }
+  if (!PTR.act && (PTR.down || Date.now() - PTR.up < 80)) { S.dirty = true; clearTimeout(PTR.t); PTR.t = setTimeout(() => { PTR.down = false; if (S.dirty) render(); }, 160); return; }
   const keep = {}; app.querySelectorAll('.tk.open [data-tf],.tk.open [data-td],.tk.open [data-tr]').forEach(x => { const k = (x.closest('.tk').dataset.tid) + '|' + (x.dataset.tf || 'd' + (x.dataset.td ?? '') + 'r' + (x.dataset.tr ?? '')); keep[k] = x.type === 'checkbox' ? x.checked : x.value; });
   const openD = new Set([...app.querySelectorAll('details[open] > summary')].map(x => x.textContent.trim()));
   if (CAM) return; // пока открыта камера, не перерисовываем
@@ -2254,7 +2309,7 @@ function langSel() {
 }
 function shell(body, full) {
   const head = full ? header() : '';
-  return (Store && Store.demo ? `<div class="demo">${T('demo')}</div>` : '') + (typeof viewAsBar === 'function' ? viewAsBar() : '') + head + body;
+  return (Store && Store.demo ? `<div class="demo">${T('demo')}</div>` : '') + (typeof viewAsBar === 'function' ? viewAsBar() : '') + (typeof geoBar === 'function' ? geoBar() : '') + head + body;
 }
 function header() {
   const me = S.me, L = Logic.level(Logic.earned(S.logs));
@@ -2439,7 +2494,9 @@ function viewMe() {
     + `<div class="stat"><b>${M(Logic.earned(S.logs))}</b><div class="mut">${T('earned_total')}</div></div></div></div>`
     + `<div class="card"><h3>⚙️ ${T('me_settings')}</h3><label class="f">🌐 ${T('language')}${langSel()}</label>`
     + sw('music', S.music, '🎵 ' + T('music')) + sw('voiceToggle', voiceOn, '🗣️ ' + T('voice_hints')) + sw('fxToggle', fxOn, '❄️ ' + T('fx_title'))
-    + `<div class="btnrow"><button class="btn" data-act="alarms">⏰ ${T('alarms_btn')}</button><button class="btn" data-act="replayIntro">🎬 ${T('intro_replay')}</button></div>`
+    + `<div class="btnrow"><button class="btn" data-act="alarms">⏰ ${T('alarms_btn')}</button><button class="btn" data-act="replayIntro">🎬 ${T('intro_replay')}</button></div></div>`
+    + `<div class="card"><h3>📍 ${T('geo_card')}</h3><div class="mut">${T('geo_card_hint')}</div><div class="btnrow">` + geoProfileBtn() + (S.geoOn ? `<button class="btn" data-act="geoMap">🗺 ${T('geo_mymap')}</button>` : '') + `</div></div>`
+    + `<div class="card">`
     + (isAdmin() ? `<div class="btnrow"><button class="btn gold" data-act="admin">⚙️ ${T('admin_panel')}</button></div>` : '')
     + `<div class="btnrow"><button class="btn ghostred" data-act="logout">🚪 ${T('logout')}</button></div></div>`
     + writeAdminBtn() + `<div class="card"><h3>${T('history')}</h3>${rows || `<div class="mut">${T('no_history')}</div>`}</div>`
@@ -2492,11 +2549,11 @@ function viewAdmin() {
   const tabs = [
     ['users', '👥', T('at_users'), pendingCount()], ['tasks', '📋', T('at_tasks'), 0], ['add', '➕', T('at_add'), 0],
     ['photos', '📷', T('at_photos'), S.photos.length], ['claims', '🛍️', T('at_claims'), cl], ['payouts', '💵', T('at_pay'), req],
-    ['msgs', '💬', T('at_msgs'), unreadFor(S.me.uid)], ['tube', '📺', T('at_tube'), 0],
+    ['msgs', '💬', T('at_msgs'), unreadFor(S.me.uid)], ['tube', '📺', T('at_tube'), 0], ['map', '📍', T('at_map'), 0],
     ['sounds', '🔊', T('at_sounds'), 0], ['fun', '🎈', T('at_fun'), 0], ['settings', '⚙️', T('at_set'), 0]
   ];
   const t = `<div class="admtabs">${tabs.map(([k, i, n, b]) => `<button class="${S.tab === k ? 'on' : ''}" data-act="tab" data-id="${k}"><span>${i}</span>${n}${b ? `<em>${b}</em>` : ''}</button>`).join('')}</div>`;
-  const body = { users: admUsers, add: admAdd, tasks: admTasks, photos: admPhotos, payouts: admPayouts, claims: admClaims, sounds: admSounds, fun: admFun, settings: admSettings, msgs: admMsgs, tube: admTube }[S.tab]();
+  const body = { users: admUsers, add: admAdd, tasks: admTasks, photos: admPhotos, payouts: admPayouts, claims: admClaims, sounds: admSounds, fun: admFun, settings: admSettings, msgs: admMsgs, tube: admTube, map: admMap }[S.tab]();
   return `<h2>⚙️ ${T('admin_panel')}</h2>${t}${body}`;
 }
 
@@ -4667,6 +4724,137 @@ function admMsgs() {
     + threads.map(t => { const u = S.users.find(x => x.uid === t.uid) || { name: t.last.name };
       return `<button class="card thread ${t.unread ? 'unread' : ''}" data-act="openThread" data-uid="${esc(t.uid)}"><div class="urow">${avatar(u)}<div style="min-width:0;flex:1"><b>${esc(u.name || '')}</b><div class="mut" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.last.from === meId ? '↩ ' : ''}${esc(t.last.text || (t.last.photo ? '📷 ' + T('msg_photo') : ''))}</div></div>${t.unread ? `<span class="badge">${t.unread}</span>` : ''}</div></button>`; }).join('')
     + (others.length ? `<div class="card"><h3>${T('msg_new')}</h3>${others.map(u => `<button class="btn" data-act="openThread" data-uid="${esc(u.uid)}">✉️ ${esc(firstName(u.name))}</button>`).join(' ')}</div>` : '');
+}
+
+
+/* ===== geo.js: открытое «Поделиться геопозицией» (по согласию) + карта и история пути ===== */
+
+const GEO_MIN_MS = 25000;            // записываем точку не чаще раза в 25 сек
+const GEO_MIN_M = 20;                // или если сдвинулся больше 20 м
+const GEO_TRAIL_MAX = 300;           // хранить последние 300 точек
+const GEO_TRAIL_MS = 48 * 3600000;   // и не старше 48 часов
+
+function geoDist(a, b) { // расстояние в метрах
+  const R = 6371000, r = x => x * Math.PI / 180;
+  const dLa = r(b.lat - a.lat), dLo = r(b.lng - a.lng);
+  const h = Math.sin(dLa / 2) ** 2 + Math.cos(r(a.lat)) * Math.cos(r(b.lat)) * Math.sin(dLo / 2) ** 2;
+  return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)));
+}
+
+let geoWatch = null, geoLastT = 0;
+function geoStart() {
+  if (!navigator.geolocation) { banner('warn', T('geo_no'), '', 3500); return false; }
+  if (geoWatch != null) return true;
+  geoWatch = navigator.geolocation.watchPosition(onGeoPos, onGeoErr, { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 });
+  return true;
+}
+function geoStop() { if (geoWatch != null) { try { navigator.geolocation.clearWatch(geoWatch); } catch (e) { /* ignore */ } geoWatch = null; } }
+function onGeoErr(e) {
+  if (e && e.code === 1) { // доступ запрещён
+    S.geoOn = false; safeSet('fp_geo', '0'); geoStop();
+    banner('warn', '📍 ' + T('geo_denied'), T('geo_denied_hint'), 6000); render();
+  }
+}
+async function onGeoPos(pos) {
+  if (!S.me || !S.geoOn) return;
+  const now = Date.now(), c = pos.coords;
+  const pt = { lat: +c.latitude.toFixed(6), lng: +c.longitude.toFixed(6), acc: Math.round(c.accuracy || 0), at: now };
+  const cur = S.myLoc && S.myLoc.uid === S.me.uid ? S.myLoc : { uid: S.me.uid, name: S.me.name, trail: [] };
+  const last = (cur.trail || [])[cur.trail.length - 1];
+  if (last && now - geoLastT < GEO_MIN_MS && geoDist(last, pt) < GEO_MIN_M) return; // почти не двигались — пропускаем
+  geoLastT = now;
+  let trail = (cur.trail || []).concat([pt]).filter(x => now - x.at < GEO_TRAIL_MS);
+  if (trail.length > GEO_TRAIL_MAX) trail = trail.slice(trail.length - GEO_TRAIL_MAX);
+  const doc = { uid: S.me.uid, name: S.me.name, sharing: true, last: pt, trail, updatedAt: now };
+  S.myLoc = doc;
+  try { await Store.setLocation(doc); } catch (e) { /* ignore */ }
+}
+
+// При загрузке приложения: если человек раньше включил — продолжаем (он это видит по полоске сверху)
+function geoResume() {
+  if (S.me && safeGet('fp_geo') === '1') { S.geoOn = true; geoStart(); }
+}
+
+ACT.geoShare = () => {
+  if (S.geoOn) { // выключить
+    S.geoOn = false; safeSet('fp_geo', '0'); geoStop();
+    const doc = Object.assign({}, S.myLoc || { uid: S.me.uid, name: S.me.name, trail: [] }, { uid: S.me.uid, name: S.me.name, sharing: false, updatedAt: Date.now() });
+    S.myLoc = doc; Store.setLocation(doc).catch(() => {});
+    banner('good', '📍 ' + T('geo_off'), '', 2200); render(); return;
+  }
+  // включить — только с явного согласия самого человека
+  ask(T('geo_consent'), () => {
+    S.geoOn = true; safeSet('fp_geo', '1');
+    if (geoStart()) banner('good', '📍 ' + T('geo_on'), T('geo_on_hint'), 4000);
+    render();
+  });
+};
+// Видимая всем полоска «вы делитесь» — чтобы человек всегда знал, что геопозиция включена
+const geoBar = () => (S.geoOn ? `<div class="geobar">📍 ${T('geo_sharing_now')}<button data-act="geoShare">${T('geo_stop')}</button></div>` : '');
+
+// Кнопка в профиле
+const geoProfileBtn = () => `<button class="btn ${S.geoOn ? 'green' : ''}" data-act="geoShare">📍 ${S.geoOn ? T('geo_sharing_on') : T('geo_share_btn')}</button>`;
+
+/* ---------- карта: Leaflet + OpenStreetMap (без ключа), подгружается при открытии ---------- */
+let geoLeafletTried = false;
+function loadLeaflet(cb) {
+  if (window.L) return cb(true);
+  if (geoLeafletTried && !window.L) { /* пробуем ещё раз */ }
+  const css = document.createElement('link'); css.rel = 'stylesheet';
+  css.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css';
+  document.head.appendChild(css);
+  const sc = document.createElement('script');
+  sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js';
+  sc.onload = () => cb(!!window.L);
+  sc.onerror = () => cb(false);
+  document.head.appendChild(sc); geoLeafletTried = true;
+}
+const geoAgo = ms => { const m = Math.round(ms / 60000); return m < 2 ? T('geo_now') : m < 60 ? T('geo_min', { m }) : T('geo_hr', { h: Math.round(m / 60) }); };
+
+ACT.geoMap = el => {
+  const uid = el && el.dataset.uid ? el.dataset.uid : S.me.uid;
+  const loc = (S.locs || []).find(l => l.uid === uid) || (S.myLoc && S.myLoc.uid === uid ? S.myLoc : null);
+  if (!loc || !loc.last) { banner('warn', '📍 ' + T('geo_nodata'), '', 3000); return; }
+  const g = `${loc.last.lat},${loc.last.lng}`;
+  modal(`<h3>🗺 ${esc(loc.name || '')}</h3>`
+    + `<div class="geomap" id="geomap"><div class="geoload">⏳ ${T('geo_maploading')}</div></div>`
+    + `<div class="mut geomapinfo">📍 ${esc(T('geo_last'))}: ${esc(geoAgo(Date.now() - (loc.updatedAt || loc.last.at)))} · ${T('geo_points', { n: (loc.trail || []).length })}</div>`
+    + `<div class="btnrow"><a class="btn gold" href="https://www.google.com/maps?q=${g}" target="_blank" rel="noopener">${T('geo_gmaps')}</a>`
+    + `<a class="btn" href="https://www.openstreetmap.org/?mlat=${loc.last.lat}&mlon=${loc.last.lng}#map=16/${loc.last.lat}/${loc.last.lng}" target="_blank" rel="noopener">OSM</a>`
+    + `<button class="btn" data-act="close">${T('close')}</button></div>`);
+  loadLeaflet(ok => {
+    const box = document.getElementById('geomap'); if (!box) return;
+    if (!ok || !window.L) { box.innerHTML = `<div class="geofail">🌐 ${T('geo_mapfail')}</div>`; return; }
+    box.innerHTML = '';
+    try {
+      const pts = (loc.trail && loc.trail.length ? loc.trail : [loc.last]);
+      const ll = pts.map(p => [p.lat, p.lng]);
+      const map = L.map(box, { attributionControl: false }).setView([loc.last.lat, loc.last.lng], 16);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+      if (ll.length > 1) L.polyline(ll, { color: '#e0951a', weight: 4, opacity: .9 }).addTo(map);
+      pts.forEach((p, i) => {
+        const isLast = i === pts.length - 1;
+        const t = new Date(p.at).toLocaleString(S.lang === 'en' ? 'en-GB' : 'ru-RU', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+        L.circleMarker([p.lat, p.lng], { radius: isLast ? 9 : 4, color: isLast ? '#e5342b' : '#2ee88f', weight: 2, fillColor: isLast ? '#ff5a5a' : '#2ee88f', fillOpacity: 1 })
+          .addTo(map).bindPopup((isLast ? '📍 <b>' + esc(T('geo_herenow')) + '</b><br>' : '🔵 ') + t);
+      });
+      if (ll.length > 1) map.fitBounds(ll, { padding: [28, 28] });
+      setTimeout(() => map.invalidateSize(), 250);
+    } catch (e) { box.innerHTML = `<div class="geofail">🌐 ${T('geo_mapfail')}</div>`; }
+  });
+};
+
+// Админ: экран «Где семья»
+function admMap() {
+  const ls = (S.locs || []).filter(l => l.last).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+  return `<div class="card"><h2>📍 ${T('at_map')}</h2><div class="mut">${T('map_hint')}</div></div>`
+    + (ls.length ? ls.map(l => {
+      const ago = geoAgo(Date.now() - (l.updatedAt || l.last.at));
+      return `<div class="card georow"><div class="urow"><b>${esc(l.name || '')}</b>`
+        + `<span class="geostate ${l.sharing ? 'on' : ''}">${l.sharing ? '🟢 ' + ago : '⚪ ' + T('geo_stopped')}</span></div>`
+        + `<div class="mut">${T('geo_points', { n: (l.trail || []).length })}</div>`
+        + `<div class="btnrow"><button class="btn gold" data-act="geoMap" data-uid="${esc(l.uid)}">🗺 ${T('geo_openmap')}</button></div></div>`;
+    }).join('') : `<div class="card center mut">${T('map_empty')}</div>`);
 }
 
 </script>
