@@ -497,6 +497,7 @@ body.tubeon{overflow:hidden}
 .row3{display:grid;grid-template-columns:1.25fr .7fr 1fr;gap:6px;align-items:end}
 .row3 label.f,.tkpane label.f{margin:4px 0;font-size:13px}
 .row3 .ic input{text-align:center;font-size:22px;padding:6px}
+.fhint{display:block;margin-top:3px;color:var(--mut);font-size:11px;line-height:1.2}
 .tkpane input[type=time]{min-width:0;-webkit-appearance:none;appearance:none}
 .tk[data-sched=daily] .only-days,.tk[data-sched=daily] .only-once,.tk[data-sched=days] .only-once,.tk[data-sched=once] .only-days{display:none}
 .wdays{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
@@ -659,7 +660,7 @@ body.focuson{overflow:hidden}
 /* ============================================================
    НАСТРОЙКИ — заполняются один раз (см. SETUP.md)
    ============================================================ */
-const APP_VERSION = '2026.11.18-8';
+const APP_VERSION = '2026.11.18-9';
 const APP_CONFIG = {
   // Ваша Google-почта. Этот аккаунт автоматически станет главным администратором.
   OWNER_EMAIL: "3307999@gmail.com",
@@ -1163,6 +1164,8 @@ Object.assign(D, {
   tk_who: ["Kimga", "Кому", "Who"],
   tk_more: ["Yana", "Ещё", "More"],
   tk_langs: ["Boshqa tillarda nomi", "Название на других языках", "Title in other languages"],
+  anytime: ["Istalgan vaqt (kun davomida)", "В любое время (весь день)", "Anytime (all day)"],
+  time_any_hint: ["Bo'sh qoldirsangiz — istalgan vaqt", "Оставьте пустым — в любое время", "Leave empty — anytime"],
   tr_window: ["Bajarish vaqti: {a} – {b}", "Можно выполнить: {a} – {b}", "Can be done: {a} – {b}"],
   tr_reward: ["Mukofot +{c}", "Награда +{c}", "Reward +{c}"],
   tr_penalty: ["o'tkazib yuborsa −{p}%", "пропуск −{p}%", "missed −{p}%"],
@@ -1399,7 +1402,8 @@ const Logic = (() => {
     if (Array.isArray(t.days) && t.days.length && t.days.length < 7) return t.days.includes(weekday(date));
     return true;
   }
-  const sortTasks = ts => ts.slice().sort((a, b) => toMin(a.time) - toMin(b.time) || String(a.id).localeCompare(String(b.id)));
+  // Задания без времени («в любое время») идут в конце дня
+  const sortTasks = ts => ts.slice().sort((a, b) => (a.time ? toMin(a.time) : 1e9) - (b.time ? toMin(b.time) : 1e9) || String(a.id).localeCompare(String(b.id)));
   const logIndex = logs => new Map(logs.map(l => [l.id, l]));
   const logId = (uid, date, taskId) => `${uid}_${date}_${taskId}`;
   const isMiss = l => l && (l.kind === 'missed' || l.kind === 'failed');
@@ -1409,6 +1413,8 @@ const Logic = (() => {
     if (log) return log.kind;
     if (date > now.date) return 'future';
     if (date < now.date) return 'expired';
+    // Задание без времени доступно весь день (не блокируется и не просрочивается по часам)
+    if (!t.time) return 'active';
     const base = toMin(t.time);
     const from = base - (t.earlyMin ?? 15), deadline = base + (t.graceMin ?? 60);
     if (now.min < from) return 'locked';
@@ -2589,8 +2595,9 @@ function viewToday() {
   } else if (actives.length) {
     const a = actives[0], t = a.t, mode = Logic.photoMode(t);
     const until = Logic.fmtMin(Logic.toMin(t.time) + (t.graceMin ?? 60)), left = Logic.toMin(t.time) + (t.graceMin ?? 60) - now.min;
+    const heromut = t.time ? `${T('until', { t: until })} · ${T('left_t', { t: fmtDur(Math.max(0, left)) })}` : `🕐 ${T('anytime')}`;
     out += `<div class="hero now"><span class="nowtag">⚡ ${T('now')}</span><div class="heroi">${esc(t.icon || '⭐')}</div><h1>${esc(loc(t.title))}</h1>`
-      + `<div class="heromut">${T('until', { t: until })} · ${T('left_t', { t: fmtDur(Math.max(0, left)) })}</div>`
+      + `<div class="heromut">${heromut}</div>`
       + `<button class="big green pulse herobtn" data-act="done" data-id="${esc(t.id)}">${mode === 'req' ? '📷 ' + T('photo_req_btn').replace(/^📷\s*/, '') : '✅ ' + T('done_btn').replace(/[✔✓]/g, '').trim()} <b>+${M(t.reward)}</b></button>`
       + `<div class="herosub">${howtoFor(t) ? `<button class="btn" data-act="howto" data-id="${esc(t.id)}">ℹ️ ${T('howto_btn')}</button>` : ''}${mode === 'opt' ? `<button class="btn" data-act="photodone" data-id="${esc(t.id)}">📷 ${T('photo_opt_btn').replace(/^📷\s*/, '')}</button>` : ''}<button class="btn ghostred" data-act="fail" data-id="${esc(t.id)}">✗ ${T('fail_btn')}</button></div></div>`;
   } else if (next) {
@@ -2612,11 +2619,11 @@ function viewToday() {
         : `<span class="tbadge mut">+${M(t.reward)}</span>`;
       const photoNote = st === 'done' && log.review === 'pending' ? ` · 📷 ${T('photo_pending')}` : '';
       const op = S.trOpen === t.id, pm = Logic.photoMode(t);
-      const info = op ? `<div class="trinfo"><div>🕐 ${T('tr_window', { a: Logic.fmtMin(Math.max(0, Logic.toMin(t.time) - (t.earlyMin ?? 15))), b: Logic.fmtMin(Logic.toMin(t.time) + (t.graceMin ?? 60)) })}</div>`
+      const info = op ? `<div class="trinfo"><div>🕐 ${t.time ? T('tr_window', { a: Logic.fmtMin(Math.max(0, Logic.toMin(t.time) - (t.earlyMin ?? 15))), b: Logic.fmtMin(Logic.toMin(t.time) + (t.graceMin ?? 60)) }) : T('anytime')}</div>`
         + `<div>💰 ${T('tr_reward', { c: M(t.reward) })} · ${T('tr_penalty', { p: (S.settings && S.settings.missPenaltyPct != null) ? S.settings.missPenaltyPct : 50 })}</div><div>🔁 ${esc(schedTxt(t))}</div>`
         + (pm !== 'off' ? `<div>📷 ${T('photo_' + pm)}</div>` : '') + (photoNote ? `<div>${photoNote.replace(/^ · /, '')}</div>` : '')
         + (howtoFor(t) ? `<button class="btn sm" data-act="howto" data-id="${esc(t.id)}">ℹ️ ${T('howto_btn')}</button>` : '') + `</div>` : '';
-      return `<div class="trow2 st-${st} ${op ? 'open' : ''}" data-act="trow" data-id="${esc(t.id)}"><span class="ttime">${esc(t.time)}</span><span class="ticon">${esc(t.icon || '•')}</span><div class="tmain"><b>${esc(loc(t.title))}</b></div>${badge}<span class="tkarrow">${op ? '▴' : '▾'}</span></div>${info}`;
+      return `<div class="trow2 st-${st} ${op ? 'open' : ''}" data-act="trow" data-id="${esc(t.id)}"><span class="ttime">${esc(t.time || '—')}</span><span class="ticon">${esc(t.icon || '•')}</span><div class="tmain"><b>${esc(loc(t.title))}</b></div>${badge}<span class="tkarrow">${op ? '▴' : '▾'}</span></div>${info}`;
     }).join('') + `</div>`;
   }
   // События вынесены в Меню → События, чтобы не отвлекать от заданий
@@ -2793,14 +2800,14 @@ function taskForm(t) {
   const tab = (open && S.tkTab) || 'main';
   const L = S.lang, others = ['uz', 'ru', 'en'].filter(l => l !== L);
   const tabs = [['main', '✏️', T('tk_main')], ['when', '🔁', T('tk_when')], ['who', '👤', T('tk_who')], ['more', '⚙️', T('tk_more')]];
-  const head = `<button class="tkhead" data-act="tkopen" data-id="${esc(t.id)}"><span class="ttime">${esc(t.time)}</span><span class="ticon">${esc(t.icon || '•')}</span>`
+  const head = `<button class="tkhead" data-act="tkopen" data-id="${esc(t.id)}"><span class="ttime">${esc(t.time || '—')}</span><span class="ticon">${esc(t.icon || '•')}</span>`
     + `<span class="tmain"><b>${esc(loc(t.title))}${t.active === false ? ' ⏸' : ''}</b><small>${'%META%'}</small></span><span class="tkarrow">${open ? '▴' : '▾'}</span></button>`;
   if (!open) return `<div class="tk" data-tid="${esc(t.id)}">${head}</div>`;
   return `<div class="tk open" data-tid="${esc(t.id)}" data-sched="${sched}">${head}<div class="tkbody">`
     + `<div class="tktabs">${tabs.map(([k, i, n]) => `<button class="${tab === k ? 'on' : ''}" data-act="tktab" data-id="${k}">${i} ${n}</button>`).join('')}</div>`
     // основное
     + `<div class="tkpane ${tab === 'main' ? 'on' : ''}" data-pane="main">`
-    + `<div class="row3"><label class="f">🕐 ${T('time')}<input data-tf="time" type="time" value="${esc(t.time)}"></label><label class="f ic">${T('icon')}<input data-tf="icon" value="${esc(t.icon || '')}" maxlength="4"></label>`
+    + `<div class="row3"><label class="f">🕐 ${T('time')}<input data-tf="time" type="time" value="${esc(t.time)}"><small class="fhint">${T('time_any_hint')}</small></label><label class="f ic">${T('icon')}<input data-tf="icon" value="${esc(t.icon || '')}" maxlength="4"></label>`
     + `<label class="f">💰 ${hq('reward')}<input data-tf="reward" type="number" inputmode="decimal" step="0.01" min="0" value="${(t.reward / 100).toFixed(2)}"></label></div>`
     + `<label class="f">${T('title_' + L)}<input data-tf="title_${L}" value="${esc((t.title || {})[L] || '')}"></label>`
     + `<details class="langs"><summary>🌐 ${T('tk_langs')}</summary>${others.map(l => `<label class="f">${T('title_' + l)}<input data-tf="title_${l}" value="${esc((t.title || {})[l] || '')}"></label>`).join('')}</details></div>`
@@ -2974,8 +2981,8 @@ function nextTaskHint(now) {
   try {
     const idx = Logic.logIndex(S.logs);
     const up = S.tasks.filter(t => Logic.assigned(t, S.me, now.date) && Logic.taskState(t, now.date, now, idx.get(Logic.logId(S.me.uid, now.date, t.id))) === 'upcoming')
-      .sort((a, b) => a.time.localeCompare(b.time))[0];
-    return up ? `${up.time} ${loc(up.title)}` : '';
+      .sort((a, b) => String(a.time || '').localeCompare(String(b.time || '')))[0];
+    return up ? `${up.time ? up.time + ' ' : ''}${loc(up.title)}` : '';
   } catch (e) { return ''; }
 }
 ACT.done = el => guarded(async () => {
@@ -3075,13 +3082,13 @@ ACT.newtask = () => guarded(async () => {
   setTimeout(() => { const b = document.querySelector(`.tk[data-tid="${id}"]`); if (b) b.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 300);
   const u = (S.tfor && S.tfor !== 'all') ? S.users.find(x => x.uid === S.tfor) : null;
   const rel = u && u.relation ? [u.relation] : ['*'];
-  await Store.saveTask({ id, time: '09:00', icon: '⭐', title: { uz: 'Yangi vazifa', ru: 'Новое задание', en: 'New task' }, reward: 1000, graceMin: 60, earlyMin: 15, relations: rel, uids: [], active: true, since: clock().date, photo: 'opt' });
+  await Store.saveTask({ id, time: '', icon: '⭐', title: { uz: 'Yangi vazifa', ru: 'Новое задание', en: 'New task' }, reward: 1000, graceMin: 60, earlyMin: 15, relations: rel, uids: [], active: true, since: clock().date, photo: 'opt' });
 });
 ACT.savetask = el => guarded(async () => {
   const d = document.querySelector(`.tk[data-tid="${CSS.escape(el.dataset.id)}"]`), g = k => d.querySelector(`[data-tf="${k}"]`);
   const old = taskById(el.dataset.id);
   const t = Object.assign({}, old, {
-    time: g('time').value || old.time, icon: g('icon').value,
+    time: g('time').value, icon: g('icon').value,
     title: { uz: g('title_uz').value, ru: g('title_ru').value, en: g('title_en').value },
     // пустое название на другом языке берём из заполненного
     reward: Math.max(0, Math.round(parseFloat(g('reward').value || '0') * 100)),
@@ -3095,7 +3102,7 @@ ACT.savetask = el => guarded(async () => {
   t.days = sched === 'days' ? days : [];
   t.once = sched === 'once' ? (g('once').value || clock().date) : '';
   S.openTask = null; S.tkTab = 'main'; await Store.saveTask(t);
-  banner('good', '💾 ' + T('saved_ok'), `${t.time} ${loc(t.title)}`, 2000);
+  banner('good', '💾 ' + T('saved_ok'), `${t.time ? t.time + ' ' : ''}${loc(t.title)}`, 2000);
 });
 ACT.trow = (el, e) => { if (e && e.target.closest('button') && e.target.closest('button') !== el) return; S.trOpen = S.trOpen === el.dataset.id ? null : el.dataset.id; render(); };
 // Кружок «?» рядом с настройкой: касание показывает объяснение, повторное — прячет
@@ -3157,7 +3164,7 @@ ACT.utasks = el => {
     modal(`<h2>📋 ${esc(u.name)}</h2><div class="mut">${esc(fmtDate(now))}</div><div class="tlist">`
       + (ts.length ? ts.map(t => { const st = logs ? Logic.taskState(t, now.date, now, idx.get(Logic.logId(uid, now.date, t.id))) : 'plan';
         const b = st === 'done' ? '<span class="tbadge ok">✓</span>' : (st === 'missed' || st === 'failed' || st === 'expired') ? '<span class="tbadge bad">✗</span>' : st === 'active' ? `<span class="tbadge now">⚡</span>` : `<span class="tbadge mut">+${M(t.reward)}</span>`;
-        return `<div class="trow2 st-${st}"><span class="ttime">${esc(t.time)}</span><span class="ticon">${esc(t.icon || '•')}</span><div class="tmain"><b>${esc(loc(t.title))}</b><small>🔁 ${esc(schedTxt(t))}</small></div>${b}</div>`; }).join('')
+        return `<div class="trow2 st-${st}"><span class="ttime">${esc(t.time || '—')}</span><span class="ticon">${esc(t.icon || '•')}</span><div class="tmain"><b>${esc(loc(t.title))}</b><small>🔁 ${esc(schedTxt(t))}</small></div>${b}</div>`; }).join('')
         : `<div class="mut">${T('fam_no_tasks')}</div>`)
       + `</div><div class="btnrow"><button class="btn" data-act="close">${T('close')}</button></div>`);
   };
