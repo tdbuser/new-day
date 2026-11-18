@@ -653,6 +653,27 @@ body.focuson{overflow:hidden}
 .uhead .chip{margin-left:auto}
 .uhead .tkarrow{flex:none}
 
+/* ---- рация ---- */
+.radiow{position:fixed;right:14px;bottom:calc(92px + env(safe-area-inset-bottom));z-index:45;display:flex;flex-direction:column;align-items:flex-end;gap:6px;pointer-events:none}
+.radiow>*{pointer-events:auto}
+.radlbl{max-width:62vw;font:800 12px Nunito,system-ui,sans-serif;color:#cfe9dc;background:rgba(6,36,26,.92);border:1px solid rgba(255,210,63,.45);border-radius:999px;padding:4px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.radlbl.pick{cursor:pointer}
+.radbtn{position:relative;width:66px;height:66px;border-radius:50%;border:2px solid #ffd23f;background:radial-gradient(circle at 35% 30%,#1d7a55,#0b4a33 60%,#062a1d);box-shadow:0 8px 24px rgba(0,0,0,.55),0 0 18px rgba(255,210,63,.35),inset 0 1px 0 rgba(255,255,255,.25);display:grid;place-items:center;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;transition:transform .12s}
+.radbtn .radico{font-size:30px;line-height:1;pointer-events:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+.radbtn .radring{position:absolute;inset:-7px;border-radius:50%;border:3px solid transparent;pointer-events:none}
+.radiow[data-st="arm"] .radbtn,.radiow[data-st="wait"] .radbtn{transform:scale(1.08)}
+.radiow[data-st="rec"] .radbtn{transform:scale(1.14);border-color:#ff3b30;background:radial-gradient(circle at 35% 30%,#ff6b5e,#c4211a 60%,#7a0f0b)}
+.radiow[data-st="rec"] .radring{border-color:rgba(255,59,48,.75);animation:radpulse 1s ease-out infinite}
+.radiow[data-st="rec"] .radlbl{color:#fff;background:#c4211a;border-color:#ff6b5e}
+.radiow[data-st="send"] .radbtn{opacity:.75}
+.radiow[data-st="play"] .radring{border-color:rgba(46,232,143,.8);animation:radpulse 1.2s ease-out infinite}
+.radiow[data-st="play"] .radlbl{color:#062a1d;background:#2ee88f;border-color:#2ee88f}
+@keyframes radpulse{0%{transform:scale(.92);opacity:1}100%{transform:scale(1.35);opacity:0}}
+body.hasradio .tlist{padding-bottom:84px}
+.radpick{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.radchip{border:1px solid var(--line);background:rgba(255,255,255,.06);color:#e9fff4;border-radius:999px;padding:10px 16px;font:800 15px Nunito,system-ui,sans-serif}
+.radchip.on{background:linear-gradient(180deg,#fff2a8,#ffd23f 50%,#e0951a);color:#2a1b00;border-color:#ffd23f}
+
 </style>
 </head>
 <body>
@@ -661,7 +682,7 @@ body.focuson{overflow:hidden}
 /* ============================================================
    НАСТРОЙКИ — заполняются один раз (см. SETUP.md)
    ============================================================ */
-const APP_VERSION = '2026.11.18-10';
+const APP_VERSION = '2026.11.18-11';
 const APP_CONFIG = {
   // Ваша Google-почта. Этот аккаунт автоматически станет главным администратором.
   OWNER_EMAIL: "3307999@gmail.com",
@@ -1183,6 +1204,21 @@ Object.assign(D, {
   hq_tubekey: ["Kalitsiz alohida videolar va pleylistlar ishlaydi. Kalit bilan — kanallarning yangi videolari va qidiruv.", "Без ключа работают отдельные видео и плейлисты. С ключом — новые видео каналов и поиск.", "Without a key, single videos and playlists work. With it — new channel videos and search."],
   nav_msgs: ["Xatlar", "Письма", "Messages"],
   nav_admin: ["Admin", "Админка", "Admin"],
+  radio_title: ["Ratsiya", "Рация", "Walkie-talkie"],
+  radio_to_admin: ["Adminga", "Админу", "To admin"],
+  radio_pick: ["Kimga? — bosing", "Кому? — нажмите", "To whom? — tap"],
+  radio_pick_hint: ["Kim eshitishini belgilang. Tugmani bosib turing va gapiring.", "Отметьте, кто будет слышать. Потом держите кнопку и говорите.", "Choose who will hear you. Then hold the button and talk."],
+  radio_nopeers: ["Hali oila a'zolari yo'q", "Пока нет членов семьи", "No family members yet"],
+  radio_done: ["Tayyor", "Готово", "Done"],
+  radio_hold: ["Gapirish uchun tugmani bosib turing", "Чтобы говорить — держите кнопку", "Hold the button to talk"],
+  radio_sending: ["yuborilmoqda…", "отправка…", "sending…"],
+  radio_sent: ["Yuborildi: {n}", "Ушло: {n}", "Sent: {n}"],
+  radio_fail: ["Yuborib bo'lmadi, yana urinib ko'ring", "Не отправилось, попробуйте ещё раз", "Couldn't send, try again"],
+  radio_nomic: ["Mikrofonga ruxsat yo'q", "Нет доступа к микрофону", "No microphone access"],
+  radio_nomic_hint: ["Sozlamalar → Safari → Mikrofon → Ruxsat berish", "Настройки → Safari → Микрофон → Разрешить", "Settings → Safari → Microphone → Allow"],
+  radio_nosupport: ["Bu brauzer ovoz yozishni qo'llamaydi", "Этот браузер не умеет записывать голос", "This browser can't record voice"],
+  radio_new: ["Ratsiyada xabar: {n}", "По рации: {n}", "Radio from {n}"],
+  radio_tap: ["Eshitish uchun ekranga teging", "Коснитесь экрана, чтобы прослушать", "Tap the screen to listen"],
   tk_draft: ["qoralama", "черновик", "draft"],
   tk_starts_next: ["Bugungi vaqt o'tib ketgan — bugun hisoblanmaydi, keyingi safar boshlanadi.", "Время на сегодня уже прошло — сегодня не считается, начнётся со следующего раза.", "Today's time has passed — not counted today, starts next time."],
   msg_photo: ["Rasm", "Фото", "Photo"],
@@ -1871,7 +1907,7 @@ const Snd = (() => {
   let unlocked = false;
   const SILENT = 'data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YSADAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==';
 
-  return { coin, wrong, warn, burn, fanfare, tick, play, checkUrl, PRESET_NAMES, startMusic, stopMusic, setMusic, unlock, get on() { return musicOn; } };
+  return { coin, wrong, warn, burn, fanfare, tick, play, checkUrl, PRESET_NAMES, startMusic, stopMusic, setMusic, unlock, get on() { return musicOn; }, audio() { return ensure() ? { ctx, master } : null; } };
 })();
 
 
@@ -1952,6 +1988,7 @@ const DemoStore = (() => {
   const watchAllMessages = cb => watch(() => cb(list(st.messages || {})));
   const addMessage = async m => { st.messages = st.messages || {}; st.messages[m.id] = clone(m); save(); };
   const updateMessage = async (id, p) => { if (st.messages && st.messages[id]) Object.assign(st.messages[id], clone(p)); save(); };
+  const delMessage = async id => { if (st.messages) delete st.messages[id]; save(); };
 
   const watchPayouts = cb => watch(() => cb(list(st.payouts)));
   const watchMyPayouts = (uid, cb) => watch(() => cb(list(st.payouts).filter(p => p.uid === uid)));
@@ -1962,7 +1999,7 @@ const DemoStore = (() => {
     getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
     watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout, watchScores, saveScore,
     watchClaims, watchMyClaims, addClaim, updateClaim, watchRecipes, saveRecipe, delRecipe, watchShared, saveShared, dumpCol, restoreDoc,
-    watchMyMessages, watchAllMessages, addMessage, updateMessage, watchLocations, watchMyLocation, setLocation };
+    watchMyMessages, watchAllMessages, addMessage, updateMessage, delMessage, watchLocations, watchMyLocation, setLocation };
 })();
 
 
@@ -2055,6 +2092,7 @@ const FirebaseStore = (() => {
   const watchAllMessages = cb => listen(col('messages'), (id, d) => Object.assign({}, d, { id }), cb);
   const addMessage = m => F.setDoc(ref('messages', m.id), m);
   const updateMessage = (id, p) => F.updateDoc(ref('messages', id), p);
+  const delMessage = id => F.deleteDoc(ref('messages', id));
 
   const watchPayouts = cb => listen(col('payouts'), (id, d) => Object.assign({}, d, { id }), cb);
   const watchMyPayouts = (uid, cb) => listen(F.query(col('payouts'), F.where('uid', '==', uid)), (id, d) => Object.assign({}, d, { id }), cb);
@@ -2065,7 +2103,7 @@ const FirebaseStore = (() => {
     getWhitelist, watchWhitelist, addWhitelist, delWhitelist, watchTasks, saveTask, delTask, watchSettings, saveSettings,
     watchLogs, addLog, delLog, watchPhotos, decidePhoto, updateLog, watchPayouts, watchMyPayouts, addPayout, updatePayout, watchScores, saveScore,
     watchClaims, watchMyClaims, addClaim, updateClaim, watchRecipes, saveRecipe, delRecipe, watchShared, saveShared, dumpCol, restoreDoc,
-    watchMyMessages, watchAllMessages, addMessage, updateMessage, watchLocations, watchMyLocation, setLocation };
+    watchMyMessages, watchAllMessages, addMessage, updateMessage, delMessage, watchLocations, watchMyLocation, setLocation };
 })();
 
 
@@ -2501,6 +2539,7 @@ function render() {
   app.querySelectorAll('details > summary').forEach(x => { if (openD.has(x.textContent.trim()) && !x.dataset.act) x.parentNode.open = true; });
   document.documentElement.lang = S.lang;
   if (typeof applyFx === 'function') applyFx();
+  if (typeof radioSync === 'function') radioSync();
   if (v === 'home' && !S.started && typeof showStart === 'function') showStart();
 }
 function langSel() {
@@ -4909,6 +4948,9 @@ const viewAsBar = () => (S.viewAs ? `<div class="viewas">👁 ${T('viewas_now', 
 const threadOf = uid => (S.msgs || []).filter(m => m.uid === uid).sort((a, b) => (a.at || 0) - (b.at || 0));
 const unreadFor = me => (S.msgs || []).filter(m => !m.read && m.from !== me).length;
 function onMessages(list) {
+  // голосовые рации живут отдельно от переписки
+  if (typeof radioIncoming === 'function') radioIncoming(list.filter(m => m.kind === 'radio'));
+  list = list.filter(m => m.kind !== 'radio');
   const meId = (S.viewAs ? S.viewAs.saved.me : S.me).uid, known = S.msgKnown || new Set();
   const fresh = list.filter(m => !known.has(m.id) && m.from !== meId && !m.read);
   if (S.msgsLoaded && fresh.length) {
@@ -5460,6 +5502,244 @@ ACT.padj = el => { const k = el.dataset.k; FS.pomo[k] = Math.max(5, Math.min(120
 ACT.pstart = () => { const inp = document.getElementById('pLabel'); if (inp) FS.pomo.label = inp.value.trim(); const mins = FS.pomo.phase === 'work' ? FS.pomo.work : FS.pomo.brk; if (FS.pomo.left <= 0 || !FS.pomo.left) FS.pomo.left = mins * 60; FS.pomo.endAt = Date.now() + FS.pomo.left * 1000; FS.pomo.running = true; try { Snd.unlock(); } catch (e) { /* ignore */ } drawFocus(); };
 ACT.ppause = () => { FS.pomo.running = false; FS.pomo.left = Math.max(0, (FS.pomo.endAt - Date.now()) / 1000); drawFocus(); };
 ACT.preset2 = () => { FS.pomo.running = false; FS.pomo.phase = 'work'; FS.pomo.left = FS.pomo.work * 60; FS.pomo.done = 0; stopRing(); drawFocus(); };
+
+
+/* ===== radio.js: «Рация» — держи кнопку и говори, у получателя шипение эфира и голос «как в рации».
+   Голос записывается, пока палец на кнопке, и уходит сразу после отпускания (1–2 сек).
+   Хранится в той же коллекции, что переписка (kind: 'radio'), поэтому правила базы не меняются.
+   Кнопка живёт вне #app, чтобы перерисовка экрана не сбивала удержание. ===== */
+
+const RADIO_MAX = 30;            // максимум секунд за одно нажатие
+const RADIO_FRESH = 24 * 3600e3; // старше суток — уже не проигрываем
+const RAD = { st: 'idle', rec: null, chunks: [], stream: null, t0: 0, down: 0, iv: null, queue: [], playing: null, cancel: false, musicWas: false };
+RAD.heard = (() => { try { return new Set(JSON.parse(localStorage.getItem('fp_radio_heard') || '[]')); } catch (e) { return new Set(); } })();
+const radHeardSave = () => { try { localStorage.setItem('fp_radio_heard', JSON.stringify([...RAD.heard].slice(-300))); } catch (e) { /* ignore */ } };
+
+const radioAdmin = () => isAdmin() && !S.viewAs;
+// С кем админ может говорить: все одобренные члены семьи, кроме админов
+const radioPeers = () => (S.users || []).filter(u => u.status === 'approved' && u.uid !== S.me.uid && !u.isAdmin);
+function radioTargets() {
+  if (!radioAdmin()) return [S.me.uid]; // пользователь говорит в свой поток — его слышит админ
+  const peers = radioPeers().map(u => u.uid);
+  let sel = null; try { sel = JSON.parse(localStorage.getItem('fp_radio_to') || 'null'); } catch (e) { /* ignore */ }
+  if (!Array.isArray(sel)) sel = radioPeers().filter(u => u.relation === 'wife').map(u => u.uid); // по умолчанию — жена
+  return sel.filter(id => peers.includes(id));
+}
+const radioToLabel = () => {
+  if (!radioAdmin()) return T('radio_to_admin');
+  const ts = radioTargets();
+  return ts.length ? ts.map(id => firstName((S.users.find(u => u.uid === id) || {}).name || '')).join(', ') : T('radio_pick');
+};
+
+/* ---------- кнопка ---------- */
+function radioEl() {
+  let w = document.getElementById('radiow');
+  if (w) return w;
+  w = document.createElement('div'); w.id = 'radiow'; w.className = 'radiow';
+  w.innerHTML = `<div class="radlbl" id="radLbl"></div><button class="radbtn" id="radBtn" type="button" aria-label="radio"><span class="radico">📻</span><i class="radring"></i></button>`;
+  document.body.appendChild(w);
+  const b = w.querySelector('#radBtn');
+  b.addEventListener('pointerdown', radioDown);
+  ['pointerup', 'pointercancel'].forEach(k => b.addEventListener(k, radioUp));
+  b.addEventListener('contextmenu', e => e.preventDefault());
+  w.querySelector('#radLbl').addEventListener('click', () => { if (radioAdmin()) radioPicker(); });
+  return w;
+}
+// Показ/скрытие: только на главном экране (вкладка «Задания»), вошедшим и одобренным
+function radioSync() {
+  const show = !!(S.me && S.view === 'home' && S.htab === 'today' && !S.viewAs && (S.me.status === 'approved' || isAdmin()));
+  const w = show ? radioEl() : document.getElementById('radiow');
+  document.body.classList.toggle('hasradio', show);
+  if (!w) return;
+  w.style.display = show ? '' : 'none';
+  if (show) radioPaint();
+}
+function radioPaint() {
+  const w = document.getElementById('radiow'); if (!w) return;
+  w.dataset.st = RAD.st;
+  const lbl = w.querySelector('#radLbl');
+  if (RAD.st === 'arm') lbl.textContent = '📻 …';
+  else if (RAD.st === 'rec') lbl.textContent = '🎙 ' + fmtClock((Date.now() - RAD.t0) / 1000);
+  else if (RAD.st === 'wait') lbl.textContent = '🎙 …';
+  else if (RAD.st === 'send') lbl.textContent = '📡 ' + T('radio_sending');
+  else if (RAD.st === 'play') lbl.textContent = '🔊 ' + (RAD.playing || '');
+  else lbl.textContent = '→ ' + radioToLabel();
+  lbl.classList.toggle('pick', RAD.st === 'idle' && radioAdmin());
+}
+
+/* ---------- запись ---------- */
+function radioMime() {
+  if (!window.MediaRecorder) return null;
+  const c = ['audio/mp4;codecs=mp4a.40.2', 'audio/mp4', 'audio/aac', 'audio/webm;codecs=opus', 'audio/webm'];
+  for (const m of c) { try { if (MediaRecorder.isTypeSupported(m)) return m; } catch (e) { /* ignore */ } }
+  return '';
+}
+function radioDown(e) {
+  e.preventDefault();
+  try { e.currentTarget.setPointerCapture(e.pointerId); } catch (er) { /* ignore */ }
+  if (RAD.st !== 'idle') return;
+  try { Snd.unlock(); } catch (er) { /* ignore */ }
+  RAD.down = Date.now(); RAD.cancel = false; RAD.st = 'arm'; radioPaint();
+  clearTimeout(RAD.armT); RAD.armT = setTimeout(radioStart, 220); // удержание, а не тап
+}
+async function radioStart() {
+  if (RAD.st !== 'arm') return;
+  if (radioAdmin() && !radioTargets().length) { RAD.st = 'idle'; radioPaint(); radioPicker(); return; }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || radioMime() === null) { RAD.st = 'idle'; radioPaint(); banner('warn', '📻 ' + T('radio_nosupport'), '', 3500); return; }
+  RAD.st = 'wait'; radioPaint();
+  try {
+    RAD.stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+  } catch (er) {
+    RAD.st = 'idle'; radioPaint(); banner('warn', '🎙 ' + T('radio_nomic'), T('radio_nomic_hint'), 5000); return;
+  }
+  if (RAD.cancel) { radioRelease(); RAD.st = 'idle'; radioPaint(); return; } // отпустил, пока ждали микрофон
+  RAD.musicWas = Snd.on; if (RAD.musicWas) Snd.stopMusic();
+  const mime = radioMime();
+  try { RAD.rec = mime ? new MediaRecorder(RAD.stream, { mimeType: mime, audioBitsPerSecond: 32000 }) : new MediaRecorder(RAD.stream); }
+  catch (er) { RAD.rec = new MediaRecorder(RAD.stream); }
+  RAD.chunks = [];
+  RAD.rec.ondataavailable = ev => { if (ev.data && ev.data.size) RAD.chunks.push(ev.data); };
+  RAD.rec.onstop = radioSend;
+  RAD.rec.start();
+  RAD.t0 = Date.now(); RAD.st = 'rec'; radioPaint();
+  radioChirp(true); if (navigator.vibrate) navigator.vibrate(30); // «чик» — можно говорить
+  clearInterval(RAD.iv);
+  RAD.iv = setInterval(() => { radioPaint(); if (Date.now() - RAD.t0 > RADIO_MAX * 1000) radioUp(); }, 250);
+}
+function radioUp() {
+  if (RAD.st === 'arm') { clearTimeout(RAD.armT); RAD.st = 'idle'; radioPaint(); radioTapHint(true); return; }
+  if (RAD.st === 'wait') { RAD.cancel = true; RAD.st = 'idle'; radioPaint(); radioTapHint(); return; }
+  if (RAD.st !== 'rec') return;
+  clearInterval(RAD.iv);
+  RAD.st = 'send'; radioPaint();
+  try { RAD.rec.stop(); } catch (e) { radioRelease(); RAD.st = 'idle'; radioPaint(); }
+}
+function radioRelease() {
+  if (RAD.stream) { RAD.stream.getTracks().forEach(t => t.stop()); RAD.stream = null; }
+  if (RAD.musicWas && !Snd.on) { try { Snd.startMusic(); } catch (e) { /* ignore */ } } RAD.musicWas = false;
+}
+function radioTapHint(tap) {
+  if (tap && radioAdmin()) radioPicker(); // короткий тап у админа — выбор, кому говорить
+  else banner('good', '📻 ' + T('radio_hold'), '', 2200);
+}
+async function radioSend() {
+  const dur = (Date.now() - RAD.t0) / 1000, type = (RAD.rec && RAD.rec.mimeType) || radioMime() || 'audio/mp4';
+  const blob = new Blob(RAD.chunks, { type });
+  radioRelease(); radioChirp(false);
+  if (dur < 0.6 || blob.size < 600) { RAD.st = 'idle'; radioPaint(); radioTapHint(); return; }
+  try {
+    const data = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(blob); });
+    if (data.length > 900000) throw new Error('too big');
+    const ts = radioTargets(), at = Date.now();
+    await Promise.all(ts.map(uid => Store.addMessage({
+      id: `${uid}_r${at}_${Math.random().toString(36).slice(2, 6)}`, uid, from: S.me.uid, name: S.me.name,
+      kind: 'radio', text: '', audio: data, mime: type, dur: Math.round(dur * 10) / 10, at, read: false
+    })));
+    if (navigator.vibrate) navigator.vibrate([20, 40, 20]);
+    banner('good', '📡 ' + T('radio_sent', { n: radioToLabel() }), '', 1600);
+  } catch (e) {
+    console.error(e); banner('warn', '📻 ' + T('radio_fail'), '', 3500);
+  }
+  RAD.st = 'idle'; radioPaint();
+}
+
+/* ---------- выбор получателей (у админа) ---------- */
+function radioPicker() {
+  const peers = radioPeers(), sel = radioTargets();
+  modal(`<h3>📻 ${T('radio_title')}</h3><div class="mut">${T('radio_pick_hint')}</div><div class="radpick">`
+    + (peers.length ? peers.map(u => `<button class="radchip ${sel.includes(u.uid) ? 'on' : ''}" data-act="radioTo" data-uid="${esc(u.uid)}">${sel.includes(u.uid) ? '☑' : '☐'} ${esc(firstName(u.name))}</button>`).join('') : `<div class="mut">${T('radio_nopeers')}</div>`)
+    + `</div><div class="btnrow"><button class="btn gold" data-act="close">✓ ${T('radio_done')}</button></div>`);
+}
+ACT.radioTo = el => {
+  const id = el.dataset.uid, peers = radioPeers().map(u => u.uid);
+  let sel = radioTargets(); sel = sel.includes(id) ? sel.filter(x => x !== id) : sel.concat(id);
+  try { localStorage.setItem('fp_radio_to', JSON.stringify(sel.filter(x => peers.includes(x)))); } catch (e) { /* ignore */ }
+  const on = sel.includes(id); el.classList.toggle('on', on); el.innerHTML = `${on ? '☑' : '☐'} ${esc(firstName((S.users.find(u => u.uid === id) || {}).name || ''))}`;
+  radioPaint();
+};
+
+/* ---------- приём и воспроизведение ---------- */
+function radioIncoming(list) {
+  const me = S.me && S.me.uid; if (!me) return;
+  const now = Date.now();
+  list.filter(m => m.from !== me && !m.read && !RAD.heard.has(m.id) && now - (m.at || 0) < RADIO_FRESH && !RAD.queue.some(q => q.id === m.id))
+    .sort((a, b) => (a.at || 0) - (b.at || 0))
+    .forEach(m => { RAD.queue.push(m); if (navigator.vibrate) navigator.vibrate(120); });
+  // админ подчищает старые/прослушанные записи, чтобы база не разрасталась
+  if (radioAdmin() && Store.delMessage) list.filter(m => (m.read && now - (m.at || 0) > 600e3) || now - (m.at || 0) > 2 * RADIO_FRESH).forEach(m => Store.delMessage(m.id).catch(() => {}));
+  radioPump();
+}
+function b64buf(dataUrl) {
+  const s = atob(String(dataUrl).split(',')[1] || ''), b = new Uint8Array(s.length);
+  for (let i = 0; i < s.length; i++) b[i] = s.charCodeAt(i);
+  return b.buffer;
+}
+async function radioPump() {
+  if (RAD.playing || !RAD.queue.length) return;
+  const A = Snd.audio && Snd.audio();
+  if (!A || A.ctx.state !== 'running') {
+    // звук ещё не разрешён (приложение только открыли) — сыграем при первом касании
+    if (!RAD.waitShown) { RAD.waitShown = true; banner('good', '📻 ' + T('radio_new', { n: RAD.queue[0].name || '' }), T('radio_tap'), 6000); }
+    return;
+  }
+  RAD.waitShown = false;
+  const m = RAD.queue.shift();
+  RAD.playing = firstName(m.name || ''); const prevSt = RAD.st; if (RAD.st === 'idle') RAD.st = 'play'; radioPaint();
+  const done = () => {
+    RAD.heard.add(m.id); radHeardSave();
+    Store.updateMessage(m.id, { read: true }).catch(() => {});
+    RAD.playing = null; if (RAD.st === 'play') RAD.st = prevSt === 'play' ? 'idle' : prevSt; radioPaint();
+    setTimeout(radioPump, 350);
+  };
+  try { await radioPlay(A.ctx, A.master, m); } catch (e) { console.error(e); }
+  done();
+}
+// Шум эфира (белый шум через полосовой фильтр)
+function radNoise(ctx, out, t, dur, vol, f) {
+  const n = Math.max(1, Math.floor(ctx.sampleRate * dur)), buf = ctx.createBuffer(1, n, ctx.sampleRate), d = buf.getChannelData(0);
+  for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (0.7 + 0.3 * Math.sin(i / 900));
+  const s = ctx.createBufferSource(), bp = ctx.createBiquadFilter(), g = ctx.createGain();
+  s.buffer = buf; bp.type = 'bandpass'; bp.frequency.value = f || 2600; bp.Q.value = 0.6;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.03);
+  g.gain.setValueAtTime(vol, t + Math.max(0.04, dur - 0.06)); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  s.connect(bp); bp.connect(g); g.connect(out); s.start(t); s.stop(t + dur + 0.02);
+}
+function radCurve(k) { const n = 1024, c = new Float32Array(n); for (let i = 0; i < n; i++) { const x = i * 2 / n - 1; c[i] = (1 + k) * x / (1 + k * Math.abs(x)); } return c; }
+async function radioPlay(ctx, out, m) {
+  let voice = null;
+  try { voice = await new Promise((res, rej) => { const p = ctx.decodeAudioData(b64buf(m.audio), res, rej); if (p && p.then) p.then(res, rej); }); } catch (e) { voice = null; }
+  const t = ctx.currentTime + 0.05, hiss = 0.65;
+  radNoise(ctx, out, t, hiss, 0.32, 2400);                 // «пшшш» — включение эфира
+  if (voice) {
+    const src = ctx.createBufferSource(), hp = ctx.createBiquadFilter(), lp = ctx.createBiquadFilter(), pk = ctx.createBiquadFilter(), ws = ctx.createWaveShaper(), g = ctx.createGain();
+    src.buffer = voice;
+    hp.type = 'highpass'; hp.frequency.value = 380;          // рация: без низов
+    lp.type = 'lowpass'; lp.frequency.value = 3000;          // и без верхов
+    pk.type = 'peaking'; pk.frequency.value = 1700; pk.gain.value = 6; pk.Q.value = 1;
+    ws.curve = radCurve(6); g.gain.value = 1.15;             // лёгкая «хрипотца»
+    src.connect(hp); hp.connect(pk); pk.connect(lp); lp.connect(ws); ws.connect(g); g.connect(out);
+    const vt = t + hiss - 0.08; src.start(vt);
+    radNoise(ctx, out, vt, voice.duration, 0.035, 2000);    // тихий фон эфира под голосом
+    radNoise(ctx, out, vt + voice.duration, 0.22, 0.3, 2800); // «кшш» — конец передачи
+    await new Promise(r => setTimeout(r, (hiss + voice.duration + 0.3) * 1000));
+  } else {
+    // формат не распознан — играем как есть, после шипения
+    await new Promise(r => setTimeout(r, hiss * 1000));
+    await new Promise(r => { const a = new Audio(m.audio); a.onended = r; a.onerror = r; const p = a.play(); if (p && p.catch) p.catch(r); setTimeout(r, ((m.dur || 10) + 2) * 1000); });
+    radNoise(ctx, out, ctx.currentTime, 0.22, 0.3, 2800);
+    await new Promise(r => setTimeout(r, 300));
+  }
+}
+// Короткий щелчок у говорящего: нажал — «чик», отпустил — «кшш»
+function radioChirp(on) {
+  const A = Snd.audio && Snd.audio(); if (!A) return;
+  const t = A.ctx.currentTime;
+  if (on) { const o = A.ctx.createOscillator(), g = A.ctx.createGain(); o.frequency.value = 1400; g.gain.setValueAtTime(0.08, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.07); o.connect(g); g.connect(A.master); o.start(t); o.stop(t + 0.08); }
+  else radNoise(A.ctx, A.master, t, 0.18, 0.18, 2800);
+}
+// Первое касание после открытия разрешает звук — проигрываем ожидающие
+document.addEventListener('pointerdown', () => { if (RAD.queue.length && !RAD.playing) setTimeout(() => { try { Snd.unlock(); } catch (e) { /* ignore */ } radioPump(); }, 80); }, true);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) radioPump(); });
 
 </script>
 </body>
